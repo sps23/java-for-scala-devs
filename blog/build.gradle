@@ -1,0 +1,9 @@
+// Blog module - Jekyll-based GitHub Pages
+// This module contains the Jekyll blog content
+// Build is handled by Jekyll/GitHub Pages
+
+task build {
+    doLast {
+        println 'Blog module - Jekyll content, no compilation needed'
+    }
+}

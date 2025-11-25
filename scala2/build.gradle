@@ -1,0 +1,24 @@
+plugins {
+    id 'scala'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+dependencies {
+    implementation 'org.scala-lang:scala-library:2.13.12'
+    
+    testImplementation 'org.scalatest:scalatest_2.13:3.2.17'
+    testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.13:2.2.0'
+}
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.additionalParameters = ['-feature']
+}
+
+test {
+    useJUnitPlatform()
+}

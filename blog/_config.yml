@@ -1,0 +1,46 @@
+title: Java for Scala Developers
+description: A practical guide for Scala developers learning Java
+baseurl: "/java-for-scala-devs"
+url: "https://sps23.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-relative-links
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /blog/:year/:month/:day/:title/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "sps23"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - build.gradle
+  - .gradle
+  - vendor
+
+# Social links
+github_username: sps23
+
+# Navigation
+header_pages:
+  - about.md
