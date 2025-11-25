@@ -58,6 +58,26 @@ bundle exec jekyll serve
 
 Then visit `http://localhost:4000/java-for-scala-devs` in your browser.
 
+## CI/CD
+
+This project uses GitHub Actions for continuous integration. The workflow is triggered on:
+- Push to `main` branch
+- Pull requests to `main` branch
+
+### Required Status Checks
+
+To enforce that all builds pass before merging PRs, configure branch protection rules:
+
+1. Go to **Settings** → **Branches** in the repository
+2. Click **Add branch protection rule** (or edit the existing rule for `main`)
+3. Set **Branch name pattern** to `main`
+4. Check **Require status checks to pass before merging**
+5. Search and select the following required status checks:
+   - `build-gradle`
+   - `build-jekyll`
+6. Optionally check **Require branches to be up to date before merging**
+7. Click **Save changes**
+
 ## License
 
 This project is open source and available under the MIT License.
