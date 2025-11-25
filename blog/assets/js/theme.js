@@ -56,7 +56,7 @@
     const visiblePosts = Array.from(posts).filter(p => p.style.display !== 'none');
     
     if (query && visiblePosts.length === 0) {
-      if (!noResults) {
+      if (!noResults && posts.length > 0) {
         noResults = document.createElement('div');
         noResults.className = 'no-results';
         noResults.innerHTML = '<p>No posts found matching your search.</p>';
@@ -65,7 +65,9 @@
         const container = posts[0].parentElement;
         container.appendChild(noResults);
       }
-      noResults.style.display = 'block';
+      if (noResults) {
+        noResults.style.display = 'block';
+      }
     } else if (noResults) {
       noResults.style.display = 'none';
     }
@@ -213,9 +215,13 @@
     const navLinks = document.querySelectorAll('.site-nav a, .nav-links a');
     
     navLinks.forEach(function(link) {
-      const linkPath = new URL(link.href).pathname;
-      if (currentPath === linkPath || currentPath.startsWith(linkPath + '/')) {
-        link.classList.add('active');
+      try {
+        const linkPath = new URL(link.href, window.location.origin).pathname;
+        if (currentPath === linkPath || currentPath.startsWith(linkPath + '/')) {
+          link.classList.add('active');
+        }
+      } catch (e) {
+        // Skip invalid URLs
       }
     });
   }

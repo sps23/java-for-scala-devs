@@ -439,6 +439,7 @@ tr:last-child td {
 .hero h1 {
   font-size: 2.5rem;
   margin-bottom: var(--space-md);
+  color: var(--accent-color); /* Fallback for browsers without background-clip support */
   background: linear-gradient(135deg, var(--accent-color), var(--success-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

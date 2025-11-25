@@ -345,6 +345,7 @@ p {
 .hero-section h1 {
   font-size: 3rem;
   margin-bottom: var(--space-md);
+  color: var(--accent-color); /* Fallback for browsers without background-clip support */
   background: var(--gradient-warm);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
