@@ -1,0 +1,69 @@
+# CodeQL Security Analysis
+#
+# This workflow runs CodeQL analysis on the repository.
+#
+# Note on Scala Support:
+# CodeQL does not natively support Scala source code analysis. However, since
+# Scala compiles to JVM bytecode, CodeQL's java-kotlin analyzer can analyze
+# the compiled bytecode and detect some security issues. This provides partial
+# coverage for Scala code.
+#
+# For more comprehensive Scala-specific analysis, consider using additional
+# tools like Scalastyle, Scapegoat, or WartRemover.
+
+name: "CodeQL"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run weekly on Sundays at 00:00 UTC
+    - cron: '0 0 * * 0'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # CodeQL supports: 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
+        # Using 'java-kotlin' which can analyze JVM bytecode from compiled Scala code
+        language: [ 'java-kotlin' ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          # For Java/Kotlin, autobuild typically works but we use manual build
+          # to ensure Scala code is properly compiled
+
+      # Build the project - CodeQL analyzes the compiled bytecode for JVM languages
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build with Gradle
+        run: ./gradlew build -x test
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"
