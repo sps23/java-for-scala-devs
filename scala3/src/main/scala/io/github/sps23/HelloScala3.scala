@@ -1,8 +1,6 @@
 package io.github.sps23
 
-/**
- * Example Scala 3 class demonstrating new syntax features.
- */
+/** Example Scala 3 class demonstrating new syntax features. */
 @main def runHelloScala3(): Unit =
   println(HelloScala3.greeting)
 
@@ -14,8 +12,7 @@ object HelloScala3:
     case Red, Green, Blue
 
   // Extension methods
-  extension (s: String)
-    def exclaim: String = s + "!"
+  extension (s: String) def exclaim: String = s + "!"
 
   // Given instances (replacing implicits)
   given Ordering[Color] = Ordering.by(_.ordinal)

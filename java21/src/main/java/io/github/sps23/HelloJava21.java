@@ -9,7 +9,7 @@ public class HelloJava21 {
 
     public static void main(String[] args) {
         System.out.println(greeting());
-        
+
         // Pattern matching example
         Object obj = "Hello";
         String result = switch (obj) {
@@ -25,14 +25,18 @@ public class HelloJava21 {
     }
 
     // Record example
-    public record Person(String name, int age) {}
+    public record Person(String name, int age) {
+    }
 
     // Sealed interface example
-    public sealed interface Shape permits Circle, Rectangle {}
-    
-    public record Circle(double radius) implements Shape {}
-    
-    public record Rectangle(double width, double height) implements Shape {}
+    public sealed interface Shape permits Circle, Rectangle {
+    }
+
+    public record Circle(double radius) implements Shape {
+    }
+
+    public record Rectangle(double width, double height) implements Shape {
+    }
 
     // Pattern matching with records
     public static double area(Shape shape) {
