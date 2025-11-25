@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.9.21'
+    id 'com.diffplug.spotless' version '6.25.0'
 }
 
 java {
@@ -18,4 +19,16 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+spotless {
+    kotlin {
+        ktlint('1.1.1')
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('spotlessCheck')
 }

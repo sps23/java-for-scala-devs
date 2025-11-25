@@ -1,5 +1,6 @@
 plugins {
     id 'scala'
+    id 'com.diffplug.spotless' version '6.25.0'
 }
 
 java {
@@ -21,4 +22,14 @@ tasks.withType(ScalaCompile) {
 
 test {
     useJUnitPlatform()
+}
+
+spotless {
+    scala {
+        scalafmt('3.7.17').configFile(rootProject.file('scala2/.scalafmt.conf'))
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('spotlessCheck')
 }

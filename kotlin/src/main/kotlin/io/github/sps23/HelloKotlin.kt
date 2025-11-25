@@ -11,8 +11,7 @@ object HelloKotlin {
     fun greeting(): String = "Hello from Kotlin!"
 
     // Example of Kotlin specific features
-    fun processItems(items: List<String>): List<String> =
-        items.map { it.uppercase() }.filter { it.isNotEmpty() }
+    fun processItems(items: List<String>): List<String> = items.map { it.uppercase() }.filter { it.isNotEmpty() }
 
     // Data class example
     data class Person(val name: String, val age: Int)

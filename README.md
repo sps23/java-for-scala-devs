@@ -46,6 +46,44 @@ Visit the blog at: https://sps23.github.io/java-for-scala-devs
 ./gradlew test
 ```
 
+## Code Formatting
+
+This project uses [Spotless](https://github.com/diffplug/spotless) for code formatting with the following formatters:
+
+| Module | Formatter | Configuration |
+|--------|-----------|---------------|
+| java21 | Eclipse JDT | [.eclipse-formatter.xml](./java21/.eclipse-formatter.xml) |
+| kotlin | ktlint | Default ktlint rules |
+| scala2 | Scalafmt | [.scalafmt.conf](./scala2/.scalafmt.conf) |
+| scala3 | Scalafmt | [.scalafmt.conf](./scala3/.scalafmt.conf) |
+
+### Check Code Formatting
+
+To check if all code is properly formatted:
+
+```bash
+./gradlew spotlessCheck
+```
+
+### Apply Code Formatting
+
+To automatically format all code:
+
+```bash
+./gradlew spotlessApply
+```
+
+### Format Specific Module
+
+```bash
+./gradlew :java21:spotlessApply
+./gradlew :scala2:spotlessApply
+./gradlew :scala3:spotlessApply
+./gradlew :kotlin:spotlessApply
+```
+
+**Note:** The `build` task automatically includes `spotlessCheck`, so the build will fail if code is not properly formatted.
+
 ## Local Blog Development
 
 To run the Jekyll blog locally:
