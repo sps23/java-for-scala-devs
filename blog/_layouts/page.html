@@ -1,0 +1,143 @@
+---
+layout: default
+---
+
+{% if site.theme_template == 2 %}
+<!-- Template 2: Tech Blog Pro - Page Layout -->
+<div class="page-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <a href="{{ '/' | relative_url }}" class="sidebar-logo">
+        <span class="logo-icon">J</span>
+        <span>{{ site.title | truncatewords: 3, "" }}</span>
+      </a>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <h3 class="nav-section-title">Navigation</h3>
+        <ul class="nav-links">
+          <li><a href="{{ '/' | relative_url }}">🏠 Home</a></li>
+          <li><a href="{{ site.baseurl }}/about/" class="active">ℹ️ About</a></li>
+          <li><a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">📦 GitHub</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+  
+  <button class="mobile-menu-toggle" aria-label="Open menu">☰</button>
+  <div class="sidebar-overlay"></div>
+  
+  <div class="main-content">
+    <div class="content-wrapper">
+      <article class="article">
+        <div class="article-content">
+          {{ content }}
+        </div>
+      </article>
+    </div>
+    
+    <footer class="site-footer">
+      <div class="footer-content">
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}</p>
+        <div class="footer-links">
+          <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs">GitHub</a>
+          <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+{% elsif site.theme_template == 3 %}
+<!-- Template 3: Developer Journal - Page Layout -->
+<header class="site-header">
+  <div class="header-wrapper">
+    <a href="{{ '/' | relative_url }}" class="site-brand">
+      <span class="site-logo">J</span>
+      <span class="site-title">{{ site.title | truncatewords: 4, "" }}</span>
+    </a>
+    
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <a href="{{ site.baseurl }}/about/">About</a>
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">GitHub</a>
+    </nav>
+    
+    <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+  </div>
+</header>
+
+<main class="article-page" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+  <article>
+    <div class="article-content">
+      {{ content }}
+    </div>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h4>{{ site.title }}</h4>
+      <p style="color: var(--text-secondary); font-size: 0.9rem;">{{ site.description }}</p>
+    </div>
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="{{ '/' | relative_url }}">Home</a></li>
+        <li><a href="{{ site.baseurl }}/about/">About</a></li>
+        <li><a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="https://github.com/{{ site.github_username }}">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll & ❤️</p>
+  </div>
+</footer>
+
+{% else %}
+<!-- Template 1: Modern Minimal Dark - Page Layout -->
+<header class="site-header">
+  <div class="header-wrapper">
+    <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+    
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      ☰
+    </button>
+    
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      {% for page in site.header_pages %}
+        <a href="{{ site.baseurl }}/{{ page }}">{{ page | replace: '.md', '' | capitalize }}</a>
+      {% endfor %}
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+  <article class="article">
+    <div class="article-content">
+      {{ content }}
+    </div>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-wrapper">
+    <div class="footer-links">
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs">GitHub</a>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a>
+      <a href="{{ site.baseurl }}/about/">About</a>
+    </div>
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll.</p>
+  </div>
+</footer>
+{% endif %}

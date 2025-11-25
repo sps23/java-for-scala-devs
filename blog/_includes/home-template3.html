@@ -1,0 +1,134 @@
+<!-- Template 3: Developer Journal - Home Page -->
+<header class="site-header">
+  <div class="header-wrapper">
+    <div class="site-brand">
+      <span class="site-logo">J</span>
+      <span class="site-title">{{ site.title | truncatewords: 4, "" }}</span>
+    </div>
+    
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <a href="{{ site.baseurl }}/about/">About</a>
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">GitHub</a>
+    </nav>
+    
+    <div class="header-search">
+      <input type="text" placeholder="Search posts...">
+      <button aria-label="Search">🔍</button>
+    </div>
+    
+    <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+  </div>
+</header>
+
+<div class="page-layout">
+  <!-- Timeline Sidebar -->
+  <aside class="timeline-sidebar">
+    <div class="timeline-header">Browse by Date</div>
+    
+    <nav class="timeline-nav">
+      {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+      {% for year in posts_by_year %}
+      <div class="timeline-year">
+        <div class="year-label">{{ year.name }}</div>
+        <ul class="month-links">
+          {% assign months = year.items | group_by_exp: "post", "post.date | date: '%B'" %}
+          {% for month in months %}
+          <li>
+            <a href="#{{ year.name }}-{{ month.name | downcase }}">
+              {{ month.name }}
+              <span class="post-count">{{ month.items | size }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </nav>
+    
+    <div class="category-pills">
+      <div class="category-pills-header">Categories</div>
+      <span class="category-pill active" data-category="all">All</span>
+      {% assign categories = site.posts | map: "categories" | join: "," | split: "," | uniq | sort %}
+      {% for category in categories %}
+        {% if category != "" %}
+        <span class="category-pill" data-category="{{ category | downcase }}">{{ category | capitalize }}</span>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </aside>
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <h1>{{ site.title }}</h1>
+      <p class="subtitle">{{ site.description }}</p>
+    </section>
+    
+    <!-- Posts Timeline -->
+    <section class="posts-timeline">
+      {% for post in site.posts %}
+      <article class="timeline-post" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}">
+        <div class="timeline-marker">
+          <span class="timeline-date">{{ post.date | date: "%b %d" }}</span>
+          <span class="timeline-dot"></span>
+        </div>
+        
+        <div class="post-card">
+          <div class="post-card-header">
+            {% if post.categories.first %}
+            <span class="post-category">{{ post.categories.first }}</span>
+            {% endif %}
+            <span class="post-reading-time">{{ post.content | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
+          </div>
+          
+          <h3 class="post-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h3>
+          
+          <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+          
+          <div class="post-tags">
+            {% for tag in post.tags %}
+            <span class="post-tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+    
+    {{ content }}
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h4>{{ site.title }}</h4>
+      <p style="color: var(--text-secondary); font-size: 0.9rem;">{{ site.description }}</p>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="{{ '/' | relative_url }}">Home</a></li>
+        <li><a href="{{ site.baseurl }}/about/">About</a></li>
+        <li><a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="https://github.com/{{ site.github_username }}">GitHub Profile</a></li>
+        <li><a href="https://github.com/{{ site.github_username }}/java-for-scala-devs">Repository</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll & ❤️</p>
+  </div>
+</footer>

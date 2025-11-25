@@ -1,0 +1,72 @@
+<!-- Template 1: Modern Minimal Dark - Post Page -->
+<header class="site-header">
+  <div class="header-wrapper">
+    <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+    
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      ☰
+    </button>
+    
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      {% for page in site.header_pages %}
+        <a href="{{ site.baseurl }}/{{ page }}">{{ page | replace: '.md', '' | capitalize }}</a>
+      {% endfor %}
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+  <article class="article">
+    <header class="article-header">
+      <h1 class="article-title">{{ page.title }}</h1>
+      <p class="article-meta">
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+        {% if page.author %} • {{ page.author }}{% endif %}
+        {% if page.categories.size > 0 %} • {{ page.categories | join: ", " }}{% endif %}
+      </p>
+      {% if page.tags.size > 0 %}
+      <div class="tags">
+        {% for tag in page.tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </header>
+    
+    <div class="article-content">
+      {{ content }}
+    </div>
+  </article>
+  
+  <!-- Post Navigation -->
+  <nav style="display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+    {% if page.previous.url %}
+    <a href="{{ page.previous.url | relative_url }}" style="max-width: 45%;">
+      <small style="color: var(--text-muted);">← Previous</small><br>
+      {{ page.previous.title }}
+    </a>
+    {% else %}
+    <span></span>
+    {% endif %}
+    
+    {% if page.next.url %}
+    <a href="{{ page.next.url | relative_url }}" style="text-align: right; max-width: 45%;">
+      <small style="color: var(--text-muted);">Next →</small><br>
+      {{ page.next.title }}
+    </a>
+    {% endif %}
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-wrapper">
+    <div class="footer-links">
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs">GitHub</a>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a>
+      <a href="{{ site.baseurl }}/about/">About</a>
+    </div>
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll.</p>
+  </div>
+</footer>

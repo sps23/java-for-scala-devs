@@ -1,0 +1,91 @@
+<!-- Template 1: Modern Minimal Dark - Home Page -->
+<header class="site-header">
+  <div class="header-wrapper">
+    <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+    
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      ☰
+    </button>
+    
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      {% for page in site.header_pages %}
+        {% assign page_url = page | relative_url %}
+        <a href="{{ site.baseurl }}/{{ page }}">{{ page | replace: '.md', '' | capitalize }}</a>
+      {% endfor %}
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="hero">
+    <h1>{{ site.title }}</h1>
+    <p>{{ site.description }}</p>
+  </div>
+  
+  <!-- Search -->
+  <div class="search-container">
+    <input type="text" class="search-input" placeholder="Search posts by title, content, or tags...">
+  </div>
+  
+  <!-- Category Filter -->
+  <div class="category-filter">
+    <button class="category-btn active" data-category="all">All Posts</button>
+    {% assign categories = site.posts | map: "categories" | join: "," | split: "," | uniq | sort %}
+    {% for category in categories %}
+      {% if category != "" %}
+      <button class="category-btn" data-category="{{ category | downcase }}">{{ category | capitalize }}</button>
+      {% endif %}
+    {% endfor %}
+  </div>
+  
+  <!-- Posts List -->
+  <h2>Latest Posts</h2>
+  <ul class="post-list">
+    {% for post in site.posts %}
+    <li class="post-item" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}">
+      <h3 class="post-title">
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </h3>
+      <p class="post-meta">
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
+        {% if post.author %} • {{ post.author }}{% endif %}
+      </p>
+      <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 40 }}</p>
+      <div class="tags">
+        {% for tag in post.tags %}
+        <a href="#" class="tag" data-category="{{ tag }}">{{ tag }}</a>
+        {% endfor %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  
+  <!-- Timeline View -->
+  <h2>Post Timeline</h2>
+  <div class="timeline">
+    {% for post in site.posts %}
+    <div class="timeline-item" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}">
+      <span class="timeline-date">{{ post.date | date: "%b %d, %Y" }}</span>
+      <h3 class="post-title">
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </h3>
+      <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  
+  {{ content }}
+</main>
+
+<footer class="site-footer">
+  <div class="footer-wrapper">
+    <div class="footer-links">
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs">GitHub</a>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a>
+      <a href="{{ site.baseurl }}/about/">About</a>
+    </div>
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll.</p>
+  </div>
+</footer>

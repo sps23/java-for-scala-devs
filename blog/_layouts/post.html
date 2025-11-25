@@ -1,0 +1,11 @@
+---
+layout: default
+---
+
+{% if site.theme_template == 2 %}
+  {% include post-template2.html %}
+{% elsif site.theme_template == 3 %}
+  {% include post-template3.html %}
+{% else %}
+  {% include post-template1.html %}
+{% endif %}

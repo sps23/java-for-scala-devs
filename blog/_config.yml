@@ -3,10 +3,18 @@ description: A practical guide for Scala developers learning Java
 baseurl: "/java-for-scala-devs"
 url: "https://sps23.github.io"
 
+# Theme Template Selection
+# Choose from:
+#   1 = Modern Minimal Dark (clean, minimalist dark theme)
+#   2 = Tech Blog Pro (professional with sidebar navigation)
+#   3 = Developer Journal (timeline-centric with search)
+theme_template: 1
+
 # Build settings
 markdown: kramdown
 highlighter: rouge
-theme: minima
+# Removed minima theme to use custom templates
+# theme: minima
 
 # Plugins
 plugins:
