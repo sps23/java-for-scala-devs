@@ -1,7 +1,6 @@
 # Gradle
 .gradle/
 build/
-!gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -41,6 +40,9 @@ blog/Gemfile.lock
 *.zip
 *.tar.gz
 *.rar
+
+# Exception for Gradle Wrapper
+!gradle/wrapper/gradle-wrapper.jar
 
 # Virtual machine crash logs
 hs_err_pid*
