@@ -34,6 +34,7 @@ blog/Gemfile.lock
 
 # Package files
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 *.war
 *.nar
 *.ear
