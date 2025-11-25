@@ -1,0 +1,16 @@
+plugins {
+    id 'base'
+}
+
+allprojects {
+    group = 'io.github.sps23'
+    version = '1.0.0-SNAPSHOT'
+    
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    // Common configuration for all subprojects
+}
