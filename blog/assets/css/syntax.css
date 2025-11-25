@@ -1,0 +1,165 @@
+/* Rouge syntax highlighting for dark themes */
+
+/* Base token styles */
+.highlight {
+  background: var(--code-bg, #161b22);
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.highlight pre {
+  margin: 0;
+  padding: 1rem;
+  background: transparent;
+  border: none;
+}
+
+.highlight code {
+  background: transparent;
+  padding: 0;
+  color: #e6edf3;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Comment */
+.highlight .c,
+.highlight .c1,
+.highlight .cm,
+.highlight .cs,
+.highlight .cp { color: #8b949e; font-style: italic; }
+
+/* String */
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sx { color: #a5d6ff; }
+
+/* Keyword */
+.highlight .k,
+.highlight .kc,
+.highlight .kd,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr,
+.highlight .kt { color: #ff7b72; }
+
+/* Number */
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo,
+.highlight .il { color: #79c0ff; }
+
+/* Operator */
+.highlight .o,
+.highlight .ow { color: #ff7b72; }
+
+/* Name - Function */
+.highlight .nf,
+.highlight .fm { color: #d2a8ff; }
+
+/* Name - Class */
+.highlight .nc,
+.highlight .nn { color: #ffa657; }
+
+/* Name - Variable */
+.highlight .nv,
+.highlight .vi,
+.highlight .vc,
+.highlight .vg { color: #ffa657; }
+
+/* Name - Attribute */
+.highlight .na { color: #79c0ff; }
+
+/* Name - Builtin */
+.highlight .nb { color: #ffa657; }
+
+/* Name - Constant */
+.highlight .no { color: #79c0ff; }
+
+/* Name - Tag (HTML/XML) */
+.highlight .nt { color: #7ee787; }
+
+/* Generic - Deleted */
+.highlight .gd { color: #ffa198; background-color: rgba(248, 81, 73, 0.15); }
+
+/* Generic - Inserted */
+.highlight .gi { color: #7ee787; background-color: rgba(63, 185, 80, 0.15); }
+
+/* Generic - Heading */
+.highlight .gh { color: #58a6ff; font-weight: bold; }
+
+/* Generic - Subheading */
+.highlight .gu { color: #58a6ff; }
+
+/* Generic - Error */
+.highlight .gr,
+.highlight .err { color: #ffa198; }
+
+/* Punctuation */
+.highlight .p { color: #e6edf3; }
+
+/* Text */
+.highlight .n,
+.highlight .nl,
+.highlight .ni { color: #e6edf3; }
+
+/* Entity */
+.highlight .ne { color: #ffa657; }
+
+/* Support */
+.highlight .ss { color: #a5d6ff; }
+
+/* Regex */
+.highlight .sr { color: #7ee787; }
+
+/* Link reference */
+.highlight .ld { color: #a5d6ff; }
+
+/* Line numbers */
+.highlight .lineno {
+  color: #6e7681;
+  padding-right: 1rem;
+  user-select: none;
+}
+
+/* Code block language indicator */
+.highlight::before {
+  content: attr(data-lang);
+  display: block;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  color: #8b949e;
+  border-bottom: 1px solid #30363d;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Inline code */
+code:not([class]) {
+  background-color: rgba(110, 118, 129, 0.2);
+  color: #e6edf3;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.875em;
+}
+
+/* Language specific highlighting */
+.language-java .highlight .kd { color: #ff7b72; }
+.language-java .highlight .nc { color: #ffa657; }
+
+.language-scala .highlight .kd { color: #ff7b72; }
+.language-scala .highlight .nc { color: #ffa657; }
+.language-scala .highlight .k + .n { color: #ffa657; } /* case class names */
+
+.language-kotlin .highlight .kd { color: #ff7b72; }
+.language-kotlin .highlight .nc { color: #ffa657; }

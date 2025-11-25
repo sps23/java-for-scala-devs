@@ -1,0 +1,142 @@
+<!-- Template 2: Tech Blog Pro - Post Page -->
+<div class="page-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <a href="{{ '/' | relative_url }}" class="sidebar-logo">
+        <span class="logo-icon">J</span>
+        <span>{{ site.title | truncatewords: 3, "" }}</span>
+      </a>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <h3 class="nav-section-title">Navigation</h3>
+        <ul class="nav-links">
+          <li><a href="{{ '/' | relative_url }}">🏠 Home</a></li>
+          <li><a href="{{ site.baseurl }}/about/">ℹ️ About</a></li>
+          <li><a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">📦 GitHub</a></li>
+          <li><a href="{{ '/feed.xml' | relative_url }}">📡 RSS Feed</a></li>
+        </ul>
+      </div>
+      
+      <div class="nav-section">
+        <h3 class="nav-section-title">On This Page</h3>
+        <ul class="nav-links" id="toc">
+          <!-- Table of contents populated by JS -->
+        </ul>
+      </div>
+      
+      <div class="nav-section">
+        <h3 class="nav-section-title">Recent Posts</h3>
+        <ul class="nav-links">
+          {% for post in site.posts limit:5 %}
+          <li><a href="{{ post.url | relative_url }}" {% if post.url == page.url %}class="active"{% endif %}>{{ post.title | truncatewords: 5 }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </nav>
+  </aside>
+  
+  <!-- Mobile Menu Toggle -->
+  <button class="mobile-menu-toggle" aria-label="Open menu">☰</button>
+  <div class="sidebar-overlay"></div>
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="top-bar-content">
+        <nav class="article-breadcrumb">
+          <a href="{{ '/' | relative_url }}">Home</a> / 
+          {% if page.categories.first %}
+          <a href="{{ '/' | relative_url }}">{{ page.categories.first | capitalize }}</a> / 
+          {% endif %}
+          <span>{{ page.title | truncatewords: 5 }}</span>
+        </nav>
+      </div>
+    </header>
+    
+    <div class="content-wrapper">
+      <article class="article">
+        <header class="article-header">
+          {% if page.categories.first %}
+          <span class="post-card-category">{{ page.categories.first }}</span>
+          {% endif %}
+          <h1 class="article-title">{{ page.title }}</h1>
+          <div class="article-meta">
+            <span><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></span>
+            {% if page.author %}<span>By {{ page.author }}</span>{% endif %}
+            <span>{{ content | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
+          </div>
+        </header>
+        
+        <div class="article-content">
+          {{ content }}
+        </div>
+        
+        {% if page.tags.size > 0 %}
+        <div class="post-card-tags" style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+          <strong style="color: var(--text-muted); margin-right: 0.5rem;">Tags:</strong>
+          {% for tag in page.tags %}
+          <span class="mini-tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </article>
+      
+      <!-- Post Navigation -->
+      <nav style="display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        {% if page.previous.url %}
+        <a href="{{ page.previous.url | relative_url }}" style="max-width: 45%;">
+          <small style="color: var(--text-muted);">← Previous Post</small><br>
+          {{ page.previous.title }}
+        </a>
+        {% else %}
+        <span></span>
+        {% endif %}
+        
+        {% if page.next.url %}
+        <a href="{{ page.next.url | relative_url }}" style="text-align: right; max-width: 45%;">
+          <small style="color: var(--text-muted);">Next Post →</small><br>
+          {{ page.next.title }}
+        </a>
+        {% endif %}
+      </nav>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}</p>
+        <div class="footer-links">
+          <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs">GitHub</a>
+          <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+          <a href="{{ site.baseurl }}/about/">About</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+// Generate table of contents
+document.addEventListener('DOMContentLoaded', function() {
+  const article = document.querySelector('.article-content');
+  const toc = document.getElementById('toc');
+  const headings = article.querySelectorAll('h2, h3');
+  
+  headings.forEach(function(heading, index) {
+    const id = 'heading-' + index;
+    heading.id = id;
+    
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = '#' + id;
+    a.textContent = heading.textContent;
+    a.style.paddingLeft = heading.tagName === 'H3' ? '1rem' : '0';
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+});
+</script>

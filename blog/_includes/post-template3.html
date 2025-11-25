@@ -1,0 +1,110 @@
+<!-- Template 3: Developer Journal - Post Page -->
+<header class="site-header">
+  <div class="header-wrapper">
+    <a href="{{ '/' | relative_url }}" class="site-brand">
+      <span class="site-logo">J</span>
+      <span class="site-title">{{ site.title | truncatewords: 4, "" }}</span>
+    </a>
+    
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <a href="{{ site.baseurl }}/about/">About</a>
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">GitHub</a>
+    </nav>
+    
+    <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+  </div>
+</header>
+
+<main class="article-page" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+  <article>
+    <header class="article-header">
+      {% if page.categories.first %}
+      <span class="article-category">{{ page.categories.first }}</span>
+      {% endif %}
+      <h1 class="article-title">{{ page.title }}</h1>
+      <div class="article-meta">
+        <span><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></span>
+        {% if page.author %}<span>By {{ page.author }}</span>{% endif %}
+        <span>{{ content | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
+      </div>
+    </header>
+    
+    <div class="article-content">
+      {{ content }}
+    </div>
+    
+    {% if page.tags.size > 0 %}
+    <div class="post-tags" style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+      {% for tag in page.tags %}
+      <span class="post-tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </article>
+  
+  <!-- Post Navigation -->
+  <nav style="display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+    {% if page.previous.url %}
+    <a href="{{ page.previous.url | relative_url }}" style="max-width: 45%;">
+      <small style="color: var(--text-muted);">← Previous</small><br>
+      {{ page.previous.title }}
+    </a>
+    {% else %}
+    <span></span>
+    {% endif %}
+    
+    {% if page.next.url %}
+    <a href="{{ page.next.url | relative_url }}" style="text-align: right; max-width: 45%;">
+      <small style="color: var(--text-muted);">Next →</small><br>
+      {{ page.next.title }}
+    </a>
+    {% endif %}
+  </nav>
+  
+  <!-- Related Posts -->
+  {% assign related_posts = site.posts | where_exp: "post", "post.url != page.url" | where_exp: "post", "post.categories contains page.categories.first" | limit: 3 %}
+  {% if related_posts.size > 0 %}
+  <section style="margin-top: 3rem;">
+    <h3 style="margin-bottom: 1.5rem; color: var(--accent-color);">Related Posts</h3>
+    <div style="display: grid; gap: 1rem;">
+      {% for post in related_posts %}
+      <a href="{{ post.url | relative_url }}" class="post-card" style="text-decoration: none;">
+        <h4 class="post-title" style="margin: 0 0 0.5rem 0;">{{ post.title }}</h4>
+        <p class="post-excerpt" style="margin: 0; font-size: 0.9rem;">{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</main>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h4>{{ site.title }}</h4>
+      <p style="color: var(--text-secondary); font-size: 0.9rem;">{{ site.description }}</p>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="{{ '/' | relative_url }}">Home</a></li>
+        <li><a href="{{ site.baseurl }}/about/">About</a></li>
+        <li><a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="https://github.com/{{ site.github_username }}">GitHub Profile</a></li>
+        <li><a href="https://github.com/{{ site.github_username }}/java-for-scala-devs">Repository</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll & ❤️</p>
+  </div>
+</footer>
