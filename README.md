@@ -102,6 +102,16 @@ This project uses GitHub Actions for continuous integration. The workflow is tri
 - Push to `main` branch
 - Pull requests to `main` branch
 
+### GitHub Pages Setup
+
+To deploy the Jekyll blog to GitHub Pages, you need to enable GitHub Pages in repository settings (one-time setup):
+
+1. Go to **Settings** → **Pages** in the repository
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**
+3. Save the settings
+
+Once enabled, the workflow will automatically build and deploy the blog on push to `main`.
+
 ### Required Status Checks
 
 To enforce that all builds pass before merging PRs, configure branch protection rules:

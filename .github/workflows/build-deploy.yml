@@ -51,8 +51,6 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
-        with:
-          enablement: true
 
       - name: Build with Jekyll
         run: |
