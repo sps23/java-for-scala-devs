@@ -187,42 +187,97 @@ public record Employee(long id, String name, String email, String department, do
 }
 ```
 
-## Comparison with Scala Case Classes
+## Comparison: Scala Case Class vs Java Record vs Kotlin Data Class
 
-For Scala developers, records will feel familiar:
+The table below summarizes the similarities and differences between Scala case classes, Java records, and Kotlin data classes for modeling immutable data:
 
-| Feature | Scala Case Class | Java Record |
-|---------|-----------------|-------------|
-| Declaration | `case class Employee(id: Long, name: String)` | `record Employee(long id, String name) {}` |
-| Immutable | Yes | Yes |
-| Pattern matching | Yes | Yes (Java 21+) |
-| Auto `equals`/`hashCode` | Yes | Yes |
-| Auto `toString` | Yes | Yes |
-| Copy method | `employee.copy(name = "Bob")` | Manual implementation needed |
-| Validation | `require(id > 0)` | Compact constructor |
-| Accessor naming | `employee.name` | `employee.name()` |
+| Feature                | Scala Case Class                | Java Record                        | Kotlin Data Class                  |
+|------------------------|---------------------------------|------------------------------------|------------------------------------|
+| Declaration            | `case class Employee(...)`      | `record Employee(...) {}`          | `data class Employee(...)`         |
+| Immutable              | Yes                             | Yes                                | Yes (with `val` properties)        |
+| Pattern matching       | Yes                             | Yes (Java 21+)                     | Yes (with `when`)                  |
+| Auto `equals`/`hashCode` | Yes                           | Yes                                | Yes                                |
+| Auto `toString`        | Yes                             | Yes                                | Yes                                |
+| Copy method            | Built-in                        | Manual implementation needed        | Built-in (`copy()`)                |
+| Validation             | `require(...)` in body          | Compact constructor                | `require(...)` in `init` block     |
+| Accessor naming        | `employee.name`                 | `employee.name()`                  | `employee.name`                    |
 
-**Scala validation:**
+### Side-by-Side Code Example
+
+Below are equivalent immutable Employee data classes in all three languages, each with validation:
+
+<div style="display: flex; gap: 2em; flex-wrap: wrap;">
+
+<div style="flex: 1; min-width: 300px">
+<strong>Scala</strong>
+
 ```scala
-case class Employee(id: Long, name: String, email: String, department: String, salary: Double) {
+case class Employee(
+  id: Long,
+  name: String,
+  email: String,
+  department: String,
+  salary: Double
+) {
   require(id > 0, "Employee ID must be positive")
   require(name.nonEmpty, "Employee name cannot be empty")
   require(email.contains("@"), "Invalid email format")
+  require(department.nonEmpty, "Department cannot be empty")
   require(salary >= 0, "Salary cannot be negative")
 }
 ```
+[View full Scala example](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/Employee.scala)
+</div>
 
-**Java validation (compact constructor):**
+<div style="flex: 1; min-width: 300px">
+<strong>Java</strong>
+
 ```java
-public record Employee(long id, String name, String email, String department, double salary) {
+public record Employee(
+    long id,
+    String name,
+    String email,
+    String department,
+    double salary
+) {
     public Employee {
         if (id <= 0) throw new IllegalArgumentException("Employee ID must be positive");
         Objects.requireNonNull(name, "Employee name cannot be null");
-        if (!email.contains("@")) throw new IllegalArgumentException("Invalid email format: " + email);
+        if (name.isBlank()) throw new IllegalArgumentException("Employee name cannot be blank");
+        Objects.requireNonNull(email, "Employee email cannot be null");
+        if (!email.contains("@")) throw new IllegalArgumentException("Invalid email format");
+        Objects.requireNonNull(department, "Department cannot be null");
         if (salary < 0) throw new IllegalArgumentException("Salary cannot be negative");
     }
 }
 ```
+[View full Java example](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/Employee.java)
+</div>
+
+<div style="flex: 1; min-width: 300px">
+<strong>Kotlin</strong>
+
+```kotlin
+data class EmployeeDataClass(
+    val id: Long,
+    val name: String,
+    val email: String,
+    val department: String,
+    val salary: Double
+) {
+    init {
+        require(id > 0) { "Employee ID must be positive" }
+        require(name.isNotBlank()) { "Employee name cannot be blank" }
+        require(email.contains("@")) { "Invalid email format: $email" }
+        require(department.isNotBlank()) { "Department cannot be blank" }
+        require(salary >= 0) { "Salary cannot be negative" }
+    }
+}
+```
+[View full Kotlin example](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/EmployeeDataClass.kt)
+</div>
+
+</div>
 
 ## Pattern Matching with Records (Java 21)
 
