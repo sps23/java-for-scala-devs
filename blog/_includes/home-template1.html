@@ -36,6 +36,7 @@
   <!-- Category Filter -->
   <div class="category-filter">
     <button class="category-btn active" data-category="all">All Posts</button>
+    <button class="category-btn" data-category="most-liked">Most Liked</button>
     {% assign categories = site.posts | map: "categories" | join: "," | split: "," | uniq | sort %}
     {% for category in categories %}
       {% if category != "" %}
@@ -48,9 +49,13 @@
   <h2>Latest Posts</h2>
   <ul class="post-list">
     {% for post in site.posts %}
-    <li class="post-item" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}">
+    <li class="post-item" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}" data-post-id="{{ post.url | slugify }}">
       <h3 class="post-title">
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <span class="post-likes" data-post-id="{{ post.url | slugify }}" style="display: none;">
+          <span class="like-icon">👍</span>
+          <span class="likes-count">0</span>
+        </span>
       </h3>
       <p class="post-meta">
         <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>

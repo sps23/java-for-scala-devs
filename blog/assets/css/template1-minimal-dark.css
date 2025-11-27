@@ -463,3 +463,60 @@ tr:last-child td {
     font-size: 1.75rem;
   }
 }
+
+/* Like Button */
+.like-section {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border-color);
+}
+
+.like-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.like-btn:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--accent-color);
+  color: var(--text-primary);
+}
+
+.like-btn.liked {
+  background-color: var(--accent-color);
+  color: var(--bg-primary);
+  border-color: var(--accent-color);
+}
+
+.like-btn .like-icon {
+  font-size: 1.1rem;
+}
+
+.like-btn .like-count {
+  font-weight: 600;
+}
+
+/* Likes count in post list */
+.post-likes {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.post-likes .like-icon {
+  color: var(--accent-color);
+}
