@@ -14,6 +14,32 @@ This is a multi-module Gradle project with the following modules:
 | [scala3](./scala3) | Scala 3 examples |
 | [kotlin](./kotlin) | Kotlin examples for comparison |
 
+### Gradle Multi-Module Setup
+
+This project uses a standard Gradle multi-module layout optimized for GitHub Pages:
+
+```
+java-for-scala-devs/
+├── build.gradle       # Root build config (shared settings)
+├── settings.gradle    # Declares all submodules
+├── blog/              # Jekyll blog (GitHub Pages content)
+│   └── build.gradle   # Minimal Gradle config (Jekyll handles build)
+├── java21/
+│   └── build.gradle   # Java-specific plugins and config
+├── scala2/
+│   └── build.gradle   # Scala 2.13-specific config
+├── scala3/
+│   └── build.gradle   # Scala 3-specific config
+└── kotlin/
+    └── build.gradle   # Kotlin-specific config
+```
+
+**Key points:**
+- Submodules are declared in `settings.gradle` using `include` statements (not in `build.gradle`)
+- The root `build.gradle` contains shared configuration via `allprojects` and `subprojects` blocks
+- Each submodule has its own `build.gradle` for language-specific plugins and dependencies
+- The `blog` module is included for consistency but uses Jekyll for the actual build
+
 ## Blog
 
 Visit the blog at: https://sps23.github.io/java-for-scala-devs

@@ -1,3 +1,34 @@
+/*
+ * Root build configuration for the java-for-scala-devs multi-module Gradle project.
+ *
+ * Project Structure:
+ * ------------------
+ * This is a Gradle multi-module project. Submodules are declared in settings.gradle
+ * (not in this file). Each submodule has its own build.gradle with specific configuration.
+ *
+ * Modules:
+ * - blog: Jekyll-based GitHub Pages blog (no Gradle compilation, built by Jekyll)
+ * - java21: Java 21 code examples
+ * - scala2: Scala 2.13 code examples
+ * - scala3: Scala 3 code examples
+ * - kotlin: Kotlin code examples
+ *
+ * GitHub Pages Integration:
+ * -------------------------
+ * The blog module contains Jekyll content deployed to GitHub Pages. The Gradle
+ * multi-module setup allows building and testing code examples separately from
+ * the Jekyll blog, while keeping everything in a single repository. The CI/CD
+ * workflow (see .github/workflows/build-deploy.yml) builds both:
+ * 1. Gradle modules (java21, scala2, scala3, kotlin) - validates code examples
+ * 2. Jekyll blog - generates static site for GitHub Pages
+ *
+ * Build Commands:
+ * ---------------
+ * ./gradlew build          - Build all modules
+ * ./gradlew :java21:build  - Build specific module
+ * ./gradlew projects       - List all subprojects
+ * ./gradlew test           - Run all tests
+ */
 plugins {
     id 'base'
 }
@@ -12,5 +43,8 @@ allprojects {
 }
 
 subprojects {
-    // Common configuration for all subprojects
+    // Each subproject defines its own plugins and configuration.
+    // This allows each language module (java21, scala2, scala3, kotlin) to use
+    // language-specific plugins and settings while sharing the common group,
+    // version, and repository configuration from allprojects above.
 }
