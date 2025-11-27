@@ -318,7 +318,7 @@
     
     if (userLikes[postId]) {
       // User already liked - unlike
-      likesData[postId] = Math.max(0, (likesData[postId] || 1) - 1);
+      likesData[postId] = Math.max(0, (likesData[postId] || 0) - 1);
       delete userLikes[postId];
     } else {
       // User hasn't liked - add like
