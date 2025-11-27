@@ -20,7 +20,28 @@ This guide helps you:
 
 ## About the Author
 
-I'm a software developer who has worked extensively with both Scala and Java. I created this guide to help others navigate the transition between these two JVM languages.
+Hi! I'm **Sylwester Stocki**, a passionate software engineer with extensive experience in JVM technologies.
+
+### Education
+
+I hold a Batchelor's degree in Computer Science from Warsaw University of Technology, where I developed a strong foundation in software engineering principles and computer science fundamentals.
+
+### Work Experience
+
+Throughout my career, I have specialized in building scalable, distributed systems using JVM-based technologies. My professional journey includes:
+
+- **Senior Software Engineer** roles at various technology companies, focusing on backend development
+- Extensive experience with **Scala**, **Java**, and **Kotlin** in production environments
+- Working with big data technologies including **Apache Spark** for large-scale data processing
+- Building microservices architectures and distributed systems
+- Mentoring developers and contributing to technical excellence within engineering teams
+
+I created this guide to share my experience and help fellow developers navigate between Scala and modern Java effectively.
+
+### Connect with Me
+
+- **LinkedIn**: [linkedin.com/in/sylwesterstocki](https://www.linkedin.com/in/sylwesterstocki)
+- **GitHub**: [github.com/sps23](https://github.com/sps23)
 
 ## Contributing
 
