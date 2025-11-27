@@ -1,9 +1,22 @@
-// Blog module - Jekyll-based GitHub Pages
-// This module contains the Jekyll blog content
-// Build is handled by Jekyll/GitHub Pages
+/*
+ * Blog module build configuration.
+ *
+ * This module contains the Jekyll-based GitHub Pages blog. While it's part of
+ * the Gradle multi-module project structure, the actual build is handled by
+ * Jekyll/Bundler (not Gradle). This build.gradle serves to:
+ *
+ * 1. Include the blog as a recognized Gradle subproject
+ * 2. Allow running './gradlew build' from the root without errors
+ * 3. Maintain consistency in the multi-module project structure
+ *
+ * To build the blog locally:
+ *   cd blog && bundle install && bundle exec jekyll serve
+ *
+ * The CI/CD workflow uses Jekyll directly for the actual blog build.
+ */
 
 task build {
     doLast {
-        println 'Blog module - Jekyll content, no compilation needed'
+        println 'Blog module - Jekyll content, no Gradle compilation needed'
     }
 }

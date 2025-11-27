@@ -1,3 +1,23 @@
+/*
+ * Gradle settings for the java-for-scala-devs multi-module project.
+ *
+ * Submodule Declaration:
+ * ----------------------
+ * In Gradle multi-module projects, submodules are declared here in settings.gradle
+ * using 'include' statements - NOT in the root build.gradle file. The root build.gradle
+ * is used for shared configuration (allprojects/subprojects blocks), while settings.gradle
+ * defines the project structure.
+ *
+ * This setup is optimal for this GitHub Pages project because:
+ * 1. Gradle automatically discovers and configures all included modules
+ * 2. Each module can have its own build.gradle with language-specific configuration
+ * 3. Running './gradlew build' builds all code modules in parallel
+ * 4. The blog module integrates cleanly - Gradle handles it but Jekyll does the actual build
+ *
+ * See also:
+ * - build.gradle - Root project configuration
+ * - .github/workflows/build-deploy.yml - CI/CD workflow
+ */
 rootProject.name = 'java-for-scala-devs'
 
 include 'blog'
