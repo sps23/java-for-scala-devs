@@ -218,7 +218,7 @@ public record Employee(long id, String name, String email, String department, do
     public Employee {
         if (id <= 0) throw new IllegalArgumentException("Employee ID must be positive");
         Objects.requireNonNull(name, "Employee name cannot be null");
-        if (!email.contains("@")) throw new IllegalArgumentException("Invalid email format");
+        if (!email.contains("@")) throw new IllegalArgumentException("Invalid email format: " + email);
         if (salary < 0) throw new IllegalArgumentException("Salary cannot be negative");
     }
 }
