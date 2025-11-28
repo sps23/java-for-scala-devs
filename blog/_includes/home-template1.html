@@ -12,7 +12,6 @@
       <a href="{{ site.baseurl }}/about/">About</a>
       {% for page in site.header_pages %}
         {% assign page_url = page | relative_url %}
-        {# Avoid duplicate About link #}
         {% if page != 'about.md' %}
           <a href="{{ site.baseurl }}/{{ page }}">{{ page | replace: '.md', '' | capitalize }}</a>
         {% endif %}
