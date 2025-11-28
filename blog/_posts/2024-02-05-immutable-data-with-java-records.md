@@ -206,10 +206,7 @@ The table below summarizes the similarities and differences between Scala case c
 
 Below are equivalent immutable Employee data classes in all three languages, each with validation:
 
-<div style="display: flex; gap: 2em; flex-wrap: wrap;">
-
-<div style="flex: 1; min-width: 300px">
-<strong>Scala</strong>
+#### **Scala 3**
 
 ```scala
 case class Employee(
@@ -226,11 +223,12 @@ case class Employee(
   require(salary >= 0, "Salary cannot be negative")
 }
 ```
-[View full Scala example](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/Employee.scala)
-</div>
 
-<div style="flex: 1; min-width: 300px">
-<strong>Java</strong>
+[View full Scala 3 example →](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/Employee.scala)
+
+---
+
+#### **Java 21**
 
 ```java
 public record Employee(
@@ -251,11 +249,12 @@ public record Employee(
     }
 }
 ```
-[View full Java example](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/Employee.java)
-</div>
 
-<div style="flex: 1; min-width: 300px">
-<strong>Kotlin</strong>
+[View full Java example →](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/Employee.java)
+
+---
+
+#### **Kotlin**
 
 ```kotlin
 data class EmployeeDataClass(
@@ -274,10 +273,10 @@ data class EmployeeDataClass(
     }
 }
 ```
-[View full Kotlin example](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/EmployeeDataClass.kt)
-</div>
 
-</div>
+[View full Kotlin example →](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/EmployeeDataClass.kt)
+
+---
 
 ## Pattern Matching with Records (Java 21)
 
@@ -320,6 +319,8 @@ void process(Object obj) {
 See the complete implementation in our repository:
 - [Employee.java](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/Employee.java) - The modern Java Record
 - [EmployeeTraditional.java](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/EmployeeTraditional.java) - The verbose Java 8 approach
+- [Employee.scala](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/Employee.scala) - Scala 3 case class
+- [EmployeeDataClass.kt](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/EmployeeDataClass.kt) - Kotlin data class
 
 ## Summary
 
