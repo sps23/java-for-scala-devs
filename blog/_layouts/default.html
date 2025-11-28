@@ -11,17 +11,67 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   
-  <!-- Theme CSS - Select one based on site.theme_template -->
-  {% if site.theme_template == 2 %}
-  <link rel="stylesheet" href="{{ '/assets/css/template2-tech-pro.css' | relative_url }}">
-  {% elsif site.theme_template == 3 %}
-  <link rel="stylesheet" href="{{ '/assets/css/template3-dev-journal.css' | relative_url }}">
-  {% else %}
-  <link rel="stylesheet" href="{{ '/assets/css/template1-minimal-dark.css' | relative_url }}">
-  {% endif %}
+  <!-- All Theme CSS - Loaded for dynamic switching, only one active at a time -->
+  <link rel="stylesheet" href="{{ '/assets/css/template1-minimal-dark.css' | relative_url }}" id="template1-css" data-template="1">
+  <link rel="stylesheet" href="{{ '/assets/css/template2-tech-pro.css' | relative_url }}" id="template2-css" data-template="2" disabled>
+  <link rel="stylesheet" href="{{ '/assets/css/template3-dev-journal.css' | relative_url }}" id="template3-css" data-template="3" disabled>
   
   <!-- Code Syntax Highlighting -->
   <link rel="stylesheet" href="{{ '/assets/css/syntax.css' | relative_url }}">
+  
+  <!-- Template Switcher Styles -->
+  <style>
+    .template-switcher {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--bg-secondary, #161b22);
+      border: 1px solid var(--border-color, #30363d);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .template-switcher label {
+      font-size: 0.75rem;
+      color: var(--text-secondary, #8b949e);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    
+    .template-switcher select {
+      padding: 0.375rem 0.5rem;
+      font-size: 0.8rem;
+      border: 1px solid var(--border-color, #30363d);
+      border-radius: 4px;
+      background: var(--bg-tertiary, #21262d);
+      color: var(--text-primary, #e6edf3);
+      cursor: pointer;
+      min-width: 150px;
+    }
+    
+    .template-switcher select:focus {
+      outline: none;
+      border-color: var(--accent-color, #58a6ff);
+    }
+    
+    @media (max-width: 768px) {
+      .template-switcher {
+        top: auto;
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.4rem 0.5rem;
+      }
+      
+      .template-switcher label {
+        display: none;
+      }
+    }
+  </style>
   
   <!-- Feed -->
   {% feed_meta %}
@@ -30,6 +80,16 @@
   {% seo %}
 </head>
 <body>
+  <!-- Template Switcher Dropdown -->
+  <div class="template-switcher">
+    <label for="template-select">Template:</label>
+    <select id="template-select" aria-label="Select template theme">
+      <option value="1">Modern Minimal Dark</option>
+      <option value="2">Tech Blog Pro</option>
+      <option value="3">Developer Journal</option>
+    </select>
+  </div>
+
   {{ content }}
   
   <!-- Theme JavaScript -->

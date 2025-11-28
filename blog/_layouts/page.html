@@ -2,7 +2,48 @@
 layout: default
 ---
 
-{% if site.theme_template == 2 %}
+<!-- All page templates are included but only one is visible at a time -->
+<div class="template-content" data-template="1">
+<!-- Template 1: Modern Minimal Dark - Page Layout -->
+<header class="site-header">
+  <div class="header-wrapper">
+    <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+    
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      ☰
+    </button>
+    
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      {% for page in site.header_pages %}
+        <a href="{{ site.baseurl }}/{{ page }}">{{ page | replace: '.md', '' | capitalize }}</a>
+      {% endfor %}
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+  <article class="article">
+    <div class="article-content">
+      {{ content }}
+    </div>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-wrapper">
+    <div class="footer-links">
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs">GitHub</a>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a>
+      <a href="{{ site.baseurl }}/about/">About</a>
+    </div>
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll.</p>
+  </div>
+</footer>
+</div>
+
+<div class="template-content" data-template="2" style="display: none;">
 <!-- Template 2: Tech Blog Pro - Page Layout -->
 <div class="page-wrapper">
   <aside class="sidebar">
@@ -48,8 +89,9 @@ layout: default
     </footer>
   </div>
 </div>
+</div>
 
-{% elsif site.theme_template == 3 %}
+<div class="template-content" data-template="3" style="display: none;">
 <!-- Template 3: Developer Journal - Page Layout -->
 <header class="site-header">
   <div class="header-wrapper">
@@ -101,43 +143,4 @@ layout: default
     <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll & ❤️</p>
   </div>
 </footer>
-
-{% else %}
-<!-- Template 1: Modern Minimal Dark - Page Layout -->
-<header class="site-header">
-  <div class="header-wrapper">
-    <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
-    
-    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
-      ☰
-    </button>
-    
-    <nav class="site-nav">
-      <a href="{{ '/' | relative_url }}">Home</a>
-      {% for page in site.header_pages %}
-        <a href="{{ site.baseurl }}/{{ page }}">{{ page | replace: '.md', '' | capitalize }}</a>
-      {% endfor %}
-      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">GitHub</a>
-    </nav>
-  </div>
-</header>
-
-<main class="main-content">
-  <article class="article">
-    <div class="article-content">
-      {{ content }}
-    </div>
-  </article>
-</main>
-
-<footer class="site-footer">
-  <div class="footer-wrapper">
-    <div class="footer-links">
-      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs">GitHub</a>
-      <a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a>
-      <a href="{{ site.baseurl }}/about/">About</a>
-    </div>
-    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll.</p>
-  </div>
-</footer>
-{% endif %}
+</div>
