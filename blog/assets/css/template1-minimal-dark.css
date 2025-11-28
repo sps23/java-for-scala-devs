@@ -175,6 +175,9 @@ p {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
 }
 
 .post-item {
@@ -182,8 +185,9 @@ p {
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: var(--space-lg);
-  margin-bottom: var(--space-md);
   transition: transform 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-item:hover {
@@ -461,5 +465,9 @@ tr:last-child td {
   
   .article-title {
     font-size: 1.75rem;
+  }
+  
+  .post-list {
+    grid-template-columns: 1fr;
   }
 }
