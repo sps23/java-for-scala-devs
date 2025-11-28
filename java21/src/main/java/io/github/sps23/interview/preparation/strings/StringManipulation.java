@@ -259,8 +259,11 @@ public final class StringManipulation {
             return "";
         }
 
-        return (pattern + separator).repeat(count).stripTrailing().transform(
-                s -> s.endsWith(separator) ? s.substring(0, s.length() - separator.length()) : s);
+        String repeated = (pattern + separator).repeat(count).stripTrailing();
+        if (repeated.endsWith(separator)) {
+            return repeated.substring(0, repeated.length() - separator.length());
+        }
+        return repeated;
     }
 
     /**

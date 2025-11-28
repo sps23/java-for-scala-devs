@@ -33,7 +33,7 @@ public static String processJava8Style(String text) {
     }
 
     // Remove trailing newline if present
-    if (result.length() > 0 && result.charAt(result.length() - 1) == '\n') {
+    if (!result.isEmpty() && result.charAt(result.length() - 1) == '\n') {
         result.deleteCharAt(result.length() - 1);
     }
 

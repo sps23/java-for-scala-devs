@@ -98,7 +98,7 @@ object StringManipulation:
           t.linesIterator
             .map { line =>
               val leadingSpaces = line.takeWhile(_ == ' ').length
-              line.drop(Math.min(leadingSpaces, removeCount))
+              line.drop(leadingSpaces.min(removeCount))
             }
             .mkString("\n")
       }
@@ -304,8 +304,9 @@ object StringManipulation:
 
   // Demo 6: Blank status
   println("\n--- isBlank() vs isEmpty() ---\n")
-  val testStrings: List[String | Null] = List("", " ", "  \t\n  ", "hello", null)
-  testStrings.foreach(s => println(describeBlankStatus(s.asInstanceOf[String])))
+  val testStrings: List[Option[String]] =
+    List(Some(""), Some(" "), Some("  \t\n  "), Some("hello"), None)
+  testStrings.foreach(s => println(describeBlankStatus(s.orNull)))
 
   // Demo 7: String interpolation
   println("\n--- String Interpolation ---\n")
