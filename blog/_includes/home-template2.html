@@ -61,9 +61,6 @@
     <header class="top-bar">
       <div class="top-bar-content">
         <h1 style="margin: 0; font-size: 1.25rem;">{{ site.title }}</h1>
-        <div class="search-box">
-          <input type="text" placeholder="Search posts...">
-        </div>
       </div>
     </header>
     
@@ -75,6 +72,9 @@
       
       <!-- Post Grid -->
       <section>
+        <div class="search-box" style="margin-bottom: 1.5rem;">
+          <input type="text" placeholder="Search posts...">
+        </div>
         <h2 style="margin-bottom: 1.5rem;">All Posts</h2>
         <div class="post-grid">
           {% for post in site.posts %}

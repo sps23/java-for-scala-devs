@@ -6,6 +6,32 @@
 (function() {
   'use strict';
 
+  // Track current template for scoped queries
+  var currentTemplateId = '1';
+
+  /**
+   * Get the currently visible template content element
+   */
+  function getVisibleTemplate() {
+    return document.querySelector('.template-content[data-template="' + currentTemplateId + '"]');
+  }
+
+  /**
+   * Query selector scoped to visible template
+   */
+  function scopedQuery(selector) {
+    var template = getVisibleTemplate();
+    return template ? template.querySelector(selector) : null;
+  }
+
+  /**
+   * Query selector all scoped to visible template
+   */
+  function scopedQueryAll(selector) {
+    var template = getVisibleTemplate();
+    return template ? template.querySelectorAll(selector) : [];
+  }
+
   // DOM Ready
   document.addEventListener('DOMContentLoaded', function() {
     initTemplateSwitcher();
@@ -26,6 +52,7 @@
 
     // Load saved template from localStorage or use default
     var savedTemplate = localStorage.getItem('selectedTemplate') || '1';
+    currentTemplateId = savedTemplate;
     
     // Apply saved template on load
     applyTemplate(savedTemplate);
@@ -34,6 +61,7 @@
     // Listen for template changes
     templateSelect.addEventListener('change', function(e) {
       var selectedTemplate = e.target.value;
+      currentTemplateId = selectedTemplate;
       applyTemplate(selectedTemplate);
       localStorage.setItem('selectedTemplate', selectedTemplate);
     });
@@ -44,6 +72,9 @@
    * @param {string} templateId - The template number ('1', '2', or '3')
    */
   function applyTemplate(templateId) {
+    // Update current template tracking
+    currentTemplateId = templateId;
+
     // Switch CSS stylesheets
     var cssLinks = document.querySelectorAll('link[data-template]');
     cssLinks.forEach(function(link) {
@@ -81,10 +112,10 @@
    * Filters posts based on search input
    */
   function initSearch() {
-    const searchInput = document.querySelector('.search-input, .header-search input, .search-box input');
+    const searchInput = scopedQuery('.search-input, .header-search input, .search-box input');
     if (!searchInput) return;
 
-    const posts = document.querySelectorAll('.post-item, .post-card, .timeline-post, .post-list-item');
+    const posts = scopedQueryAll('.post-item, .post-card, .timeline-post, .post-list-item');
     
     searchInput.addEventListener('input', function(e) {
       const query = e.target.value.toLowerCase().trim();
@@ -139,10 +170,10 @@
    * Filter posts by category/tag
    */
   function initCategoryFilter() {
-    const categoryBtns = document.querySelectorAll('.category-btn, .category-badge, .category-pill');
+    const categoryBtns = scopedQueryAll('.category-btn, .category-badge, .category-pill');
     if (!categoryBtns.length) return;
 
-    const posts = document.querySelectorAll('.post-item, .post-card, .timeline-post, .post-list-item');
+    const posts = scopedQueryAll('.post-item, .post-card, .timeline-post, .post-list-item');
     
     categoryBtns.forEach(function(btn) {
       btn.addEventListener('click', function(e) {
@@ -181,26 +212,33 @@
    * Mobile menu toggle
    */
   function initMobileMenu() {
-    const menuToggle = document.querySelector('.menu-toggle, .mobile-menu-toggle, .mobile-menu-btn');
-    const nav = document.querySelector('.site-nav, .sidebar');
-    const overlay = document.querySelector('.sidebar-overlay');
+    const menuToggle = scopedQuery('.menu-toggle, .mobile-menu-toggle, .mobile-menu-btn');
+    const nav = scopedQuery('.site-nav, .sidebar');
+    const overlay = scopedQuery('.sidebar-overlay');
     
     if (menuToggle && nav) {
-      menuToggle.addEventListener('click', function() {
+      // Clone the menu toggle to remove existing event listeners
+      var newMenuToggle = menuToggle.cloneNode(true);
+      menuToggle.parentNode.replaceChild(newMenuToggle, menuToggle);
+      
+      newMenuToggle.addEventListener('click', function() {
         nav.classList.toggle('active');
         if (overlay) overlay.classList.toggle('active');
         
         // Update aria-expanded
         const expanded = nav.classList.contains('active');
-        menuToggle.setAttribute('aria-expanded', expanded);
+        newMenuToggle.setAttribute('aria-expanded', expanded);
       });
       
       // Close menu on overlay click
       if (overlay) {
-        overlay.addEventListener('click', function() {
+        var newOverlay = overlay.cloneNode(true);
+        overlay.parentNode.replaceChild(newOverlay, overlay);
+        
+        newOverlay.addEventListener('click', function() {
           nav.classList.remove('active');
-          overlay.classList.remove('active');
-          menuToggle.setAttribute('aria-expanded', 'false');
+          newOverlay.classList.remove('active');
+          newMenuToggle.setAttribute('aria-expanded', 'false');
         });
       }
       
@@ -209,7 +247,7 @@
         if (e.key === 'Escape' && nav.classList.contains('active')) {
           nav.classList.remove('active');
           if (overlay) overlay.classList.remove('active');
-          menuToggle.setAttribute('aria-expanded', 'false');
+          newMenuToggle.setAttribute('aria-expanded', 'false');
         }
       });
     }
@@ -241,7 +279,7 @@
    * Uses Intersection Observer for performance
    */
   function initTimelineAnimations() {
-    const timelinePosts = document.querySelectorAll('.timeline-post');
+    const timelinePosts = scopedQueryAll('.timeline-post');
     if (!timelinePosts.length) return;
 
     // Check if IntersectionObserver is supported

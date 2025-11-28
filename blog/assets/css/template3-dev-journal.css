@@ -762,4 +762,17 @@ th {
   .mobile-menu-btn {
     display: block;
   }
+  
+  .site-nav.active {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: var(--bg-secondary);
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 100;
+  }
 }

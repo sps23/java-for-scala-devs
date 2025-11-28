@@ -3,8 +3,6 @@ layout: home
 title: Home
 ---
 
-# Java for Scala Developers
-
 Welcome to the practical guide for Scala developers who want to learn (or re-learn) Java!
 
 This blog covers modern Java features, comparing them with their Scala equivalents, and providing practical examples to help you transition between the two languages.

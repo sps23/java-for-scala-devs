@@ -37,10 +37,7 @@
     }
     
     .template-switcher label {
-      font-size: 0.75rem;
-      color: var(--text-secondary, #8b949e);
-      font-weight: 500;
-      white-space: nowrap;
+      display: none;
     }
     
     .template-switcher select {
@@ -63,12 +60,9 @@
       .template-switcher {
         top: auto;
         bottom: 1rem;
-        right: 1rem;
+        left: 1rem;
+        right: auto;
         padding: 0.4rem 0.5rem;
-      }
-      
-      .template-switcher label {
-        display: none;
       }
     }
   </style>
@@ -82,7 +76,6 @@
 <body>
   <!-- Template Switcher Dropdown -->
   <div class="template-switcher">
-    <label for="template-select">Template:</label>
     <select id="template-select" aria-label="Select template theme">
       <option value="1">Modern Minimal Dark</option>
       <option value="2">Tech Blog Pro</option>
