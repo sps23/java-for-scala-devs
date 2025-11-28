@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Welcome to Java for Scala Developers"
-date: 2024-01-15 10:00:00 +0000
+date: 2025-11-28 10:00:00 +0000
 categories: introduction
 tags: java scala getting-started
 ---

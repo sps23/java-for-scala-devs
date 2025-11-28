@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Immutable Data with Java Records"
-date: 2024-02-05 10:00:00 +0000
+date: 2025-11-28 14:00:00 +0000
 categories: interview
 tags: java java21 records immutability interview-preparation
 ---
@@ -338,4 +338,4 @@ Records bring Java much closer to Scala's case classes, making the transition be
 
 ---
 
-*This is Part 1 of our Java 21 Interview Preparation series. Check out the [full preparation plan](/interview/2024/02/01/java21-interview-preparation-plan.html) for more topics.*
+*This is Part 1 of our Java 21 Interview Preparation series. Check out the [full preparation plan](/interview/2025/11/28/java21-interview-preparation-plan.html) for more topics.*
