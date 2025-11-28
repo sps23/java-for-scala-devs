@@ -227,16 +227,25 @@ fun calculateFee(payment: PaymentMethod): BigDecimal =
     }
 ```
 
-Kotlin can also use conditions within `when`:
+Kotlin maintains exhaustiveness by matching on the sealed type first, then using conditions within each branch:
 
 ```kotlin
 fun describeFee(payment: PaymentMethod): String =
-    when {
-        payment is CreditCard && payment.amount > BigDecimal("100") ->
-            "Credit card (high value): 2.9% + \$0.30"
-        payment is CreditCard ->
-            "Credit card (standard): 2.9% + \$0.30"
-        // ... other cases
+    when (payment) {
+        is CreditCard ->
+            if (payment.amount > BigDecimal("100")) {
+                "Credit card (high value): 2.9% + \$0.30"
+            } else {
+                "Credit card (standard): 2.9% + \$0.30"
+            }
+        is BankTransfer ->
+            if (payment.amount >= BigDecimal("1000")) {
+                "Bank transfer (high value): flat \$5.00"
+            } else {
+                "Bank transfer (standard): flat \$2.50"
+            }
+        is DigitalWallet ->
+            "Digital wallet (${payment.provider}): 2.5% (min \$0.50)"
     }
 ```
 
