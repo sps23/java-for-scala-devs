@@ -240,6 +240,7 @@ p {
   background-color: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
   padding: var(--space-md) var(--space-xl);
+  padding-right: 220px; /* Add space for template switcher */
   position: sticky;
   top: 0;
   z-index: 50;
@@ -575,6 +576,10 @@ th {
     width: 100%;
   }
   
+  .top-bar {
+    padding-right: var(--space-xl); /* Reset padding on mobile since switcher moves to bottom */
+  }
+
   .top-bar-content {
     flex-direction: column;
     gap: var(--space-md);
