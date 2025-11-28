@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Java Records vs Scala Case Classes"
-date: 2024-01-20 10:00:00 +0000
+date: 2025-11-28 11:00:00 +0000
 categories: features
 tags: java scala records case-classes
 ---

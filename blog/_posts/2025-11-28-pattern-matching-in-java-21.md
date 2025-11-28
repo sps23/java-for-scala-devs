@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Pattern Matching in Java 21"
-date: 2024-01-25 10:00:00 +0000
+date: 2025-11-28 12:00:00 +0000
 categories: features
 tags: java scala pattern-matching
 ---

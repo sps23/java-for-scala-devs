@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "String Manipulation with Modern APIs"
-date: 2024-02-10 10:00:00 +0000
+date: 2025-11-28 16:00:00 +0000
 categories: interview
 tags: java java21 scala kotlin strings interview-preparation
 ---
@@ -425,4 +425,4 @@ For Scala and Kotlin developers, the modern Java APIs feel more familiar and idi
 
 ---
 
-*This is Part 2 of our Java 21 Interview Preparation series. Check out [Part 1: Immutable Data with Java Records](/interview/2024/02/05/immutable-data-with-java-records.html) and the [full preparation plan](/interview/2024/02/01/java21-interview-preparation-plan.html).*
+*This is Part 2 of our Java 21 Interview Preparation series. Check out [Part 1: Immutable Data with Java Records](/interview/2025/11/28/immutable-data-with-java-records.html) and the [full preparation plan](/interview/2025/11/28/java21-interview-preparation-plan.html).*
