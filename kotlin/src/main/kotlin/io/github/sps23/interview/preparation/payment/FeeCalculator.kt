@@ -44,25 +44,29 @@ object FeeCalculator {
     /**
      * Calculates fee using `when` expression with additional conditions.
      *
-     * Demonstrates conditional matching within `when` branches.
-     * This is similar to Java's `when` clause and Scala's pattern guards.
+     * Demonstrates conditional matching within `when` branches while maintaining
+     * exhaustive pattern matching. By using `when (payment)` on the sealed type first,
+     * the compiler verifies all cases are handled.
      *
      * @param payment the payment method
      * @return a description of the fee calculation
      */
     fun describeFee(payment: PaymentMethod): String =
-        when {
-            payment is CreditCard && payment.amount > BigDecimal("100") ->
-                "Credit card (high value): 2.9% + \$0.30 on ${payment.cardNumber.takeLast(4)}"
-            payment is CreditCard ->
-                "Credit card (standard): 2.9% + \$0.30 on ${payment.cardNumber.takeLast(4)}"
-            payment is BankTransfer && payment.amount >= BANK_TRANSFER_THRESHOLD ->
-                "Bank transfer (high value): flat \$5.00 to ${payment.bankCode}"
-            payment is BankTransfer ->
-                "Bank transfer (standard): flat \$2.50 to ${payment.bankCode}"
-            payment is DigitalWallet ->
+        when (payment) {
+            is CreditCard ->
+                if (payment.amount > BigDecimal("100")) {
+                    "Credit card (high value): 2.9% + \$0.30 on ${payment.cardNumber.takeLast(4)}"
+                } else {
+                    "Credit card (standard): 2.9% + \$0.30 on ${payment.cardNumber.takeLast(4)}"
+                }
+            is BankTransfer ->
+                if (payment.amount >= BANK_TRANSFER_THRESHOLD) {
+                    "Bank transfer (high value): flat \$5.00 to ${payment.bankCode}"
+                } else {
+                    "Bank transfer (standard): flat \$2.50 to ${payment.bankCode}"
+                }
+            is DigitalWallet ->
                 "Digital wallet (${payment.provider}): 2.5% (min \$0.50)"
-            else -> throw IllegalStateException("Unknown payment type")
         }
 
     /**
