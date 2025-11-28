@@ -6,13 +6,6 @@
 (function() {
   'use strict';
 
-  // Template names for display
-  var TEMPLATE_NAMES = {
-    '1': 'Modern Minimal Dark',
-    '2': 'Tech Blog Pro',
-    '3': 'Developer Journal'
-  };
-
   // DOM Ready
   document.addEventListener('DOMContentLoaded', function() {
     initTemplateSwitcher();
@@ -71,13 +64,16 @@
       }
     });
 
-    // Re-initialize features for the new template
-    setTimeout(function() {
-      initSearch();
-      initCategoryFilter();
-      initMobileMenu();
-      initTimelineAnimations();
-    }, 50);
+    // Re-initialize features for the new template using requestAnimationFrame
+    // for more reliable timing than setTimeout
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        initSearch();
+        initCategoryFilter();
+        initMobileMenu();
+        initTimelineAnimations();
+      });
+    });
   }
 
   /**
