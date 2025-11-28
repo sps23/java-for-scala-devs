@@ -2,10 +2,15 @@
 layout: default
 ---
 
-{% if site.theme_template == 2 %}
-  {% include post-template2.html %}
-{% elsif site.theme_template == 3 %}
-  {% include post-template3.html %}
-{% else %}
+<!-- All templates are included but only one is visible at a time -->
+<div class="template-content" data-template="1">
   {% include post-template1.html %}
-{% endif %}
+</div>
+
+<div class="template-content" data-template="2" style="display: none;">
+  {% include post-template2.html %}
+</div>
+
+<div class="template-content" data-template="3" style="display: none;">
+  {% include post-template3.html %}
+</div>

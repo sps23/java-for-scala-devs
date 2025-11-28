@@ -1,19 +1,84 @@
 /**
  * Blog Theme JavaScript
- * Handles search, filtering, navigation, and interactive features
+ * Handles search, filtering, navigation, template switching, and interactive features
  */
 
 (function() {
   'use strict';
 
+  // Template names for display
+  var TEMPLATE_NAMES = {
+    '1': 'Modern Minimal Dark',
+    '2': 'Tech Blog Pro',
+    '3': 'Developer Journal'
+  };
+
   // DOM Ready
   document.addEventListener('DOMContentLoaded', function() {
+    initTemplateSwitcher();
     initSearch();
     initCategoryFilter();
     initMobileMenu();
     initSmoothScroll();
     initTimelineAnimations();
   });
+
+  /**
+   * Template Switcher functionality
+   * Allows users to switch between templates dynamically
+   */
+  function initTemplateSwitcher() {
+    var templateSelect = document.getElementById('template-select');
+    if (!templateSelect) return;
+
+    // Load saved template from localStorage or use default
+    var savedTemplate = localStorage.getItem('selectedTemplate') || '1';
+    
+    // Apply saved template on load
+    applyTemplate(savedTemplate);
+    templateSelect.value = savedTemplate;
+
+    // Listen for template changes
+    templateSelect.addEventListener('change', function(e) {
+      var selectedTemplate = e.target.value;
+      applyTemplate(selectedTemplate);
+      localStorage.setItem('selectedTemplate', selectedTemplate);
+    });
+  }
+
+  /**
+   * Apply the selected template
+   * @param {string} templateId - The template number ('1', '2', or '3')
+   */
+  function applyTemplate(templateId) {
+    // Switch CSS stylesheets
+    var cssLinks = document.querySelectorAll('link[data-template]');
+    cssLinks.forEach(function(link) {
+      if (link.dataset.template === templateId) {
+        link.removeAttribute('disabled');
+      } else {
+        link.setAttribute('disabled', 'disabled');
+      }
+    });
+
+    // Switch template content (HTML)
+    var templateContents = document.querySelectorAll('.template-content');
+    templateContents.forEach(function(content) {
+      if (content.dataset.template === templateId) {
+        content.style.display = '';
+      } else {
+        content.style.display = 'none';
+      }
+    });
+
+    // Re-initialize features for the new template
+    setTimeout(function() {
+      initSearch();
+      initCategoryFilter();
+      initMobileMenu();
+      initTimelineAnimations();
+    }, 50);
+  }
 
   /**
    * Search functionality
