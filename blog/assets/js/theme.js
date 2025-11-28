@@ -8,6 +8,9 @@
 
   // Track current template for scoped queries
   var currentTemplateId = '1';
+  
+  // AbortController for managing event listeners
+  var mobileMenuAbortController = null;
 
   /**
    * Get the currently visible template content element
@@ -144,7 +147,7 @@
    * Show/hide no results message
    */
   function updateNoResultsMessage(query, posts) {
-    let noResults = document.querySelector('.no-results');
+    let noResults = scopedQuery('.no-results');
     const visiblePosts = Array.from(posts).filter(p => p.style.display !== 'none');
     
     if (query && visiblePosts.length === 0) {
@@ -212,34 +215,34 @@
    * Mobile menu toggle
    */
   function initMobileMenu() {
+    // Abort previous listeners before adding new ones
+    if (mobileMenuAbortController) {
+      mobileMenuAbortController.abort();
+    }
+    mobileMenuAbortController = new AbortController();
+    var signal = mobileMenuAbortController.signal;
+    
     const menuToggle = scopedQuery('.menu-toggle, .mobile-menu-toggle, .mobile-menu-btn');
     const nav = scopedQuery('.site-nav, .sidebar');
     const overlay = scopedQuery('.sidebar-overlay');
     
     if (menuToggle && nav) {
-      // Clone the menu toggle to remove existing event listeners
-      var newMenuToggle = menuToggle.cloneNode(true);
-      menuToggle.parentNode.replaceChild(newMenuToggle, menuToggle);
-      
-      newMenuToggle.addEventListener('click', function() {
+      menuToggle.addEventListener('click', function() {
         nav.classList.toggle('active');
         if (overlay) overlay.classList.toggle('active');
         
         // Update aria-expanded
         const expanded = nav.classList.contains('active');
-        newMenuToggle.setAttribute('aria-expanded', expanded);
-      });
+        menuToggle.setAttribute('aria-expanded', expanded);
+      }, { signal: signal });
       
       // Close menu on overlay click
       if (overlay) {
-        var newOverlay = overlay.cloneNode(true);
-        overlay.parentNode.replaceChild(newOverlay, overlay);
-        
-        newOverlay.addEventListener('click', function() {
+        overlay.addEventListener('click', function() {
           nav.classList.remove('active');
-          newOverlay.classList.remove('active');
-          newMenuToggle.setAttribute('aria-expanded', 'false');
-        });
+          overlay.classList.remove('active');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }, { signal: signal });
       }
       
       // Close menu on escape key
@@ -247,9 +250,9 @@
         if (e.key === 'Escape' && nav.classList.contains('active')) {
           nav.classList.remove('active');
           if (overlay) overlay.classList.remove('active');
-          newMenuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-expanded', 'false');
         }
-      });
+      }, { signal: signal });
     }
   }
 
