@@ -41,30 +41,6 @@ case class Transaction(
     f"[$id] $category: $$$amount%.2f - $description ($date)"
 
 object Transaction:
-  /** Factory method for creating transactions.
-    *
-    * @param id
-    *   transaction ID
-    * @param category
-    *   transaction category
-    * @param amount
-    *   transaction amount
-    * @param description
-    *   transaction description
-    * @param date
-    *   transaction date
-    * @return
-    *   new Transaction instance
-    */
-  def apply(
-      id: Long,
-      category: String,
-      amount: Double,
-      description: String,
-      date: LocalDate
-  ): Transaction =
-    new Transaction(id, category, amount, description, date)
-
   /** Creates a Transaction with today's date.
     *
     * @param id
