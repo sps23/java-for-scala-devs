@@ -70,10 +70,12 @@ Let's create a query builder that prevents SQL injection by using parameterized 
 public static final class SafeQueryBuilder {
     private final StringBuilder query;
     private final List<Object> parameters;
+    private boolean hasWhereClause;
 
     public SafeQueryBuilder() {
         this.query = new StringBuilder();
         this.parameters = new ArrayList<>();
+        this.hasWhereClause = false;
     }
 
     public SafeQueryBuilder select(String... columns) {
@@ -88,8 +90,9 @@ public static final class SafeQueryBuilder {
     }
 
     public SafeQueryBuilder where(String column, String operator, Object value) {
-        if (!query.toString().contains("WHERE")) {
+        if (!hasWhereClause) {
             query.append(" WHERE ");
+            hasWhereClause = true;
         } else {
             query.append(" AND ");
         }
@@ -248,7 +251,8 @@ val json = """
 ```scala
 final case class SafeQueryBuilder(
     query: String = "",
-    parameters: List[Any] = List.empty
+    parameters: List[Any] = List.empty,
+    hasWhereClause: Boolean = false
 ):
   def select(columns: String*): SafeQueryBuilder =
     copy(query = s"SELECT ${columns.mkString(", ")}")
@@ -257,11 +261,17 @@ final case class SafeQueryBuilder(
     copy(query = s"$query FROM $table")
 
   def where(column: String, operator: String, value: Any): SafeQueryBuilder =
-    val prefix = if query.contains("WHERE") then " AND" else " WHERE"
-    copy(
-      query = s"$query$prefix $column $operator ?",
-      parameters = parameters :+ value
-    )
+    if hasWhereClause then
+      copy(
+        query = s"$query AND $column $operator ?",
+        parameters = parameters :+ value
+      )
+    else
+      copy(
+        query = s"$query WHERE $column $operator ?",
+        parameters = parameters :+ value,
+        hasWhereClause = true
+      )
 ```
 
 #### Kotlin
@@ -269,7 +279,8 @@ final case class SafeQueryBuilder(
 ```kotlin
 data class SafeQueryBuilder(
     val query: String = "",
-    val parameters: List<Any> = emptyList()
+    val parameters: List<Any> = emptyList(),
+    val hasWhereClause: Boolean = false
 ) {
     fun select(vararg columns: String): SafeQueryBuilder =
         copy(query = "SELECT ${columns.joinToString(", ")}")
@@ -277,13 +288,19 @@ data class SafeQueryBuilder(
     fun from(table: String): SafeQueryBuilder =
         copy(query = "$query FROM $table")
 
-    fun where(column: String, operator: String, value: Any): SafeQueryBuilder {
-        val prefix = if (query.contains("WHERE")) " AND" else " WHERE"
-        return copy(
-            query = "$query$prefix $column $operator ?",
-            parameters = parameters + value
-        )
-    }
+    fun where(column: String, operator: String, value: Any): SafeQueryBuilder =
+        if (hasWhereClause) {
+            copy(
+                query = "$query AND $column $operator ?",
+                parameters = parameters + value
+            )
+        } else {
+            copy(
+                query = "$query WHERE $column $operator ?",
+                parameters = parameters + value,
+                hasWhereClause = true
+            )
+        }
 }
 ```
 

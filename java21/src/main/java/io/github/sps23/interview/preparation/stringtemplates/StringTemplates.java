@@ -143,6 +143,7 @@ public final class StringTemplates {
 
         private final StringBuilder query;
         private final List<Object> parameters;
+        private boolean hasWhereClause;
 
         /**
          * Creates a new safe query builder.
@@ -150,6 +151,7 @@ public final class StringTemplates {
         public SafeQueryBuilder() {
             this.query = new StringBuilder();
             this.parameters = new ArrayList<>();
+            this.hasWhereClause = false;
         }
 
         /**
@@ -189,8 +191,9 @@ public final class StringTemplates {
          * @return this builder
          */
         public SafeQueryBuilder where(String column, String operator, Object value) {
-            if (!query.toString().contains("WHERE")) {
+            if (!hasWhereClause) {
                 query.append(" WHERE ");
+                hasWhereClause = true;
             } else {
                 query.append(" AND ");
             }
