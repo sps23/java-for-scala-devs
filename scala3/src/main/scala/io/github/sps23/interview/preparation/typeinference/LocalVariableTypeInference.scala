@@ -89,7 +89,7 @@ object LocalVariableTypeInference:
 
     // Type is obvious from factory method
     val today     = LocalDate.now()
-    val emptyList = List.empty
+    val emptyList = List.empty[String]
 
     println(s"Count: $count")
     println(s"Total: $total")
