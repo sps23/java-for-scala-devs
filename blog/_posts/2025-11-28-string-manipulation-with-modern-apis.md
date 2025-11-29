@@ -187,7 +187,7 @@ String.format("Name: %s, Age: %d", name, age);
 
 <td>
 
-```java
+{% highlight java %}
 public static String processText(String text) {
     if (text == null || text.isBlank()) {
         return "";
@@ -197,11 +197,12 @@ public static String processText(String text) {
         .filter(line -> !line.isBlank())
         .collect(Collectors.joining("\n"));
 }
-```
+{% endhighlight %}
+
 </td>
 <td>
 
-```scala
+{% highlight scala %}
 def processText(text: String): String =
   Option(text)
     .filter(_.trim.nonEmpty)
@@ -210,12 +211,12 @@ def processText(text: String): String =
       .filter(_.nonEmpty)
       .mkString("\n"))
     .getOrElse("")
-```
+{% endhighlight %}
 
 </td>
 <td>
 
-```kotlin
+{% highlight kotlin %}
 fun processText(text: String?): String {
     if (text.isNullOrBlank()) return ""
     return text.lines()
@@ -223,7 +224,8 @@ fun processText(text: String?): String {
         .filter { it.isNotBlank() }
         .joinToString("\n")
 }
-```
+{% endhighlight %}
+
 </td>
 </tr>
 </table>
@@ -254,37 +256,38 @@ fun processText(text: String?): String {
 </tr>
 <tr>
 <td>
-
-```java
+<pre>
+<code lang="java">
 String json = """
     {
         "name": "%s",
         "email": "%s"
     }
     """.formatted(name, email);
-```
-
+</code>
+</pre>
 </td>
 <td>
 
-```scala
+{% highlight scala %}
 val json = s"""{
   |  "name": "$name",
   |  "email": "$email"
   |}""".stripMargin
-```
+{% endhighlight %}
 
 </td>
 <td>
 
-```kotlin
+{% highlight kotlin %}
 val json = """
     {
       "name": "$name",
       "email": "$email"
     }
 """.trimIndent()
-```
+{% endhighlight %}
+
 </td>
 </tr>
 </table>
