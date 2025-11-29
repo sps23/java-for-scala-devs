@@ -311,17 +311,17 @@ object TransactionProcessor {
         // 3. Calculate totals per category
         println("\n--- Total Spending by Category ---")
         calculateTotalByCategory(transactions).forEach { (category, total) ->
-            println("  $category: $%.2f".format(total))
+            println("  $category: ${"$%.2f".format(total)}")
         }
 
         // 4. Overall statistics
         println("\n--- Overall Statistics ---")
         val stats = calculateStatistics(transactions)
         println("  Count: ${stats.count} transactions")
-        println("  Total: $%.2f".format(stats.total))
-        println("  Average: $%.2f".format(stats.average))
-        println("  Min: $%.2f".format(stats.min))
-        println("  Max: $%.2f".format(stats.max))
+        println("  Total: ${"$%.2f".format(stats.total)}")
+        println("  Average: ${"$%.2f".format(stats.average)}")
+        println("  Min: ${"$%.2f".format(stats.min)}")
+        println("  Max: ${"$%.2f".format(stats.max)}")
 
         // 5. Min/Max transactions
         println("\n--- Min/Max Transactions ---")
@@ -355,7 +355,7 @@ fun main() {
 
     println("\nmapOf() - Category budgets:")
     TransactionProcessor.getCategoryBudgets().forEach { (k, v) ->
-        println("  $k: $%.2f".format(v))
+        println("  $k: ${"$%.2f".format(v)}")
     }
 
     // Demo 2: Mutable vs Immutable
@@ -369,7 +369,7 @@ fun main() {
     // Demo 4: Summary
     println("\n--- Summary (comparable to Collectors.teeing) ---\n")
     val summary = TransactionProcessor.calculateSummary(transactions)
-    println("Total: $%.2f".format(summary.total))
+    println("Total: ${"$%.2f".format(summary.total)}")
     println("Count: ${summary.count}")
-    println("Average: $%.2f".format(summary.average))
+    println("Average: ${"$%.2f".format(summary.average)}")
 }
