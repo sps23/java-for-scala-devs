@@ -60,13 +60,39 @@
     // Apply saved template on load
     applyTemplate(savedTemplate);
     templateSelect.value = savedTemplate;
+    
+    // Sync all mobile template selects
+    syncMobileTemplateSelects(savedTemplate);
 
-    // Listen for template changes
+    // Listen for template changes on main select
     templateSelect.addEventListener('change', function(e) {
       var selectedTemplate = e.target.value;
       currentTemplateId = selectedTemplate;
       applyTemplate(selectedTemplate);
       localStorage.setItem('selectedTemplate', selectedTemplate);
+      syncMobileTemplateSelects(selectedTemplate);
+    });
+    
+    // Listen for template changes on mobile selects (using event delegation)
+    document.addEventListener('change', function(e) {
+      if (e.target.classList.contains('mobile-template-select')) {
+        var selectedTemplate = e.target.value;
+        currentTemplateId = selectedTemplate;
+        applyTemplate(selectedTemplate);
+        localStorage.setItem('selectedTemplate', selectedTemplate);
+        templateSelect.value = selectedTemplate;
+        syncMobileTemplateSelects(selectedTemplate);
+      }
+    });
+  }
+  
+  /**
+   * Sync all mobile template selects to the same value
+   */
+  function syncMobileTemplateSelects(templateId) {
+    var mobileSelects = document.querySelectorAll('.mobile-template-select');
+    mobileSelects.forEach(function(select) {
+      select.value = templateId;
     });
   }
 

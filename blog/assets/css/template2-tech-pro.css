@@ -552,6 +552,10 @@ th {
     transform: translateX(0);
   }
   
+  .sidebar.active .mobile-template-switcher {
+    display: block;
+  }
+  
   .main-content,
   .top-bar,
   .site-footer {
