@@ -16,6 +16,7 @@
     initMobileMenu();
     initSmoothScroll();
     initTimelineAnimations();
+    initLikes();
   });
 
   /**
@@ -85,6 +86,7 @@
     if (!categoryBtns.length) return;
 
     const posts = document.querySelectorAll('.post-item, .post-card, .timeline-post, .post-list-item');
+    const postList = document.querySelector('.post-list');
     
     categoryBtns.forEach(function(btn) {
       btn.addEventListener('click', function(e) {
@@ -96,13 +98,45 @@
         
         const category = btn.dataset.category || btn.textContent.trim().toLowerCase();
         
-        // "all" shows everything
+        // "all" shows everything in original order
         if (category === 'all') {
           posts.forEach(post => post.style.display = '');
+          // Restore original order
+          if (postList) {
+            var postsArray = Array.from(postList.querySelectorAll('.post-item'));
+            postsArray.sort(function(a, b) {
+              var dateA = a.querySelector('time');
+              var dateB = b.querySelector('time');
+              if (dateA && dateB) {
+                return new Date(dateB.getAttribute('datetime')) - new Date(dateA.getAttribute('datetime'));
+              }
+              return 0;
+            });
+            postsArray.forEach(function(post) {
+              postList.appendChild(post);
+            });
+          }
           return;
         }
         
-        // Filter posts
+        // "most-liked" sorts by likes count
+        if (category === 'most-liked') {
+          posts.forEach(post => post.style.display = '');
+          if (postList) {
+            var postsArray = Array.from(postList.querySelectorAll('.post-item'));
+            postsArray.sort(function(a, b) {
+              var likesA = getLikesCount(a.dataset.postId);
+              var likesB = getLikesCount(b.dataset.postId);
+              return likesB - likesA;
+            });
+            postsArray.forEach(function(post) {
+              postList.appendChild(post);
+            });
+          }
+          return;
+        }
+        
+        // Filter posts by category
         posts.forEach(function(post) {
           const postCategories = post.dataset.categories || '';
           const postTags = post.dataset.tags || '';
@@ -238,5 +272,126 @@
 
   // Initialize active nav on load
   updateActiveNavLink();
+
+  /**
+   * Likes functionality
+   * Stores likes in localStorage
+   */
+  var LIKES_STORAGE_KEY = 'blog_post_likes';
+  var USER_LIKES_KEY = 'blog_user_likes';
+
+  function getLikesData() {
+    try {
+      return JSON.parse(localStorage.getItem(LIKES_STORAGE_KEY)) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function getUserLikes() {
+    try {
+      return JSON.parse(localStorage.getItem(USER_LIKES_KEY)) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveLikesData(data) {
+    try {
+      localStorage.setItem(LIKES_STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      // localStorage not available
+    }
+  }
+
+  function saveUserLikes(data) {
+    try {
+      localStorage.setItem(USER_LIKES_KEY, JSON.stringify(data));
+    } catch (e) {
+      // localStorage not available
+    }
+  }
+
+  function getLikesCount(postId) {
+    var likesData = getLikesData();
+    return likesData[postId] || 0;
+  }
+
+  function hasUserLiked(postId) {
+    var userLikes = getUserLikes();
+    return userLikes[postId] === true;
+  }
+
+  function toggleLike(postId) {
+    var likesData = getLikesData();
+    var userLikes = getUserLikes();
+    
+    if (userLikes[postId]) {
+      // User already liked - unlike
+      likesData[postId] = Math.max(0, (likesData[postId] || 0) - 1);
+      delete userLikes[postId];
+    } else {
+      // User hasn't liked - add like
+      likesData[postId] = (likesData[postId] || 0) + 1;
+      userLikes[postId] = true;
+    }
+    
+    saveLikesData(likesData);
+    saveUserLikes(userLikes);
+    
+    return {
+      count: likesData[postId] || 0,
+      liked: userLikes[postId] === true
+    };
+  }
+
+  function initLikes() {
+    // Initialize like buttons on post pages
+    var likeButtons = document.querySelectorAll('.like-btn');
+    likeButtons.forEach(function(btn) {
+      var postId = btn.dataset.postId;
+      if (!postId) return;
+      
+      var countEl = btn.querySelector('.like-count');
+      var count = getLikesCount(postId);
+      var liked = hasUserLiked(postId);
+      
+      if (countEl) {
+        countEl.textContent = count;
+      }
+      if (liked) {
+        btn.classList.add('liked');
+      }
+      
+      btn.addEventListener('click', function() {
+        var result = toggleLike(postId);
+        if (countEl) {
+          countEl.textContent = result.count;
+        }
+        if (result.liked) {
+          btn.classList.add('liked');
+        } else {
+          btn.classList.remove('liked');
+        }
+      });
+    });
+    
+    // Initialize likes display on home page
+    var postLikesElements = document.querySelectorAll('.post-likes');
+    postLikesElements.forEach(function(el) {
+      var postId = el.dataset.postId;
+      if (!postId) return;
+      
+      var countEl = el.querySelector('.likes-count');
+      var count = getLikesCount(postId);
+      
+      if (count > 0) {
+        el.style.display = 'inline-flex';
+        if (countEl) {
+          countEl.textContent = count;
+        }
+      }
+    });
+  }
 
 })();

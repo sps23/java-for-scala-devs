@@ -38,6 +38,15 @@
     <div class="article-content">
       {{ content }}
     </div>
+    
+    <!-- Like Section -->
+    <div class="like-section">
+      <button class="like-btn" data-post-id="{{ page.url | slugify }}" aria-label="Like this post">
+        <span class="like-icon">👍</span>
+        <span class="like-count">0</span>
+      </button>
+      <span class="like-text">Like this post</span>
+    </div>
   </article>
   
   <!-- Post Navigation -->
