@@ -51,6 +51,7 @@ public class WebScraperTraditional {
     
     private ScrapedResult scrapeUrl(String url) {
         // Blocking HTTP call - ties up the thread while waiting
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         return new ScrapedResult(url, response.statusCode(), response.body().length());
     }
