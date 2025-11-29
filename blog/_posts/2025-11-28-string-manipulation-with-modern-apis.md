@@ -177,17 +177,9 @@ String.format("Name: %s, Age: %d", name, age);
 
 ### Processing Multi-line Text
 
-<table>
-<tr>
-<th>Java 21</th>
-<th>Scala 3</th>
-<th>Kotlin</th>
-</tr>
-<tr>
+### Java 21
 
-<td>
-
-{% highlight java %}
+```java
 public static String processText(String text) {
     if (text == null || text.isBlank()) {
         return "";
@@ -197,12 +189,11 @@ public static String processText(String text) {
         .filter(line -> !line.isBlank())
         .collect(Collectors.joining("\n"));
 }
-{% endhighlight %}
+```
 
-</td>
-<td>
+### Scala 3
 
-{% highlight scala %}
+```scala
 def processText(text: String): String =
   Option(text)
     .filter(_.trim.nonEmpty)
@@ -211,12 +202,11 @@ def processText(text: String): String =
       .filter(_.nonEmpty)
       .mkString("\n"))
     .getOrElse("")
-{% endhighlight %}
+```
 
-</td>
-<td>
+### Kotlin
 
-{% highlight kotlin %}
+```kotlin
 fun processText(text: String?): String {
     if (text.isNullOrBlank()) return ""
     return text.lines()
@@ -224,11 +214,7 @@ fun processText(text: String?): String {
         .filter { it.isNotBlank() }
         .joinToString("\n")
 }
-{% endhighlight %}
-
-</td>
-</tr>
-</table>
+```
 
 ### Multi-line Strings
 
@@ -248,49 +234,37 @@ fun processText(text: String?): String {
 
 ### Creating Multi-line Strings
 
-<table>
-<tr>
-<th>Java 21</th>
-<th>Scala 3</th>
-<th>Kotlin</th>
-</tr>
-<tr>
-<td>
-<pre>
-<code lang="java">
+### Java 21
+
+```java
 String json = """
     {
         "name": "%s",
         "email": "%s"
     }
     """.formatted(name, email);
-</code>
-</pre>
-</td>
-<td>
+```
 
-{% highlight scala %}
+### Scala 3
+
+```scala
 val json = s"""{
   |  "name": "$name",
   |  "email": "$email"
   |}""".stripMargin
-{% endhighlight %}
 
-</td>
-<td>
+```
 
-{% highlight kotlin %}
+### Kotlin
+
+```kotlin
 val json = """
     {
       "name": "$name",
       "email": "$email"
     }
 """.trimIndent()
-{% endhighlight %}
-
-</td>
-</tr>
-</table>
+```
 
 ## Complete Example: Text Processing Pipeline
 
