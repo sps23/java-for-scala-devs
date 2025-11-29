@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Collection Factory Methods and Stream Basics"
-date: 2025-11-28 18:00:00 +0000
+date: 2025-11-29 14:00:00 +0000
 categories: interview
 tags: java java21 scala kotlin collections streams interview-preparation
 ---

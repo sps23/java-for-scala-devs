@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Immutable Data with Java Records"
-date: 2025-11-28 14:00:00 +0000
+date: 2025-11-26 21:00:00 +0000
 categories: interview
 tags: java java21 records immutability interview-preparation
 ---

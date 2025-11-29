@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Java 21 Interview Preparation Plan"
-date: 2025-11-28 13:00:00 +0000
+date: 2025-11-25 20:00:00 +0000
 categories: interview
 tags: java java21 interview preparation senior-developer
 ---
