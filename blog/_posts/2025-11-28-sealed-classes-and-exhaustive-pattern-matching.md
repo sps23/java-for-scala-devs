@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Sealed Classes and Exhaustive Pattern Matching"
-date: 2025-11-28 15:00:00 +0000
+date: 2025-11-28 21:00:00 +0000
 categories: interview
 tags: java java21 scala kotlin sealed-classes pattern-matching interview-preparation
 ---
