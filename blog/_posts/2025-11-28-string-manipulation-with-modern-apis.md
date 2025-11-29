@@ -177,10 +177,15 @@ String.format("Name: %s, Age: %d", name, age);
 
 ### Processing Multi-line Text
 
-<div style="display: flex; gap: 2em; flex-wrap: wrap;">
+<table>
+<tr>
+<th>Java 21</th>
+<th>Scala 3</th>
+<th>Kotlin</th>
+</tr>
+<tr>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Java 21</strong>
+<td>
 
 ```java
 public static String processText(String text) {
@@ -193,10 +198,8 @@ public static String processText(String text) {
         .collect(Collectors.joining("\n"));
 }
 ```
-</div>
-
-<div style="flex: 1; min-width: 280px">
-<strong>Scala 3</strong>
+</td>
+<td>
 
 ```scala
 def processText(text: String): String =
@@ -208,10 +211,9 @@ def processText(text: String): String =
       .mkString("\n"))
     .getOrElse("")
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Kotlin</strong>
+</td>
+<td>
 
 ```kotlin
 fun processText(text: String?): String {
@@ -222,9 +224,9 @@ fun processText(text: String?): String {
         .joinToString("\n")
 }
 ```
-</div>
-
-</div>
+</td>
+</tr>
+</table>
 
 ### Multi-line Strings
 
@@ -244,10 +246,14 @@ fun processText(text: String?): String {
 
 ### Creating Multi-line Strings
 
-<div style="display: flex; gap: 2em; flex-wrap: wrap;">
-
-<div style="flex: 1; min-width: 280px">
-<strong>Java 21</strong>
+<table>
+<tr>
+<th>Java 21</th>
+<th>Scala 3</th>
+<th>Kotlin</th>
+</tr>
+<tr>
+<td>
 
 ```java
 String json = """
@@ -257,10 +263,9 @@ String json = """
     }
     """.formatted(name, email);
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Scala 3</strong>
+</td>
+<td>
 
 ```scala
 val json = s"""{
@@ -268,10 +273,9 @@ val json = s"""{
   |  "email": "$email"
   |}""".stripMargin
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Kotlin</strong>
+</td>
+<td>
 
 ```kotlin
 val json = """
@@ -281,9 +285,9 @@ val json = """
     }
 """.trimIndent()
 ```
-</div>
-
-</div>
+</td>
+</tr>
+</table>
 
 ## Complete Example: Text Processing Pipeline
 
