@@ -1,36 +1,60 @@
-/* Rouge syntax highlighting for dark themes */
+/* Rouge syntax highlighting - Dracula Theme
+ * Inspired by the official Dracula theme used in IntelliJ and GitHub
+ * https://draculatheme.com
+ */
+
+/* Dracula Color Palette */
+:root {
+  --dracula-bg: #282a36;
+  --dracula-current-line: #44475a;
+  --dracula-foreground: #f8f8f2;
+  --dracula-comment: #6272a4;
+  --dracula-cyan: #8be9fd;
+  --dracula-green: #50fa7b;
+  --dracula-orange: #ffb86c;
+  --dracula-pink: #ff79c6;
+  --dracula-purple: #bd93f9;
+  --dracula-red: #ff5555;
+  --dracula-yellow: #f1fa8c;
+}
 
 /* Base token styles */
 .highlight {
-  background: var(--code-bg, #161b22);
+  background: var(--dracula-bg);
   border-radius: 8px;
   overflow-x: auto;
   margin: 1.5rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .highlight pre {
   margin: 0;
-  padding: 1rem;
+  padding: 1.25rem;
   background: transparent;
   border: none;
+  line-height: 1.5;
 }
 
 .highlight code {
   background: transparent;
   padding: 0;
-  color: #e6edf3;
-  font-size: 0.875rem;
-  line-height: 1.6;
+  color: var(--dracula-foreground);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-family: 'Fira Code', 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
 }
 
-/* Comment */
+/* Comments - Dracula blue-gray */
 .highlight .c,
 .highlight .c1,
 .highlight .cm,
 .highlight .cs,
-.highlight .cp { color: #8b949e; font-style: italic; }
+.highlight .cp {
+  color: var(--dracula-comment);
+  font-style: italic;
+}
 
-/* String */
+/* Strings - Dracula yellow */
 .highlight .s,
 .highlight .s1,
 .highlight .s2,
@@ -40,54 +64,80 @@
 .highlight .se,
 .highlight .sh,
 .highlight .si,
-.highlight .sx { color: #a5d6ff; }
+.highlight .sx {
+  color: var(--dracula-yellow);
+}
 
-/* Keyword */
+/* Keywords - Dracula pink */
 .highlight .k,
 .highlight .kc,
 .highlight .kd,
 .highlight .kn,
 .highlight .kp,
 .highlight .kr,
-.highlight .kt { color: #ff7b72; }
+.highlight .kt {
+  color: var(--dracula-pink);
+  font-weight: 500;
+}
 
-/* Number */
+/* Numbers - Dracula purple */
 .highlight .m,
 .highlight .mf,
 .highlight .mh,
 .highlight .mi,
 .highlight .mo,
-.highlight .il { color: #79c0ff; }
+.highlight .il {
+  color: var(--dracula-purple);
+}
 
-/* Operator */
+/* Operators - Dracula pink */
 .highlight .o,
-.highlight .ow { color: #ff7b72; }
+.highlight .ow {
+  color: var(--dracula-pink);
+}
 
-/* Name - Function */
+/* Function names - Dracula green */
 .highlight .nf,
-.highlight .fm { color: #d2a8ff; }
+.highlight .fm {
+  color: var(--dracula-green);
+  font-weight: 500;
+}
 
-/* Name - Class */
+/* Class names - Dracula cyan */
 .highlight .nc,
-.highlight .nn { color: #ffa657; }
+.highlight .nn {
+  color: var(--dracula-cyan);
+  font-weight: 500;
+}
 
-/* Name - Variable */
+/* Variables - Dracula foreground */
 .highlight .nv,
 .highlight .vi,
 .highlight .vc,
-.highlight .vg { color: #ffa657; }
+.highlight .vg {
+  color: var(--dracula-foreground);
+}
 
-/* Name - Attribute */
-.highlight .na { color: #79c0ff; }
+/* Attributes - Dracula green */
+.highlight .na {
+  color: var(--dracula-green);
+}
 
-/* Name - Builtin */
-.highlight .nb { color: #ffa657; }
+/* Built-in functions - Dracula cyan */
+.highlight .nb {
+  color: var(--dracula-cyan);
+}
 
-/* Name - Constant */
-.highlight .no { color: #79c0ff; }
+/* Constants - Dracula purple */
+.highlight .no {
+  color: var(--dracula-purple);
+  font-weight: 500;
+}
 
-/* Name - Tag (HTML/XML) */
-.highlight .nt { color: #7ee787; }
+/* HTML/XML Tags - Dracula pink */
+.highlight .nt {
+  color: var(--dracula-pink);
+}
 
 /* Generic - Deleted */
 .highlight .gd { color: #ffa198; background-color: rgba(248, 81, 73, 0.15); }
@@ -98,57 +148,171 @@
 /* Generic - Heading */
 .highlight .gh { color: #58a6ff; font-weight: bold; }
 
+/* HTML/XML Tags - Dracula pink */
+.highlight .nt {
+  color: var(--dracula-pink);
+}
+
+/* Entity names - Dracula cyan */
+.highlight .ne {
+  color: var(--dracula-cyan);
+}
+
+/* Symbols/Atoms - Dracula purple */
+.highlight .ss {
+  color: var(--dracula-purple);
+}
+
+/* Regex - Dracula red */
+.highlight .sr {
+  color: var(--dracula-red);
+}
+
+/* Link reference - Dracula cyan */
+.highlight .ld {
+  color: var(--dracula-cyan);
+}
+
+/* Punctuation - Dracula foreground */
+.highlight .p {
+  color: var(--dracula-foreground);
+}
+
+/* Generic text/names - Dracula foreground */
+.highlight .n,
+.highlight .nl,
+.highlight .ni {
+  color: var(--dracula-foreground);
+}
+
+/* Annotations/Decorators - Dracula green */
+.highlight .nd {
+  color: var(--dracula-green);
+}
+
+/* Generic - Deleted (diff) */
+.highlight .gd {
+  color: var(--dracula-red);
+  background-color: rgba(255, 85, 85, 0.15);
+}
+
+/* Generic - Inserted (diff) */
+.highlight .gi {
+  color: var(--dracula-green);
+  background-color: rgba(80, 250, 123, 0.15);
+}
+
+/* Generic - Heading */
+.highlight .gh {
+  color: var(--dracula-cyan);
+  font-weight: bold;
+}
+
 /* Generic - Subheading */
-.highlight .gu { color: #58a6ff; }
+.highlight .gu {
+  color: var(--dracula-purple);
+}
 
 /* Generic - Error */
 .highlight .gr,
-.highlight .err { color: #ffa198; }
-
-/* Punctuation */
-.highlight .p { color: #e6edf3; }
-
-/* Text */
-.highlight .n,
-.highlight .nl,
-.highlight .ni { color: #e6edf3; }
-
-/* Entity */
-.highlight .ne { color: #ffa657; }
-
-/* Support */
-.highlight .ss { color: #a5d6ff; }
-
-/* Regex */
-.highlight .sr { color: #7ee787; }
-
-/* Link reference */
-.highlight .ld { color: #a5d6ff; }
+.highlight .err {
+  color: var(--dracula-red);
+}
 
 /* Line numbers */
 .highlight .lineno {
-  color: #6e7681;
+  color: var(--dracula-comment);
   padding-right: 1rem;
   user-select: none;
 }
 
-/* Code block language indicator */
-.highlight::before {
-  content: attr(data-lang);
-  display: block;
-  padding: 0.5rem 1rem;
-  font-size: 0.75rem;
-  color: #8b949e;
-  border-bottom: 1px solid #30363d;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+/* Inline code (not in code blocks) */
+code:not([class]) {
+  background-color: var(--dracula-current-line);
+  color: var(--dracula-pink);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: 'Fira Code', 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
 }
 
-/* Inline code */
-code:not([class]) {
-  background-color: rgba(110, 118, 129, 0.2);
-  color: #e6edf3;
-  padding: 0.2em 0.4em;
+/* Language label for code blocks */
+.highlight[data-lang]::before {
+  content: attr(data-lang);
+  display: block;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.75rem;
+  color: var(--dracula-comment);
+  border-bottom: 1px solid var(--dracula-current-line);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* Improve readability with better spacing */
+.highlight .highlight {
+  margin: 0;
+}
+
+/* Selection color for Dracula theme */
+.highlight ::selection {
+  background-color: var(--dracula-current-line);
+  color: var(--dracula-foreground);
+}
+
+.highlight ::-moz-selection {
+  background-color: var(--dracula-current-line);
+  color: var(--dracula-foreground);
+}
+
+/* Java-specific enhancements */
+.highlight .kt { /* Java types like String, int */
+  color: var(--dracula-cyan);
+  font-style: italic;
+}
+
+.highlight .nx { /* Java method calls */
+  color: var(--dracula-green);
+}
+
+/* Scala-specific enhancements */
+.highlight .k.o { /* Scala operators like => */
+  color: var(--dracula-pink);
+}
+
+/* Kotlin-specific enhancements */
+.highlight .kd + .highlight .nf { /* Kotlin fun keyword + function name */
+  color: var(--dracula-green);
+}
+
+/* Make sure code blocks in tables also use Dracula theme */
+table .highlight {
+  margin: 0.5rem 0;
+}
+
+table td .highlight pre {
+  padding: 0.75rem;
+}
+
+/* Scrollbar styling for code blocks (WebKit browsers) */
+.highlight pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.highlight pre::-webkit-scrollbar-track {
+  background: var(--dracula-current-line);
+  border-radius: 4px;
+}
+
+.highlight pre::-webkit-scrollbar-thumb {
+  background: var(--dracula-comment);
+  border-radius: 4px;
+}
+
+.highlight pre::-webkit-scrollbar-thumb:hover {
+  background: var(--dracula-purple);
+}
+
   border-radius: 4px;
   font-size: 0.875em;
 }
