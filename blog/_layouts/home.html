@@ -2,15 +2,4 @@
 layout: default
 ---
 
-<!-- All templates are included but only one is visible at a time -->
-<div class="template-content" data-template="1">
-  {% include home-template1.html %}
-</div>
-
-<div class="template-content" data-template="2" style="display: none;">
-  {% include home-template2.html %}
-</div>
-
-<div class="template-content" data-template="3" style="display: none;">
-  {% include home-template3.html %}
-</div>
+{% include home-template1.html %}

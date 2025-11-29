@@ -1,43 +1,16 @@
 /**
  * Blog Theme JavaScript
- * Handles search, filtering, navigation, template switching, and interactive features
+ * Handles search, filtering, navigation, and interactive features
  */
 
 (function() {
   'use strict';
 
-  // Track current template for scoped queries
-  var currentTemplateId = '1';
-  
   // AbortController for managing event listeners
   var mobileMenuAbortController = null;
 
-  /**
-   * Get the currently visible template content element
-   */
-  function getVisibleTemplate() {
-    return document.querySelector('.template-content[data-template="' + currentTemplateId + '"]');
-  }
-
-  /**
-   * Query selector scoped to visible template
-   */
-  function scopedQuery(selector) {
-    var template = getVisibleTemplate();
-    return template ? template.querySelector(selector) : null;
-  }
-
-  /**
-   * Query selector all scoped to visible template
-   */
-  function scopedQueryAll(selector) {
-    var template = getVisibleTemplate();
-    return template ? template.querySelectorAll(selector) : [];
-  }
-
   // DOM Ready
   document.addEventListener('DOMContentLoaded', function() {
-    initTemplateSwitcher();
     initSearch();
     initCategoryFilter();
     initMobileMenu();
@@ -46,105 +19,14 @@
   });
 
   /**
-   * Template Switcher functionality
-   * Allows users to switch between templates dynamically
-   */
-  function initTemplateSwitcher() {
-    var templateSelect = document.getElementById('template-select');
-    if (!templateSelect) return;
-
-    // Load saved template from localStorage or use default
-    var savedTemplate = localStorage.getItem('selectedTemplate') || '1';
-    currentTemplateId = savedTemplate;
-    
-    // Apply saved template on load
-    applyTemplate(savedTemplate);
-    templateSelect.value = savedTemplate;
-    
-    // Sync all mobile template selects
-    syncMobileTemplateSelects(savedTemplate);
-
-    // Listen for template changes on main select
-    templateSelect.addEventListener('change', function(e) {
-      var selectedTemplate = e.target.value;
-      currentTemplateId = selectedTemplate;
-      applyTemplate(selectedTemplate);
-      localStorage.setItem('selectedTemplate', selectedTemplate);
-      syncMobileTemplateSelects(selectedTemplate);
-    });
-    
-    // Listen for template changes on mobile selects (using event delegation)
-    document.addEventListener('change', function(e) {
-      if (e.target.classList.contains('mobile-template-select')) {
-        var selectedTemplate = e.target.value;
-        currentTemplateId = selectedTemplate;
-        applyTemplate(selectedTemplate);
-        localStorage.setItem('selectedTemplate', selectedTemplate);
-        templateSelect.value = selectedTemplate;
-        syncMobileTemplateSelects(selectedTemplate);
-      }
-    });
-  }
-  
-  /**
-   * Sync all mobile template selects to the same value
-   */
-  function syncMobileTemplateSelects(templateId) {
-    var mobileSelects = document.querySelectorAll('.mobile-template-select');
-    mobileSelects.forEach(function(select) {
-      select.value = templateId;
-    });
-  }
-
-  /**
-   * Apply the selected template
-   * @param {string} templateId - The template number ('1', '2', or '3')
-   */
-  function applyTemplate(templateId) {
-    // Update current template tracking
-    currentTemplateId = templateId;
-
-    // Switch CSS stylesheets
-    var cssLinks = document.querySelectorAll('link[data-template]');
-    cssLinks.forEach(function(link) {
-      if (link.dataset.template === templateId) {
-        link.removeAttribute('disabled');
-      } else {
-        link.setAttribute('disabled', 'disabled');
-      }
-    });
-
-    // Switch template content (HTML)
-    var templateContents = document.querySelectorAll('.template-content');
-    templateContents.forEach(function(content) {
-      if (content.dataset.template === templateId) {
-        content.style.display = '';
-      } else {
-        content.style.display = 'none';
-      }
-    });
-
-    // Re-initialize features for the new template using requestAnimationFrame
-    // for more reliable timing than setTimeout
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        initSearch();
-        initCategoryFilter();
-        initMobileMenu();
-        initTimelineAnimations();
-      });
-    });
-  }
-
-  /**
    * Search functionality
    * Filters posts based on search input
    */
   function initSearch() {
-    const searchInput = scopedQuery('.search-input, .header-search input, .search-box input');
+    const searchInput = document.querySelector('.search-input, .header-search input, .search-box input');
     if (!searchInput) return;
 
-    const posts = scopedQueryAll('.post-item, .post-card, .timeline-post, .post-list-item');
+    const posts = document.querySelectorAll('.post-item, .post-card, .timeline-post, .post-list-item');
     
     searchInput.addEventListener('input', function(e) {
       const query = e.target.value.toLowerCase().trim();
@@ -173,7 +55,7 @@
    * Show/hide no results message
    */
   function updateNoResultsMessage(query, posts) {
-    let noResults = scopedQuery('.no-results');
+    let noResults = document.querySelector('.no-results');
     const visiblePosts = Array.from(posts).filter(p => p.style.display !== 'none');
     
     if (query && visiblePosts.length === 0) {
@@ -199,10 +81,10 @@
    * Filter posts by category/tag
    */
   function initCategoryFilter() {
-    const categoryBtns = scopedQueryAll('.category-btn, .category-badge, .category-pill');
+    const categoryBtns = document.querySelectorAll('.category-btn, .category-badge, .category-pill');
     if (!categoryBtns.length) return;
 
-    const posts = scopedQueryAll('.post-item, .post-card, .timeline-post, .post-list-item');
+    const posts = document.querySelectorAll('.post-item, .post-card, .timeline-post, .post-list-item');
     
     categoryBtns.forEach(function(btn) {
       btn.addEventListener('click', function(e) {
@@ -248,9 +130,9 @@
     mobileMenuAbortController = new AbortController();
     var signal = mobileMenuAbortController.signal;
     
-    const menuToggle = scopedQuery('.menu-toggle, .mobile-menu-toggle, .mobile-menu-btn');
-    const nav = scopedQuery('.site-nav, .sidebar');
-    const overlay = scopedQuery('.sidebar-overlay');
+    const menuToggle = document.querySelector('.menu-toggle, .mobile-menu-toggle, .mobile-menu-btn');
+    const nav = document.querySelector('.site-nav, .sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
     
     if (menuToggle && nav) {
       menuToggle.addEventListener('click', function() {
@@ -308,7 +190,7 @@
    * Uses Intersection Observer for performance
    */
   function initTimelineAnimations() {
-    const timelinePosts = scopedQueryAll('.timeline-post');
+    const timelinePosts = document.querySelectorAll('.timeline-post');
     if (!timelinePosts.length) return;
 
     // Check if IntersectionObserver is supported
