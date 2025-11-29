@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Virtual Threads and Structured Concurrency in Java 21"
-date: 2025-11-28 17:00:00 +0000
+date: 2025-11-29 17:00:00 +0000
 categories: interview
 tags: java java21 scala kotlin virtual-threads concurrency project-loom interview-preparation
 ---
@@ -51,6 +51,7 @@ public class WebScraperTraditional {
     
     private ScrapedResult scrapeUrl(String url) {
         // Blocking HTTP call - ties up the thread while waiting
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         return new ScrapedResult(url, response.statusCode(), response.body().length());
     }

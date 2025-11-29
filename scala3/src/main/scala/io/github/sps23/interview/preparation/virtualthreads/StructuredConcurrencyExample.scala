@@ -68,10 +68,11 @@ object StructuredConcurrencyExample:
     *   content length from first successful URL
     */
   def fetchAnySuccessful(urls: List[String]): Int =
+    // Note: We use Integer here because Java's ShutdownOnSuccess requires a reference type
     Using.resource(new StructuredTaskScope.ShutdownOnSuccess[Integer]()) { scope =>
-      urls.foreach(url => scope.fork(() => fetchContentLength(url)))
+      urls.foreach(url => scope.fork(() => Integer.valueOf(fetchContentLength(url))))
       scope.join()
-      scope.result()
+      scope.result().intValue()
     }
 
   /** Aggregated data from multiple services. */

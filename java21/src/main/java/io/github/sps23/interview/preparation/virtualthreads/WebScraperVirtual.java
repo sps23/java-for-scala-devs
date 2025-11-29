@@ -131,9 +131,12 @@ public class WebScraperVirtual {
             for (Future<ScrapedResult> future : futures) {
                 try {
                     results.add(future.get());
-                } catch (Exception e) {
-                    // Handle interruption
+                } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
+                    // Continue collecting other results
+                } catch (Exception e) {
+                    // ExecutionException or other - log but continue
+                    System.err.println("Error collecting result: " + e.getMessage());
                 }
             }
 
