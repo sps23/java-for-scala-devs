@@ -124,6 +124,7 @@ object StringTemplates {
     data class SafeQueryBuilder(
         val query: String = "",
         val parameters: List<Any> = emptyList(),
+        val hasWhereClause: Boolean = false,
     ) {
         /**
          * Sets the SELECT clause.
@@ -153,13 +154,19 @@ object StringTemplates {
             column: String,
             operator: String,
             value: Any,
-        ): SafeQueryBuilder {
-            val prefix = if (query.contains("WHERE")) " AND" else " WHERE"
-            return copy(
-                query = "$query$prefix $column $operator ?",
-                parameters = parameters + value,
-            )
-        }
+        ): SafeQueryBuilder =
+            if (hasWhereClause) {
+                copy(
+                    query = "$query AND $column $operator ?",
+                    parameters = parameters + value,
+                )
+            } else {
+                copy(
+                    query = "$query WHERE $column $operator ?",
+                    parameters = parameters + value,
+                    hasWhereClause = true,
+                )
+            }
 
         /**
          * Adds an ORDER BY clause.
@@ -308,29 +315,6 @@ object StringTemplates {
 // ========================================================================
 // Extension Functions for Enhanced String Operations
 // ========================================================================
-
-/**
- * Creates a safe SQL query from a template string.
- *
- * This extension function demonstrates how to create domain-specific
- * string operations in Kotlin.
- */
-fun String.toSafeQuery(vararg params: Any): StringTemplates.SafeQueryBuilder {
-    var parameterizedQuery = this
-    params.forEach { _ ->
-        val firstPlaceholder = parameterizedQuery.indexOf("\${")
-        if (firstPlaceholder >= 0) {
-            val endPlaceholder = parameterizedQuery.indexOf("}", firstPlaceholder)
-            if (endPlaceholder >= 0) {
-                parameterizedQuery =
-                    parameterizedQuery.substring(0, firstPlaceholder) +
-                    "?" +
-                    parameterizedQuery.substring(endPlaceholder + 1)
-            }
-        }
-    }
-    return StringTemplates.SafeQueryBuilder(parameterizedQuery, params.toList())
-}
 
 /**
  * Wraps the string with a delimiter on both sides.

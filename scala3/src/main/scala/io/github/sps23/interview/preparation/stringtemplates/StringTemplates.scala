@@ -115,8 +115,9 @@ object StringTemplates:
     *   the list of parameter values
     */
   final case class SafeQueryBuilder(
-      query: String         = "",
-      parameters: List[Any] = List.empty
+      query: String           = "",
+      parameters: List[Any]   = List.empty,
+      hasWhereClause: Boolean = false
   ):
 
     /** Sets the SELECT clause.
@@ -151,11 +152,17 @@ object StringTemplates:
       *   new builder with WHERE condition
       */
     def where(column: String, operator: String, value: Any): SafeQueryBuilder =
-      val prefix = if query.contains("WHERE") then " AND" else " WHERE"
-      copy(
-        query      = s"$query$prefix $column $operator ?",
-        parameters = parameters :+ value
-      )
+      if hasWhereClause then
+        copy(
+          query      = s"$query AND $column $operator ?",
+          parameters = parameters :+ value
+        )
+      else
+        copy(
+          query          = s"$query WHERE $column $operator ?",
+          parameters     = parameters :+ value,
+          hasWhereClause = true
+        )
 
     /** Adds an ORDER BY clause.
       *
