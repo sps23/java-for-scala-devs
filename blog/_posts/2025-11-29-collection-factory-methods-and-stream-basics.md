@@ -32,10 +32,7 @@ Java 9+ introduced elegant factory methods:
 
 ### List.of(), Set.of(), Map.of()
 
-<div style="display: flex; gap: 2em; flex-wrap: wrap;">
-
-<div style="flex: 1; min-width: 280px">
-<strong>Java 21</strong>
+#### Java
 
 ```java
 // Immutable list
@@ -58,10 +55,8 @@ Map<String, Integer> largeMap = Map.ofEntries(
     // ... more entries
 );
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Scala 3</strong>
+#### Scala 3
 
 ```scala
 // Immutable by default
@@ -77,10 +72,8 @@ val map = Map(
   "three" -> 3
 )
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Kotlin</strong>
+#### Kotlin
 
 ```kotlin
 // Read-only list
@@ -96,9 +89,6 @@ val map = mapOf(
     "three" to 3
 )
 ```
-</div>
-
-</div>
 
 ### Key Characteristics
 
@@ -113,10 +103,9 @@ val map = mapOf(
 
 Understanding the difference between immutable and mutable collections is crucial for writing thread-safe, predictable code.
 
-<div style="display: flex; gap: 2em; flex-wrap: wrap;">
+### Java 21 vs Scala 3 vs Kotlin
 
-<div style="flex: 1; min-width: 280px">
-<strong>Java 21</strong>
+#### Java 21
 
 ```java
 // Mutable (traditional)
@@ -132,10 +121,8 @@ List<String> immutable = List.of("Apple", "Banana");
 List<String> copy = new ArrayList<>(immutable);
 copy.add("Cherry"); // OK
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Scala 3</strong>
+#### Scala 3
 
 ```scala
 // Immutable (default)
@@ -150,10 +137,8 @@ import scala.collection.mutable.ListBuffer
 val mutable = ListBuffer("Apple", "Banana")
 mutable += "Cherry" // Modifies in place
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Kotlin</strong>
+#### Kotlin
 
 ```kotlin
 // Read-only (default)
@@ -166,18 +151,12 @@ val newList = readOnly + "Cherry"
 val mutable = mutableListOf("Apple", "Banana")
 mutable.add("Cherry") // Modifies in place
 ```
-</div>
-
-</div>
 
 ## Stream API: Filter, Group, Statistics
 
 ### Filtering Transactions
 
-<div style="display: flex; gap: 2em; flex-wrap: wrap;">
-
-<div style="flex: 1; min-width: 280px">
-<strong>Java 21</strong>
+#### Java 21
 
 ```java
 // Java 8 style - mutable result
@@ -190,10 +169,8 @@ List<Transaction> filtered = transactions.stream()
     .filter(t -> t.amount() >= 50.0)
     .toList();
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Scala 3</strong>
+#### Scala 3
 
 ```scala
 // Direct collection operations
@@ -201,10 +178,8 @@ val filtered = transactions
   .filter(_.amount >= 50.0)
 // Result is immutable by default
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Kotlin</strong>
+#### Kotlin
 
 ```kotlin
 // Direct collection operations
@@ -212,16 +187,11 @@ val filtered = transactions
     .filter { it.amount >= 50.0 }
 // Result is read-only by default
 ```
-</div>
 
-</div>
 
 ### Grouping by Category
 
-<div style="display: flex; gap: 2em; flex-wrap: wrap;">
-
-<div style="flex: 1; min-width: 280px">
-<strong>Java 21</strong>
+#### Java 21
 
 ```java
 // Group transactions by category
@@ -241,10 +211,8 @@ Map<String, Double> totals =
             )
         ));
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Scala 3</strong>
+#### Scala 3
 
 ```scala
 // Group transactions by category
@@ -256,10 +224,8 @@ val byCategory = transactions
 val totals = transactions
   .groupMapReduce(_.category)(_.amount)(_ + _)
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Kotlin</strong>
+#### Kotlin
 
 ```kotlin
 // Group transactions by category
@@ -273,16 +239,10 @@ val totals = transactions
         txns.sumOf { it.amount } 
     }
 ```
-</div>
-
-</div>
 
 ### Calculating Statistics
 
-<div style="display: flex; gap: 2em; flex-wrap: wrap;">
-
-<div style="flex: 1; min-width: 280px">
-<strong>Java 21</strong>
+#### Java 21
 
 ```java
 // DoubleSummaryStatistics provides:
@@ -298,10 +258,8 @@ System.out.println("Average: " + stats.getAverage());
 System.out.println("Min: " + stats.getMin());
 System.out.println("Max: " + stats.getMax());
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Scala 3</strong>
+#### Scala 3
 
 ```scala
 // Calculate statistics manually
@@ -314,10 +272,8 @@ val stats = Statistics(
   max = amounts.max
 )
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Kotlin</strong>
+#### Kotlin
 
 ```kotlin
 // Calculate statistics using stdlib
@@ -330,9 +286,6 @@ val stats = Statistics(
     max = amounts.max()
 )
 ```
-</div>
-
-</div>
 
 ## Collectors.teeing() (Java 12+)
 
@@ -340,10 +293,7 @@ val stats = Statistics(
 
 ### Finding Min and Max in One Pass
 
-<div style="display: flex; gap: 2em; flex-wrap: wrap;">
-
-<div style="flex: 1; min-width: 280px">
-<strong>Java 21</strong>
+#### Java 21
 
 ```java
 record MinMaxResult(
@@ -369,10 +319,8 @@ MinMaxResult result = transactions.stream()
         )
     ));
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Scala 3</strong>
+#### Scala 3
 
 ```scala
 case class MinMaxResult(
@@ -386,10 +334,8 @@ val result = MinMaxResult(
   max = transactions.maxByOption(_.amount)
 )
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Kotlin</strong>
+#### Kotlin
 
 ```kotlin
 data class MinMaxResult(
@@ -403,9 +349,6 @@ val result = MinMaxResult(
     max = transactions.maxByOrNull { it.amount }
 )
 ```
-</div>
-
-</div>
 
 ### Combined Summary Statistics
 
@@ -454,10 +397,7 @@ List<Transaction> immutableList = transactions.stream()
 
 Here's our Transaction record used in the examples:
 
-<div style="display: flex; gap: 2em; flex-wrap: wrap;">
-
-<div style="flex: 1; min-width: 280px">
-<strong>Java 21</strong>
+### Java 21
 
 ```java
 public record Transaction(
@@ -476,10 +416,8 @@ public record Transaction(
     }
 }
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Scala 3</strong>
+### Scala 3
 
 ```scala
 case class Transaction(
@@ -493,10 +431,8 @@ case class Transaction(
   require(category.nonEmpty, "Category required")
   require(amount > 0, "Amount must be positive")
 ```
-</div>
 
-<div style="flex: 1; min-width: 280px">
-<strong>Kotlin</strong>
+### Kotlin
 
 ```kotlin
 data class Transaction(
@@ -513,9 +449,6 @@ data class Transaction(
     }
 }
 ```
-</div>
-
-</div>
 
 ## Summary: Feature Comparison
 
