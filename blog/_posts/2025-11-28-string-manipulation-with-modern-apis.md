@@ -178,16 +178,16 @@ String.format("Name: %s, Age: %d", name, age);
 
 ### Processing Multi-line Text
 
-<div class="code-tabs">
-<input type="radio" name="tabs-1" id="tab-java-1" checked>
-<input type="radio" name="tabs-1" id="tab-scala-1">
-<input type="radio" name="tabs-1" id="tab-kotlin-1">
+<div class="code-tabs" role="tablist">
+<input type="radio" name="tabs-1" id="tab-java-1" checked aria-label="Show Java 21 code">
+<input type="radio" name="tabs-1" id="tab-scala-1" aria-label="Show Scala 3 code">
+<input type="radio" name="tabs-1" id="tab-kotlin-1" aria-label="Show Kotlin code">
 <div class="tab-labels">
-<label for="tab-java-1">Java 21</label>
-<label for="tab-scala-1">Scala 3</label>
-<label for="tab-kotlin-1">Kotlin</label>
+<label for="tab-java-1" role="tab">Java 21</label>
+<label for="tab-scala-1" role="tab">Scala 3</label>
+<label for="tab-kotlin-1" role="tab">Kotlin</label>
 </div>
-<div class="tab-content java-1" markdown="1">
+<div class="tab-content java-1" role="tabpanel" aria-labelledby="tab-java-1" markdown="1">
 
 ```java
 public static String processText(String text) {
@@ -202,7 +202,7 @@ public static String processText(String text) {
 ```
 
 </div>
-<div class="tab-content scala-1" markdown="1">
+<div class="tab-content scala-1" role="tabpanel" aria-labelledby="tab-scala-1" markdown="1">
 
 ```scala
 def processText(text: String): String =
@@ -216,7 +216,7 @@ def processText(text: String): String =
 ```
 
 </div>
-<div class="tab-content kotlin-1" markdown="1">
+<div class="tab-content kotlin-1" role="tabpanel" aria-labelledby="tab-kotlin-1" markdown="1">
 
 ```kotlin
 fun processText(text: String?): String {
@@ -249,16 +249,16 @@ fun processText(text: String?): String {
 
 ### Creating Multi-line Strings
 
-<div class="code-tabs">
-<input type="radio" name="tabs-2" id="tab-java-2" checked>
-<input type="radio" name="tabs-2" id="tab-scala-2">
-<input type="radio" name="tabs-2" id="tab-kotlin-2">
+<div class="code-tabs" role="tablist">
+<input type="radio" name="tabs-2" id="tab-java-2" checked aria-label="Show Java 21 code">
+<input type="radio" name="tabs-2" id="tab-scala-2" aria-label="Show Scala 3 code">
+<input type="radio" name="tabs-2" id="tab-kotlin-2" aria-label="Show Kotlin code">
 <div class="tab-labels">
-<label for="tab-java-2">Java 21</label>
-<label for="tab-scala-2">Scala 3</label>
-<label for="tab-kotlin-2">Kotlin</label>
+<label for="tab-java-2" role="tab">Java 21</label>
+<label for="tab-scala-2" role="tab">Scala 3</label>
+<label for="tab-kotlin-2" role="tab">Kotlin</label>
 </div>
-<div class="tab-content java-2" markdown="1">
+<div class="tab-content java-2" role="tabpanel" aria-labelledby="tab-java-2" markdown="1">
 
 ```java
 String json = """
@@ -270,7 +270,7 @@ String json = """
 ```
 
 </div>
-<div class="tab-content scala-2" markdown="1">
+<div class="tab-content scala-2" role="tabpanel" aria-labelledby="tab-scala-2" markdown="1">
 
 ```scala
 val json = s"""{
@@ -280,7 +280,7 @@ val json = s"""{
 ```
 
 </div>
-<div class="tab-content kotlin-2" markdown="1">
+<div class="tab-content kotlin-2" role="tabpanel" aria-labelledby="tab-kotlin-2" markdown="1">
 
 ```kotlin
 val json = """

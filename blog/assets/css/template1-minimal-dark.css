@@ -489,7 +489,18 @@ tr:last-child td {
   }
 }
 
-/* Tabbed Code Blocks */
+/*
+ * Tabbed Code Blocks
+ * 
+ * Browser compatibility: Uses CSS :has() selector which is supported in:
+ * - Chrome 105+ (Aug 2022)
+ * - Safari 15.4+ (Mar 2022)  
+ * - Firefox 121+ (Dec 2023)
+ * - Edge 105+ (Aug 2022)
+ * 
+ * For older browsers, all code tabs will be hidden. Consider this acceptable
+ * as modern browsers are required for the best reading experience.
+ */
 .code-tabs {
   margin: var(--space-lg) 0;
   border-radius: 8px;
@@ -536,7 +547,7 @@ tr:last-child td {
   border: none;
 }
 
-/* Tab selection using :has() selector (modern CSS) */
+/* Tab selection using :has() selector */
 /* Java tab selected */
 .code-tabs:has(input[id^="tab-java"]:checked) .tab-labels label[for^="tab-java"] {
   color: var(--accent-color);
