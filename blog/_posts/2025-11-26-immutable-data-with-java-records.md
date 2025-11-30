@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Immutable Data with Java Records"
+description: "Master Java Records for immutable data classes - compare with Scala case classes and Kotlin data classes, learn validation patterns, and see before/after code examples."
 date: 2025-11-26 21:00:00 +0000
 categories: interview
 tags: java java21 records immutability interview-preparation

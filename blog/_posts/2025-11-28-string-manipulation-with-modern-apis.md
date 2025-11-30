@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "String Manipulation with Modern APIs"
+description: "Learn modern Java String APIs (Java 11-17) including isBlank(), lines(), strip(), indent(), and text blocks - with comparisons to Scala 3 and Kotlin approaches."
 date: 2025-11-28 22:00:00 +0000
 categories: interview
 tags: java java21 scala kotlin strings interview-preparation

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Stream API Advanced Operations"
+description: "Advanced Java Stream API operations - learn takeWhile, dropWhile, custom collectors, parallel streams, and data analysis patterns with Scala and Kotlin comparisons."
 date: 2025-11-29 16:00:00 +0000
 categories: interview
 tags: java java21 scala kotlin streams collectors parallel interview-preparation

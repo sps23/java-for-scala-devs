@@ -1,6 +1,7 @@
 ---
 layout: home
 title: Home
+description: "Java for Scala Developers - A practical guide covering modern Java 21 features including Records, Pattern Matching, Virtual Threads, and more for Scala developers."
 ---
 
 Welcome to the practical guide for Scala developers who want to learn (or re-learn) Java!

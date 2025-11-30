@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Foreign Function and Memory API in Java 21"
+description: "Integrate with native C libraries using Java 21's FFM API - a modern JNI alternative with Arena memory management, MemorySegment, and Linker examples."
 date: 2025-11-29 19:00:00 +0000
 categories: interview
 tags: java java21 scala kotlin ffm native jni interview-preparation

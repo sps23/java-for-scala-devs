@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Functional Interfaces and Lambda Expressions"
+description: "Master Java functional interfaces, lambda expressions, and method references - build a configurable retry mechanism with comparisons to Scala and Kotlin functions."
 date: 2025-11-29 15:00:00 +0000
 categories: functional-programming
 tags: java scala kotlin lambdas functional-interfaces method-references
