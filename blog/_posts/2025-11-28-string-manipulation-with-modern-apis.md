@@ -178,7 +178,16 @@ String.format("Name: %s, Age: %d", name, age);
 
 ### Processing Multi-line Text
 
-### Java 21
+<div class="code-tabs">
+<input type="radio" name="tabs-1" id="tab-java-1" checked>
+<input type="radio" name="tabs-1" id="tab-scala-1">
+<input type="radio" name="tabs-1" id="tab-kotlin-1">
+<div class="tab-labels">
+<label for="tab-java-1">Java 21</label>
+<label for="tab-scala-1">Scala 3</label>
+<label for="tab-kotlin-1">Kotlin</label>
+</div>
+<div class="tab-content java-1" markdown="1">
 
 ```java
 public static String processText(String text) {
@@ -192,7 +201,8 @@ public static String processText(String text) {
 }
 ```
 
-### Scala 3
+</div>
+<div class="tab-content scala-1" markdown="1">
 
 ```scala
 def processText(text: String): String =
@@ -205,7 +215,8 @@ def processText(text: String): String =
     .getOrElse("")
 ```
 
-### Kotlin
+</div>
+<div class="tab-content kotlin-1" markdown="1">
 
 ```kotlin
 fun processText(text: String?): String {
@@ -216,6 +227,9 @@ fun processText(text: String?): String {
         .joinToString("\n")
 }
 ```
+
+</div>
+</div>
 
 ### Multi-line Strings
 
@@ -235,7 +249,16 @@ fun processText(text: String?): String {
 
 ### Creating Multi-line Strings
 
-### Java 21
+<div class="code-tabs">
+<input type="radio" name="tabs-2" id="tab-java-2" checked>
+<input type="radio" name="tabs-2" id="tab-scala-2">
+<input type="radio" name="tabs-2" id="tab-kotlin-2">
+<div class="tab-labels">
+<label for="tab-java-2">Java 21</label>
+<label for="tab-scala-2">Scala 3</label>
+<label for="tab-kotlin-2">Kotlin</label>
+</div>
+<div class="tab-content java-2" markdown="1">
 
 ```java
 String json = """
@@ -246,17 +269,18 @@ String json = """
     """.formatted(name, email);
 ```
 
-### Scala 3
+</div>
+<div class="tab-content scala-2" markdown="1">
 
 ```scala
 val json = s"""{
   |  "name": "$name",
   |  "email": "$email"
   |}""".stripMargin
-
 ```
 
-### Kotlin
+</div>
+<div class="tab-content kotlin-2" markdown="1">
 
 ```kotlin
 val json = """
@@ -266,6 +290,9 @@ val json = """
     }
 """.trimIndent()
 ```
+
+</div>
+</div>
 
 ## Complete Example: Text Processing Pipeline
 

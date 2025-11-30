@@ -488,3 +488,118 @@ tr:last-child td {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+/* Tabbed Code Blocks */
+.code-tabs {
+  margin: var(--space-lg) 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+.code-tabs input[type="radio"] {
+  display: none;
+}
+
+.code-tabs .tab-labels {
+  display: flex;
+  background-color: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+.code-tabs .tab-labels label {
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.code-tabs .tab-labels label:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.code-tabs .tab-content {
+  display: none;
+}
+
+.code-tabs .tab-content pre {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Tab selection using :has() selector (modern CSS) */
+/* Java tab selected */
+.code-tabs:has(input[id^="tab-java"]:checked) .tab-labels label[for^="tab-java"] {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+  background-color: rgba(88, 166, 255, 0.1);
+}
+
+.code-tabs:has(input[id^="tab-java"]:checked) .tab-content[class*="java"] {
+  display: block;
+}
+
+/* Scala tab selected */
+.code-tabs:has(input[id^="tab-scala"]:checked) .tab-labels label[for^="tab-scala"] {
+  color: #ff5555;
+  border-bottom-color: #ff5555;
+  background-color: rgba(255, 85, 85, 0.1);
+}
+
+.code-tabs:has(input[id^="tab-scala"]:checked) .tab-content[class*="scala"] {
+  display: block;
+}
+
+/* Kotlin tab selected */
+.code-tabs:has(input[id^="tab-kotlin"]:checked) .tab-labels label[for^="tab-kotlin"] {
+  color: #bd93f9;
+  border-bottom-color: #bd93f9;
+  background-color: rgba(189, 147, 249, 0.1);
+}
+
+.code-tabs:has(input[id^="tab-kotlin"]:checked) .tab-content[class*="kotlin"] {
+  display: block;
+}
+
+/* Default state: show Java tab when no tab is selected (fallback) */
+.code-tabs:not(:has(input:checked)) .tab-content[class*="java"] {
+  display: block;
+}
+
+.code-tabs:not(:has(input:checked)) .tab-labels label[for^="tab-java"] {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+  background-color: rgba(88, 166, 255, 0.1);
+}
+
+/* Language icons/badges in tab labels */
+.code-tabs .tab-labels label::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.code-tabs .tab-labels label[for^="tab-java"]::before {
+  background-color: var(--accent-color);
+}
+
+.code-tabs .tab-labels label[for^="tab-scala"]::before {
+  background-color: #ff5555;
+}
+
+.code-tabs .tab-labels label[for^="tab-kotlin"]::before {
+  background-color: #bd93f9;
+}
