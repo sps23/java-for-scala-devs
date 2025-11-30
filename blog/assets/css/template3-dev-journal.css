@@ -586,8 +586,12 @@ pre {
   padding: var(--space-lg);
   border-radius: 12px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--border-color);
   position: relative;
+  max-width: 100%;
+  white-space: pre;
+  word-wrap: normal;
 }
 
 pre::before {
@@ -745,6 +749,20 @@ th {
   
   .header-search input:focus {
     width: 200px;
+  }
+  
+  /* Ensure code blocks scroll horizontally on mobile */
+  .article-content,
+  .main-content,
+  .article-page {
+    overflow-x: hidden;
+  }
+  
+  .article-content pre,
+  .article-content .highlight {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 

@@ -489,7 +489,11 @@ pre {
   padding: var(--space-lg);
   border-radius: 8px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--border-color);
+  max-width: 100%;
+  white-space: pre;
+  word-wrap: normal;
 }
 
 pre code {
@@ -587,6 +591,19 @@ th {
   .top-bar-content {
     flex-direction: column;
     gap: var(--space-md);
+  }
+  
+  /* Ensure code blocks scroll horizontally on mobile */
+  .article-content,
+  .content-wrapper {
+    overflow-x: hidden;
+  }
+  
+  .article-content pre,
+  .article-content .highlight {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 

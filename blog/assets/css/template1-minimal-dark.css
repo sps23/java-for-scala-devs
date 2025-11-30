@@ -311,7 +311,11 @@ pre {
   padding: var(--space-md);
   border-radius: 8px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 100%;
+  white-space: pre;
+  word-wrap: normal;
 }
 
 pre code {
@@ -469,5 +473,18 @@ tr:last-child td {
   
   .post-list {
     grid-template-columns: 1fr;
+  }
+  
+  /* Ensure code blocks scroll horizontally on mobile */
+  .article-content,
+  .main-content {
+    overflow-x: hidden;
+  }
+  
+  .article-content pre,
+  .article-content .highlight {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
