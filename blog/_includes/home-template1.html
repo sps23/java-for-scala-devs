@@ -34,103 +34,11 @@
   
   <!-- Category Filter -->
   <div class="category-filter">
-    <div class="filter-header">
-      <h3>Filter by Category</h3>
-      <span class="filter-count"><span id="visible-count">{{ site.posts | size }}</span> / {{ site.posts | size }} posts</span>
-    </div>
-    <div class="category-buttons">
-      <button class="category-btn active" data-category="all">
-        <span class="category-icon">📚</span>
-        <span class="category-label">All Posts</span>
-        <span class="category-badge">{{ site.posts | size }}</span>
-      </button>
-      {% assign categories = site.posts | map: "categories" | join: "," | split: "," | uniq | sort %}
-      {% for category in categories %}
-        {% if category != "" %}
-        {% assign category_posts = site.posts | where_exp: "post", "post.categories contains category" %}
-        <button class="category-btn" data-category="{{ category | downcase }}">
-          <span class="category-icon">
-            {% if category == "interview" %}💼
-            {% elsif category == "features" %}✨
-            {% elsif category == "concurrency" %}⚡
-            {% elsif category == "introduction" %}👋
-            {% else %}📝{% endif %}
-          </span>
-          <span class="category-label">{{ category | capitalize }}</span>
-          <span class="category-badge">{{ category_posts | size }}</span>
-        </button>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-
-  <!-- Category Groups Section -->
-  <div class="category-groups-section">
-    <div class="section-header">
-      <h2>Posts by Category</h2>
-      <p class="section-subtitle">Browse posts organized by topic areas</p>
-    </div>
-
+    <button class="category-btn active" data-category="all">All Posts</button>
     {% assign categories = site.posts | map: "categories" | join: "," | split: "," | uniq | sort %}
     {% for category in categories %}
       {% if category != "" %}
-      {% assign category_posts = site.posts | where_exp: "post", "post.categories contains category" %}
-
-      <div class="category-group" data-category="{{ category | downcase }}">
-        <div class="category-group-header">
-          <div class="category-group-title">
-            <span class="category-group-icon">
-              {% if category == "interview" %}💼
-              {% elsif category == "features" %}✨
-              {% elsif category == "concurrency" %}⚡
-              {% elsif category == "introduction" %}👋
-              {% else %}📝{% endif %}
-            </span>
-            <h3>{{ category | capitalize }}</h3>
-            <span class="category-group-count">{{ category_posts | size }} posts</span>
-          </div>
-          <p class="category-group-description">
-            {% if category == "interview" %}
-              Essential topics and deep dives for Java 21 interview preparation
-            {% elsif category == "features" %}
-              Exploring modern Java features and their Scala equivalents
-            {% elsif category == "concurrency" %}
-              Concurrent and asynchronous programming patterns
-            {% elsif category == "introduction" %}
-              Getting started with Java for Scala developers
-            {% else %}
-              Posts related to {{ category }}
-            {% endif %}
-          </p>
-        </div>
-
-        <div class="category-group-posts">
-          {% for post in category_posts limit: 3 %}
-          <article class="category-post-card">
-            <div class="post-card-header">
-              <time class="post-card-date" datetime="{{ post.date | date_to_xmlschema }}">
-                {{ post.date | date: "%b %-d, %Y" }}
-              </time>
-            </div>
-            <h4 class="post-card-title">
-              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            </h4>
-            <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-            <div class="post-card-tags">
-              {% for tag in post.tags limit: 4 %}
-              <span class="post-card-tag">{{ tag }}</span>
-              {% endfor %}
-            </div>
-          </article>
-          {% endfor %}
-
-          {% if category_posts.size > 3 %}
-          <a href="#" class="view-all-link" data-category="{{ category | downcase }}">
-            View all {{ category_posts | size }} posts in {{ category | capitalize }} →
-          </a>
-          {% endif %}
-        </div>
-      </div>
+      <button class="category-btn" data-category="{{ category | downcase }}">{{ category | capitalize }}</button>
       {% endif %}
     {% endfor %}
   </div>

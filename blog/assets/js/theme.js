@@ -85,9 +85,7 @@
     if (!categoryBtns.length) return;
 
     const posts = document.querySelectorAll('.post-item, .post-card, .timeline-post, .post-list-item');
-    const categoryGroups = document.querySelectorAll('.category-group');
-    const visibleCountEl = document.getElementById('visible-count');
-
+    
     categoryBtns.forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
@@ -101,13 +99,10 @@
         // "all" shows everything
         if (category === 'all') {
           posts.forEach(post => post.style.display = '');
-          categoryGroups.forEach(group => group.style.display = '');
-          updateVisibleCount(posts.length, visibleCountEl);
           return;
         }
         
-        // Filter posts in post list
-        let visibleCount = 0;
+        // Filter posts
         posts.forEach(function(post) {
           const postCategories = post.dataset.categories || '';
           const postTags = post.dataset.tags || '';
@@ -119,52 +114,9 @@
                          categoryText.includes(category);
           
           post.style.display = matches ? '' : 'none';
-          if (matches) visibleCount++;
         });
-
-        // Filter category groups
-        categoryGroups.forEach(function(group) {
-          const groupCategory = group.dataset.category;
-          group.style.display = (groupCategory === category) ? '' : 'none';
-        });
-
-        updateVisibleCount(visibleCount, visibleCountEl);
       });
     });
-
-    // Handle "View all" links in category groups
-    const viewAllLinks = document.querySelectorAll('.view-all-link');
-    viewAllLinks.forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const category = link.dataset.category;
-
-        // Find and click the corresponding category button
-        const categoryBtn = document.querySelector('.category-btn[data-category="' + category + '"]');
-        if (categoryBtn) {
-          categoryBtn.click();
-
-          // Scroll to posts list
-          const postsList = document.querySelector('.post-list, h2');
-          if (postsList) {
-            postsList.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }
-      });
-    });
-  }
-
-  /**
-   * Update visible post counter
-   */
-  function updateVisibleCount(count, element) {
-    if (element) {
-      element.textContent = count;
-      element.style.animation = 'none';
-      setTimeout(function() {
-        element.style.animation = 'fadeIn 0.3s ease';
-      }, 10);
-    }
   }
 
   /**
