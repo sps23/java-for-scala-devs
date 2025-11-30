@@ -9,6 +9,18 @@ java {
     }
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ['--enable-preview']
+}
+
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += ['--enable-preview']
+}
+
+tasks.withType(Test).configureEach {
+    jvmArgs += ['--enable-preview']
+}
+
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

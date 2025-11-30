@@ -9,9 +9,7 @@
     
     <nav class="site-nav">
       <a href="{{ '/' | relative_url }}">Home</a>
-      {% for page in site.header_pages %}
-        <a href="{{ site.baseurl }}/{{ page }}">{{ page | replace: '.md', '' | capitalize }}</a>
-      {% endfor %}
+      <a href="{{ site.baseurl }}/about/">About</a>
       <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">GitHub</a>
     </nav>
   </div>
