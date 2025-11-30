@@ -23,8 +23,10 @@
   background: var(--dracula-bg);
   border-radius: 8px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   margin: 1.5rem 0;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 100%;
 }
 
 .highlight pre {
@@ -33,6 +35,10 @@
   background: transparent;
   border: none;
   line-height: 1.5;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: pre;
+  word-wrap: normal;
 }
 
 .highlight code {
@@ -313,8 +319,21 @@ table td .highlight pre {
   background: var(--dracula-purple);
 }
 
-  border-radius: 4px;
-  font-size: 0.875em;
+/* Mobile-specific styles for code blocks */
+@media (max-width: 768px) {
+  .highlight {
+    margin: 1rem 0;
+    border-radius: 6px;
+  }
+  
+  .highlight pre {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .highlight code {
+    font-size: 0.85rem;
+  }
 }
 
 /* Language specific highlighting */
