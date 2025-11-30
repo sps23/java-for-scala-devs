@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Null-Safe Programming with Optional"
+description: "Eliminate NullPointerException with Java Optional API - learn map, flatMap, filter patterns and compare with Scala Option and Kotlin null-safety features."
 date: 2025-11-29 18:00:00 +0000
 categories: interview
 tags: java java21 scala kotlin optional null-safety interview-preparation

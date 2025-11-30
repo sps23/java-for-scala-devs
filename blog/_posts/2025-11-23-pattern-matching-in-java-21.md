@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Pattern Matching in Java 21"
+description: "Explore Java 21 pattern matching features including type patterns, record patterns, guards, and sealed types - with comparisons to Scala's match expressions."
 date: 2025-11-23 12:00:00 +0000
 categories: features
 tags: java scala pattern-matching

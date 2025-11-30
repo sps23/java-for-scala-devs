@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Virtual Threads and Structured Concurrency in Java 21"
+description: "Master Java 21 virtual threads and Project Loom - migrate from thread pools, use StructuredTaskScope, understand scoped values, and compare with Scala ZIO and Kotlin coroutines."
 date: 2025-11-29 17:00:00 +0000
 categories: interview
 tags: java java21 scala kotlin virtual-threads concurrency project-loom interview-preparation

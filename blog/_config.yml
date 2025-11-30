@@ -1,7 +1,27 @@
 title: Java for Scala Developers
-description: A practical guide for Scala developers learning Java
+description: A practical guide for Scala developers learning modern Java 21+. Compare Java Records, Pattern Matching, Virtual Threads with Scala case classes, match expressions, and more.
 baseurl: "/java-for-scala-devs"
 url: "https://sps23.github.io"
+
+# SEO Configuration
+author:
+  name: Sylwester Stocki
+  url: https://github.com/sps23
+lang: en_US
+
+# Social Links for SEO
+social:
+  name: Sylwester Stocki
+  links:
+    - https://github.com/sps23
+    - https://www.linkedin.com/in/sylwesterstocki
+
+# Open Graph defaults
+logo: /assets/images/logo.png
+
+# Twitter Card defaults
+twitter:
+  card: summary
 
 # Theme Template Selection
 # Choose from:
@@ -21,6 +41,7 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-relative-links
+  - jekyll-sitemap
 
 # Collections
 collections:
@@ -52,3 +73,10 @@ github_username: sps23
 # Navigation
 header_pages:
   - about.md
+
+# Sass/CSS Minification (for any SCSS files)
+sass:
+  style: compressed
+
+# Permalink for clean SEO-friendly URLs
+permalink: /blog/:year/:month/:day/:title/

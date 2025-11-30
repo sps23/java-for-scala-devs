@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "CompletableFuture and Asynchronous Programming"
+description: "Build concurrent applications with Java CompletableFuture - learn async composition, timeouts, and error handling with comparisons to Scala Futures and Kotlin Coroutines."
 date: 2025-11-29 10:00:00 +0000
 categories: concurrency
 tags: java scala kotlin async futures completablefuture coroutines

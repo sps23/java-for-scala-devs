@@ -1,6 +1,7 @@
 ---
 layout: page
 title: About
+description: "About Java for Scala Developers - learn about the author Sylwester Stocki, the purpose of this guide, and how to contribute to the project."
 permalink: /about/
 ---
 
