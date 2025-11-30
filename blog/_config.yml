@@ -16,9 +16,6 @@ social:
     - https://github.com/sps23
     - https://www.linkedin.com/in/sylwesterstocki
 
-# Open Graph defaults
-logo: /assets/images/logo.png
-
 # Twitter Card defaults
 twitter:
   card: summary
