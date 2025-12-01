@@ -55,200 +55,204 @@ Each language has rules about what sealed subtypes must be:
 
 ## The Solution: Sealed Payment Types
 
-### Java Implementation
+<div class="code-tabs" data-tabs-id="tabs-1">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// PaymentMethod.java - Sealed interface restricts implementations</span>
+<span class="kd">public</span> <span class="kd">sealed</span> <span class="kd">interface</span> <span class="nc">PaymentMethod</span> <span class="n">permits</span> <span class="nc">CreditCard</span><span class="o">,</span> <span class="nc">BankTransfer</span><span class="o">,</span> <span class="nc">DigitalWallet</span> <span class="o">{</span>
+    <span class="nc">BigDecimal</span> <span class="nf">amount</span><span class="o">();</span>
+<span class="o">}</span>
 
-Java 17 introduced the `sealed` and `permits` keywords. Combined with records (Java 16+), we can create concise, immutable payment types:
+<span class="c1">// CreditCard.java - Record implementing sealed interface</span>
+<span class="kd">public</span> <span class="n">record</span> <span class="nc">CreditCard</span><span class="o">(</span><span class="nc">String</span> <span class="n">cardNumber</span><span class="o">,</span> <span class="nc">YearMonth</span> <span class="n">expiryDate</span><span class="o">,</span> <span class="nc">BigDecimal</span> <span class="n">amount</span><span class="o">)</span>
+        <span class="kd">implements</span> <span class="nc">PaymentMethod</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">CreditCard</span> <span class="o">{</span>
+        <span class="c1">// Compact constructor for validation</span>
+        <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">cardNumber</span><span class="o">,</span> <span class="s">"Card number cannot be null"</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cardNumber</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">!=</span> <span class="mi">16</span> <span class="o">||</span> <span class="o">!</span><span class="n">cardNumber</span><span class="o">.</span><span class="na">matches</span><span class="o">(</span><span class="s">"\\d+"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">(</span><span class="s">"Card number must be 16 digits"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// ... more validation</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-```java
-// PaymentMethod.java - Sealed interface restricts implementations
-public sealed interface PaymentMethod permits CreditCard, BankTransfer, DigitalWallet {
-    BigDecimal amount();
-}
+<span class="c1">// BankTransfer.java</span>
+<span class="kd">public</span> <span class="n">record</span> <span class="nc">BankTransfer</span><span class="o">(</span><span class="nc">String</span> <span class="n">iban</span><span class="o">,</span> <span class="nc">String</span> <span class="n">bankCode</span><span class="o">,</span> <span class="nc">BigDecimal</span> <span class="n">amount</span><span class="o">)</span>
+        <span class="kd">implements</span> <span class="nc">PaymentMethod</span> <span class="o">{</span> <span class="c1">/* validation */</span> <span class="o">}</span>
 
-// CreditCard.java - Record implementing sealed interface
-public record CreditCard(String cardNumber, YearMonth expiryDate, BigDecimal amount)
-        implements PaymentMethod {
-    public CreditCard {
-        // Compact constructor for validation
-        Objects.requireNonNull(cardNumber, "Card number cannot be null");
-        if (cardNumber.length() != 16 || !cardNumber.matches("\\d+")) {
-            throw new IllegalArgumentException("Card number must be 16 digits");
-        }
-        // ... more validation
-    }
-}
+<span class="c1">// DigitalWallet.java</span>
+<span class="kd">public</span> <span class="n">record</span> <span class="nc">DigitalWallet</span><span class="o">(</span><span class="nc">String</span> <span class="n">provider</span><span class="o">,</span> <span class="nc">String</span> <span class="n">accountId</span><span class="o">,</span> <span class="nc">BigDecimal</span> <span class="n">amount</span><span class="o">)</span>
+        <span class="kd">implements</span> <span class="nc">PaymentMethod</span> <span class="o">{</span> <span class="c1">/* validation */</span> <span class="o">}</span>
+</code></pre></div></div>
+<p><a href="https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/interview/preparation/payment">View full Java implementation</a></p>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// PaymentMethod.scala - All subtypes must be in same file</span>
+<span class="k">sealed</span> <span class="k">trait</span> <span class="nc">PaymentMethod</span><span class="o">:</span>
+  <span class="k">def</span> <span class="nf">amount</span><span class="k">:</span> <span class="kt">BigDecimal</span>
 
-// BankTransfer.java
-public record BankTransfer(String iban, String bankCode, BigDecimal amount)
-        implements PaymentMethod { /* validation */ }
+<span class="k">case</span> <span class="k">class</span> <span class="nc">CreditCard</span><span class="o">(</span><span class="n">cardNumber</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">expiryDate</span><span class="k">:</span> <span class="kt">YearMonth</span><span class="o">,</span> <span class="n">amount</span><span class="k">:</span> <span class="kt">BigDecimal</span><span class="o">)</span>
+    <span class="k">extends</span> <span class="nc">PaymentMethod</span><span class="o">:</span>
+  <span class="nf">require</span><span class="o">(</span><span class="n">cardNumber</span><span class="o">.</span><span class="py">length</span> <span class="o">==</span> <span class="mi">16</span> <span class="o">&amp;&amp;</span> <span class="n">cardNumber</span><span class="o">.</span><span class="py">forall</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">isDigit</span><span class="o">),</span> <span class="s">"Card number must be 16 digits"</span><span class="o">)</span>
+  <span class="nf">require</span><span class="o">(!</span><span class="n">expiryDate</span><span class="o">.</span><span class="py">isBefore</span><span class="o">(</span><span class="nv">YearMonth</span><span class="o">.</span><span class="py">now</span><span class="o">()),</span> <span class="s">"Card has expired"</span><span class="o">)</span>
+  <span class="nf">require</span><span class="o">(</span><span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">,</span> <span class="s">"Amount must be positive"</span><span class="o">)</span>
 
-// DigitalWallet.java
-public record DigitalWallet(String provider, String accountId, BigDecimal amount)
-        implements PaymentMethod { /* validation */ }
-```
+<span class="k">case</span> <span class="k">class</span> <span class="nc">BankTransfer</span><span class="o">(</span><span class="n">iban</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">bankCode</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">amount</span><span class="k">:</span> <span class="kt">BigDecimal</span><span class="o">)</span>
+    <span class="k">extends</span> <span class="nc">PaymentMethod</span><span class="o">:</span>
+  <span class="c1">// validation with require()</span>
 
-[View full Java implementation](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/interview/preparation/payment)
+<span class="k">case</span> <span class="k">class</span> <span class="nc">DigitalWallet</span><span class="o">(</span><span class="n">provider</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">accountId</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">amount</span><span class="k">:</span> <span class="kt">BigDecimal</span><span class="o">)</span>
+    <span class="k">extends</span> <span class="nc">PaymentMethod</span><span class="o">:</span>
+  <span class="c1">// validation with require()</span>
+</code></pre></div></div>
+<p><a href="https://github.com/sps23/java-for-scala-devs/tree/main/scala3/src/main/scala/io/github/sps23/interview/preparation/payment">View full Scala implementation</a></p>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// PaymentMethod.kt - All implementations in same package/module</span>
+<span class="k">sealed</span> <span class="kd">interface</span> <span class="nc">PaymentMethod</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">amount</span><span class="p">:</span> <span class="nc">BigDecimal</span>
+<span class="p">}</span>
 
-### Scala Implementation
+<span class="kd">data</span> <span class="kd">class</span> <span class="nc">CreditCard</span><span class="p">(</span>
+    <span class="kd">val</span> <span class="py">cardNumber</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">expiryDate</span><span class="p">:</span> <span class="nc">YearMonth</span><span class="p">,</span>
+    <span class="k">override</span> <span class="kd">val</span> <span class="py">amount</span><span class="p">:</span> <span class="nc">BigDecimal</span><span class="p">,</span>
+<span class="p">)</span> <span class="p">:</span> <span class="nc">PaymentMethod</span> <span class="p">{</span>
+    <span class="k">init</span> <span class="p">{</span>
+        <span class="nf">require</span><span class="p">(</span><span class="n">cardNumber</span><span class="p">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">16</span> <span class="o">&amp;&amp;</span> <span class="n">cardNumber</span><span class="p">.</span><span class="nf">all</span> <span class="p">{</span> <span class="k">it</span><span class="p">.</span><span class="nf">isDigit</span><span class="p">()</span> <span class="p">})</span> <span class="p">{</span>
+            <span class="s">"Card number must be 16 digits"</span>
+        <span class="p">}</span>
+        <span class="nf">require</span><span class="p">(!</span><span class="n">expiryDate</span><span class="p">.</span><span class="nf">isBefore</span><span class="p">(</span><span class="nc">YearMonth</span><span class="p">.</span><span class="nf">now</span><span class="p">()))</span> <span class="p">{</span> <span class="s">"Card has expired"</span> <span class="p">}</span>
+        <span class="nf">require</span><span class="p">(</span><span class="n">amount</span> <span class="p">&gt;</span> <span class="nc">BigDecimal</span><span class="p">.</span><span class="nc">ZERO</span><span class="p">)</span> <span class="p">{</span> <span class="s">"Amount must be positive"</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-Scala's sealed traits and case classes provide the most concise syntax:
+<span class="kd">data</span> <span class="kd">class</span> <span class="nc">BankTransfer</span><span class="p">(</span><span class="kd">val</span> <span class="py">iban</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span> <span class="kd">val</span> <span class="py">bankCode</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span> <span class="k">override</span> <span class="kd">val</span> <span class="py">amount</span><span class="p">:</span> <span class="nc">BigDecimal</span><span class="p">)</span>
+    <span class="p">:</span> <span class="nc">PaymentMethod</span> <span class="p">{</span> <span class="c1">/* validation */</span> <span class="p">}</span>
 
-```scala
-// PaymentMethod.scala - All subtypes must be in same file
-sealed trait PaymentMethod:
-  def amount: BigDecimal
-
-case class CreditCard(cardNumber: String, expiryDate: YearMonth, amount: BigDecimal)
-    extends PaymentMethod:
-  require(cardNumber.length == 16 && cardNumber.forall(_.isDigit), "Card number must be 16 digits")
-  require(!expiryDate.isBefore(YearMonth.now()), "Card has expired")
-  require(amount > 0, "Amount must be positive")
-
-case class BankTransfer(iban: String, bankCode: String, amount: BigDecimal)
-    extends PaymentMethod:
-  // validation with require()
-
-case class DigitalWallet(provider: String, accountId: String, amount: BigDecimal)
-    extends PaymentMethod:
-  // validation with require()
-```
-
-[View full Scala implementation](https://github.com/sps23/java-for-scala-devs/tree/main/scala3/src/main/scala/io/github/sps23/interview/preparation/payment)
-
-### Kotlin Implementation
-
-Kotlin's sealed interfaces with data classes offer a clean middle ground:
-
-```kotlin
-// PaymentMethod.kt - All implementations in same package/module
-sealed interface PaymentMethod {
-    val amount: BigDecimal
-}
-
-data class CreditCard(
-    val cardNumber: String,
-    val expiryDate: YearMonth,
-    override val amount: BigDecimal,
-) : PaymentMethod {
-    init {
-        require(cardNumber.length == 16 && cardNumber.all { it.isDigit() }) {
-            "Card number must be 16 digits"
-        }
-        require(!expiryDate.isBefore(YearMonth.now())) { "Card has expired" }
-        require(amount > BigDecimal.ZERO) { "Amount must be positive" }
-    }
-}
-
-data class BankTransfer(val iban: String, val bankCode: String, override val amount: BigDecimal)
-    : PaymentMethod { /* validation */ }
-
-data class DigitalWallet(val provider: String, val accountId: String, override val amount: BigDecimal)
-    : PaymentMethod { /* validation */ }
-```
-
-[View full Kotlin implementation](https://github.com/sps23/java-for-scala-devs/tree/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/payment)
+<span class="kd">data</span> <span class="kd">class</span> <span class="nc">DigitalWallet</span><span class="p">(</span><span class="kd">val</span> <span class="py">provider</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span> <span class="kd">val</span> <span class="py">accountId</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span> <span class="k">override</span> <span class="kd">val</span> <span class="py">amount</span><span class="p">:</span> <span class="nc">BigDecimal</span><span class="p">)</span>
+    <span class="p">:</span> <span class="nc">PaymentMethod</span> <span class="p">{</span> <span class="c1">/* validation */</span> <span class="p">}</span>
+</code></pre></div></div>
+<p><a href="https://github.com/sps23/java-for-scala-devs/tree/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/payment">View full Kotlin implementation</a></p>
+</div>
+</div>
 
 ## Exhaustive Pattern Matching for Fee Calculation
 
 The real power of sealed classes comes from exhaustive pattern matching. Let's implement fee calculation in all three languages.
 
-### Java - Switch Expressions with Record Patterns
+<div class="code-tabs" data-tabs-id="tabs-2">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="nc">BigDecimal</span> <span class="nf">calculateFee</span><span class="o">(</span><span class="nc">PaymentMethod</span> <span class="n">payment</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// No default needed - compiler verifies all cases are covered</span>
+    <span class="k">return</span> <span class="k">switch</span> <span class="o">(</span><span class="n">payment</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="nf">CreditCard</span><span class="o">(</span><span class="kt">var</span> <span class="n">cardNumber</span><span class="o">,</span> <span class="kt">var</span> <span class="n">expiry</span><span class="o">,</span> <span class="kt">var</span> <span class="n">amount</span><span class="o">)</span> <span class="o">-&gt;</span>
+            <span class="n">amount</span><span class="o">.</span><span class="na">multiply</span><span class="o">(</span><span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"0.029"</span><span class="o">)).</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"0.30"</span><span class="o">));</span>
+        <span class="k">case</span> <span class="nf">BankTransfer</span><span class="o">(</span><span class="kt">var</span> <span class="n">iban</span><span class="o">,</span> <span class="kt">var</span> <span class="n">bankCode</span><span class="o">,</span> <span class="kt">var</span> <span class="n">amount</span><span class="o">)</span> <span class="o">-&gt;</span>
+            <span class="n">amount</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"1000"</span><span class="o">))</span> <span class="o">&lt;</span> <span class="mi">0</span>
+                <span class="o">?</span> <span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"2.50"</span><span class="o">)</span>
+                <span class="o">:</span> <span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"5.00"</span><span class="o">);</span>
+        <span class="k">case</span> <span class="nf">DigitalWallet</span><span class="o">(</span><span class="kt">var</span> <span class="n">provider</span><span class="o">,</span> <span class="kt">var</span> <span class="n">accountId</span><span class="o">,</span> <span class="kt">var</span> <span class="n">amount</span><span class="o">)</span> <span class="o">-&gt;</span>
+            <span class="n">amount</span><span class="o">.</span><span class="na">multiply</span><span class="o">(</span><span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"0.025"</span><span class="o">)).</span><span class="na">max</span><span class="o">(</span><span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"0.50"</span><span class="o">));</span>
+    <span class="o">};</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">calculateFee</span><span class="o">(</span><span class="n">payment</span><span class="k">:</span> <span class="kt">PaymentMethod</span><span class="o">)</span><span class="k">:</span> <span class="kt">BigDecimal</span> <span class="o">=</span>
+  <span class="n">payment</span> <span class="k">match</span>
+    <span class="k">case</span> <span class="nc">CreditCard</span><span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="k">_</span><span class="o">,</span> <span class="n">amount</span><span class="o">)</span>    <span class="k">=&gt;</span>
+      <span class="n">amount</span> <span class="o">*</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"0.029"</span><span class="o">)</span> <span class="o">+</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"0.30"</span><span class="o">)</span>
+    <span class="k">case</span> <span class="nc">BankTransfer</span><span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="k">_</span><span class="o">,</span> <span class="n">amount</span><span class="o">)</span>  <span class="k">=&gt;</span>
+      <span class="nf">if</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"1000"</span><span class="o">)</span> <span class="k">then</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"2.50"</span><span class="o">)</span> <span class="k">else</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"5.00"</span><span class="o">)</span>
+    <span class="k">case</span> <span class="nc">DigitalWallet</span><span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="k">_</span><span class="o">,</span> <span class="n">amount</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="o">(</span><span class="n">amount</span> <span class="o">*</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"0.025"</span><span class="o">)).</span><span class="py">max</span><span class="o">(</span><span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"0.50"</span><span class="o">))</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">calculateFee</span><span class="p">(</span><span class="n">payment</span><span class="p">:</span> <span class="nc">PaymentMethod</span><span class="p">):</span> <span class="nc">BigDecimal</span> <span class="p">=</span>
+    <span class="k">when</span> <span class="p">(</span><span class="n">payment</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">is</span> <span class="nc">CreditCard</span> <span class="p">-&gt;</span>
+            <span class="n">payment</span><span class="p">.</span><span class="n">amount</span> <span class="p">*</span> <span class="nc">BigDecimal</span><span class="p">(</span><span class="s">"0.029"</span><span class="p">)</span> <span class="p">+</span> <span class="nc">BigDecimal</span><span class="p">(</span><span class="s">"0.30"</span><span class="p">)</span>
+        <span class="k">is</span> <span class="nc">BankTransfer</span> <span class="p">-&gt;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">payment</span><span class="p">.</span><span class="n">amount</span> <span class="p">&lt;</span> <span class="nc">BigDecimal</span><span class="p">(</span><span class="s">"1000"</span><span class="p">))</span> <span class="nc">BigDecimal</span><span class="p">(</span><span class="s">"2.50"</span><span class="p">)</span> <span class="k">else</span> <span class="nc">BigDecimal</span><span class="p">(</span><span class="s">"5.00"</span><span class="p">)</span>
+        <span class="k">is</span> <span class="nc">DigitalWallet</span> <span class="p">-&gt;</span>
+            <span class="p">(</span><span class="n">payment</span><span class="p">.</span><span class="n">amount</span> <span class="p">*</span> <span class="nc">BigDecimal</span><span class="p">(</span><span class="s">"0.025"</span><span class="p">)).</span><span class="nf">max</span><span class="p">(</span><span class="nc">BigDecimal</span><span class="p">(</span><span class="s">"0.50"</span><span class="p">))</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
-```java
-public static BigDecimal calculateFee(PaymentMethod payment) {
-    // No default needed - compiler verifies all cases are covered
-    return switch (payment) {
-        case CreditCard(var cardNumber, var expiry, var amount) ->
-            amount.multiply(new BigDecimal("0.029")).add(new BigDecimal("0.30"));
-        case BankTransfer(var iban, var bankCode, var amount) ->
-            amount.compareTo(new BigDecimal("1000")) < 0
-                ? new BigDecimal("2.50")
-                : new BigDecimal("5.00");
-        case DigitalWallet(var provider, var accountId, var amount) ->
-            amount.multiply(new BigDecimal("0.025")).max(new BigDecimal("0.50"));
-    };
-}
-```
+### Pattern Guards
 
-Java 21 also supports **pattern guards** with the `when` keyword:
-
-```java
-public static String describeFee(PaymentMethod payment) {
-    return switch (payment) {
-        case CreditCard(var num, var exp, var amt) when amt.compareTo(new BigDecimal("100")) > 0
-            -> "Credit card (high value): 2.9% + $0.30";
-        case CreditCard(var num, var exp, var amt)
-            -> "Credit card (standard): 2.9% + $0.30";
-        case BankTransfer(var iban, var code, var amt) when amt.compareTo(new BigDecimal("1000")) >= 0
-            -> "Bank transfer (high value): flat $5.00";
-        case BankTransfer(var iban, var code, var amt)
-            -> "Bank transfer (standard): flat $2.50";
-        case DigitalWallet(var provider, var id, var amt)
-            -> "Digital wallet (" + provider + "): 2.5% (min $0.50)";
-    };
-}
-```
-
-### Scala - Match Expressions with Case Class Destructuring
-
-```scala
-def calculateFee(payment: PaymentMethod): BigDecimal =
-  payment match
-    case CreditCard(_, _, amount)    =>
-      amount * BigDecimal("0.029") + BigDecimal("0.30")
-    case BankTransfer(_, _, amount)  =>
-      if amount < BigDecimal("1000") then BigDecimal("2.50") else BigDecimal("5.00")
-    case DigitalWallet(_, _, amount) =>
-      (amount * BigDecimal("0.025")).max(BigDecimal("0.50"))
-```
-
-Scala uses `if` guards within patterns:
-
-```scala
-def describeFee(payment: PaymentMethod): String =
-  payment match
-    case CreditCard(num, _, amt) if amt > BigDecimal("100") =>
-      s"Credit card (high value): 2.9% + $$0.30 on ${num.takeRight(4)}"
-    case CreditCard(num, _, _) =>
-      s"Credit card (standard): 2.9% + $$0.30 on ${num.takeRight(4)}"
-    // ... other cases
-```
-
-### Kotlin - When Expressions with Smart Casting
-
-```kotlin
-fun calculateFee(payment: PaymentMethod): BigDecimal =
-    when (payment) {
-        is CreditCard ->
-            payment.amount * BigDecimal("0.029") + BigDecimal("0.30")
-        is BankTransfer ->
-            if (payment.amount < BigDecimal("1000")) BigDecimal("2.50") else BigDecimal("5.00")
-        is DigitalWallet ->
-            (payment.amount * BigDecimal("0.025")).max(BigDecimal("0.50"))
-    }
-```
-
-Kotlin maintains exhaustiveness by matching on the sealed type first, then using conditions within each branch:
-
-```kotlin
-fun describeFee(payment: PaymentMethod): String =
-    when (payment) {
-        is CreditCard ->
-            if (payment.amount > BigDecimal("100")) {
-                "Credit card (high value): 2.9% + \$0.30"
-            } else {
-                "Credit card (standard): 2.9% + \$0.30"
-            }
-        is BankTransfer ->
-            if (payment.amount >= BigDecimal("1000")) {
-                "Bank transfer (high value): flat \$5.00"
-            } else {
-                "Bank transfer (standard): flat \$2.50"
-            }
-        is DigitalWallet ->
-            "Digital wallet (${payment.provider}): 2.5% (min \$0.50)"
-    }
-```
+<div class="code-tabs" data-tabs-id="tabs-3">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">describeFee</span><span class="o">(</span><span class="nc">PaymentMethod</span> <span class="n">payment</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">switch</span> <span class="o">(</span><span class="n">payment</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="nf">CreditCard</span><span class="o">(</span><span class="kt">var</span> <span class="n">num</span><span class="o">,</span> <span class="kt">var</span> <span class="n">exp</span><span class="o">,</span> <span class="kt">var</span> <span class="n">amt</span><span class="o">)</span> <span class="n">when</span> <span class="n">amt</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"100"</span><span class="o">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="o">-&gt;</span> <span class="s">"Credit card (high value): 2.9% + $0.30"</span><span class="o">;</span>
+        <span class="k">case</span> <span class="nf">CreditCard</span><span class="o">(</span><span class="kt">var</span> <span class="n">num</span><span class="o">,</span> <span class="kt">var</span> <span class="n">exp</span><span class="o">,</span> <span class="kt">var</span> <span class="n">amt</span><span class="o">)</span>
+            <span class="o">-&gt;</span> <span class="s">"Credit card (standard): 2.9% + $0.30"</span><span class="o">;</span>
+        <span class="k">case</span> <span class="nf">BankTransfer</span><span class="o">(</span><span class="kt">var</span> <span class="n">iban</span><span class="o">,</span> <span class="kt">var</span> <span class="n">code</span><span class="o">,</span> <span class="kt">var</span> <span class="n">amt</span><span class="o">)</span> <span class="n">when</span> <span class="n">amt</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"1000"</span><span class="o">))</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+            <span class="o">-&gt;</span> <span class="s">"Bank transfer (high value): flat $5.00"</span><span class="o">;</span>
+        <span class="k">case</span> <span class="nf">BankTransfer</span><span class="o">(</span><span class="kt">var</span> <span class="n">iban</span><span class="o">,</span> <span class="kt">var</span> <span class="n">code</span><span class="o">,</span> <span class="kt">var</span> <span class="n">amt</span><span class="o">)</span>
+            <span class="o">-&gt;</span> <span class="s">"Bank transfer (standard): flat $2.50"</span><span class="o">;</span>
+        <span class="k">case</span> <span class="nf">DigitalWallet</span><span class="o">(</span><span class="kt">var</span> <span class="n">provider</span><span class="o">,</span> <span class="kt">var</span> <span class="n">id</span><span class="o">,</span> <span class="kt">var</span> <span class="n">amt</span><span class="o">)</span>
+            <span class="o">-&gt;</span> <span class="s">"Digital wallet ("</span> <span class="o">+</span> <span class="n">provider</span> <span class="o">+</span> <span class="s">"): 2.5% (min $0.50)"</span><span class="o">;</span>
+    <span class="o">};</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">describeFee</span><span class="o">(</span><span class="n">payment</span><span class="k">:</span> <span class="kt">PaymentMethod</span><span class="o">)</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span>
+  <span class="n">payment</span> <span class="k">match</span>
+    <span class="k">case</span> <span class="nc">CreditCard</span><span class="o">(</span><span class="n">num</span><span class="o">,</span> <span class="k">_</span><span class="o">,</span> <span class="n">amt</span><span class="o">)</span> <span class="k">if</span> <span class="n">amt</span> <span class="o">&gt;</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"100"</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="nv">s</span><span class="s">"Credit card (high value): 2.9% + $$0.30 on ${num.takeRight(4)}"</span>
+    <span class="k">case</span> <span class="nc">CreditCard</span><span class="o">(</span><span class="n">num</span><span class="o">,</span> <span class="k">_</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="nv">s</span><span class="s">"Credit card (standard): 2.9% + $$0.30 on ${num.takeRight(4)}"</span>
+    <span class="k">case</span> <span class="nc">BankTransfer</span><span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="k">_</span><span class="o">,</span> <span class="n">amt</span><span class="o">)</span> <span class="k">if</span> <span class="n">amt</span> <span class="o">&gt;=</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"1000"</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="s">"Bank transfer (high value): flat $5.00"</span>
+    <span class="k">case</span> <span class="nc">BankTransfer</span><span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="k">_</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="s">"Bank transfer (standard): flat $2.50"</span>
+    <span class="k">case</span> <span class="nc">DigitalWallet</span><span class="o">(</span><span class="n">provider</span><span class="o">,</span> <span class="k">_</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="nv">s</span><span class="s">"Digital wallet ($provider): 2.5% (min $$0.50)"</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">describeFee</span><span class="p">(</span><span class="n">payment</span><span class="p">:</span> <span class="nc">PaymentMethod</span><span class="p">):</span> <span class="nc">String</span> <span class="p">=</span>
+    <span class="k">when</span> <span class="p">(</span><span class="n">payment</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">is</span> <span class="nc">CreditCard</span> <span class="p">-&gt;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">payment</span><span class="p">.</span><span class="n">amount</span> <span class="p">&gt;</span> <span class="nc">BigDecimal</span><span class="p">(</span><span class="s">"100"</span><span class="p">))</span> <span class="p">{</span>
+                <span class="s">"Credit card (high value): 2.9% + \$0.30"</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="s">"Credit card (standard): 2.9% + \$0.30"</span>
+            <span class="p">}</span>
+        <span class="k">is</span> <span class="nc">BankTransfer</span> <span class="p">-&gt;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">payment</span><span class="p">.</span><span class="n">amount</span> <span class="p">&gt;=</span> <span class="nc">BigDecimal</span><span class="p">(</span><span class="s">"1000"</span><span class="p">))</span> <span class="p">{</span>
+                <span class="s">"Bank transfer (high value): flat \$5.00"</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="s">"Bank transfer (standard): flat \$2.50"</span>
+            <span class="p">}</span>
+        <span class="k">is</span> <span class="nc">DigitalWallet</span> <span class="p">-&gt;</span>
+            <span class="s">"Digital wallet (${payment.provider}): 2.5% (min \$0.50)"</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ## Comparison Table
 
