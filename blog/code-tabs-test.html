@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Tabs Test</title>
+    <link rel="stylesheet" href="assets/css/syntax.css">
+    <link rel="stylesheet" href="assets/css/template1-minimal-dark.css">
+    <style>
+        body {
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <h1>Code Tabs Test</h1>
+    <p>Click the tabs below to switch between languages. Only one code block should be visible at a time.</p>
+
+    <h2>Test 1: Processing Multi-line Text</h2>
+    <div class="code-tabs" data-tabs-id="tabs-1">
+        <div class="tab-buttons">
+            <button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+            <button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+            <button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+        </div>
+        <div class="tab-content active" data-tab="java">
+            <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">processText</span><span class="o">(</span><span class="nc">String</span> <span class="n">text</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">text</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">text</span><span class="o">.</span><span class="na">isBlank</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">""</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="na">lines</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nc">String</span><span class="o">::</span><span class="n">strip</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">line</span> <span class="o">-&gt;</span> <span class="o">!</span><span class="n">line</span><span class="o">.</span><span class="na">isBlank</span><span class="o">())</span>
+        <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">joining</span><span class="o">(</span><span class="s">"\n"</span><span class="o">));</span>
+<span class="o">}</span>
+</code></pre></div></div>
+        </div>
+        <div class="tab-content" data-tab="scala">
+            <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">processText</span><span class="o">(</span><span class="n">text</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">String</span> <span class="k">=</span>
+  <span class="nc">Option</span><span class="o">(</span><span class="n">text</span><span class="o">)</span>
+    <span class="o">.</span><span class="py">filter</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="py">trim</span><span class="o">.</span><span class="py">nonEmpty</span><span class="o">)</span>
+    <span class="o">.</span><span class="py">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="py">linesIterator</span>
+      <span class="o">.</span><span class="py">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="py">strip</span><span class="o">)</span>
+      <span class="o">.</span><span class="py">filter</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="py">nonEmpty</span><span class="o">)</span>
+      <span class="o">.</span><span class="py">mkString</span><span class="o">(</span><span class="s">"\n"</span><span class="o">))</span>
+    <span class="o">.</span><span class="py">getOrElse</span><span class="o">(</span><span class="s">""</span><span class="o">)</span>
+</code></pre></div></div>
+        </div>
+        <div class="tab-content" data-tab="kotlin">
+            <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">processText</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nc">String</span><span class="p">?)</span><span class="p">:</span> <span class="nc">String</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">text</span><span class="p">.</span><span class="nf">isNullOrBlank</span><span class="p">())</span> <span class="k">return</span> <span class="s">""</span>
+    <span class="k">return</span> <span class="n">text</span><span class="p">.</span><span class="nf">lines</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="k">it</span><span class="p">.</span><span class="nf">trim</span><span class="p">()</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nf">filter</span> <span class="p">{</span> <span class="k">it</span><span class="p">.</span><span class="nf">isNotBlank</span><span class="p">()</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nf">joinToString</span><span class="p">(</span><span class="s">"\n"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+        </div>
+    </div>
+
+    <h2>Test 2: Creating Multi-line Strings</h2>
+    <div class="code-tabs" data-tabs-id="tabs-2">
+        <div class="tab-buttons">
+            <button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+            <button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+            <button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+        </div>
+        <div class="tab-content active" data-tab="java">
+            <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">json</span> <span class="o">=</span> <span class="s">"""
+    {
+        "name": "%s",
+        "email": "%s"
+    }
+    """</span><span class="o">.</span><span class="na">formatted</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">email</span><span class="o">);</span>
+</code></pre></div></div>
+        </div>
+        <div class="tab-content" data-tab="scala">
+            <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">json</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"""{
+  |  "name": "$name",
+  |  "email": "$email"
+  |}"""</span><span class="o">.</span><span class="py">stripMargin</span>
+</code></pre></div></div>
+        </div>
+        <div class="tab-content" data-tab="kotlin">
+            <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">json</span> <span class="p">=</span> <span class="s">"""
+    {
+      "name": "$name",
+      "email": "$email"
+    }
+"""</span><span class="p">.</span><span class="nf">trimIndent</span><span class="p">()</span>
+</code></pre></div></div>
+        </div>
+    </div>
+
+    <h2>Expected Behavior</h2>
+    <ul>
+        <li>✅ Only ONE code block visible at a time</li>
+        <li>✅ Clicking tabs switches the visible code</li>
+        <li>✅ Active tab has colored bottom border</li>
+        <li>✅ Java = Blue, Scala = Red, Kotlin = Purple</li>
+        <li>✅ Smooth transitions</li>
+        <li>✅ <strong>Syntax highlighting with colors</strong></li>
+        <li>✅ Keywords highlighted in purple</li>
+        <li>✅ Strings highlighted in yellow</li>
+        <li>✅ Comments highlighted in blue</li>
+        <li>✅ Works without any plugins</li>
+    </ul>
+
+    <script src="assets/js/theme.js"></script>
+</body>
+</html>
+

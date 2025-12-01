@@ -490,16 +490,10 @@ tr:last-child td {
 }
 
 /*
- * Tabbed Code Blocks
- * 
- * Browser compatibility: Uses CSS :has() selector which is supported in:
- * - Chrome 105+ (Aug 2022)
- * - Safari 15.4+ (Mar 2022)  
- * - Firefox 121+ (Dec 2023)
- * - Edge 105+ (Aug 2022)
- * 
- * For older browsers, all code tabs will be hidden. Consider this acceptable
- * as modern browsers are required for the best reading experience.
+ * Tabbed Code Blocks - Button-based implementation
+ *
+ * Simple JavaScript-driven tabs that work in all browsers.
+ * Uses button elements instead of radio inputs for better compatibility.
  */
 .code-tabs {
   margin: var(--space-lg) 0;
@@ -509,36 +503,67 @@ tr:last-child td {
   background-color: var(--bg-secondary);
 }
 
-.code-tabs input[type="radio"] {
-  display: none;
-}
-
-.code-tabs .tab-labels {
+/* Tab buttons container */
+.code-tabs .tab-buttons {
   display: flex;
   background-color: var(--bg-tertiary);
   border-bottom: 1px solid var(--border-color);
   overflow-x: auto;
+  gap: 0;
 }
 
-.code-tabs .tab-labels label {
+/* Tab buttons */
+.code-tabs .tab-button {
   padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-secondary);
   transition: all 0.2s ease;
-  border-bottom: 2px solid transparent;
   white-space: nowrap;
   user-select: none;
 }
 
-.code-tabs .tab-labels label:hover {
+.code-tabs .tab-button:hover {
   color: var(--text-primary);
   background-color: rgba(255, 255, 255, 0.05);
 }
 
+/* Active tab button styles */
+.code-tabs .tab-button.active {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+  background-color: rgba(88, 166, 255, 0.1);
+}
+
+.code-tabs .tab-button[data-tab="java"].active {
+  color: #58a6ff;
+  border-bottom-color: #58a6ff;
+  background-color: rgba(88, 166, 255, 0.1);
+}
+
+.code-tabs .tab-button[data-tab="scala"].active {
+  color: #ff5555;
+  border-bottom-color: #ff5555;
+  background-color: rgba(255, 85, 85, 0.1);
+}
+
+.code-tabs .tab-button[data-tab="kotlin"].active {
+  color: #bd93f9;
+  border-bottom-color: #bd93f9;
+  background-color: rgba(189, 147, 249, 0.1);
+}
+
+/* Tab content */
 .code-tabs .tab-content {
   display: none;
+}
+
+.code-tabs .tab-content.active {
+  display: block;
 }
 
 .code-tabs .tab-content pre {
@@ -546,54 +571,6 @@ tr:last-child td {
   border-radius: 0;
   border: none;
 }
-
-/* Tab selection using :has() selector */
-/* Java tab selected */
-.code-tabs:has(input[id^="tab-java"]:checked) .tab-labels label[for^="tab-java"] {
-  color: var(--accent-color);
-  border-bottom-color: var(--accent-color);
-  background-color: rgba(88, 166, 255, 0.1);
-}
-
-.code-tabs:has(input[id^="tab-java"]:checked) .tab-content[class*="java"] {
-  display: block;
-}
-
-/* Scala tab selected */
-.code-tabs:has(input[id^="tab-scala"]:checked) .tab-labels label[for^="tab-scala"] {
-  color: #ff5555;
-  border-bottom-color: #ff5555;
-  background-color: rgba(255, 85, 85, 0.1);
-}
-
-.code-tabs:has(input[id^="tab-scala"]:checked) .tab-content[class*="scala"] {
-  display: block;
-}
-
-/* Kotlin tab selected */
-.code-tabs:has(input[id^="tab-kotlin"]:checked) .tab-labels label[for^="tab-kotlin"] {
-  color: #bd93f9;
-  border-bottom-color: #bd93f9;
-  background-color: rgba(189, 147, 249, 0.1);
-}
-
-.code-tabs:has(input[id^="tab-kotlin"]:checked) .tab-content[class*="kotlin"] {
-  display: block;
-}
-
-/* Default state: show Java tab when no tab is selected (fallback) */
-.code-tabs:not(:has(input:checked)) .tab-content[class*="java"] {
-  display: block;
-}
-
-.code-tabs:not(:has(input:checked)) .tab-labels label[for^="tab-java"] {
-  color: var(--accent-color);
-  border-bottom-color: var(--accent-color);
-  background-color: rgba(88, 166, 255, 0.1);
-}
-
-/* Language icons/badges in tab labels */
-.code-tabs .tab-labels label::before {
   content: '';
   display: inline-block;
   width: 12px;

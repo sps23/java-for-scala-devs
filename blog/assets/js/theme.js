@@ -16,6 +16,7 @@
     initMobileMenu();
     initSmoothScroll();
     initTimelineAnimations();
+    initCodeTabs();
   });
 
   /**
@@ -214,6 +215,39 @@
     timelinePosts.forEach(function(post) {
       post.style.animationPlayState = 'paused';
       observer.observe(post);
+    });
+  }
+
+  /**
+   * Initialize code tabs
+   * Handle tab switching for code examples in multiple languages
+   */
+  function initCodeTabs() {
+    const codeTabsContainers = document.querySelectorAll('.code-tabs');
+    if (!codeTabsContainers.length) return;
+
+    codeTabsContainers.forEach(function(container) {
+      const buttons = container.querySelectorAll('.tab-button');
+      const contents = container.querySelectorAll('.tab-content');
+
+      buttons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          const targetTab = button.getAttribute('data-tab');
+
+          // Remove active class from all buttons and contents in this container
+          buttons.forEach(btn => btn.classList.remove('active'));
+          contents.forEach(content => content.classList.remove('active'));
+
+          // Add active class to clicked button
+          button.classList.add('active');
+
+          // Show corresponding content
+          const targetContent = container.querySelector('.tab-content[data-tab="' + targetTab + '"]');
+          if (targetContent) {
+            targetContent.classList.add('active');
+          }
+        });
+      });
     });
   }
 
