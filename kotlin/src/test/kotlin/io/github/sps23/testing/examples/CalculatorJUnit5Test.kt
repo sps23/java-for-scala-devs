@@ -17,7 +17,6 @@ import org.junit.jupiter.params.provider.ValueSource
  */
 @DisplayName("Calculator Tests (JUnit 5 in Kotlin)")
 class CalculatorJUnit5Test {
-
     private lateinit var calculator: Calculator
 
     @BeforeEach
@@ -28,7 +27,6 @@ class CalculatorJUnit5Test {
     @Nested
     @DisplayName("Basic Operations")
     inner class BasicOperations {
-
         @Test
         @DisplayName("Addition should return sum of two numbers")
         fun testAddition() {
@@ -57,7 +55,6 @@ class CalculatorJUnit5Test {
     @Nested
     @DisplayName("Division Operations")
     inner class DivisionOperations {
-
         @Test
         @DisplayName("Division should return quotient of two numbers")
         fun testDivision() {
@@ -75,7 +72,6 @@ class CalculatorJUnit5Test {
     @Nested
     @DisplayName("Prime Number Checks")
     inner class PrimeNumberChecks {
-
         @ParameterizedTest
         @DisplayName("Should identify prime numbers correctly")
         @ValueSource(ints = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29])

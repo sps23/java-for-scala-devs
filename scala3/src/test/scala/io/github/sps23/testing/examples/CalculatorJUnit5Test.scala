@@ -8,10 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-/**
- * JUnit 5 test examples for Calculator in Scala.
- * Demonstrates using JUnit 5 with Scala 3.
- */
+/** JUnit 5 test examples for Calculator in Scala. Demonstrates using JUnit 5 with Scala 3. */
 @DisplayName("Calculator Tests (JUnit 5 in Scala)")
 class CalculatorJUnit5Test:
 
