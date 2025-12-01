@@ -40,42 +40,44 @@ Java 8 introduced `Optional<T>` to represent values that may or may not be prese
 
 ### Creating Optionals
 
-#### Java 21
+<div class="code-tabs" data-tabs-id="tabs-1">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// From nullable value</span>
+<span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">opt1</span> <span class="o">=</span> <span class="nc">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="n">maybeNull</span><span class="o">);</span>
 
-```java
-// From nullable value
-Optional<String> opt1 = Optional.ofNullable(maybeNull);
+<span class="c1">// From non-null value (throws if null)</span>
+<span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">opt2</span> <span class="o">=</span> <span class="nc">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"value"</span><span class="o">);</span>
 
-// From non-null value (throws if null)
-Optional<String> opt2 = Optional.of("value");
+<span class="c1">// Empty optional</span>
+<span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">opt3</span> <span class="o">=</span> <span class="nc">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">();</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// From nullable value (handles null from Java interop)</span>
+<span class="k">val</span> <span class="nv">opt1</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Option</span><span class="o">(</span><span class="n">maybeNull</span><span class="o">)</span>
 
-// Empty optional
-Optional<String> opt3 = Optional.empty();
-```
+<span class="c1">// Explicit Some/None</span>
+<span class="k">val</span> <span class="nv">opt2</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="s">"value"</span><span class="o">)</span>
+<span class="k">val</span> <span class="nv">opt3</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">None</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Kotlin uses nullable types instead of Optional</span>
+<span class="kd">val</span> <span class="py">opt1</span><span class="p">:</span> <span class="nc">String</span><span class="p">?</span> <span class="p">=</span> <span class="n">maybeNull</span>
 
-#### Scala 3
+<span class="c1">// Non-null value</span>
+<span class="kd">val</span> <span class="py">opt2</span><span class="p">:</span> <span class="nc">String</span> <span class="p">=</span> <span class="s">"value"</span>
 
-```scala
-// From nullable value (handles null from Java interop)
-val opt1: Option[String] = Option(maybeNull)
-
-// Explicit Some/None
-val opt2: Option[String] = Some("value")
-val opt3: Option[String] = None
-```
-
-#### Kotlin
-
-```kotlin
-// Kotlin uses nullable types instead of Optional
-val opt1: String? = maybeNull
-
-// Non-null value
-val opt2: String = "value"
-
-// Null value
-val opt3: String? = null
-```
+<span class="c1">// Null value</span>
+<span class="kd">val</span> <span class="py">opt3</span><span class="p">:</span> <span class="nc">String</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ## Extracting Values: orElse, orElseGet, orElseThrow
 
@@ -83,93 +85,95 @@ val opt3: String? = null
 
 Use when the default is already computed or cheap to create.
 
-#### Java 21
-
-```java
-// Returns theme or "light" if empty
-String theme = findUserPreference(userId)
-    .map(UserPreference::theme)
-    .orElse("light");
-```
-
-#### Scala 3
-
-```scala
-// getOrElse is equivalent to orElse
-val theme = findUserPreference(userId)
-  .flatMap(_.theme)
-  .getOrElse("light")
-```
-
-#### Kotlin
-
-```kotlin
-// Elvis operator (?:) is equivalent to orElse
-val theme = findUserPreference(userId)?.theme ?: "light"
-```
+<div class="code-tabs" data-tabs-id="tabs-2">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Returns theme or "light" if empty</span>
+<span class="nc">String</span> <span class="n">theme</span> <span class="o">=</span> <span class="n">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">theme</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">"light"</span><span class="o">);</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// getOrElse is equivalent to orElse</span>
+<span class="k">val</span> <span class="nv">theme</span> <span class="k">=</span> <span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">theme</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">getOrElse</span><span class="o">(</span><span class="s">"light"</span><span class="o">)</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Elvis operator (?:) is equivalent to orElse</span>
+<span class="kd">val</span> <span class="py">theme</span> <span class="p">=</span> <span class="nf">findUserPreference</span><span class="p">(</span><span class="n">userId</span><span class="p">)?.</span><span class="n">theme</span> <span class="o">?:</span> <span class="s">"light"</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ### orElseGet() - Lazy Default Computation
 
 Use when the default is expensive to compute.
 
-#### Java 21
+<div class="code-tabs" data-tabs-id="tabs-3">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Supplier is only called if Optional is empty</span>
+<span class="nc">String</span> <span class="n">theme</span> <span class="o">=</span> <span class="n">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">theme</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">orElseGet</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">computeExpensiveDefault</span><span class="o">());</span>
 
-```java
-// Supplier is only called if Optional is empty
-String theme = findUserPreference(userId)
-    .map(UserPreference::theme)
-    .orElseGet(() -> computeExpensiveDefault());
-```
+<span class="c1">// orElse: default is ALWAYS evaluated</span>
+<span class="n">opt</span><span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="n">expensiveOperation</span><span class="o">());</span> <span class="c1">// expensiveOperation() called even if opt has value!</span>
 
-**Important Difference:**
-
-```java
-// orElse: default is ALWAYS evaluated
-opt.orElse(expensiveOperation()); // expensiveOperation() called even if opt has value!
-
-// orElseGet: default is only evaluated if needed
-opt.orElseGet(() -> expensiveOperation()); // expensiveOperation() called only if opt is empty
-```
-
-#### Scala 3
-
-```scala
-// getOrElse is already lazy in Scala (by-name parameter)
-val theme = opt.getOrElse(computeExpensiveDefault())
-```
-
-#### Kotlin
-
-```kotlin
-// Elvis operator is already lazy
-val theme = opt ?: computeExpensiveDefault()
-```
+<span class="c1">// orElseGet: default is only evaluated if needed</span>
+<span class="n">opt</span><span class="o">.</span><span class="na">orElseGet</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">expensiveOperation</span><span class="o">());</span> <span class="c1">// expensiveOperation() called only if opt is empty</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// getOrElse is already lazy in Scala (by-name parameter)</span>
+<span class="k">val</span> <span class="nv">theme</span> <span class="k">=</span> <span class="nv">opt</span><span class="o">.</span><span class="py">getOrElse</span><span class="o">(</span><span class="nf">computeExpensiveDefault</span><span class="o">())</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Elvis operator is already lazy</span>
+<span class="kd">val</span> <span class="py">theme</span> <span class="p">=</span> <span class="n">opt</span> <span class="o">?:</span> <span class="nf">computeExpensiveDefault</span><span class="p">()</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ### orElseThrow() - Throw on Absence
 
 Use when absence is exceptional and should be an error.
 
-#### Java 21
-
-```java
-UserPreference pref = findUserPreference(userId)
-    .orElseThrow(() -> 
-        new NoSuchElementException("User not found: " + userId));
-```
-
-#### Scala 3
-
-```scala
-val pref = findUserPreference(userId)
-  .getOrElse(throw new NoSuchElementException(s"User not found: $userId"))
-```
-
-#### Kotlin
-
-```kotlin
-val pref = findUserPreference(userId)
-    ?: throw NoSuchElementException("User not found: $userId")
-```
+<div class="code-tabs" data-tabs-id="tabs-4">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">UserPreference</span> <span class="n">pref</span> <span class="o">=</span> <span class="n">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">orElseThrow</span><span class="o">(()</span> <span class="o">-&gt;</span> 
+        <span class="k">new</span> <span class="nf">NoSuchElementException</span><span class="o">(</span><span class="s">"User not found: "</span> <span class="o">+</span> <span class="n">userId</span><span class="o">));</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">pref</span> <span class="k">=</span> <span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">getOrElse</span><span class="o">(</span><span class="k">throw</span> <span class="k">new</span> <span class="nc">NoSuchElementException</span><span class="o">(</span><span class="nv">s</span><span class="s">"User not found: $userId"</span><span class="o">))</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">pref</span> <span class="p">=</span> <span class="nf">findUserPreference</span><span class="p">(</span><span class="n">userId</span><span class="p">)</span>
+    <span class="o">?:</span> <span class="k">throw</span> <span class="nc">NoSuchElementException</span><span class="p">(</span><span class="s">"User not found: $userId"</span><span class="p">)</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ## Transformation: map(), flatMap(), filter()
 
@@ -177,157 +181,171 @@ val pref = findUserPreference(userId)
 
 Use when transformation returns a non-Optional value.
 
-#### Java 21
-
-```java
-// Transform theme to uppercase if present
-Optional<String> uppercase = findUserPreference(userId)
-    .map(UserPreference::theme)
-    .map(String::toUpperCase);
-```
-
-#### Scala 3
-
-```scala
-val uppercase = findUserPreference(userId)
-  .flatMap(_.theme)
-  .map(_.toUpperCase)
-```
-
-#### Kotlin
-
-```kotlin
-// Safe call operator (?.) is equivalent to map
-val uppercase = findUserPreference(userId)?.theme?.uppercase()
-```
+<div class="code-tabs" data-tabs-id="tabs-5">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Transform theme to uppercase if present</span>
+<span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">uppercase</span> <span class="o">=</span> <span class="n">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">theme</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="n">toUpperCase</span><span class="o">);</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">uppercase</span> <span class="k">=</span> <span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">theme</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">map</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">toUpperCase</span><span class="o">)</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Safe call operator (?.) is equivalent to map</span>
+<span class="kd">val</span> <span class="py">uppercase</span> <span class="p">=</span> <span class="nf">findUserPreference</span><span class="p">(</span><span class="n">userId</span><span class="p">)?.</span><span class="n">theme</span><span class="p">?.</span><span class="nf">uppercase</span><span class="p">()</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ### flatMap() - Avoid Nested Optionals
 
 Use when transformation returns an Optional.
 
-#### Java 21
+<div class="code-tabs" data-tabs-id="tabs-6">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// validateTheme returns Optional&lt;String&gt;</span>
+<span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">validTheme</span> <span class="o">=</span> <span class="n">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">theme</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">validateTheme</span><span class="o">);</span>
 
-```java
-// validateTheme returns Optional<String>
-Optional<String> validTheme = findUserPreference(userId)
-    .map(UserPreference::theme)
-    .flatMap(this::validateTheme);
-
-// Without flatMap, you'd get Optional<Optional<String>>!
-```
-
-#### Scala 3
-
-```scala
-// flatMap prevents Option[Option[T]]
-val validTheme = findUserPreference(userId)
-  .flatMap(_.theme)
-  .flatMap(validateTheme)
-```
-
-#### Kotlin
-
-```kotlin
-// Use let for flatMap-like behavior
-val validTheme = findUserPreference(userId)
-    ?.theme
-    ?.let { validateTheme(it) }
-```
+<span class="c1">// Without flatMap, you'd get Optional&lt;Optional&lt;String&gt;&gt;!</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// flatMap prevents Option[Option[T]]</span>
+<span class="k">val</span> <span class="nv">validTheme</span> <span class="k">=</span> <span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">theme</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="n">validateTheme</span><span class="o">)</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Use let for flatMap-like behavior</span>
+<span class="kd">val</span> <span class="py">validTheme</span> <span class="p">=</span> <span class="nf">findUserPreference</span><span class="p">(</span><span class="n">userId</span><span class="p">)</span>
+    <span class="p">?.</span><span class="n">theme</span>
+    <span class="p">?.</span><span class="nf">let</span> <span class="p">{</span> <span class="nf">validateTheme</span><span class="p">(</span><span class="k">it</span><span class="p">)</span> <span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ### filter() - Conditional Processing
 
 Keep value only if predicate matches.
 
-#### Java 21
-
-```java
-// Only keep font sizes >= 14
-Optional<Integer> largeFontSize = findUserPreference(userId)
-    .map(UserPreference::fontSize)
-    .filter(size -> size >= 14);
-```
-
-#### Scala 3
-
-```scala
-val largeFontSize = findUserPreference(userId)
-  .flatMap(_.fontSize)
-  .filter(_ >= 14)
-```
-
-#### Kotlin
-
-```kotlin
-// takeIf is equivalent to filter
-val largeFontSize = findUserPreference(userId)
-    ?.fontSize
-    ?.takeIf { it >= 14 }
-```
+<div class="code-tabs" data-tabs-id="tabs-7">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Only keep font sizes &gt;= 14</span>
+<span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">largeFontSize</span> <span class="o">=</span> <span class="n">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">fontSize</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">size</span> <span class="o">-&gt;</span> <span class="n">size</span> <span class="o">&gt;=</span> <span class="mi">14</span><span class="o">);</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">largeFontSize</span> <span class="k">=</span> <span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">fontSize</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">filter</span><span class="o">(</span><span class="k">_</span> <span class="o">&gt;=</span> <span class="mi">14</span><span class="o">)</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// takeIf is equivalent to filter</span>
+<span class="kd">val</span> <span class="py">largeFontSize</span> <span class="p">=</span> <span class="nf">findUserPreference</span><span class="p">(</span><span class="n">userId</span><span class="p">)</span>
+    <span class="p">?.</span><span class="n">fontSize</span>
+    <span class="p">?.</span><span class="nf">takeIf</span> <span class="p">{</span> <span class="k">it</span> <span class="p">&gt;=</span> <span class="mi">14</span> <span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ## Java 9+ Enhancements
 
 ### ifPresentOrElse() - Handle Both Cases
 
-```java
-findUserPreference(userId)
-    .map(UserPreference::theme)
-    .ifPresentOrElse(
-        theme -> System.out.println("User theme: " + theme),
-        () -> System.out.println("Using default theme")
-    );
-```
+<div class="code-tabs" data-tabs-id="tabs-8">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">theme</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">ifPresentOrElse</span><span class="o">(</span>
+        <span class="n">theme</span> <span class="o">-&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"User theme: "</span> <span class="o">+</span> <span class="n">theme</span><span class="o">),</span>
+        <span class="o">()</span> <span class="o">-&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Using default theme"</span><span class="o">)</span>
+    <span class="o">);</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Pattern matching handles both cases elegantly</span>
+<span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">theme</span><span class="o">)</span> <span class="k">match</span>
+  <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="n">theme</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nf">println</span><span class="o">(</span><span class="nv">s</span><span class="s">"User theme: $theme"</span><span class="o">)</span>
+  <span class="k">case</span> <span class="nc">None</span>        <span class="k">=&gt;</span> <span class="nf">println</span><span class="o">(</span><span class="s">"Using default theme"</span><span class="o">)</span>
 
-#### Scala 3 Equivalent
-
-```scala
-// Pattern matching handles both cases elegantly
-findUserPreference(userId).flatMap(_.theme) match
-  case Some(theme) => println(s"User theme: $theme")
-  case None        => println("Using default theme")
-
-// Or using fold
-findUserPreference(userId)
-  .flatMap(_.theme)
-  .fold(println("Using default theme"))(t => println(s"User theme: $t"))
-```
-
-#### Kotlin Equivalent
-
-```kotlin
-// When expression with nullable
-when (val theme = findUserPreference(userId)?.theme) {
-    null -> println("Using default theme")
-    else -> println("User theme: $theme")
-}
-```
+<span class="c1">// Or using fold</span>
+<span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">theme</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">fold</span><span class="o">(</span><span class="nf">println</span><span class="o">(</span><span class="s">"Using default theme"</span><span class="o">))(</span><span class="n">t</span> <span class="k">=&gt;</span> <span class="nf">println</span><span class="o">(</span><span class="nv">s</span><span class="s">"User theme: $t"</span><span class="o">))</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// When expression with nullable</span>
+<span class="k">when</span> <span class="p">(</span><span class="kd">val</span> <span class="py">theme</span> <span class="p">=</span> <span class="nf">findUserPreference</span><span class="p">(</span><span class="n">userId</span><span class="p">)?.</span><span class="n">theme</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">null</span> <span class="p">-&gt;</span> <span class="nf">println</span><span class="p">(</span><span class="s">"Using default theme"</span><span class="p">)</span>
+    <span class="k">else</span> <span class="p">-&gt;</span> <span class="nf">println</span><span class="p">(</span><span class="s">"User theme: $theme"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ### or() - Alternative Optional Source
 
 Provide a fallback Optional when the first is empty.
 
-```java
-String theme = findUserPreference(userId)
-    .map(UserPreference::theme)
-    .or(() -> getFallbackTheme())    // Returns Optional<String>
-    .orElse("light");
-```
-
-#### Scala 3 Equivalent
-
-```scala
-val theme = findUserPreference(userId)
-  .flatMap(_.theme)
-  .orElse(getFallbackTheme)
-  .getOrElse("light")
-```
-
-#### Kotlin Equivalent
-
-```kotlin
-val theme = findUserPreference(userId)?.theme
-    ?: getFallbackTheme()
-    ?: "light"
-```
+<div class="code-tabs" data-tabs-id="tabs-9">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">theme</span> <span class="o">=</span> <span class="n">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">theme</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">or</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">getFallbackTheme</span><span class="o">())</span>    <span class="c1">// Returns Optional&lt;String&gt;</span>
+    <span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">"light"</span><span class="o">);</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">theme</span> <span class="k">=</span> <span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">theme</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">orElse</span><span class="o">(</span><span class="n">getFallbackTheme</span><span class="o">)</span>
+  <span class="o">.</span><span class="py">getOrElse</span><span class="o">(</span><span class="s">"light"</span><span class="o">)</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">theme</span> <span class="p">=</span> <span class="nf">findUserPreference</span><span class="p">(</span><span class="n">userId</span><span class="p">)?.</span><span class="n">theme</span>
+    <span class="o">?:</span> <span class="nf">getFallbackTheme</span><span class="p">()</span>
+    <span class="o">?:</span> <span class="s">"light"</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ## Refactoring Nested Null Checks
 
@@ -351,92 +369,98 @@ String getProcessedTheme(String userId) {
 
 ### After: Fluent Optional Chain
 
-```java
-String getProcessedTheme(String userId) {
-    return findUserPreference(userId)
-        .map(UserPreference::theme)
-        .filter(this::isValidTheme)
-        .map(String::toUpperCase)
-        .orElse("LIGHT");
-}
-```
-
-### Scala 3 For-Comprehension
-
-```scala
-def getDisplaySettings(userId: String): Option[String] =
-  for
-    pref <- findUserPreference(userId)
-    theme <- pref.theme
-    fontSize <- pref.fontSize
-  yield s"$theme theme, ${fontSize}px font"
-```
-
-### Kotlin Scope Functions
-
-```kotlin
-fun getDisplaySettings(userId: String): String? =
-    findUserPreference(userId)?.run {
-        theme?.let { t ->
-            fontSize?.let { s ->
-                "$t theme, ${s}px font"
-            }
-        }
-    }
-```
+<div class="code-tabs" data-tabs-id="tabs-10">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="nf">getProcessedTheme</span><span class="o">(</span><span class="nc">String</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">theme</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">isValidTheme</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="n">toUpperCase</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">"LIGHT"</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">getDisplaySettings</span><span class="o">(</span><span class="n">userId</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span>
+  <span class="k">for</span>
+    <span class="n">pref</span> <span class="k">&lt;-</span> <span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+    <span class="n">theme</span> <span class="k">&lt;-</span> <span class="nv">pref</span><span class="o">.</span><span class="py">theme</span>
+    <span class="n">fontSize</span> <span class="k">&lt;-</span> <span class="nv">pref</span><span class="o">.</span><span class="py">fontSize</span>
+  <span class="k">yield</span> <span class="nv">s</span><span class="s">"$theme theme, ${fontSize}px font"</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">getDisplaySettings</span><span class="p">(</span><span class="n">userId</span><span class="p">:</span> <span class="nc">String</span><span class="p">):</span> <span class="nc">String</span><span class="p">?</span> <span class="p">=</span>
+    <span class="nf">findUserPreference</span><span class="p">(</span><span class="n">userId</span><span class="p">)?.</span><span class="nf">run</span> <span class="p">{</span>
+        <span class="n">theme</span><span class="p">?.</span><span class="nf">let</span> <span class="p">{</span> <span class="n">t</span> <span class="p">-&gt;</span>
+            <span class="n">fontSize</span><span class="p">?.</span><span class="nf">let</span> <span class="p">{</span> <span class="n">s</span> <span class="p">-&gt;</span>
+                <span class="s">"$t theme, ${s}px font"</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ## Complete Example: Preference Resolution
 
 Here's a complete example showing preference resolution with fallbacks:
 
-### Java 21
-
-```java
-public ResolvedPreferences resolvePreferences(String userId) {
-    Optional<UserPreference> userPref = findUserPreference(userId);
+<div class="code-tabs" data-tabs-id="tabs-11">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">ResolvedPreferences</span> <span class="nf">resolvePreferences</span><span class="o">(</span><span class="nc">String</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">UserPreference</span><span class="o">&gt;</span> <span class="n">userPref</span> <span class="o">=</span> <span class="n">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
     
-    return new ResolvedPreferences(
-        userId,
-        userPref.map(UserPreference::theme).orElse(DEFAULT_THEME),
-        userPref.map(UserPreference::language).orElse(DEFAULT_LANGUAGE),
-        userPref.map(UserPreference::fontSize).orElse(DEFAULT_FONT_SIZE),
-        userPref.map(UserPreference::notificationsEnabled)
-            .orElse(DEFAULT_NOTIFICATIONS)
-    );
-}
-```
-
-### Scala 3
-
-```scala
-def resolvePreferences(userId: String): ResolvedPreferences =
-  val userPref = findUserPreference(userId)
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">ResolvedPreferences</span><span class="o">(</span>
+        <span class="n">userId</span><span class="o">,</span>
+        <span class="n">userPref</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">theme</span><span class="o">).</span><span class="na">orElse</span><span class="o">(</span><span class="no">DEFAULT_THEME</span><span class="o">),</span>
+        <span class="n">userPref</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">language</span><span class="o">).</span><span class="na">orElse</span><span class="o">(</span><span class="no">DEFAULT_LANGUAGE</span><span class="o">),</span>
+        <span class="n">userPref</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">fontSize</span><span class="o">).</span><span class="na">orElse</span><span class="o">(</span><span class="no">DEFAULT_FONT_SIZE</span><span class="o">),</span>
+        <span class="n">userPref</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">UserPreference:</span><span class="o">:</span><span class="n">notificationsEnabled</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="no">DEFAULT_NOTIFICATIONS</span><span class="o">)</span>
+    <span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">resolvePreferences</span><span class="o">(</span><span class="n">userId</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">ResolvedPreferences</span> <span class="o">=</span>
+  <span class="k">val</span> <span class="nv">userPref</span> <span class="k">=</span> <span class="nf">findUserPreference</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
   
-  ResolvedPreferences(
-    userId = userId,
-    theme = userPref.flatMap(_.theme).getOrElse(DefaultTheme),
-    language = userPref.flatMap(_.language).getOrElse(DefaultLanguage),
-    fontSize = userPref.flatMap(_.fontSize).getOrElse(DefaultFontSize),
-    notificationsEnabled = 
-      userPref.flatMap(_.notificationsEnabled).getOrElse(DefaultNotifications)
-  )
-```
-
-### Kotlin
-
-```kotlin
-fun resolvePreferences(userId: String): ResolvedPreferences {
-    val userPref = findUserPreference(userId)
+  <span class="nc">ResolvedPreferences</span><span class="o">(</span>
+    <span class="n">userId</span> <span class="k">=</span> <span class="n">userId</span><span class="o">,</span>
+    <span class="n">theme</span> <span class="k">=</span> <span class="nv">userPref</span><span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">theme</span><span class="o">).</span><span class="py">getOrElse</span><span class="o">(</span><span class="nc">DefaultTheme</span><span class="o">),</span>
+    <span class="n">language</span> <span class="k">=</span> <span class="nv">userPref</span><span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">language</span><span class="o">).</span><span class="py">getOrElse</span><span class="o">(</span><span class="nc">DefaultLanguage</span><span class="o">),</span>
+    <span class="n">fontSize</span> <span class="k">=</span> <span class="nv">userPref</span><span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">fontSize</span><span class="o">).</span><span class="py">getOrElse</span><span class="o">(</span><span class="nc">DefaultFontSize</span><span class="o">),</span>
+    <span class="n">notificationsEnabled</span> <span class="k">=</span> 
+      <span class="nv">userPref</span><span class="o">.</span><span class="py">flatMap</span><span class="o">(</span><span class="nv">_</span><span class="o">.</span><span class="py">notificationsEnabled</span><span class="o">).</span><span class="py">getOrElse</span><span class="o">(</span><span class="nc">DefaultNotifications</span><span class="o">)</span>
+  <span class="o">)</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">resolvePreferences</span><span class="p">(</span><span class="n">userId</span><span class="p">:</span> <span class="nc">String</span><span class="p">):</span> <span class="nc">ResolvedPreferences</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">userPref</span> <span class="p">=</span> <span class="nf">findUserPreference</span><span class="p">(</span><span class="n">userId</span><span class="p">)</span>
     
-    return ResolvedPreferences(
-        userId = userId,
-        theme = userPref?.theme ?: DEFAULT_THEME,
-        language = userPref?.language ?: DEFAULT_LANGUAGE,
-        fontSize = userPref?.fontSize ?: DEFAULT_FONT_SIZE,
-        notificationsEnabled = userPref?.notificationsEnabled ?: DEFAULT_NOTIFICATIONS
-    )
-}
-```
+    <span class="k">return</span> <span class="nc">ResolvedPreferences</span><span class="p">(</span>
+        <span class="n">userId</span> <span class="p">=</span> <span class="n">userId</span><span class="p">,</span>
+        <span class="n">theme</span> <span class="p">=</span> <span class="n">userPref</span><span class="p">?.</span><span class="n">theme</span> <span class="o">?:</span> <span class="nc">DEFAULT_THEME</span><span class="p">,</span>
+        <span class="n">language</span> <span class="p">=</span> <span class="n">userPref</span><span class="p">?.</span><span class="n">language</span> <span class="o">?:</span> <span class="nc">DEFAULT_LANGUAGE</span><span class="p">,</span>
+        <span class="n">fontSize</span> <span class="p">=</span> <span class="n">userPref</span><span class="p">?.</span><span class="n">fontSize</span> <span class="o">?:</span> <span class="nc">DEFAULT_FONT_SIZE</span><span class="p">,</span>
+        <span class="n">notificationsEnabled</span> <span class="p">=</span> <span class="n">userPref</span><span class="p">?.</span><span class="n">notificationsEnabled</span> <span class="o">?:</span> <span class="nc">DEFAULT_NOTIFICATIONS</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ## Anti-patterns to Avoid
 
