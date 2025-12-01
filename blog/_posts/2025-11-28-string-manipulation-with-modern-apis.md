@@ -178,56 +178,44 @@ String.format("Name: %s, Age: %d", name, age);
 
 ### Processing Multi-line Text
 
-<div class="code-tabs" role="tablist">
-<input type="radio" name="tabs-1" id="tab-java-1" checked aria-label="Show Java 21 code">
-<input type="radio" name="tabs-1" id="tab-scala-1" aria-label="Show Scala 3 code">
-<input type="radio" name="tabs-1" id="tab-kotlin-1" aria-label="Show Kotlin code">
-<div class="tab-labels">
-<label for="tab-java-1" role="tab">Java 21</label>
-<label for="tab-scala-1" role="tab">Scala 3</label>
-<label for="tab-kotlin-1" role="tab">Kotlin</label>
+<div class="code-tabs" data-tabs-id="tabs-1">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
 </div>
-<div class="tab-content java-1" role="tabpanel" aria-labelledby="tab-java-1" markdown="1">
-
-```java
-public static String processText(String text) {
-    if (text == null || text.isBlank()) {
-        return "";
-    }
-    return text.lines()
-        .map(String::strip)
-        .filter(line -> !line.isBlank())
-        .collect(Collectors.joining("\n"));
-}
-```
-
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">processText</span><span class="o">(</span><span class="nc">String</span> <span class="n">text</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">text</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">text</span><span class="o">.</span><span class="na">isBlank</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">""</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="na">lines</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nc">String</span><span class="o">::</span><span class="n">strip</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">line</span> <span class="o">-&gt;</span> <span class="o">!</span><span class="n">line</span><span class="o">.</span><span class="na">isBlank</span><span class="o">())</span>
+        <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">joining</span><span class="o">(</span><span class="s">"\n"</span><span class="o">));</span>
+<span class="o">}</span>
+</code></pre></div></div>
 </div>
-<div class="tab-content scala-1" role="tabpanel" aria-labelledby="tab-scala-1" markdown="1">
-
-```scala
-def processText(text: String): String =
-  Option(text)
-    .filter(_.trim.nonEmpty)
-    .map(_.linesIterator
-      .map(_.strip)
-      .filter(_.nonEmpty)
-      .mkString("\n"))
-    .getOrElse("")
-```
-
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">processText</span><span class="o">(</span><span class="n">text</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">String</span> <span class="k">=</span>
+  <span class="nc">Option</span><span class="o">(</span><span class="n">text</span><span class="o">)</span>
+    <span class="o">.</span><span class="py">filter</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="py">trim</span><span class="o">.</span><span class="py">nonEmpty</span><span class="o">)</span>
+    <span class="o">.</span><span class="py">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="py">linesIterator</span>
+      <span class="o">.</span><span class="py">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="py">strip</span><span class="o">)</span>
+      <span class="o">.</span><span class="py">filter</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="py">nonEmpty</span><span class="o">)</span>
+      <span class="o">.</span><span class="py">mkString</span><span class="o">(</span><span class="s">"\n"</span><span class="o">))</span>
+    <span class="o">.</span><span class="py">getOrElse</span><span class="o">(</span><span class="s">""</span><span class="o">)</span>
+</code></pre></div></div>
 </div>
-<div class="tab-content kotlin-1" role="tabpanel" aria-labelledby="tab-kotlin-1" markdown="1">
-
-```kotlin
-fun processText(text: String?): String {
-    if (text.isNullOrBlank()) return ""
-    return text.lines()
-        .map { it.trim() }
-        .filter { it.isNotBlank() }
-        .joinToString("\n")
-}
-```
-
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">processText</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nc">String</span><span class="p">?)</span><span class="p">:</span> <span class="nc">String</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">text</span><span class="p">.</span><span class="nf">isNullOrBlank</span><span class="p">())</span> <span class="k">return</span> <span class="s">""</span>
+    <span class="k">return</span> <span class="n">text</span><span class="p">.</span><span class="nf">lines</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="k">it</span><span class="p">.</span><span class="nf">trim</span><span class="p">()</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nf">filter</span> <span class="p">{</span> <span class="k">it</span><span class="p">.</span><span class="nf">isNotBlank</span><span class="p">()</span> <span class="p">}</span>
+        <span class="p">.</span><span class="nf">joinToString</span><span class="p">(</span><span class="s">"\n"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
 </div>
 </div>
 
@@ -249,50 +237,39 @@ fun processText(text: String?): String {
 
 ### Creating Multi-line Strings
 
-<div class="code-tabs" role="tablist">
-<input type="radio" name="tabs-2" id="tab-java-2" checked aria-label="Show Java 21 code">
-<input type="radio" name="tabs-2" id="tab-scala-2" aria-label="Show Scala 3 code">
-<input type="radio" name="tabs-2" id="tab-kotlin-2" aria-label="Show Kotlin code">
-<div class="tab-labels">
-<label for="tab-java-2" role="tab">Java 21</label>
-<label for="tab-scala-2" role="tab">Scala 3</label>
-<label for="tab-kotlin-2" role="tab">Kotlin</label>
+<div class="code-tabs" data-tabs-id="tabs-2">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
 </div>
-<div class="tab-content java-2" role="tabpanel" aria-labelledby="tab-java-2" markdown="1">
-
-```java
-String json = """
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">json</span> <span class="o">=</span> <span class="s">"""
     {
         "name": "%s",
         "email": "%s"
     }
-    """.formatted(name, email);
-```
-
+    """</span><span class="o">.</span><span class="na">formatted</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">email</span><span class="o">);</span>
+</code></pre></div></div>
 </div>
-<div class="tab-content scala-2" role="tabpanel" aria-labelledby="tab-scala-2" markdown="1">
-
-```scala
-val json = s"""{
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">json</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"""{
   |  "name": "$name",
   |  "email": "$email"
-  |}""".stripMargin
-```
-
+  |}"""</span><span class="o">.</span><span class="py">stripMargin</span>
+</code></pre></div></div>
 </div>
-<div class="tab-content kotlin-2" role="tabpanel" aria-labelledby="tab-kotlin-2" markdown="1">
-
-```kotlin
-val json = """
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">json</span> <span class="p">=</span> <span class="s">"""
     {
       "name": "$name",
       "email": "$email"
     }
-""".trimIndent()
-```
+"""</span><span class="p">.</span><span class="nf">trimIndent</span><span class="p">()</span>
+</code></pre></div></div>
+</div>
+</div>
 
-</div>
-</div>
 
 ## Complete Example: Text Processing Pipeline
 
