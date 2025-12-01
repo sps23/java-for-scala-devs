@@ -440,7 +440,7 @@ class CalculatorKotestFunSpec : FunSpec({
         }
 
         test("division by zero should throw ArithmeticException") {
-            shouldThrow&lt;ArithmeticException> {
+            shouldThrow<ArithmeticException> {
                 calculator.divide(5, 0)
             }
         }
@@ -507,7 +507,7 @@ class CalculatorKotestStringSpec : StringSpec({
     }
 
     "division by zero should throw ArithmeticException" {
-        shouldThrow&lt;ArithmeticException> {
+        shouldThrow<ArithmeticException> {
             calculator.divide(5, 0)
         }
     }
