@@ -164,146 +164,155 @@ SafeQueryBuilder safe = safeQuery(maliciousInput);
 
 ### Basic String Interpolation
 
-#### Java 21
+<div class="code-tabs" data-tabs-id="tabs-1">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import static</span> <span class="nn">java.lang.StringTemplate.STR</span><span class="o">;</span>
 
-```java
-import static java.lang.StringTemplate.STR;
-
-String greeting = STR."Hello, \{name}! You are \{age} years old.";
-String math = STR."Sum: \{x + y}, Product: \{x * y}";
-```
-
-#### Scala 3
-
-```scala
-val greeting = s"Hello, $name! You are $age years old."
-val math = s"Sum: ${x + y}, Product: ${x * y}"
-```
-
-#### Kotlin
-
-```kotlin
-val greeting = "Hello, $name! You are $age years old."
-val math = "Sum: ${x + y}, Product: ${x * y}"
-```
+<span class="nc">String</span> <span class="n">greeting</span> <span class="o">=</span> <span class="no">STR</span><span class="o">.</span><span class="s">"Hello, \{name}! You are \{age} years old."</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">math</span> <span class="o">=</span> <span class="no">STR</span><span class="o">.</span><span class="s">"Sum: \{x + y}, Product: \{x * y}"</span><span class="o">;</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">greeting</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"Hello, $name! You are $age years old."</span>
+<span class="k">val</span> <span class="nv">math</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"Sum: ${x + y}, Product: ${x * y}"</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">greeting</span> <span class="p">=</span> <span class="s">"Hello, $name! You are $age years old."</span>
+<span class="kd">val</span> <span class="py">math</span> <span class="p">=</span> <span class="s">"Sum: ${x + y}, Product: ${x * y}"</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ### Printf-style Formatting
 
-#### Java 21
-
-```java
-String formatted = STR."Item: \{item}, Price: $\{String.format("%.2f", price)}";
-// Or with text blocks
-String row = STR."| \{String.format("%5d", id)} | \{String.format("%-20s", name)} |";
-```
-
-#### Scala 3
-
-```scala
-// f-interpolator provides printf-style formatting
-val formatted = f"Item: $item, Price: $$$price%.2f"
-val row = f"| $id%5d | $name%-20s |"
-```
-
-#### Kotlin
-
-```kotlin
-val formatted = "Item: $item, Price: $%.2f".format(price)
-val row = "| %5d | %-20s |".format(id, name)
-```
+<div class="code-tabs" data-tabs-id="tabs-2">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">formatted</span> <span class="o">=</span> <span class="no">STR</span><span class="o">.</span><span class="s">"Item: \{item}, Price: $\{String.format(\"%.2f\", price)}"</span><span class="o">;</span>
+<span class="c1">// Or with text blocks</span>
+<span class="nc">String</span> <span class="n">row</span> <span class="o">=</span> <span class="no">STR</span><span class="o">.</span><span class="s">"| \{String.format(\"%5d\", id)} | \{String.format(\"%-20s\", name)} |"</span><span class="o">;</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// f-interpolator provides printf-style formatting</span>
+<span class="k">val</span> <span class="nv">formatted</span> <span class="k">=</span> <span class="nv">f</span><span class="s">"Item: $item, Price: $$$price%.2f"</span>
+<span class="k">val</span> <span class="nv">row</span> <span class="k">=</span> <span class="nv">f</span><span class="s">"| $id%5d | $name%-20s |"</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">formatted</span> <span class="p">=</span> <span class="s">"Item: $item, Price: $%.2f"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">price</span><span class="p">)</span>
+<span class="kd">val</span> <span class="py">row</span> <span class="p">=</span> <span class="s">"| %5d | %-20s |"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ### Multi-line Strings
 
-#### Java 21
-
-```java
-String json = STR."""
+<div class="code-tabs" data-tabs-id="tabs-3">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">json</span> <span class="o">=</span> <span class="no">STR</span><span class="o">.</span><span class="s">"""
     {
         "name": "\{name}",
         "email": "\{email}"
     }
-    """;
-```
-
-#### Scala 3
-
-```scala
-val json = s"""{
+    """</span><span class="o">;</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">json</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"""{
    |    "name": "$name",
    |    "email": "$email"
-   |}""".stripMargin
-```
-
-#### Kotlin
-
-```kotlin
-val json = """
+   |}"""</span><span class="o">.</span><span class="py">stripMargin</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">json</span> <span class="p">=</span> <span class="s">"""
     {
         "name": "$name",
         "email": "$email"
     }
-""".trimIndent()
-```
+"""</span><span class="p">.</span><span class="nf">trimIndent</span><span class="p">()</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ### Safe Query Builder (Immutable Pattern)
 
-#### Scala 3
+<div class="code-tabs" data-tabs-id="tabs-4">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">final</span> <span class="k">case</span> <span class="k">class</span> <span class="nc">SafeQueryBuilder</span><span class="o">(</span>
+    <span class="n">query</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">""</span><span class="o">,</span>
+    <span class="n">parameters</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Any</span><span class="o">]</span> <span class="k">=</span> <span class="nv">List</span><span class="o">.</span><span class="py">empty</span><span class="o">,</span>
+    <span class="n">hasWhereClause</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="o">):</span>
+  <span class="k">def</span> <span class="nf">select</span><span class="o">(</span><span class="n">columns</span><span class="k">:</span> <span class="kt">String*</span><span class="o">)</span><span class="k">:</span> <span class="kt">SafeQueryBuilder</span> <span class="o">=</span>
+    <span class="nf">copy</span><span class="o">(</span><span class="n">query</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"SELECT ${columns.mkString(\", \")}"</span><span class="o">)</span>
 
-```scala
-final case class SafeQueryBuilder(
-    query: String = "",
-    parameters: List[Any] = List.empty,
-    hasWhereClause: Boolean = false
-):
-  def select(columns: String*): SafeQueryBuilder =
-    copy(query = s"SELECT ${columns.mkString(", ")}")
+  <span class="k">def</span> <span class="nf">from</span><span class="o">(</span><span class="n">table</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">SafeQueryBuilder</span> <span class="o">=</span>
+    <span class="nf">copy</span><span class="o">(</span><span class="n">query</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"$query FROM $table"</span><span class="o">)</span>
 
-  def from(table: String): SafeQueryBuilder =
-    copy(query = s"$query FROM $table")
+  <span class="k">def</span> <span class="nf">where</span><span class="o">(</span><span class="n">column</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">operator</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">value</span><span class="k">:</span> <span class="kt">Any</span><span class="o">)</span><span class="k">:</span> <span class="kt">SafeQueryBuilder</span> <span class="o">=</span>
+    <span class="nf">if</span> <span class="n">hasWhereClause</span> <span class="k">then</span>
+      <span class="nf">copy</span><span class="o">(</span>
+        <span class="n">query</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"$query AND $column $operator ?"</span><span class="o">,</span>
+        <span class="n">parameters</span> <span class="k">=</span> <span class="n">parameters</span> <span class="o">:+</span> <span class="n">value</span>
+      <span class="o">)</span>
+    <span class="k">else</span>
+      <span class="nf">copy</span><span class="o">(</span>
+        <span class="n">query</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"$query WHERE $column $operator ?"</span><span class="o">,</span>
+        <span class="n">parameters</span> <span class="k">=</span> <span class="n">parameters</span> <span class="o">:+</span> <span class="n">value</span><span class="o">,</span>
+        <span class="n">hasWhereClause</span> <span class="k">=</span> <span class="kc">true</span>
+      <span class="o">)</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">data</span> <span class="kd">class</span> <span class="nc">SafeQueryBuilder</span><span class="p">(</span>
+    <span class="kd">val</span> <span class="py">query</span><span class="p">:</span> <span class="nc">String</span> <span class="p">=</span> <span class="s">""</span><span class="p">,</span>
+    <span class="kd">val</span> <span class="py">parameters</span><span class="p">:</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">Any</span><span class="p">&gt;</span> <span class="p">=</span> <span class="nf">emptyList</span><span class="p">(),</span>
+    <span class="kd">val</span> <span class="py">hasWhereClause</span><span class="p">:</span> <span class="nc">Boolean</span> <span class="p">=</span> <span class="k">false</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">select</span><span class="p">(</span><span class="k">vararg</span> <span class="n">columns</span><span class="p">:</span> <span class="nc">String</span><span class="p">):</span> <span class="nc">SafeQueryBuilder</span> <span class="p">=</span>
+        <span class="nf">copy</span><span class="p">(</span><span class="n">query</span> <span class="p">=</span> <span class="s">"SELECT ${columns.joinToString(\", \")}"</span><span class="p">)</span>
 
-  def where(column: String, operator: String, value: Any): SafeQueryBuilder =
-    if hasWhereClause then
-      copy(
-        query = s"$query AND $column $operator ?",
-        parameters = parameters :+ value
-      )
-    else
-      copy(
-        query = s"$query WHERE $column $operator ?",
-        parameters = parameters :+ value,
-        hasWhereClause = true
-      )
-```
+    <span class="k">fun</span> <span class="nf">from</span><span class="p">(</span><span class="n">table</span><span class="p">:</span> <span class="nc">String</span><span class="p">):</span> <span class="nc">SafeQueryBuilder</span> <span class="p">=</span>
+        <span class="nf">copy</span><span class="p">(</span><span class="n">query</span> <span class="p">=</span> <span class="s">"$query FROM $table"</span><span class="p">)</span>
 
-#### Kotlin
-
-```kotlin
-data class SafeQueryBuilder(
-    val query: String = "",
-    val parameters: List<Any> = emptyList(),
-    val hasWhereClause: Boolean = false
-) {
-    fun select(vararg columns: String): SafeQueryBuilder =
-        copy(query = "SELECT ${columns.joinToString(", ")}")
-
-    fun from(table: String): SafeQueryBuilder =
-        copy(query = "$query FROM $table")
-
-    fun where(column: String, operator: String, value: Any): SafeQueryBuilder =
-        if (hasWhereClause) {
-            copy(
-                query = "$query AND $column $operator ?",
-                parameters = parameters + value
-            )
-        } else {
-            copy(
-                query = "$query WHERE $column $operator ?",
-                parameters = parameters + value,
-                hasWhereClause = true
-            )
-        }
-}
-```
+    <span class="k">fun</span> <span class="nf">where</span><span class="p">(</span><span class="n">column</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span> <span class="n">operator</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nc">Any</span><span class="p">):</span> <span class="nc">SafeQueryBuilder</span> <span class="p">=</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">hasWhereClause</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nf">copy</span><span class="p">(</span>
+                <span class="n">query</span> <span class="p">=</span> <span class="s">"$query AND $column $operator ?"</span><span class="p">,</span>
+                <span class="n">parameters</span> <span class="p">=</span> <span class="n">parameters</span> <span class="p">+</span> <span class="n">value</span>
+            <span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nf">copy</span><span class="p">(</span>
+                <span class="n">query</span> <span class="p">=</span> <span class="s">"$query WHERE $column $operator ?"</span><span class="p">,</span>
+                <span class="n">parameters</span> <span class="p">=</span> <span class="n">parameters</span> <span class="p">+</span> <span class="n">value</span><span class="p">,</span>
+                <span class="n">hasWhereClause</span> <span class="p">=</span> <span class="k">true</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ### Custom String Interpolator (Scala 3)
 
