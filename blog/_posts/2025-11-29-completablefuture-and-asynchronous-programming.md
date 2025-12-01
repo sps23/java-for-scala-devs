@@ -22,285 +22,239 @@ We need to:
 3. Provide fallback values when APIs fail
 4. Combine results into an aggregated response
 
-## Java: CompletableFuture
+## Basic Async Operations
 
-Java's `CompletableFuture` (introduced in Java 8, enhanced in Java 9+) provides a rich API for async programming:
+<div class="code-tabs" data-tabs-id="tabs-1">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create an async task - similar to Scala's Future { ... }</span>
+<span class="nc">CompletableFuture</span><span class="o">&lt;</span><span class="nc">ApiResponse</span><span class="o">&gt;</span> <span class="nf">fetchWeatherData</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nc">CompletableFuture</span><span class="o">.</span><span class="na">supplyAsync</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="c1">// Simulate API call</span>
+        <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">150</span><span class="o">);</span>
+        <span class="k">return</span> <span class="nc">ApiResponse</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"weather"</span><span class="o">,</span> <span class="s">"{\"temp\": 22}"</span><span class="o">);</span>
+    <span class="o">},</span> <span class="n">executor</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fetchWeatherData</span><span class="o">()</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">ApiResponse</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Future</span> <span class="o">{</span>
+  <span class="nf">simulateApiCall</span><span class="o">(</span><span class="s">"Weather API"</span><span class="o">,</span> <span class="mi">150</span><span class="o">)</span>
+  <span class="nc">ApiResponse</span><span class="o">(</span><span class="s">"weather"</span><span class="o">,</span> <span class="s">"""{"temp": 22}"""</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nc">CoroutineScope</span><span class="p">.</span><span class="nf">fetchWeatherDataAsync</span><span class="p">():</span> <span class="nc">Deferred</span><span class="p">&lt;</span><span class="nc">ApiResponse</span><span class="p">&gt;</span> <span class="p">=</span>
+    <span class="nf">async</span><span class="p">(</span><span class="nc">Dispatchers</span><span class="p">.</span><span class="nc">IO</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">simulateApiCall</span><span class="p">(</span><span class="s">"Weather API"</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+        <span class="nc">ApiResponse</span><span class="p">.</span><span class="nf">of</span><span class="p">(</span><span class="s">"weather"</span><span class="p">,</span> <span class="s">"""{"temp": 22}"""</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
-### Basic Async Operation
+## Transformation and Chaining
 
-```java
-// Create an async task - similar to Scala's Future { ... }
-CompletableFuture<ApiResponse> fetchWeatherData() {
-    return CompletableFuture.supplyAsync(() -> {
-        // Simulate API call
-        Thread.sleep(150);
-        return ApiResponse.of("weather", "{\"temp\": 22}");
-    }, executor);
-}
-```
+<div class="code-tabs" data-tabs-id="tabs-2">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Transform the result (like Scala's map)</span>
+<span class="nc">CompletableFuture</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">transformResponse</span><span class="o">(</span><span class="nc">CompletableFuture</span><span class="o">&lt;</span><span class="nc">ApiResponse</span><span class="o">&gt;</span> <span class="n">future</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">future</span><span class="o">.</span><span class="na">thenApply</span><span class="o">(</span><span class="n">response</span> <span class="o">-&gt;</span> <span class="n">response</span><span class="o">.</span><span class="na">data</span><span class="o">().</span><span class="na">toUpperCase</span><span class="o">());</span>
+<span class="o">}</span>
 
-### Transformation with thenApply (like Scala's map)
+<span class="c1">// Chain dependent async operations (like Scala's flatMap)</span>
+<span class="nc">CompletableFuture</span><span class="o">&lt;</span><span class="nc">ApiResponse</span><span class="o">&gt;</span> <span class="nf">fetchAndEnrichWeather</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nf">fetchWeatherData</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">thenCompose</span><span class="o">(</span><span class="n">weather</span> <span class="o">-&gt;</span> <span class="n">enrichWithLocation</span><span class="o">(</span><span class="n">weather</span><span class="o">));</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Transform the result (map)</span>
+<span class="k">def</span> <span class="nf">transformResponse</span><span class="o">(</span><span class="n">future</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">ApiResponse</span><span class="o">])</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span>
+  <span class="nv">future</span><span class="o">.</span><span class="py">map</span><span class="o">(</span><span class="n">response</span> <span class="k">=&gt;</span> <span class="nv">response</span><span class="o">.</span><span class="py">data</span><span class="o">.</span><span class="py">toUpperCase</span><span class="o">)</span>
 
-```java
-// Transform the result
-CompletableFuture<String> transformResponse(CompletableFuture<ApiResponse> future) {
-    return future.thenApply(response -> response.data().toUpperCase());
-}
-```
+<span class="c1">// Chain with for-comprehension (flatMap)</span>
+<span class="k">def</span> <span class="nf">fetchAndEnrichWeather</span><span class="o">()</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">ApiResponse</span><span class="o">]</span> <span class="k">=</span>
+  <span class="k">for</span>
+    <span class="n">weather</span> <span class="k">&lt;-</span> <span class="nf">fetchWeatherData</span><span class="o">()</span>
+    <span class="n">enriched</span> <span class="k">&lt;-</span> <span class="nf">enrichWithLocation</span><span class="o">(</span><span class="n">weather</span><span class="o">)</span>
+  <span class="k">yield</span> <span class="n">enriched</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Sequential operations (looks synchronous but is async!)</span>
+<span class="k">suspend</span> <span class="k">fun</span> <span class="nf">fetchAndEnrichWeather</span><span class="p">():</span> <span class="nc">ApiResponse</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">weather</span> <span class="p">=</span> <span class="nf">fetchWeatherDataAsync</span><span class="p">().</span><span class="nf">await</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nf">enrichWithLocation</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
-### Chaining with thenCompose (like Scala's flatMap)
+## Combining Multiple Futures
 
-```java
-// Chain dependent async operations
-CompletableFuture<ApiResponse> fetchAndEnrichWeather() {
-    return fetchWeatherData()
-        .thenCompose(weather -> enrichWithLocation(weather));
-}
-```
+<div class="code-tabs" data-tabs-id="tabs-3">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Wait for all futures to complete</span>
+<span class="nc">CompletableFuture</span><span class="o">&lt;</span><span class="nc">AggregatedData</span><span class="o">&gt;</span> <span class="nf">aggregateFromAllApis</span><span class="o">(</span><span class="nc">Duration</span> <span class="n">timeout</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">var</span> <span class="n">weather</span> <span class="o">=</span> <span class="n">fetchWeatherData</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">completeOnTimeout</span><span class="o">(</span><span class="n">fallback</span><span class="o">,</span> <span class="n">timeout</span><span class="o">.</span><span class="na">toMillis</span><span class="o">(),</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">);</span>
+    <span class="kt">var</span> <span class="n">traffic</span> <span class="o">=</span> <span class="n">fetchTrafficData</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">completeOnTimeout</span><span class="o">(</span><span class="n">fallback</span><span class="o">,</span> <span class="n">timeout</span><span class="o">.</span><span class="na">toMillis</span><span class="o">(),</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">);</span>
+    <span class="kt">var</span> <span class="n">news</span> <span class="o">=</span> <span class="n">fetchNewsData</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">completeOnTimeout</span><span class="o">(</span><span class="n">fallback</span><span class="o">,</span> <span class="n">timeout</span><span class="o">.</span><span class="na">toMillis</span><span class="o">(),</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">);</span>
 
-### Combining Futures with allOf
-
-```java
-// Wait for all futures to complete
-CompletableFuture<AggregatedData> aggregateFromAllApis(Duration timeout) {
-    var weather = fetchWeatherData()
-        .completeOnTimeout(fallback, timeout.toMillis(), TimeUnit.MILLISECONDS);
-    var traffic = fetchTrafficData()
-        .completeOnTimeout(fallback, timeout.toMillis(), TimeUnit.MILLISECONDS);
-    var news = fetchNewsData()
-        .completeOnTimeout(fallback, timeout.toMillis(), TimeUnit.MILLISECONDS);
-
-    return CompletableFuture.allOf(weather, traffic, news)
-        .thenApply(v -> AggregatedData.success(List.of(
-            weather.join(),
-            traffic.join(),
-            news.join()
-        )));
-}
-```
-
-### Race Conditions with anyOf
-
-```java
-// Get the first result
-CompletableFuture<ApiResponse> getFirstAvailableResponse() {
-    return CompletableFuture.anyOf(
-        fetchWeatherData(),
-        fetchTrafficData(),
-        fetchNewsData()
-    ).thenApply(result -> (ApiResponse) result);
-}
-```
-
-### Timeout Handling (Java 9+)
-
-```java
-// With fallback value (completeOnTimeout)
-future.completeOnTimeout(fallback, 5, TimeUnit.SECONDS);
-
-// With exception (orTimeout)
-future.orTimeout(5, TimeUnit.SECONDS);
-```
-
-### Error Handling
-
-```java
-// Recovery (like Scala's recover)
-future.exceptionally(ex -> ApiResponse.of("fallback", "{}"));
-
-// Full handling (like Scala's transform)
-future.handle((response, ex) -> {
-    if (ex != null) return "Error: " + ex.getMessage();
-    return "Success: " + response.data();
-});
-```
-
-## Scala: Futures
-
-Scala's `Future` has been a core part of async programming in Scala for years. The syntax is often more concise:
-
-### Basic Async Operation
-
-```scala
-def fetchWeatherData(): Future[ApiResponse] = Future {
-  simulateApiCall("Weather API", 150)
-  ApiResponse("weather", """{"temp": 22}""")
-}
-```
-
-### Transformation with map
-
-```scala
-def transformResponse(future: Future[ApiResponse]): Future[String] =
-  future.map(response => response.data.toUpperCase)
-```
-
-### Chaining with flatMap and for-comprehensions
-
-```scala
-// Using flatMap
-def fetchAndEnrichWeather(): Future[ApiResponse] =
-  fetchWeatherData().flatMap(weather => enrichWithLocation(weather))
-
-// More elegantly with for-comprehension
-def fetchAndEnrichWeather(): Future[ApiResponse] =
-  for
-    weather <- fetchWeatherData()
-    enriched <- enrichWithLocation(weather)
-  yield enriched
-```
-
-### Combining Futures with sequence
-
-```scala
-def aggregateFromAllApis(timeout: FiniteDuration): Future[AggregatedData] =
-  val futures = List(
-    withTimeout(fetchWeatherData(), timeout, fallback),
-    withTimeout(fetchTrafficData(), timeout, fallback),
-    withTimeout(fetchNewsData(), timeout, fallback)
-  )
+    <span class="k">return</span> <span class="nc">CompletableFuture</span><span class="o">.</span><span class="na">allOf</span><span class="o">(</span><span class="n">weather</span><span class="o">,</span> <span class="n">traffic</span><span class="o">,</span> <span class="n">news</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">thenApply</span><span class="o">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="nc">AggregatedData</span><span class="o">.</span><span class="na">success</span><span class="o">(</span><span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+            <span class="n">weather</span><span class="o">.</span><span class="na">join</span><span class="o">(),</span>
+            <span class="n">traffic</span><span class="o">.</span><span class="na">join</span><span class="o">(),</span>
+            <span class="n">news</span><span class="o">.</span><span class="na">join</span><span class="o">()</span>
+        <span class="o">)));</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">aggregateFromAllApis</span><span class="o">(</span><span class="n">timeout</span><span class="k">:</span> <span class="kt">FiniteDuration</span><span class="o">)</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">AggregatedData</span><span class="o">]</span> <span class="k">=</span>
+  <span class="k">val</span> <span class="nv">futures</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span>
+    <span class="nf">withTimeout</span><span class="o">(</span><span class="nf">fetchWeatherData</span><span class="o">(),</span> <span class="n">timeout</span><span class="o">,</span> <span class="n">fallback</span><span class="o">),</span>
+    <span class="nf">withTimeout</span><span class="o">(</span><span class="nf">fetchTrafficData</span><span class="o">(),</span> <span class="n">timeout</span><span class="o">,</span> <span class="n">fallback</span><span class="o">),</span>
+    <span class="nf">withTimeout</span><span class="o">(</span><span class="nf">fetchNewsData</span><span class="o">(),</span> <span class="n">timeout</span><span class="o">,</span> <span class="n">fallback</span><span class="o">)</span>
+  <span class="o">)</span>
   
-  Future.sequence(futures).map(responses => 
-    AggregatedData.success(responses)
-  )
-```
-
-### Racing Futures with firstCompletedOf
-
-```scala
-def getFirstAvailableResponse(): Future[ApiResponse] =
-  Future.firstCompletedOf(List(
-    fetchWeatherData(),
-    fetchTrafficData(),
-    fetchNewsData()
-  ))
-```
-
-### Error Handling
-
-```scala
-// Recovery
-future.recover { case ex: Exception =>
-  ApiResponse("fallback", "{}")
-}
-
-// Full transformation
-future.transform {
-  case Success(response) => Success(s"Success: ${response.data}")
-  case Failure(ex) => Success(s"Error: ${ex.getMessage}")
-}
-```
-
-### Timeout Handling (requires helper)
-
-Scala's Future doesn't have built-in timeout. Here's a pattern using `Promise`:
-
-```scala
-def withTimeout[T](future: Future[T], timeout: FiniteDuration, fallback: T): Future[T] =
-  val promise = Promise[T]()
-  
-  scheduler.schedule(
-    () => promise.trySuccess(fallback),
-    timeout.toMillis,
-    TimeUnit.MILLISECONDS
-  )
-  
-  future.onComplete(result => promise.tryComplete(result))
-  promise.future
-```
-
-## Kotlin: Coroutines
-
-Kotlin takes a different approach with coroutines, providing structured concurrency that looks like synchronous code:
-
-### Basic Async Operation
-
-```kotlin
-fun CoroutineScope.fetchWeatherDataAsync(): Deferred<ApiResponse> =
-    async(Dispatchers.IO) {
-        simulateApiCall("Weather API", 150)
-        ApiResponse.of("weather", """{"temp": 22}""")
-    }
-```
-
-### Sequential Operations (Natural Syntax!)
-
-```kotlin
-// This looks synchronous but is actually async!
-suspend fun fetchAndEnrichWeather(): ApiResponse {
-    val weather = fetchWeatherDataAsync().await()
-    return enrichWithLocation(weather)
-}
-```
-
-### Concurrent Operations with awaitAll
-
-```kotlin
-suspend fun aggregateFromAllApis(timeout: Duration): AggregatedData =
-    coroutineScope {
-        val weather = async { fetchWithTimeout("weather", timeout) }
-        val traffic = async { fetchWithTimeout("traffic", timeout) }
-        val news = async { fetchWithTimeout("news", timeout) }
+  <span class="nv">Future</span><span class="o">.</span><span class="py">sequence</span><span class="o">(</span><span class="n">futures</span><span class="o">).</span><span class="py">map</span><span class="o">(</span><span class="n">responses</span> <span class="k">=&gt;</span> 
+    <span class="nv">AggregatedData</span><span class="o">.</span><span class="py">success</span><span class="o">(</span><span class="n">responses</span><span class="o">)</span>
+  <span class="o">)</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">suspend</span> <span class="k">fun</span> <span class="nf">aggregateFromAllApis</span><span class="p">(</span><span class="n">timeout</span><span class="p">:</span> <span class="nc">Duration</span><span class="p">):</span> <span class="nc">AggregatedData</span> <span class="p">=</span>
+    <span class="nf">coroutineScope</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">weather</span> <span class="p">=</span> <span class="nf">async</span> <span class="p">{</span> <span class="nf">fetchWithTimeout</span><span class="p">(</span><span class="s">"weather"</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span> <span class="p">}</span>
+        <span class="kd">val</span> <span class="py">traffic</span> <span class="p">=</span> <span class="nf">async</span> <span class="p">{</span> <span class="nf">fetchWithTimeout</span><span class="p">(</span><span class="s">"traffic"</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span> <span class="p">}</span>
+        <span class="kd">val</span> <span class="py">news</span> <span class="p">=</span> <span class="nf">async</span> <span class="p">{</span> <span class="nf">fetchWithTimeout</span><span class="p">(</span><span class="s">"news"</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span> <span class="p">}</span>
         
-        val responses = listOf(weather, traffic, news).awaitAll()
-        AggregatedData.success(responses)
-    }
-```
+        <span class="kd">val</span> <span class="py">responses</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="n">weather</span><span class="p">,</span> <span class="n">traffic</span><span class="p">,</span> <span class="n">news</span><span class="p">).</span><span class="nf">awaitAll</span><span class="p">()</span>
+        <span class="nc">AggregatedData</span><span class="p">.</span><span class="nf">success</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
-### Racing with select
+## Racing Futures
 
-```kotlin
-suspend fun getFirstAvailableResponse(): ApiResponse =
-    coroutineScope {
-        val weather = fetchWeatherDataAsync()
-        val traffic = fetchTrafficDataAsync()
-        val news = fetchNewsDataAsync()
+<div class="code-tabs" data-tabs-id="tabs-4">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Get the first result</span>
+<span class="nc">CompletableFuture</span><span class="o">&lt;</span><span class="nc">ApiResponse</span><span class="o">&gt;</span> <span class="nf">getFirstAvailableResponse</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nc">CompletableFuture</span><span class="o">.</span><span class="na">anyOf</span><span class="o">(</span>
+        <span class="n">fetchWeatherData</span><span class="o">(),</span>
+        <span class="n">fetchTrafficData</span><span class="o">(),</span>
+        <span class="n">fetchNewsData</span><span class="o">()</span>
+    <span class="o">).</span><span class="na">thenApply</span><span class="o">(</span><span class="n">result</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="nc">ApiResponse</span><span class="o">)</span> <span class="n">result</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">getFirstAvailableResponse</span><span class="o">()</span><span class="k">:</span> <span class="kt">Future</span><span class="o">[</span><span class="kt">ApiResponse</span><span class="o">]</span> <span class="k">=</span>
+  <span class="nv">Future</span><span class="o">.</span><span class="py">firstCompletedOf</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span>
+    <span class="nf">fetchWeatherData</span><span class="o">(),</span>
+    <span class="nf">fetchTrafficData</span><span class="o">(),</span>
+    <span class="nf">fetchNewsData</span><span class="o">()</span>
+  <span class="o">))</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">suspend</span> <span class="k">fun</span> <span class="nf">getFirstAvailableResponse</span><span class="p">():</span> <span class="nc">ApiResponse</span> <span class="p">=</span>
+    <span class="nf">coroutineScope</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="py">weather</span> <span class="p">=</span> <span class="nf">fetchWeatherDataAsync</span><span class="p">()</span>
+        <span class="kd">val</span> <span class="py">traffic</span> <span class="p">=</span> <span class="nf">fetchTrafficDataAsync</span><span class="p">()</span>
+        <span class="kd">val</span> <span class="py">news</span> <span class="p">=</span> <span class="nf">fetchNewsDataAsync</span><span class="p">()</span>
         
-        select {
-            weather.onAwait { it }
-            traffic.onAwait { it }
-            news.onAwait { it }
-        }
-    }
-```
+        <span class="nf">select</span> <span class="p">{</span>
+            <span class="n">weather</span><span class="p">.</span><span class="nf">onAwait</span> <span class="p">{</span> <span class="k">it</span> <span class="p">}</span>
+            <span class="n">traffic</span><span class="p">.</span><span class="nf">onAwait</span> <span class="p">{</span> <span class="k">it</span> <span class="p">}</span>
+            <span class="n">news</span><span class="p">.</span><span class="nf">onAwait</span> <span class="p">{</span> <span class="k">it</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
-### Built-in Timeout Handling
+## Error Handling
 
-```kotlin
-// With fallback (returns null on timeout)
-val result = withTimeoutOrNull(5.seconds) {
-    fetchSlowApi()
-} ?: fallbackValue
+<div class="code-tabs" data-tabs-id="tabs-5">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Recovery (like Scala's recover)</span>
+<span class="n">future</span><span class="o">.</span><span class="na">exceptionally</span><span class="o">(</span><span class="n">ex</span> <span class="o">-&gt;</span> <span class="nc">ApiResponse</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"fallback"</span><span class="o">,</span> <span class="s">"{}"</span><span class="o">));</span>
 
-// With exception
-val result = withTimeout(5.seconds) {
-    fetchSlowApi()
-}
-```
+<span class="c1">// Full handling (like Scala's transform)</span>
+<span class="n">future</span><span class="o">.</span><span class="na">handle</span><span class="o">((</span><span class="n">response</span><span class="o">,</span> <span class="n">ex</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">ex</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="s">"Error: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
+    <span class="k">return</span> <span class="s">"Success: "</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="na">data</span><span class="o">();</span>
+<span class="o">});</span>
 
-### Error Handling
+<span class="c1">// Timeout handling (Java 9+)</span>
+<span class="n">future</span><span class="o">.</span><span class="na">completeOnTimeout</span><span class="o">(</span><span class="n">fallback</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+<span class="n">future</span><span class="o">.</span><span class="na">orTimeout</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Recovery</span>
+<span class="nv">future</span><span class="o">.</span><span class="py">recover</span> <span class="o">{</span> <span class="k">case</span> <span class="n">ex</span><span class="k">:</span> <span class="kt">Exception</span> <span class="o">=&gt;</span>
+  <span class="nc">ApiResponse</span><span class="o">(</span><span class="s">"fallback"</span><span class="o">,</span> <span class="s">"{}"</span><span class="o">)</span>
+<span class="o">}</span>
 
-```kotlin
-// Using runCatching (Kotlin's Result type)
-suspend fun fetchWithHandling(): String {
-    val result = runCatching {
-        fetchApiData()
-    }
+<span class="c1">// Full transformation</span>
+<span class="nv">future</span><span class="o">.</span><span class="py">transform</span> <span class="o">{</span>
+  <span class="k">case</span> <span class="nc">Success</span><span class="o">(</span><span class="n">response</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Success</span><span class="o">(</span><span class="nv">s</span><span class="s">"Success: ${response.data}"</span><span class="o">)</span>
+  <span class="k">case</span> <span class="nc">Failure</span><span class="o">(</span><span class="n">ex</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Success</span><span class="o">(</span><span class="nv">s</span><span class="s">"Error: ${ex.getMessage}"</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Using runCatching (Kotlin's Result type)</span>
+<span class="k">suspend</span> <span class="k">fun</span> <span class="nf">fetchWithHandling</span><span class="p">():</span> <span class="nc">String</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">result</span> <span class="p">=</span> <span class="nf">runCatching</span> <span class="p">{</span> <span class="nf">fetchApiData</span><span class="p">()</span> <span class="p">}</span>
     
-    return result.fold(
-        onSuccess = { "Success: ${it.data}" },
-        onFailure = { "Error: ${it.message}" }
-    )
-}
+    <span class="k">return</span> <span class="n">result</span><span class="p">.</span><span class="nf">fold</span><span class="p">(</span>
+        <span class="n">onSuccess</span> <span class="p">=</span> <span class="p">{</span> <span class="s">"Success: ${it.data}"</span> <span class="p">},</span>
+        <span class="n">onFailure</span> <span class="p">=</span> <span class="p">{</span> <span class="s">"Error: ${it.message}"</span> <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">}</span>
 
-// Simple try/catch (works naturally with suspend functions)
-suspend fun fetchWithRecovery(): ApiResponse =
-    try {
-        fetchUnreliableApi()
-    } catch (ex: Exception) {
-        ApiResponse.of("fallback", "{}")
-    }
-```
+<span class="c1">// Built-in timeout handling</span>
+<span class="kd">val</span> <span class="py">result</span> <span class="p">=</span> <span class="nf">withTimeoutOrNull</span><span class="p">(</span><span class="mi">5</span><span class="p">.</span><span class="n">seconds</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">fetchSlowApi</span><span class="p">()</span>
+<span class="p">}</span> <span class="o">?:</span> <span class="n">fallbackValue</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ## Comparison Table
 
