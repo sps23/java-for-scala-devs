@@ -6,13 +6,25 @@ import kotlin.math.sqrt
  * A simple calculator for testing framework demonstrations.
  */
 class Calculator {
-    fun add(a: Int, b: Int): Int = a + b
+    fun add(
+        a: Int,
+        b: Int,
+    ): Int = a + b
 
-    fun subtract(a: Int, b: Int): Int = a - b
+    fun subtract(
+        a: Int,
+        b: Int,
+    ): Int = a - b
 
-    fun multiply(a: Int, b: Int): Int = a * b
+    fun multiply(
+        a: Int,
+        b: Int,
+    ): Int = a * b
 
-    fun divide(a: Int, b: Int): Double {
+    fun divide(
+        a: Int,
+        b: Int,
+    ): Double {
         if (b == 0) {
             throw ArithmeticException("Division by zero")
         }

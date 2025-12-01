@@ -3,10 +3,7 @@ package io.github.sps23.testing.examples
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
-/**
- * ScalaTest WordSpec examples for Calculator.
- * Demonstrates BDD-style testing with ScalaTest.
- */
+/** ScalaTest WordSpec examples for Calculator. Demonstrates BDD-style testing with ScalaTest. */
 class CalculatorScalaTestWordSpec extends AnyWordSpec with Matchers:
 
   val calculator = new Calculator

@@ -14,8 +14,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 /**
- * JUnit 5 test examples for Calculator.
- * Demonstrates modern Java testing with Jupiter API.
+ * JUnit 5 test examples for Calculator. Demonstrates modern Java testing with
+ * Jupiter API.
  */
 @DisplayName("Calculator Tests (JUnit 5)")
 class CalculatorJUnit5Test {

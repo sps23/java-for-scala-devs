@@ -1,8 +1,6 @@
 package io.github.sps23.testing.examples
 
-/**
- * A simple calculator for testing framework demonstrations.
- */
+/** A simple calculator for testing framework demonstrations. */
 class Calculator:
   def add(a: Int, b: Int): Int = a + b
 
@@ -16,5 +14,4 @@ class Calculator:
 
   def isPrime(number: Int): Boolean =
     if number <= 1 then false
-    else
-      (2 to math.sqrt(number).toInt).forall(i => number % i != 0)
+    else (2 to math.sqrt(number).toInt).forall(i => number % i != 0)
