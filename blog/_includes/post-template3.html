@@ -23,17 +23,21 @@
       <span class="article-category">{{ page.categories.first }}</span>
       {% endif %}
       <h1 class="article-title">{{ page.title }}</h1>
-      <div class="article-meta">
-        <span><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></span>
-        {% if page.author %}<span>By {{ page.author }}</span>{% endif %}
-        <span>{{ content | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
-        <span class="stat-item" title="Page views">
-          <svg class="stat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
-          <span class="view-count" data-path="{{ page.url }}">—</span>
-        </span>
+      <div class="article-meta-wrapper">
+        <div class="article-meta">
+          <span><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></span>
+          {% if page.author %}<span>By {{ page.author }}</span>{% endif %}
+          <span>{{ content | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
+        </div>
+        <div class="article-stats">
+          <span class="stat-item" title="Page views">
+            <svg class="stat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span class="view-count" data-path="{{ page.url }}">—</span> views
+          </span>
+        </div>
       </div>
     </header>
     
