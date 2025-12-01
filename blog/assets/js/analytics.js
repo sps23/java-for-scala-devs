@@ -13,45 +13,28 @@
   });
 
   /**
-   * Initialize view counters
-   * Displays view counts from GoatCounter
+   * Get GoatCounter site name from the script tag
+   * @returns {string|null} The site name or null if not found
    */
-  function initViewCounters() {
-    const viewCountElements = document.querySelectorAll('.view-count');
-    if (!viewCountElements.length) return;
-
-    viewCountElements.forEach(function(element) {
-      const path = element.dataset.path || window.location.pathname;
-      fetchViewCount(path, element);
-    });
-
-    // Also update total views if present
-    const totalViewsElement = document.querySelector('.total-blog-views');
-    if (totalViewsElement) {
-      fetchTotalViews(totalViewsElement);
+  function getGoatCounterSiteName() {
+    var gcScript = document.querySelector('script[data-goatcounter]');
+    if (!gcScript) {
+      return null;
     }
+
+    var gcUrl = gcScript.getAttribute('data-goatcounter');
+    // Extract site name from URL (e.g., "https://site.goatcounter.com/count" -> "site")
+    var match = gcUrl.match(/https:\/\/([^.]+)\.goatcounter\.com/);
+    return match ? match[1] : null;
   }
 
   /**
-   * Fetch view count for a specific page from GoatCounter
+   * Fetch view count from GoatCounter API
+   * @param {string} siteName - The GoatCounter site name
+   * @param {string} path - The page path to fetch count for
+   * @param {HTMLElement} element - The element to update with the count
    */
-  function fetchViewCount(path, element) {
-    // Get the GoatCounter site from the script tag
-    const gcScript = document.querySelector('script[data-goatcounter]');
-    if (!gcScript) {
-      element.textContent = '—';
-      return;
-    }
-
-    const gcUrl = gcScript.getAttribute('data-goatcounter');
-    // Extract site name from URL (e.g., "https://site.goatcounter.com/count" -> "site")
-    var match = gcUrl.match(/https:\/\/([^.]+)\.goatcounter\.com/);
-    if (!match) {
-      element.textContent = '—';
-      return;
-    }
-    var siteName = match[1];
-
+  function fetchGoatCounterData(siteName, path, element) {
     // Use GoatCounter's public API to get page count
     // Note: This requires the site to have public stats enabled
     var apiUrl = 'https://' + siteName + '.goatcounter.com/counter/' + encodeURIComponent(path) + '.json';
@@ -78,45 +61,33 @@
   }
 
   /**
-   * Fetch total blog views
+   * Initialize view counters
+   * Displays view counts from GoatCounter
    */
-  function fetchTotalViews(element) {
-    // Get the GoatCounter site from the script tag
-    const gcScript = document.querySelector('script[data-goatcounter]');
-    if (!gcScript) {
-      element.textContent = '—';
-      return;
-    }
-
-    const gcUrl = gcScript.getAttribute('data-goatcounter');
-    var match = gcUrl.match(/https:\/\/([^.]+)\.goatcounter\.com/);
-    if (!match) {
-      element.textContent = '—';
-      return;
-    }
-    var siteName = match[1];
-
-    // Fetch total site visits - we'll use the root path
-    var apiUrl = 'https://' + siteName + '.goatcounter.com/counter/TOTAL.json';
-
-    fetch(apiUrl)
-      .then(function(response) {
-        if (!response.ok) {
-          throw new Error('Not found');
-        }
-        return response.json();
-      })
-      .then(function(data) {
-        if (data && data.count !== undefined) {
-          element.textContent = formatNumber(data.count);
-          element.classList.add('loaded');
-        } else {
-          element.textContent = '—';
-        }
-      })
-      .catch(function() {
+  function initViewCounters() {
+    var siteName = getGoatCounterSiteName();
+    
+    var viewCountElements = document.querySelectorAll('.view-count');
+    viewCountElements.forEach(function(element) {
+      if (!siteName) {
         element.textContent = '—';
-      });
+        return;
+      }
+      var path = element.dataset.path || window.location.pathname;
+      fetchGoatCounterData(siteName, path, element);
+    });
+
+    // Also update total views if present
+    var totalViewsElement = document.querySelector('.total-blog-views');
+    if (totalViewsElement) {
+      if (!siteName) {
+        totalViewsElement.textContent = '—';
+        return;
+      }
+      // Fetch total site visits using the root path '/'
+      // GoatCounter aggregates all visits when querying the root
+      fetchGoatCounterData(siteName, '/', totalViewsElement);
+    }
   }
 
   /**
@@ -166,7 +137,9 @@
           }
         });
       }, {
-        threshold: Array.from({ length: 101 }, function(_, i) { return i / 100; })
+        // Use fewer thresholds for better performance
+        // The scroll handler provides granular updates
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1.0]
       });
 
       observer.observe(article);
