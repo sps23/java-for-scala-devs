@@ -116,7 +116,7 @@ class CalculatorJUnit5Test {
 
 ### JUnit 5 in Scala 3
 
-```scala 3
+```scala
 package io.github.sps23.testing.examples
 
 import org.junit.jupiter.api.Assertions.*
@@ -247,7 +247,9 @@ ScalaTest is the most popular test framework for Scala, offering multiple testin
 
 ### ScalaTest FunSuite Style
 
-```scala 3
+```scala
+package io.github.sps23.testing.examples
+  
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -288,7 +290,7 @@ class CalculatorScalaTestFunSuite extends AnyFunSuite with Matchers:
 
 ### ScalaTest WordSpec Style (BDD)
 
-```scala 3
+```scala
 package io.github.sps23.testing.examples
 
 import org.scalatest.wordspec.AnyWordSpec
