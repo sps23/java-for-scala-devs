@@ -95,7 +95,7 @@ Java 9+ introduced elegant factory methods:
 
 ### Key Characteristics
 
-<div class="table-wrapper" markdown="block">
+<div class="table-wrapper" markdown="1">
 
 | Feature | Java 9+ | Scala 3 | Kotlin |
 |---------|---------|---------|--------|
@@ -385,7 +385,7 @@ SummaryResult summary = transactions.stream()
 
 Java 16 introduced `Stream.toList()` as a more concise alternative to `Collectors.toList()`:
 
-<div class="table-wrapper" markdown="block">
+<div class="table-wrapper" markdown="1">
 
 | Method | Return Type | Mutability | Java Version |
 |--------|-------------|------------|--------------|
@@ -472,7 +472,7 @@ Here's our Transaction record used in the examples:
 
 ## Summary: Feature Comparison
 
-<div class="table-wrapper" markdown="block">
+<div class="table-wrapper" markdown="1">
 
 | Feature | Java 8 | Java 21 | Scala 3 | Kotlin |
 |---------|--------|---------|---------|--------|

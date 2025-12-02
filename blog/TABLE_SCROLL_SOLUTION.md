@@ -41,7 +41,7 @@ Additionally, `white-space: nowrap` was added to `th, td` styles to prevent cell
 To make a table scrollable on mobile, wrap it with a `<div class="table-wrapper">` element in your Markdown:
 
 ```markdown
-<div class="table-wrapper" markdown="block">
+<div class="table-wrapper" markdown="1">
 
 | Column 1 | Column 2 | Column 3 | Column 4 |
 |----------|----------|----------|----------|
@@ -50,7 +50,7 @@ To make a table scrollable on mobile, wrap it with a `<div class="table-wrapper"
 </div>
 ```
 
-**Important:** The `markdown="block"` attribute is required for Jekyll to properly parse the Markdown table inside the HTML div.
+**Important:** The `markdown="1"` attribute is required for kramdown (Jekyll's default Markdown processor) to properly parse the Markdown table inside the HTML div.
 
 ## Example Usage
 
