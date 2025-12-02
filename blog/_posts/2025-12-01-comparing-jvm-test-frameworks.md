@@ -528,37 +528,37 @@ Let's compare how the same prime number test looks across all three frameworks:
 
 <div class="code-tabs" data-tabs-id="syntax-comparison">
 <div class="tab-buttons">
-    <button class="tab-button active" data-tab="java" data-lang="Java (JUnit 5)">Java (JUnit 5)</button>
-    <button class="tab-button" data-tab="scala" data-lang="Scala (ScalaTest)">Scala (ScalaTest)</button>
-    <button class="tab-button" data-tab="kotlin" data-lang="Kotlin (Kotest)">Kotlin (Kotest)</button>
-  </div>
-  <div class="tab-content active" data-tab="java">
-    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@ParameterizedTest
-@DisplayName("Should identify prime numbers correctly")
-@ValueSource(ints = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29})
-void testPrimeNumbers(int number) {
-    assertTrue(calculator.isPrime(number), 
-        number + " should be prime");
-}
+<button class="tab-button active" data-tab="java" data-lang="Java (JUnit 5)">Java (JUnit 5)</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala (ScalaTest)">Scala (ScalaTest)</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin (Kotest)">Kotlin (Kotest)</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ParameterizedTest</span>
+<span class="nd">@DisplayName</span><span class="o">(</span><span class="s">"Should identify prime numbers correctly"</span><span class="o">)</span>
+<span class="nd">@ValueSource</span><span class="o">(</span><span class="n">ints</span> <span class="o">=</span> <span class="o">{</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">11</span><span class="o">,</span> <span class="mi">13</span><span class="o">,</span> <span class="mi">17</span><span class="o">,</span> <span class="mi">19</span><span class="o">,</span> <span class="mi">23</span><span class="o">,</span> <span class="mi">29</span><span class="o">})</span>
+<span class="kt">void</span> <span class="nf">testPrimeNumbers</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">assertTrue</span><span class="o">(</span><span class="n">calculator</span><span class="o">.</span><span class="na">isPrime</span><span class="o">(</span><span class="n">number</span><span class="o">),</span> 
+        <span class="n">number</span> <span class="o">+</span> <span class="s">" should be prime"</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div></div>
-  </div>
-  <div class="tab-content" data-tab="scala">
-    <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test("should identify prime numbers correctly"):
-  val primes = Seq(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
-  primes.foreach { n =>
-    calculator.isPrime(n) shouldBe true
-  }
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">test</span><span class="o">(</span><span class="s">"should identify prime numbers correctly"</span><span class="o">):</span>
+  <span class="k">val</span> <span class="nv">primes</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">11</span><span class="o">,</span> <span class="mi">13</span><span class="o">,</span> <span class="mi">17</span><span class="o">,</span> <span class="mi">19</span><span class="o">,</span> <span class="mi">23</span><span class="o">,</span> <span class="mi">29</span><span class="o">)</span>
+  <span class="n">primes</span><span class="o">.</span><span class="py">foreach</span> <span class="o">{</span> <span class="n">n</span> <span class="k">=&gt;</span>
+    <span class="n">calculator</span><span class="o">.</span><span class="py">isPrime</span><span class="o">(</span><span class="n">n</span><span class="o">)</span> <span class="n">shouldBe</span> <span class="kc">true</span>
+  <span class="o">}</span>
 </code></pre></div></div>
-  </div>
-  <div class="tab-content" data-tab="kotlin">
-    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test("should identify prime numbers correctly") {
-    val primes = listOf(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
-    primes.forEach { n ->
-        calculator.isPrime(n) shouldBe true
-    }
-}
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">test</span><span class="p">(</span><span class="s">"should identify prime numbers correctly"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">primes</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">29</span><span class="p">)</span>
+    <span class="n">primes</span><span class="p">.</span><span class="nf">forEach</span> <span class="p">{</span> <span class="n">n</span> <span class="p">-&gt;</span>
+        <span class="n">calculator</span><span class="p">.</span><span class="nf">isPrime</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="n">shouldBe</span> <span class="k">true</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
-  </div>
+</div>
 </div>
 
 **Key Differences:**
