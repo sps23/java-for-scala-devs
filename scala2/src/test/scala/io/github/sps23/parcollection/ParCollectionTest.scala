@@ -3,16 +3,18 @@ package io.github.sps23.parcollection
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
+import scala.annotation.tailrec
+
 /** Real-world mathematical examples demonstrating apply and aggregate operations.
   *
   * Mathematical operations covered:
-  * - Summation (Σ): Adding elements together
-  * - Sum of squares: Used in variance/standard deviation calculations
-  * - Euclidean distance: Geometry calculations
-  * - Factorial products: Combinatorics
-  * - GCD: Number theory
-  * - Dot product: Linear algebra
-  * - Prime factorization: Cryptography
+  *   - Summation (Σ): Adding elements together
+  *   - Sum of squares: Used in variance/standard deviation calculations
+  *   - Euclidean distance: Geometry calculations
+  *   - Factorial products: Combinatorics
+  *   - GCD: Number theory
+  *   - Dot product: Linear algebra
+  *   - Prime factorization: Cryptography
   */
 class ParCollectionTest extends AnyFunSuite with Matchers {
 
@@ -28,11 +30,11 @@ class ParCollectionTest extends AnyFunSuite with Matchers {
     val squares = ParCollection.applyF(numbers, (n: Int) => n * n)
 
     // Then: Should produce [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-    assert(squares == Seq(1, 4, 9, 16, 25, 36, 49, 64, 81, 100))
+    squares shouldBe Seq(1, 4, 9, 16, 25, 36, 49, 64, 81, 100)
   }
 
   test("applyParF should compute squares in parallel") {
-    val numbers = 1 to 100
+    val numbers    = 1 to 100
     val sequential = ParCollection.applyF(numbers, (n: Int) => n * n)
     val parallel   = ParCollection.applyParF(numbers, (n: Int) => n * n)
 
@@ -53,9 +55,9 @@ class ParCollectionTest extends AnyFunSuite with Matchers {
     // Computing Σ(x²) = 2² + 4² + 6² + 8² + 10² = 4 + 16 + 36 + 64 + 100 = 220
     val sumOfSquares = ParCollection.aggregateF(
       dataPoints,
-      f = (x: Int) => x * x,                      // Transform: square each number
+      f         = (x: Int) => x * x,             // Transform: square each number
       aggregate = (acc: Int, x: Int) => acc + x, // Combine: sum them up
-      zero = 0
+      zero      = 0
     )
 
     assert(sumOfSquares == 220)
@@ -70,15 +72,15 @@ class ParCollectionTest extends AnyFunSuite with Matchers {
     val dataPoints = 1 to 100
     val sequential = ParCollection.aggregateF(
       dataPoints,
-      f = (x: Int) => x * x,
+      f         = (x: Int) => x * x,
       aggregate = (acc: Int, x: Int) => acc + x,
-      zero = 0
+      zero      = 0
     )
     val parallel = ParCollection.aggregateParF(
       dataPoints,
-      f = (x: Int) => x * x,
+      f         = (x: Int) => x * x,
       aggregate = (acc: Int, x: Int) => acc + x,
-      zero = 0
+      zero      = 0
     )
 
     assert(sequential == parallel)
@@ -108,7 +110,7 @@ class ParCollectionTest extends AnyFunSuite with Matchers {
         diff * diff
       },
       aggregate = (acc: Double, x: Double) => acc + x,
-      zero = 0.0
+      zero      = 0.0
     )
 
     val distance = math.sqrt(sumOfSquaredDiffs)
@@ -125,16 +127,15 @@ class ParCollectionTest extends AnyFunSuite with Matchers {
     // Real-world: Used in combinatorics and probability calculations
     // Computing: (1! * 2! * 3! * 4!) = 1 * 2 * 6 * 24 = 288
 
-    def factorial(n: Int): Long = {
+    def factorial(n: Int): Long =
       if (n <= 1) 1L else n * factorial(n - 1)
-    }
 
-    val numbers             = Seq(1, 2, 3, 4)
+    val numbers = Seq(1, 2, 3, 4)
     val productOfFactorials = ParCollection.aggregateF(
       numbers,
-      f = (n: Int) => factorial(n),
+      f         = (n: Int) => factorial(n),
       aggregate = (acc: Long, x: Long) => acc * x,
-      zero = 1L
+      zero      = 1L
     )
 
     assert(productOfFactorials == 288L) // 1! * 2! * 3! * 4! = 1 * 2 * 6 * 24
@@ -148,18 +149,18 @@ class ParCollectionTest extends AnyFunSuite with Matchers {
     // Real-world: Finding the greatest common divisor of a set of numbers
     // Used in fraction simplification, scheduling problems, etc.
 
-    def gcd(a: Int, b: Int): Int = {
+    @tailrec
+    def gcd(a: Int, b: Int): Int =
       if (b == 0) a else gcd(b, a % b)
-    }
 
     val numbers = Seq(48, 64, 80, 96)
 
     // GCD of all numbers in sequence
     val overallGcd = ParCollection.aggregateF(
       numbers,
-      f = (n: Int) => n,                         // Identity function
+      f         = (n: Int) => n, // Identity function
       aggregate = (acc: Int, x: Int) => gcd(acc, x),
-      zero = numbers.head
+      zero      = numbers.head
     )
 
     assert(overallGcd == 16) // GCD(48, 64, 80, 96) = 16
@@ -181,9 +182,9 @@ class ParCollectionTest extends AnyFunSuite with Matchers {
 
     val dotProduct = ParCollection.aggregateF(
       vectorPairs,
-      f = (pair: (Int, Int)) => pair._1 * pair._2, // Multiply components
-      aggregate = (acc: Int, x: Int) => acc + x,    // Sum products
-      zero = 0
+      f         = (pair: (Int, Int)) => pair._1 * pair._2, // Multiply components
+      aggregate = (acc: Int, x: Int) => acc + x,           // Sum products
+      zero      = 0
     )
 
     // (1*5) + (2*6) + (3*7) + (4*8) = 5 + 12 + 21 + 32 = 70
@@ -218,9 +219,9 @@ class ParCollectionTest extends AnyFunSuite with Matchers {
 
     val totalPrimeFactors = ParCollection.aggregateParFixedF(
       numbers,
-      f = (n: Int) => countPrimeFactors(n),
-      aggregate = (acc: Int, x: Int) => acc + x,
-      zero = 0,
+      f                    = (n: Int) => countPrimeFactors(n),
+      aggregate            = (acc: Int, x: Int) => acc + x,
+      zero                 = 0,
       fixedNumberOfThreads = 2
     )
 
@@ -236,25 +237,24 @@ class ParCollectionTest extends AnyFunSuite with Matchers {
     val largeDataset = 1 to 10000
 
     // Expensive computation: sum of cube roots
-    def expensiveComputation(n: Int): Double = {
+    def expensiveComputation(n: Int): Double =
       math.pow(n, 1.0 / 3.0) // Cube root
-    }
 
     val start1 = System.nanoTime()
     val sequential = ParCollection.aggregateF(
       largeDataset,
-      f = expensiveComputation,
+      f         = expensiveComputation,
       aggregate = (acc: Double, x: Double) => acc + x,
-      zero = 0.0
+      zero      = 0.0
     )
     val time1 = System.nanoTime() - start1
 
     val start2 = System.nanoTime()
     val parallel = ParCollection.aggregateParForkF(
       largeDataset,
-      f = expensiveComputation,
-      aggregate = (acc: Double, x: Double) => acc + x,
-      zero = 0.0,
+      f           = expensiveComputation,
+      aggregate   = (acc: Double, x: Double) => acc + x,
+      zero        = 0.0,
       parallelism = 4
     )
     val time2 = System.nanoTime() - start2
@@ -267,4 +267,3 @@ class ParCollectionTest extends AnyFunSuite with Matchers {
     println(s"Sequential: ${time1 / 1000000}ms, Parallel: ${time2 / 1000000}ms")
   }
 }
-
