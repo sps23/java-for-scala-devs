@@ -193,7 +193,7 @@ object NativeMemoryExample {
 
         Arena.ofConfined().use { arena ->
             val small = arena.allocate(8)
-
+            small.toString()
             // This would throw IndexOutOfBoundsException
             // small.get(ValueLayout.JAVA_LONG, 8) // Attempt to read beyond bounds
 
@@ -204,6 +204,7 @@ object NativeMemoryExample {
         println("\nThread confinement example:")
         Arena.ofConfined().use { confined ->
             val segment = confined.allocate(16)
+            segment.toString()
             println("Confined arena can only be accessed from creating thread")
             // Accessing from another thread would throw WrongThreadException
         }
