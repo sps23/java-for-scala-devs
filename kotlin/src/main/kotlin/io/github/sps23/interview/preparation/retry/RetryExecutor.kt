@@ -452,7 +452,7 @@ fun main() {
     val cond1 = RetryConditions.maxAttempts(3)
     val cond2 = RetryConditions.forException<IOException>()
     val combined = cond1 and cond2 // More readable than cond1.and(cond2)
-    println("  Infix function: condition1 and condition2")
+    println("  Infix function: condition1 and condition2: ${combined(RetryContext.initial(IOException("IO error")))}")
 
     // Reified generics
     println("  Reified generic: forException<IOException>() - no Class parameter needed")
