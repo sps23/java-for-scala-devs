@@ -3,8 +3,8 @@ layout: post
 title: "String Templates (Preview) - Safe String Interpolation"
 description: "Java 21 String Templates preview - build safe SQL queries with STR and FMT processors, create custom template processors, and compare with Scala and Kotlin interpolation."
 date: 2025-11-29 21:00:00 +0000
-categories: interview
-tags: java java21 scala kotlin string-templates interview-preparation preview
+categories: [interview]
+tags: [java, java21, scala, kotlin, string-templates, interview-preparation, preview]
 ---
 
 This is Part 8 of our Java 21 Interview Preparation series. We'll explore Java 21's String Templates preview feature, build a SQL query builder that safely interpolates parameters, and compare with Scala 3 and Kotlin approaches.

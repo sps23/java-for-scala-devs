@@ -3,8 +3,8 @@ layout: post
 title: "CompletableFuture and Asynchronous Programming"
 description: "Build concurrent applications with Java CompletableFuture - learn async composition, timeouts, and error handling with comparisons to Scala Futures and Kotlin Coroutines."
 date: 2025-11-29 10:00:00 +0000
-categories: concurrency
-tags: java scala kotlin async futures completablefuture coroutines
+categories: [concurrency]
+tags: [java, scala, kotlin, async, futures, completablefuture, coroutines]
 ---
 
 Asynchronous programming is essential for building responsive, high-performance applications. This post explores how Java, Scala, and Kotlin handle async operations, with a focus on aggregating data from multiple APIs concurrently.

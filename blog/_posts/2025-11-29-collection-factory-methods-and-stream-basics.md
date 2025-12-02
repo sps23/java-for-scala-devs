@@ -3,8 +3,8 @@ layout: post
 title: "Collection Factory Methods and Stream Basics"
 description: "Master Java 9+ collection factories (List.of, Set.of, Map.of) and Stream API fundamentals - compare with Scala 3 collections and Kotlin stdlib approaches."
 date: 2025-11-29 14:00:00 +0000
-categories: interview
-tags: java java21 scala kotlin collections streams interview-preparation
+categories: [interview]
+tags: [java, java21, scala, kotlin, collections, streams, interview-preparation]
 ---
 
 This is Part 3 of our Java 21 Interview Preparation series. We'll explore modern collection factory methods (Java 9+) and Stream API fundamentals, comparing them with Scala 3 and Kotlin approaches.

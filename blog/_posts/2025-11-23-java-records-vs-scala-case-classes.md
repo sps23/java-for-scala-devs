@@ -3,8 +3,8 @@ layout: post
 title: "Java Records vs Scala Case Classes"
 description: "Compare Java 16+ Records with Scala case classes - learn about immutability, auto-generated methods, pattern matching, and key differences between these immutable data types."
 date: 2025-11-23 11:00:00 +0000
-categories: features
-tags: java scala records case-classes
+categories: [features]
+tags: [java, scala, records, case-classes]
 ---
 
 One of the most beloved features of Scala is the case class. Java 16+ introduced Records, which provide similar functionality. Let's compare them!
