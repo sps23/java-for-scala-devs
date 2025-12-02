@@ -77,3 +77,11 @@ sass:
 
 # Permalink for clean SEO-friendly URLs
 permalink: /blog/:year/:month/:day/:title/
+
+# Analytics Configuration
+# GoatCounter is a privacy-friendly, open-source analytics service
+# To use your own GoatCounter account:
+# 1. Sign up at https://goatcounter.com (free for personal use)
+# 2. Create a site and get your site code
+# 3. Replace the goatcounter_site value below with your site code
+goatcounter_site: "java-for-scala-devs"

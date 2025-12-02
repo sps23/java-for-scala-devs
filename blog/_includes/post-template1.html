@@ -19,11 +19,22 @@
   <article class="article">
     <header class="article-header">
       <h1 class="article-title">{{ page.title }}</h1>
-      <p class="article-meta">
-        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
-        {% if page.author %} • {{ page.author }}{% endif %}
-        {% if page.categories.size > 0 %} • {{ page.categories | join: ", " }}{% endif %}
-      </p>
+      <div class="article-meta-wrapper">
+        <p class="article-meta">
+          <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+          {% if page.author %} • {{ page.author }}{% endif %}
+          {% if page.categories.size > 0 %} • {{ page.categories | join: ", " }}{% endif %}
+        </p>
+        <div class="article-stats">
+          <span class="stat-item" title="Page views">
+            <svg class="stat-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span class="view-count" data-path="{{ page.url }}">—</span> views
+          </span>
+        </div>
+      </div>
       {% if page.tags.size > 0 %}
       <div class="tags">
         {% for tag in page.tags %}

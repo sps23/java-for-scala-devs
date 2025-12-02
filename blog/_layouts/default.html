@@ -28,5 +28,14 @@
   
   <!-- Theme JavaScript -->
   <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+  
+  <!-- Analytics JavaScript -->
+  <script src="{{ '/assets/js/analytics.js' | relative_url }}"></script>
+  
+  <!-- GoatCounter Analytics (privacy-friendly, no cookies) -->
+  {% if site.goatcounter_site %}
+  <script data-goatcounter="https://{{ site.goatcounter_site }}.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+  {% endif %}
 </body>
 </html>
