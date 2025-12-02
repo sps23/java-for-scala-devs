@@ -3,8 +3,8 @@ layout: post
 title: "Comparing JVM Test Frameworks: JUnit 5, ScalaTest, and Kotest"
 description: "A comprehensive comparison of the most popular test frameworks across Java, Scala, and Kotlin - explore JUnit 5, ScalaTest, and Kotest with practical examples and cross-language usage."
 date: 2025-12-01 23:00:00 +0000
-categories: testing
-tags: java scala kotlin junit scalatest kotest testing interview-preparation
+categories: [testing]
+tags: [java, scala, kotlin, junit, scalatest, kotest, testing, interview-preparation]
 ---
 
 Testing is a critical part of software development on the JVM. This comprehensive guide compares the three most popular test frameworks across Java, Scala, and Kotlin: **JUnit 5**, **ScalaTest**, and **Kotest**. We'll explore their features, syntax styles, and cross-language compatibility with practical examples.
@@ -48,12 +48,8 @@ JUnit 5 (Jupiter) is the most widely adopted test framework on the JVM. It works
 
 ### JUnit 5 in Java
 
-<div class="code-tabs" data-tabs-id="junit-java">
-<div class="tab-buttons">
-<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
-</div>
-<div class="tab-content active" data-tab="java">
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package io.github.sps23.testing.examples;
+```java
+package io.github.sps23.testing.examples;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
@@ -103,9 +99,7 @@ class CalculatorJUnit5Test {
         }
     }
 }
-</code></pre></div></div>
-</div>
-</div>
+```
 
 **Strengths:**
 - Excellent IDE support (IntelliJ IDEA, Eclipse, VS Code)
@@ -122,12 +116,8 @@ class CalculatorJUnit5Test {
 
 ### JUnit 5 in Scala 3
 
-<div class="code-tabs" data-tabs-id="junit-scala">
-<div class="tab-buttons">
-<button class="tab-button active" data-tab="scala" data-lang="Scala 3">Scala 3</button>
-</div>
-<div class="tab-content active" data-tab="scala">
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package io.github.sps23.testing.examples
+```scala 3
+package io.github.sps23.testing.examples
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.*
@@ -170,9 +160,7 @@ class CalculatorJUnit5Test:
     def testPrimeNumbers(number: Int): Unit =
       assertTrue(calculator.isPrime(number), 
         s"$number should be prime")
-</code></pre></div></div>
-</div>
-</div>
+```
 
 **Scala 3 with JUnit 5:**
 - Works seamlessly with Scala 3 syntax
@@ -183,12 +171,8 @@ class CalculatorJUnit5Test:
 
 ### JUnit 5 in Kotlin
 
-<div class="code-tabs" data-tabs-id="junit-kotlin">
-<div class="tab-buttons">
-<button class="tab-button active" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
-</div>
-<div class="tab-content active" data-tab="kotlin">
-<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package io.github.sps23.testing.examples
+```kotlin
+package io.github.sps23.testing.examples
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.*
@@ -239,9 +223,7 @@ class CalculatorJUnit5Test {
         }
     }
 }
-</code></pre></div></div>
-</div>
-</div>
+```
 
 **Kotlin with JUnit 5:**
 - Uses `inner class` for nested tests
@@ -265,13 +247,7 @@ ScalaTest is the most popular test framework for Scala, offering multiple testin
 
 ### ScalaTest FunSuite Style
 
-<div class="code-tabs" data-tabs-id="scalatest-funsuite">
-<div class="tab-buttons">
-<button class="tab-button active" data-tab="scala" data-lang="Scala 3">Scala 3</button>
-</div>
-<div class="tab-content active" data-tab="scala">
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package io.github.sps23.testing.examples
-
+```scala 3
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -302,9 +278,7 @@ class CalculatorScalaTestFunSuite extends AnyFunSuite with Matchers:
     nonPrimes.foreach { n =>
       calculator.isPrime(n) shouldBe false
     }
-</code></pre></div></div>
-</div>
-</div>
+```
 
 **FunSuite Strengths:**
 - Concise, xUnit-style tests
@@ -314,12 +288,8 @@ class CalculatorScalaTestFunSuite extends AnyFunSuite with Matchers:
 
 ### ScalaTest WordSpec Style (BDD)
 
-<div class="code-tabs" data-tabs-id="scalatest-wordspec">
-<div class="tab-buttons">
-<button class="tab-button active" data-tab="scala" data-lang="Scala 3">Scala 3</button>
-</div>
-<div class="tab-content active" data-tab="scala">
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package io.github.sps23.testing.examples
+```scala 3
+package io.github.sps23.testing.examples
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
@@ -366,9 +336,7 @@ class CalculatorScalaTestWordSpec extends AnyWordSpec with Matchers:
       }
     }
   }
-</code></pre></div></div>
-</div>
-</div>
+```
 
 **WordSpec Strengths:**
 - BDD-style nested descriptions
@@ -404,13 +372,7 @@ Kotest is the most Kotlin-idiomatic test framework, offering multiple spec style
 
 ### Kotest FunSpec Style
 
-<div class="code-tabs" data-tabs-id="kotest-funspec">
-<div class="tab-buttons">
-<button class="tab-button active" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
-</div>
-<div class="tab-content active" data-tab="kotlin">
-<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package io.github.sps23.testing.examples
-
+```kotlin
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.doubles.plusOrMinus
@@ -462,9 +424,7 @@ class CalculatorKotestFunSpec : FunSpec({
         }
     }
 })
-</code></pre></div></div>
-</div>
-</div>
+```
 
 **FunSpec Features:**
 - `context { }` blocks for grouping related tests
@@ -474,12 +434,8 @@ class CalculatorKotestFunSpec : FunSpec({
 
 ### Kotest StringSpec Style (Most Concise)
 
-<div class="code-tabs" data-tabs-id="kotest-stringspec">
-<div class="tab-buttons">
-<button class="tab-button active" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
-</div>
-<div class="tab-content active" data-tab="kotlin">
-<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package io.github.sps23.testing.examples
+```kotlin
+package io.github.sps23.testing.examples
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -526,9 +482,7 @@ class CalculatorKotestStringSpec : StringSpec({
         }
     }
 })
-</code></pre></div></div>
-</div>
-</div>
+```
 
 **StringSpec Features:**
 - Most concise Kotest style
@@ -572,12 +526,12 @@ Let's compare how the same prime number test looks across all three frameworks:
 
 <div class="code-tabs" data-tabs-id="syntax-comparison">
 <div class="tab-buttons">
-<button class="tab-button active" data-tab="java" data-lang="Java (JUnit 5)">Java (JUnit 5)</button>
-<button class="tab-button" data-tab="scala" data-lang="Scala (ScalaTest)">Scala (ScalaTest)</button>
-<button class="tab-button" data-tab="kotlin" data-lang="Kotlin (Kotest)">Kotlin (Kotest)</button>
-</div>
-<div class="tab-content active" data-tab="java">
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@ParameterizedTest
+    <button class="tab-button active" data-tab="java" data-lang="Java (JUnit 5)">Java (JUnit 5)</button>
+    <button class="tab-button" data-tab="scala" data-lang="Scala (ScalaTest)">Scala (ScalaTest)</button>
+    <button class="tab-button" data-tab="kotlin" data-lang="Kotlin (Kotest)">Kotlin (Kotest)</button>
+  </div>
+  <div class="tab-content active" data-tab="java">
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@ParameterizedTest
 @DisplayName("Should identify prime numbers correctly")
 @ValueSource(ints = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29})
 void testPrimeNumbers(int number) {
@@ -585,24 +539,24 @@ void testPrimeNumbers(int number) {
         number + " should be prime");
 }
 </code></pre></div></div>
-</div>
-<div class="tab-content" data-tab="scala">
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test("should identify prime numbers correctly"):
+  </div>
+  <div class="tab-content" data-tab="scala">
+    <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test("should identify prime numbers correctly"):
   val primes = Seq(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
   primes.foreach { n =>
     calculator.isPrime(n) shouldBe true
   }
 </code></pre></div></div>
-</div>
-<div class="tab-content" data-tab="kotlin">
-<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test("should identify prime numbers correctly") {
+  </div>
+  <div class="tab-content" data-tab="kotlin">
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test("should identify prime numbers correctly") {
     val primes = listOf(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
     primes.forEach { n ->
         calculator.isPrime(n) shouldBe true
     }
 }
 </code></pre></div></div>
-</div>
+  </div>
 </div>
 
 **Key Differences:**
