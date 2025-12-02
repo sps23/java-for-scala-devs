@@ -95,12 +95,16 @@ Java 9+ introduced elegant factory methods:
 
 ### Key Characteristics
 
+<div class="table-wrapper" markdown="block">
+
 | Feature | Java 9+ | Scala 3 | Kotlin |
 |---------|---------|---------|--------|
 | Default mutability | Immutable with factory methods | Immutable | Read-only (immutable view) |
 | Null elements | Not allowed | Allowed | Allowed |
 | Modification | UnsupportedOperationException | New collection created | UnsupportedOperationException |
 | Duplicate keys (Map) | IllegalArgumentException | Last value wins | Last value wins |
+
+</div>
 
 ## Immutable vs Mutable Collections
 
@@ -381,11 +385,15 @@ SummaryResult summary = transactions.stream()
 
 Java 16 introduced `Stream.toList()` as a more concise alternative to `Collectors.toList()`:
 
+<div class="table-wrapper" markdown="block">
+
 | Method | Return Type | Mutability | Java Version |
 |--------|-------------|------------|--------------|
 | `Collectors.toList()` | ArrayList | Mutable | Java 8+ |
 | `Stream.toList()` | Unmodifiable List | Immutable | Java 16+ |
 | `Collectors.toUnmodifiableList()` | Unmodifiable List | Immutable | Java 10+ |
+
+</div>
 
 ```java
 // Java 8 style - returns mutable ArrayList
@@ -464,6 +472,8 @@ Here's our Transaction record used in the examples:
 
 ## Summary: Feature Comparison
 
+<div class="table-wrapper" markdown="block">
+
 | Feature | Java 8 | Java 21 | Scala 3 | Kotlin |
 |---------|--------|---------|---------|--------|
 | Immutable List | `Collections.unmodifiableList()` | `List.of()` | `List()` | `listOf()` |
@@ -474,6 +484,8 @@ Here's our Transaction record used in the examples:
 | Sum By Group | `groupingBy(..., summingDouble())` | Same | `groupMapReduce()` | `groupBy().mapValues()` |
 | Combined Collectors | N/A | `teeing()` | N/A (not needed) | N/A (not needed) |
 | Statistics | `summaryStatistics()` | `summaryStatistics()` | Manual | Manual |
+
+</div>
 
 ## Best Practices
 

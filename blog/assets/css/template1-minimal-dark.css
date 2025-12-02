@@ -325,6 +325,23 @@ pre code {
 }
 
 /* Tables */
+/* Wrapper for horizontal scrolling on mobile */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: var(--space-lg) 0;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+.table-wrapper table {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -338,6 +355,7 @@ th, td {
   padding: var(--space-sm) var(--space-md);
   text-align: left;
   border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
 }
 
 th {
