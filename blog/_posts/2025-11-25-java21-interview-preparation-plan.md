@@ -3,8 +3,8 @@ layout: post
 title: "Java 21 Interview Preparation Plan"
 description: "Comprehensive Java 21 interview preparation plan for senior developers - 20 problems covering Records, Virtual Threads, Pattern Matching, and more modern Java features."
 date: 2025-11-25 20:00:00 +0000
-categories: interview
-tags: java java21 interview preparation senior-developer
+categories: [interview]
+tags: [java, java21, interview, preparation, senior-developer]
 ---
 
 This post outlines a comprehensive plan for preparing for a Java Senior Developer interview, especially for developers who haven't worked with Java since JDK 1.8. The problems are divided into three groups: Basic, Medium, and Advanced, with a focus on JDK 21 features.

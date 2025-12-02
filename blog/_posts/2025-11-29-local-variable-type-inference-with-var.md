@@ -3,8 +3,8 @@ layout: post
 title: "Local Variable Type Inference with var"
 description: "Use Java 10+ var keyword effectively - learn best practices for type inference, readability guidelines, and comparisons with Scala 3 and Kotlin type inference."
 date: 2025-11-29 21:00:00 +0000
-categories: interview
-tags: java java21 scala kotlin type-inference var interview-preparation
+categories: [interview]
+tags: [java, java21, scala, kotlin, type-inference, var, interview-preparation]
 ---
 
 This is part of our Java 21 Interview Preparation series. We'll explore local variable type inference using Java's `var` keyword (Java 10+), comparing it with Scala 3's and Kotlin's approach to type inference.

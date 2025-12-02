@@ -3,8 +3,8 @@ layout: post
 title: "Functional Interfaces and Lambda Expressions"
 description: "Master Java functional interfaces, lambda expressions, and method references - build a configurable retry mechanism with comparisons to Scala and Kotlin functions."
 date: 2025-11-29 15:00:00 +0000
-categories: functional-programming
-tags: java scala kotlin lambdas functional-interfaces method-references
+categories: [functional-programming]
+tags: [java, scala, kotlin, lambdas, functional-interfaces, method-references]
 ---
 
 Functional programming is a core paradigm in modern software development. This post explores how Java, Scala, and Kotlin handle functional interfaces, lambda expressions, and function composition, with a practical example: building a configurable retry mechanism.

@@ -3,8 +3,8 @@ layout: post
 title: "Welcome to Java for Scala Developers"
 description: "Introduction to the Java for Scala Developers blog - a practical guide covering modern Java 21 features like Records, Sealed Classes, Pattern Matching, and Virtual Threads."
 date: 2025-11-22 10:00:00 +0000
-categories: introduction
-tags: java scala getting-started
+categories: [introduction]
+tags: [java, scala, getting-started]
 ---
 
 Welcome to the Java for Scala Developers blog! This is a practical guide for Scala developers who want to learn or refresh their Java knowledge.

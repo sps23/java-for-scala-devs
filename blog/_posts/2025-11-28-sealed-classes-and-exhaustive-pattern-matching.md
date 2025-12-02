@@ -3,8 +3,8 @@ layout: post
 title: "Sealed Classes and Exhaustive Pattern Matching"
 description: "Model type-safe domain logic with Java 17 sealed classes and exhaustive pattern matching - compare with Scala sealed traits and Kotlin sealed classes with payment system examples."
 date: 2025-11-28 21:00:00 +0000
-categories: interview
-tags: java java21 scala kotlin sealed-classes pattern-matching interview-preparation
+categories: [interview]
+tags: [java, java21, scala, kotlin, sealed-classes, pattern-matching, interview-preparation]
 ---
 
 Sealed classes are a powerful feature for type-safe domain modeling. Java 17 introduced sealed classes and interfaces, bringing Java closer to Scala's sealed traits and Kotlin's sealed classes. In this post, we'll explore how to model a payment system using sealed classes and implement fee calculation with exhaustive pattern matching.
