@@ -12,10 +12,13 @@ java {
 dependencies {
     implementation 'org.scala-lang:scala-library:2.13.12'
     implementation 'org.scala-lang.modules:scala-parallel-collections_3:1.2.0'
-    
-    testImplementation 'org.scalatest:scalatest_2.13:3.2.17'
+
     testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.13:2.2.0'
-    testRuntimeOnly 'org.scalatestplus:junit-5-10_2.13:3.2.17.0'
+    testImplementation('org.scalatest:scalatest_3:3.2.19')
+    testImplementation('org.junit.jupiter:junit-jupiter:5.10.1')
+    testRuntimeOnly('org.junit.platform:junit-platform-engine:1.13.1')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.10.1')
+    testRuntimeOnly('org.scalatestplus:junit-5-13_3:3.2.19.0')
 }
 
 tasks.withType(ScalaCompile).configureEach {
@@ -24,10 +27,11 @@ tasks.withType(ScalaCompile).configureEach {
 
 test {
     useJUnitPlatform {
-        includeEngines 'scalatest'
-    }
-    testLogging {
-        events "passed", "skipped", "failed"
+        includeEngines('scalatest', 'junit-jupiter')
+        testLogging {
+            events 'passed', 'skipped', 'failed'
+            exceptionFormat 'full'
+        }
     }
 }
 
