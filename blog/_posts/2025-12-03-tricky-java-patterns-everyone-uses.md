@@ -417,7 +417,7 @@ String result = switch (day) {
 
 | Feature | Statement | Expression |
 |---------|-----------|------------|
-| Fall-through | Default (needs `break`) | Never (with `-&gt;`) |
+| Fall-through | Default (needs `break`) | Never (with `->`) |
 | Exhaustiveness | Not required | Required |
 | Returns value | No | Yes |
 | `break` | Exits switch | Not allowed |
