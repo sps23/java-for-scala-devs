@@ -2,11 +2,10 @@ package io.github.sps23.trickypatterns;
 
 /**
  * Demonstrates the double-checked locking pattern and its evolution.
- * 
+ *
  * The tricky part: The "obvious" implementation is broken due to memory model.
- * Pre-Java 5: Completely broken
- * Java 5+: Requires volatile keyword
- * Modern Java: Use lazy initialization holders instead
+ * Pre-Java 5: Completely broken Java 5+: Requires volatile keyword Modern Java:
+ * Use lazy initialization holders instead
  */
 public class DoubleCheckedLockingPattern {
 
@@ -25,8 +24,8 @@ public class DoubleCheckedLockingPattern {
     }
 
     /**
-     * BROKEN PATTERN (Pre-Java 5 and even after without volatile)
-     * This looks correct but has subtle race conditions
+     * BROKEN PATTERN (Pre-Java 5 and even after without volatile) This looks
+     * correct but has subtle race conditions
      */
     @SuppressWarnings("all")
     private static void demonstrateBrokenPattern() {
@@ -57,8 +56,7 @@ public class DoubleCheckedLockingPattern {
     }
 
     /**
-     * CORRECT PATTERN (Java 5+)
-     * Requires volatile keyword to prevent reordering
+     * CORRECT PATTERN (Java 5+) Requires volatile keyword to prevent reordering
      */
     private static void demonstrateCorrectPattern() {
         System.out.println("=== CORRECT PATTERN (Java 5+) ===");
@@ -69,7 +67,8 @@ public class DoubleCheckedLockingPattern {
         System.out.println("    if (instance == null) {");
         System.out.println("        synchronized (CorrectSingleton.class) {");
         System.out.println("            if (instance == null) {");
-        System.out.println("                instance = new CorrectSingleton();  // ✅ Safe with volatile");
+        System.out.println(
+                "                instance = new CorrectSingleton();  // ✅ Safe with volatile");
         System.out.println("            }");
         System.out.println("        }");
         System.out.println("    }");
@@ -88,8 +87,7 @@ public class DoubleCheckedLockingPattern {
     }
 
     /**
-     * MODERN PATTERN
-     * Use initialization-on-demand holder idiom
+     * MODERN PATTERN Use initialization-on-demand holder idiom
      */
     private static void demonstrateModernWay() {
         System.out.println("=== MODERN WAY: Initialization-on-Demand Holder ===");
@@ -98,7 +96,8 @@ public class DoubleCheckedLockingPattern {
         System.out.println("    private ModernSingleton() {}");
         System.out.println();
         System.out.println("    private static class Holder {");
-        System.out.println("        static final ModernSingleton INSTANCE = new ModernSingleton();");
+        System.out
+                .println("        static final ModernSingleton INSTANCE = new ModernSingleton();");
         System.out.println("    }");
         System.out.println();
         System.out.println("    public static ModernSingleton getInstance() {");
@@ -160,7 +159,7 @@ public class DoubleCheckedLockingPattern {
             // Expensive initialization
             System.out.println("Initializing connection pool...");
             try {
-                Thread.sleep(100);  // Simulate slow init
+                Thread.sleep(100); // Simulate slow init
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -168,8 +167,8 @@ public class DoubleCheckedLockingPattern {
 
         // Double-checked locking (correct with volatile)
         public static ConnectionPool getInstance() {
-            if (instance == null) {  // Fast path: no lock
-                synchronized (ConnectionPool.class) {  // Slow path: lock
+            if (instance == null) { // Fast path: no lock
+                synchronized (ConnectionPool.class) { // Slow path: lock
                     if (instance == null) {
                         instance = new ConnectionPool();
                     }
@@ -194,7 +193,7 @@ public class DoubleCheckedLockingPattern {
         }
 
         public static ModernConnectionPool getInstance() {
-            return Holder.INSTANCE;  // Simple and correct
+            return Holder.INSTANCE; // Simple and correct
         }
     }
 }

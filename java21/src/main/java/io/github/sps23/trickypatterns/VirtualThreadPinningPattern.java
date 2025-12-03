@@ -5,10 +5,10 @@ import java.util.concurrent.Executors;
 
 /**
  * Demonstrates Virtual Thread pinning scenarios that harm performance.
- * 
+ *
  * The tricky part: Virtual threads (Java 21) are cheap and scalable, BUT
- * certain operations "pin" them to platform threads, losing benefits.
- * This is extremely non-intuitive and poorly documented.
+ * certain operations "pin" them to platform threads, losing benefits. This is
+ * extremely non-intuitive and poorly documented.
  */
 public class VirtualThreadPinningPattern {
 
@@ -43,16 +43,16 @@ public class VirtualThreadPinningPattern {
     private static void demonstrateSynchronizedBlock() throws InterruptedException {
         System.out.println("=== PINNING CAUSE #1: synchronized ===");
         System.out.println();
-        
+
         Object lock = new Object();
-        
+
         // ❌ This pins the virtual thread!
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             executor.submit(() -> {
-                synchronized (lock) {  // ❌ PINNING!
+                synchronized (lock) { // ❌ PINNING!
                     System.out.println("Inside synchronized block");
                     try {
-                        Thread.sleep(1000);  // Virtual thread is pinned!
+                        Thread.sleep(1000); // Virtual thread is pinned!
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
@@ -60,7 +60,7 @@ public class VirtualThreadPinningPattern {
                 return null;
             });
         }
-        
+
         System.out.println();
         System.out.println("Why it pins:");
         System.out.println("  - synchronized uses monitor (JVM intrinsic)");
@@ -81,7 +81,7 @@ public class VirtualThreadPinningPattern {
     private static void demonstrateNativeMethodPinning() {
         System.out.println("=== PINNING CAUSE #2: Native Methods ===");
         System.out.println();
-        
+
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             executor.submit(() -> {
                 // Many I/O operations use native methods
@@ -90,7 +90,7 @@ public class VirtualThreadPinningPattern {
                 return null;
             });
         }
-        
+
         System.out.println();
         System.out.println("Native methods that pin:");
         System.out.println("  - FileInputStream/FileOutputStream (some operations)");
@@ -110,18 +110,18 @@ public class VirtualThreadPinningPattern {
     private static void demonstrateCorrectAlternatives() throws InterruptedException {
         System.out.println("=== CORRECT ALTERNATIVES ===");
         System.out.println();
-        
+
         // ✅ Alternative 1: Use ReentrantLock instead of synchronized
         System.out.println("1. Replace synchronized with ReentrantLock:");
         demonstrateReentrantLock();
         System.out.println();
-        
+
         // ✅ Alternative 2: Keep synchronized blocks short
         System.out.println("2. Keep synchronized blocks SHORT:");
         System.out.println("   Move blocking I/O OUTSIDE synchronized");
         demonstrateShortSynchronized();
         System.out.println();
-        
+
         // ✅ Alternative 3: Use Semaphore for concurrency control
         System.out.println("3. Use Semaphore for counting:");
         System.out.println("   Better than synchronized for rate limiting");
@@ -130,10 +130,10 @@ public class VirtualThreadPinningPattern {
 
     private static void demonstrateReentrantLock() throws InterruptedException {
         var lock = new java.util.concurrent.locks.ReentrantLock();
-        
+
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             executor.submit(() -> {
-                lock.lock();  // ✅ No pinning with ReentrantLock!
+                lock.lock(); // ✅ No pinning with ReentrantLock!
                 try {
                     System.out.println("   Inside ReentrantLock");
                     Thread.sleep(100);
@@ -145,29 +145,29 @@ public class VirtualThreadPinningPattern {
                 return null;
             });
         }
-        
+
         System.out.println("   Virtual thread can unmount while waiting");
     }
 
     private static void demonstrateShortSynchronized() throws InterruptedException {
         Object lock = new Object();
-        
+
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             executor.submit(() -> {
                 // ❌ Bad: I/O inside synchronized
                 // synchronized (lock) {
-                //     performExpensiveIO();  // Pins for entire duration
+                // performExpensiveIO(); // Pins for entire duration
                 // }
-                
+
                 // ✅ Good: I/O outside synchronized
                 String data = performExpensiveIO();
-                synchronized (lock) {  // Only pin for memory update
+                synchronized (lock) { // Only pin for memory update
                     updateSharedState(data);
                 }
                 return null;
             });
         }
-        
+
         System.out.println("   Pinning duration minimized");
     }
 
@@ -186,7 +186,7 @@ public class VirtualThreadPinningPattern {
     public static void demonstrateWebServerScenario() {
         System.out.println("=== REAL WORLD: Web Server ===");
         System.out.println();
-        
+
         System.out.println("❌ BAD: Each request in synchronized block");
         System.out.println("```java");
         System.out.println("void handleRequest(Request req) {");
@@ -198,7 +198,7 @@ public class VirtualThreadPinningPattern {
         System.out.println("```");
         System.out.println("Impact: Can only handle N concurrent requests (N = platform threads)");
         System.out.println();
-        
+
         System.out.println("✅ GOOD: Minimal synchronization");
         System.out.println("```java");
         System.out.println("void handleRequest(Request req) {");
