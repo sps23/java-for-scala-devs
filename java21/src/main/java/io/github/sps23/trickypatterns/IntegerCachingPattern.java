@@ -2,9 +2,9 @@ package io.github.sps23.trickypatterns;
 
 /**
  * Demonstrates the confusing Integer caching behavior.
- * 
- * The tricky part: Integer.valueOf() caches values from -128 to 127,
- * leading to unexpected == behavior that seems to work, then breaks!
+ *
+ * The tricky part: Integer.valueOf() caches values from -128 to 127, leading to
+ * unexpected == behavior that seems to work, then breaks!
  */
 public class IntegerCachingPattern {
 
@@ -20,21 +20,21 @@ public class IntegerCachingPattern {
      */
     private static void demonstrateCachingBehavior() {
         System.out.println("=== INTEGER CACHING BEHAVIOR ===");
-        
+
         // ✅ These work as expected due to caching
         Integer a = 100;
         Integer b = 100;
-        System.out.println("a == b (100): " + (a == b));  // true - cached!
-        System.out.println("a.equals(b): " + a.equals(b));  // true
+        System.out.println("a == b (100): " + (a == b)); // true - cached!
+        System.out.println("a.equals(b): " + a.equals(b)); // true
         System.out.println();
-        
+
         // ❌ These FAIL even though they look identical
         Integer c = 200;
         Integer d = 200;
-        System.out.println("c == d (200): " + (c == d));  // false - NOT cached!
-        System.out.println("c.equals(d): " + c.equals(d));  // true
+        System.out.println("c == d (200): " + (c == d)); // false - NOT cached!
+        System.out.println("c.equals(d): " + c.equals(d)); // true
         System.out.println();
-        
+
         System.out.println("Why? JVM caches -128 to 127 by default");
         System.out.println("The == comparison checks object identity, not value!\n");
     }
@@ -44,18 +44,18 @@ public class IntegerCachingPattern {
      */
     private static void demonstrateCommonMistake() {
         System.out.println("=== COMMON MISTAKE: Using == ===");
-        
+
         // This works in testing...
         Integer userId1 = getUserId(1);
         Integer userId2 = getUserId(1);
-        if (userId1 == userId2) {  // ❌ Dangerous!
+        if (userId1 == userId2) { // ❌ Dangerous!
             System.out.println("Test users match (low IDs work)");
         }
-        
+
         // ...but fails in production with larger IDs!
         Integer realId1 = getUserId(1000);
         Integer realId2 = getUserId(1000);
-        if (realId1 == realId2) {  // This is false!
+        if (realId1 == realId2) { // This is false!
             System.out.println("Production users match");
         } else {
             System.out.println("Production users DON'T match (but they should!)");
@@ -68,20 +68,20 @@ public class IntegerCachingPattern {
      */
     private static void demonstrateCorrectWay() {
         System.out.println("=== CORRECT WAY: Use .equals() ===");
-        
+
         Integer a = 1000;
         Integer b = 1000;
-        
+
         // ✅ Always use equals() for object comparison
         if (a.equals(b)) {
             System.out.println("Values are equal (correct!)");
         }
-        
+
         // ✅ Or use intValue() to get primitive
         if (a.intValue() == b.intValue()) {
             System.out.println("Primitive comparison also works");
         }
-        
+
         // ✅ Or auto-unbox to primitive (Java 5+)
         int aPrim = a;
         int bPrim = b;
@@ -114,30 +114,30 @@ public class IntegerCachingPattern {
      */
     public static void demonstrateAutoboxingPitfalls() {
         System.out.println("=== AUTOBOXING PITFALLS ===");
-        
+
         // Pitfall 1: Null pointer exception
         Integer value = null;
         try {
-            int primitive = value;  // NullPointerException on auto-unbox!
+            int primitive = value; // NullPointerException on auto-unbox!
         } catch (NullPointerException e) {
             System.out.println("NPE on auto-unboxing null Integer");
         }
-        
+
         // Pitfall 2: Performance in loops
         long start = System.nanoTime();
-        Integer sum = 0;  // ❌ Creates object for each addition!
+        Integer sum = 0; // ❌ Creates object for each addition!
         for (int i = 0; i < 10000; i++) {
-            sum += i;  // Unbox, add, box - inefficient!
+            sum += i; // Unbox, add, box - inefficient!
         }
         long boxedTime = System.nanoTime() - start;
-        
+
         start = System.nanoTime();
-        int primSum = 0;  // ✅ Primitive - efficient
+        int primSum = 0; // ✅ Primitive - efficient
         for (int i = 0; i < 10000; i++) {
             primSum += i;
         }
         long primTime = System.nanoTime() - start;
-        
+
         System.out.println("Boxed loop: " + boxedTime / 1000 + "μs");
         System.out.println("Primitive loop: " + primTime / 1000 + "μs");
         System.out.println("Speedup: " + (boxedTime / primTime) + "x");
