@@ -13,12 +13,16 @@ Project Loom brings revolutionary changes to Java concurrency with virtual threa
 
 Imagine you need to scrape thousands of web pages concurrently. With traditional platform threads, you face several challenges:
 
+<div class="table-wrapper" markdown="1">
+
 | Challenge | Impact |
 |-----------|--------|
 | Memory | ~1MB stack per thread, limiting total threads |
 | Thread Pool Sizing | Too few threads = queuing; too many = memory exhaustion |
 | Blocking I/O | Threads sit idle waiting for responses |
 | Scalability | 10K concurrent requests requires ~10GB of thread stacks |
+
+</div>
 
 ## Before: Traditional Thread Pool Approach
 
@@ -235,12 +239,16 @@ public int fetchAnySuccessful(List<String> mirrors) throws Exception {
 
 ### Comparison: ShutdownOnFailure vs ShutdownOnSuccess
 
+<div class="table-wrapper" markdown="1">
+
 | Aspect | ShutdownOnFailure | ShutdownOnSuccess |
 |--------|-------------------|-------------------|
 | Use case | Need ALL results | Need ANY result |
 | On first failure | Cancel all, throw | Continue others |
 | On first success | Continue all | Cancel others, return |
 | Returns | All results | First success |
+
+</div>
 
 ## Scoped Values: Modern Alternative to ThreadLocal
 
@@ -273,12 +281,16 @@ private String processRequest(String url) throws Exception {
 
 ### ThreadLocal vs ScopedValue
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | ThreadLocal | ScopedValue |
 |---------|-------------|-------------|
 | Mutability | Mutable | Immutable per scope |
 | Cleanup | Manual remove() | Automatic with scope |
 | Memory | Can leak | Cleaned up automatically |
 | Virtual threads | Works, but heavy | Optimized |
+
+</div>
 
 ## When to Use Virtual Threads vs Platform Threads
 
@@ -332,6 +344,8 @@ private String processRequest(String url) throws Exception {
 
 Virtual threads provide similar benefits to effect systems like ZIO or Cats Effect:
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | Virtual Threads | ZIO/Cats Effect |
 |---------|-----------------|-----------------|
 | Lightweight concurrency | ✓ | ✓ (Fibers) |
@@ -340,11 +354,15 @@ Virtual threads provide similar benefits to effect systems like ZIO or Cats Effe
 | Structured concurrency | StructuredTaskScope | Built-in |
 | Effect tracking | No | Yes (IO monad) |
 
+</div>
+
 **Key insight**: Virtual threads let you write blocking-style code that scales like async code, without needing an effect system.
 
 ## For Kotlin Developers
 
 Virtual threads complement Kotlin coroutines:
+
+<div class="table-wrapper" markdown="1">
 
 | Use Case | Virtual Threads | Coroutines |
 |----------|-----------------|------------|
@@ -353,9 +371,13 @@ Virtual threads complement Kotlin coroutines:
 | Blocking Java libraries | Excellent | Needs Dispatchers.IO |
 | Structured concurrency | StructuredTaskScope | Built-in |
 
+</div>
+
 ## Performance Comparison
 
 With 1000 URLs that each take 1 second to fetch:
+
+<div class="table-wrapper" markdown="1">
 
 | Approach | Threads | Time | Memory |
 |----------|---------|------|--------|
@@ -363,6 +385,8 @@ With 1000 URLs that each take 1 second to fetch:
 | Thread pool (16) | 16 | ~63s | ~16MB |
 | Thread pool (200) | 200 | ~5s | ~200MB |
 | Virtual threads | 1000 | ~1s | ~few MB |
+
+</div>
 
 Virtual threads achieve maximum parallelism with minimal memory!
 

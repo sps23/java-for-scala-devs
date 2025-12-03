@@ -192,6 +192,8 @@ public record Employee(long id, String name, String email, String department, do
 
 The table below summarizes the similarities and differences between Scala case classes, Java records, and Kotlin data classes for modeling immutable data:
 
+<div class="table-wrapper" markdown="1">
+
 | Feature                | Scala Case Class                | Java Record                        | Kotlin Data Class                  |
 |------------------------|---------------------------------|------------------------------------|------------------------------------|
 | Declaration            | `case class Employee(...)`      | `record Employee(...) {}`          | `data class Employee(...)`         |
@@ -202,6 +204,8 @@ The table below summarizes the similarities and differences between Scala case c
 | Copy method            | Built-in                        | Manual implementation needed        | Built-in (`copy()`)                |
 | Validation             | `require(...)` in body          | Compact constructor                | `require(...)` in `init` block     |
 | Accessor naming        | `employee.name`                 | `employee.name()`                  | `employee.name`                    |
+
+</div>
 
 ### Side-by-Side Code Example
 
@@ -327,6 +331,8 @@ See the complete implementation in our repository:
 
 Java Records are a game-changer for Java developers, especially those coming from Scala:
 
+<div class="table-wrapper" markdown="1">
+
 | Aspect | Before (Java 8) | After (Java 16+) |
 |--------|----------------|------------------|
 | Lines of code | 60+ | ~25 |
@@ -334,6 +340,8 @@ Java Records are a game-changer for Java developers, especially those coming fro
 | Error-prone | Yes (manual equals/hashCode) | No (auto-generated) |
 | Readability | Low | High |
 | IDE support | Required for generation | Not needed |
+
+</div>
 
 Records bring Java much closer to Scala's case classes, making the transition between languages smoother. In our next post, we'll explore String Manipulation with Modern APIs.
 

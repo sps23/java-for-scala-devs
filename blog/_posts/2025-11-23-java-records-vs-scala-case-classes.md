@@ -35,6 +35,8 @@ System.out.println(person);         // Person[name=Alice, age=30]
 
 ## Key Differences
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | Scala Case Class | Java Record |
 |---------|-----------------|-------------|
 | Immutable | Yes | Yes |
@@ -43,6 +45,8 @@ System.out.println(person);         // Person[name=Alice, age=30]
 | Copy method | Built-in | Manual |
 | Pattern matching | Yes | Yes (Java 21+) |
 | Inheritance | Limited | No (final) |
+
+</div>
 
 ## Pattern Matching Example
 

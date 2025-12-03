@@ -591,6 +591,8 @@ public static OrderReport generateReport(
 
 ## Feature Comparison Table
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | Java 21 | Scala 3 | Kotlin |
 |---------|---------|---------|--------|
 | takeWhile/dropWhile | `stream().takeWhile()` | `list.takeWhile()` | `list.takeWhile {}` |
@@ -600,6 +602,8 @@ public static OrderReport generateReport(
 | Custom collectors | `Collector.of()` | foldLeft/scanLeft | fold/scan |
 | Running totals | Custom collector | `scanLeft` | `scan` |
 | Parallel | `.parallelStream()` | `.par` (separate lib) | Coroutines preferred |
+
+</div>
 
 ## Best Practices
 

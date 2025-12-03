@@ -258,6 +258,8 @@ We need to:
 
 ## Comparison Table
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | Java CompletableFuture | Scala Future | Kotlin Coroutines |
 |---------|----------------------|--------------|-------------------|
 | Create async | `supplyAsync()` | `Future { }` | `async { }` |
@@ -269,6 +271,8 @@ We need to:
 | Timeout exception | `orTimeout()` | Helper needed | `withTimeout()` |
 | Recover | `exceptionally()` | `recover` | try/catch |
 | Transform both | `handle()` | `transform` | `runCatching().fold()` |
+
+</div>
 
 ## Key Insights for Scala Developers
 

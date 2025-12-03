@@ -235,9 +235,15 @@ SafeQueryBuilder safe = safeQuery(maliciousInput);
 </div>
 <div class="tab-content" data-tab="scala">
 <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">json</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"""{
+
+<div class="table-wrapper" markdown="1">
+
    |    "name": "$name",
    |    "email": "$email"
    |}"""</span><span class="o">.</span><span class="py">stripMargin</span>
+
+</div>
+
 </code></pre></div></div>
 </div>
 <div class="tab-content" data-tab="kotlin">
@@ -375,6 +381,8 @@ public static String escapeHtml(String input) {
 
 ## Feature Comparison Table
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | Java 21 | Scala 3 | Kotlin |
 |---------|---------|---------|--------|
 | Basic interpolation | `STR."\{var}"` | `s"$var"` | `"$var"` |
@@ -383,6 +391,8 @@ public static String escapeHtml(String input) {
 | Multi-line strings | Text blocks + STR | Triple quotes + stripMargin | Triple quotes + trimIndent |
 | Custom interpolators | Template processors | Extension methods on StringContext | Not built-in |
 | Preview/Stable | Preview (Java 21) | Stable (since Scala 2.10) | Stable (since Kotlin 1.0) |
+
+</div>
 
 ## Key Concepts
 

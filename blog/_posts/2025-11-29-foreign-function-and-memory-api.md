@@ -13,6 +13,8 @@ Java 21 introduces the Foreign Function and Memory (FFM) API as a stable feature
 
 Many applications need to interact with native libraries for performance-critical operations, system-level functionality, or leveraging existing C/C++ codebases. Traditional approaches using JNI (Java Native Interface) are:
 
+<div class="table-wrapper" markdown="1">
+
 | Challenge | Impact |
 |-----------|--------|
 | Complexity | Requires writing C/C++ glue code |
@@ -20,6 +22,8 @@ Many applications need to interact with native libraries for performance-critica
 | Safety | Manual memory management, no bounds checking |
 | Portability | Platform-specific binaries |
 | Debugging | Difficult to trace issues across JNI boundary |
+
+</div>
 
 ## Before: Traditional JNI Approach
 
@@ -301,6 +305,8 @@ public class FFMDemo {
 
 The FFM API provides significant safety improvements:
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | JNI | FFM API |
 |---------|-----|---------|
 | Bounds Checking | None | Built-in |
@@ -308,6 +314,8 @@ The FFM API provides significant safety improvements:
 | Type Safety | Weak | Strong |
 | Null Safety | Manual checks | Integrated |
 | Thread Safety | Manual | Confined arenas |
+
+</div>
 
 ### Example: Bounds Checking
 
@@ -339,6 +347,8 @@ try (Arena confined = Arena.ofConfined()) {
 
 ## FFM API vs JNI Comparison
 
+<div class="table-wrapper" markdown="1">
+
 | Aspect | JNI | FFM API |
 |--------|-----|---------|
 | Native Code | Requires C/C++ glue code | Pure Java |
@@ -351,9 +361,13 @@ try (Arena confined = Arena.ofConfined()) {
 | Debugging | Difficult | Better tooling |
 | Learning Curve | Steep | Moderate |
 
+</div>
+
 ## For Scala Developers
 
 The FFM API provides similar benefits to what you get from effect systems:
+
+<div class="table-wrapper" markdown="1">
 
 | Feature | FFM API | ZIO/Cats Effect |
 |---------|---------|-----------------|
@@ -361,6 +375,8 @@ The FFM API provides similar benefits to what you get from effect systems:
 | Memory Safety | Built-in | Not applicable |
 | Error Handling | Exceptions | Effect types |
 | Composability | Method handles | Monadic |
+
+</div>
 
 Scala's `Using.resource` integrates naturally with Arena:
 

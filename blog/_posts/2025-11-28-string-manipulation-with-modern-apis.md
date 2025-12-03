@@ -221,19 +221,27 @@ String.format("Name: %s, Age: %d", name, age);
 
 ### Multi-line Strings
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | Java 21 | Scala 3 | Kotlin |
 |---------|---------|---------|--------|
 | Multi-line literal | Text blocks (`"""..."""`) | Triple quotes with `stripMargin` | Triple quotes with `trimIndent` |
 | String interpolation | `formatted()` method | `s"..."`, `f"..."` | `"$variable"`, `"${expr}"` |
 | Margin handling | Automatic | `\|` with `stripMargin` | Auto with `trimIndent` |
 
+</div>
+
 ### String Checking Methods
+
+<div class="table-wrapper" markdown="1">
 
 | Check | Java 21 | Scala 3 | Kotlin |
 |-------|---------|---------|--------|
 | Empty | `isEmpty()` | `isEmpty` | `isEmpty()` |
 | Blank | `isBlank()` | `isBlank` | `isBlank()` |
 | Null-safe blank | Manual | `Option(s).exists(_.nonEmpty)` | `isNullOrBlank()` |
+
+</div>
 
 ### Creating Multi-line Strings
 
@@ -254,9 +262,15 @@ String.format("Name: %s, Age: %d", name, age);
 </div>
 <div class="tab-content" data-tab="scala">
 <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">json</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"""{
+
+<div class="table-wrapper" markdown="1">
+
   |  "name": "$name",
   |  "email": "$email"
   |}"""</span><span class="o">.</span><span class="py">stripMargin</span>
+
+</div>
+
 </code></pre></div></div>
 </div>
 <div class="tab-content" data-tab="kotlin">
@@ -371,6 +385,8 @@ fun String.wrapWith(delimiter: String): String =
 
 ## Summary: Feature Comparison
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | Java 8 | Java 21 | Scala 3 | Kotlin |
 |---------|--------|---------|---------|--------|
 | Check blank | `text.trim().isEmpty()` | `text.isBlank()` | `text.isBlank` | `text.isBlank()` |
@@ -380,6 +396,8 @@ fun String.wrapWith(delimiter: String): String =
 | String formatting | `String.format()` | `"...".formatted()` | `s"..."`, `f"..."` | `"$var"` |
 | Indentation | Manual | `text.indent(n)` | Manual | `trimIndent()` |
 | Functional transform | Manual | `text.transform(f)` | `Option(text).map(f)` | `text.let { f(it) }` |
+
+</div>
 
 ## Best Practices
 
