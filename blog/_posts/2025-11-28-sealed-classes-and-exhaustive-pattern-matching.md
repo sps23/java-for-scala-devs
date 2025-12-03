@@ -27,15 +27,21 @@ We want the compiler to:
 
 In all three languages, sealing a type restricts which other types can extend or implement it:
 
+<div class="table-wrapper" markdown="1">
+
 | Language | Keyword | Behavior |
 |----------|---------|----------|
 | Java | `sealed ... permits` | Must explicitly list permitted subtypes |
 | Scala | `sealed` | Subtypes must be in same file |
 | Kotlin | `sealed` | Subtypes must be in same package and module |
 
+</div>
+
 ### Exhaustive Pattern Matching
 
 When all possible subtypes are known at compile time, the compiler can verify that pattern matching covers all cases:
+
+<div class="table-wrapper" markdown="1">
 
 | Language | Construct | No default needed |
 |----------|-----------|-------------------|
@@ -43,15 +49,21 @@ When all possible subtypes are known at compile time, the compiler can verify th
 | Scala | `match` expression | ✓ |
 | Kotlin | `when` expression | ✓ |
 
+</div>
+
 ### Subtype Requirements
 
 Each language has rules about what sealed subtypes must be:
+
+<div class="table-wrapper" markdown="1">
 
 | Language | Permitted Subtypes |
 |----------|-------------------|
 | Java | Must be `final`, `sealed`, or `non-sealed` |
 | Scala | Case classes, objects, or other sealed traits |
 | Kotlin | Data classes, objects, or other sealed classes/interfaces |
+
+</div>
 
 ## The Solution: Sealed Payment Types
 
@@ -256,6 +268,8 @@ The real power of sealed classes comes from exhaustive pattern matching. Let's i
 
 ## Comparison Table
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | Java 17+ | Scala 3 | Kotlin |
 |---------|----------|---------|--------|
 | Sealed declaration | `sealed interface/class ... permits` | `sealed trait/class` | `sealed interface/class` |
@@ -265,6 +279,8 @@ The real power of sealed classes comes from exhaustive pattern matching. Let's i
 | Destructuring | Record patterns | Case class patterns | Smart casting |
 | Guards | `when` clause | `if` clause | Conditions in `when` |
 | No default needed | ✓ | ✓ | ✓ |
+
+</div>
 
 ## When to Use Sealed Classes
 

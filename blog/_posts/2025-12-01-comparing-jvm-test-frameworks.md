@@ -508,6 +508,8 @@ class CalculatorKotestStringSpec : StringSpec({
 
 ## Feature Comparison
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | JUnit 5 | ScalaTest | Kotest |
 |---------|---------|-----------|--------|
 | **Multi-language support** | ✅ Java, Scala, Kotlin | ⚠️ Scala (Java/Kotlin via JVM) | ❌ Kotlin only |
@@ -521,6 +523,8 @@ class CalculatorKotestStringSpec : StringSpec({
 | **IDE support** | ⭐⭐⭐⭐⭐ Excellent | ⭐⭐⭐⭐ Very good | ⭐⭐⭐⭐ Very good |
 | **Community size** | ⭐⭐⭐⭐⭐ Largest | ⭐⭐⭐⭐ Large (Scala) | ⭐⭐⭐ Growing |
 | **Learning curve** | ⭐⭐ Easy | ⭐⭐⭐ Moderate | ⭐⭐⭐ Moderate |
+
+</div>
 
 ## Syntax Comparison: Same Test, Three Frameworks
 

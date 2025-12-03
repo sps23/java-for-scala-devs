@@ -62,6 +62,8 @@ The `@FunctionalInterface` annotation:
 
 Java provides standard functional interfaces in `java.util.function`:
 
+<div class="table-wrapper" markdown="1">
+
 | Interface | Method | Scala Equivalent |
 |-----------|--------|------------------|
 | `Supplier<T>` | `T get()` | `() => T` |
@@ -69,6 +71,8 @@ Java provides standard functional interfaces in `java.util.function`:
 | `Function<T,R>` | `R apply(T)` | `T => R` |
 | `Predicate<T>` | `boolean test(T)` | `T => Boolean` |
 | `BiFunction<T,U,R>` | `R apply(T,U)` | `(T, U) => R` |
+
+</div>
 
 ### Method References
 
@@ -321,6 +325,8 @@ val result = runCatching { operation() }
 
 ## Comparison Table
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | Java | Scala | Kotlin |
 |---------|------|-------|--------|
 | Function type syntax | `Function<T,R>` | `T => R` | `(T) -> R` |
@@ -332,6 +338,8 @@ val result = runCatching { operation() }
 | Default methods | `default` keyword | Extension methods | Extension functions |
 | DSL support | Limited | Symbolic methods, infix | Infix functions |
 | Partial application | Not supported | `f(a, _)` | Not directly |
+
+</div>
 
 ## Key Insights for Scala Developers
 

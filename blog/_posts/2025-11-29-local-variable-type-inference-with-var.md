@@ -299,11 +299,15 @@ var explicitList = new ArrayList<String>();
 
 A key difference between Java and Scala/Kotlin is how they handle mutability:
 
+<div class="table-wrapper" markdown="1">
+
 | Aspect | Java | Scala | Kotlin |
 |--------|------|-------|--------|
 | Type inference | `var` | Automatic with `val`/`var` | Automatic with `val`/`var` |
 | Immutable reference | `final var` | `val` | `val` |
 | Mutable reference | `var` | `var` | `var` |
+
+</div>
 
 ### Scala 3
 
@@ -420,6 +424,8 @@ fun processTransactionPipeline(
 
 ## Feature Comparison Table
 
+<div class="table-wrapper" markdown="1">
+
 | Feature | Java 21 (var) | Scala 3 (val/var) | Kotlin (val/var) |
 |---------|---------------|-------------------|------------------|
 | Local variables | ✅ | ✅ | ✅ |
@@ -430,6 +436,8 @@ fun processTransactionPipeline(
 | Null initializer | ❌ | ✅ | ✅ |
 | Immutable by keyword | ❌ (needs `final`) | ✅ (`val`) | ✅ (`val`) |
 | Pattern matching | ✅ (Java 21) | ✅ | ✅ (destructuring) |
+
+</div>
 
 ## Best Practices Summary
 

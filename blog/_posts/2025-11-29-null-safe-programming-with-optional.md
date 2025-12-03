@@ -526,6 +526,8 @@ val theme = preference?.theme ?: "default"
 
 ## Language Comparison
 
+<div class="table-wrapper" markdown="1">
+
 | Operation | Java Optional | Scala Option | Kotlin |
 |-----------|--------------|--------------|--------|
 | Wrap nullable | `Optional.ofNullable(x)` | `Option(x)` | `x` (nullable type) |
@@ -539,6 +541,8 @@ val theme = preference?.theme ?: "default"
 | Filter | `filter(p)` | `filter(p)` | `?.takeIf { p(it) }` |
 | Handle both | `ifPresentOrElse(f, g)` | `match/fold` | `when` expression |
 | Fallback source | `or(() -> ...)` | `orElse(...)` | `?: ... ?: ...` |
+
+</div>
 
 ## Best Practices Summary
 
