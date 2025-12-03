@@ -235,15 +235,9 @@ SafeQueryBuilder safe = safeQuery(maliciousInput);
 </div>
 <div class="tab-content" data-tab="scala">
 <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="nv">json</span> <span class="k">=</span> <span class="nv">s</span><span class="s">"""{
-
-<div class="table-wrapper" markdown="1">
-
    |    "name": "$name",
    |    "email": "$email"
    |}"""</span><span class="o">.</span><span class="py">stripMargin</span>
-
-</div>
-
 </code></pre></div></div>
 </div>
 <div class="tab-content" data-tab="kotlin">
