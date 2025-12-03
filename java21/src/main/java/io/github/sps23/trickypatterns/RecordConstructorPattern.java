@@ -45,17 +45,33 @@ public class RecordConstructorPattern {
         }
     }
 
-    // Multiple constructors confusion
+    // Example showing you CANNOT mix compact constructor with custom constructors
+    // This is intentionally commented out to show the mistake
+    // record InvalidComplexPoint(int x, int y) {
+    // // Compact constructor
+    // public InvalidComplexPoint {
+    // System.out.println("Compact called");
+    // }
+    //
+    // // ❌ This would cause a compilation error!
+    // // Cannot have both compact and custom constructor
+    // public InvalidComplexPoint(int value) {
+    // this(value, value); // Would be recursive!
+    // }
+    // }
+
+    // Correct: Use canonical constructor instead
     record ComplexPoint(int x, int y) {
-        // Compact constructor
-        public ComplexPoint {
-            System.out.println("Compact called");
+        // Canonical constructor with logic
+        public ComplexPoint(int x, int y) {
+            this.x = x;
+            this.y = y;
+            System.out.println("Canonical called");
         }
 
-        // Custom constructor - must delegate to canonical
+        // Custom constructor - delegates to canonical
         public ComplexPoint(int value) {
-            this(value, value); // ✅ Must call canonical constructor
-            // ❌ Cannot have both compact and this custom pattern!
+            this(value, value); // ✅ Correctly delegates
         }
     }
 
