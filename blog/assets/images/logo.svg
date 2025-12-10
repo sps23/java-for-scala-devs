@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Simple, minimalist logo combining Java (coffee cup) and Scala/functional programming (lambda) -->
+  <!-- Coffee cup with simplified Scala logo pattern (three curved lines) -->
   
   <!-- Coffee cup steam (three wavy lines) -->
   <path d="M 24 8 Q 22 10, 24 12" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
@@ -14,9 +14,10 @@
   <path d="M 46 24 Q 54 24, 54 32 Q 54 40, 46 40" 
         fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
   
-  <!-- Lambda symbol inside cup (functional programming) -->
-  <path d="M 28 28 L 26 38 M 32 28 L 30 34 L 36 38" 
-        stroke="#000" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Scala inspired spiral pattern (3 curved lines) -->
+  <path d="M 26 28 Q 32 28, 38 28" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 26 33 Q 32 33, 38 33" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 26 38 Q 32 38, 38 38" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
   
   <!-- Saucer -->
   <line x1="14" y1="54" x2="50" y2="54" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
