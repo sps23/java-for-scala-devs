@@ -133,6 +133,11 @@ p {
   font-size: 1rem;
 }
 
+.sidebar-logo .logo-icon-img {
+  width: 32px;
+  height: 32px;
+}
+
 .sidebar-nav {
   flex: 1;
 }
