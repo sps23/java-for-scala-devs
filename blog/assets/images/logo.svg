@@ -7,7 +7,7 @@
   <path d="M 40 8 Q 38 10, 40 12" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
   
   <!-- Coffee cup body -->
-  <path d="M 18 18 L 22 46 Q 22 50, 26 50 L 38 50 Q 42 50, 42 46 L 46 18 Z" 
+  <path d="M 18 18 L 22 46 Q 22 50, 26 50 L 38 50 Q 42 50, 42 46 L 46 18 L 18 18 Z" 
         fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round"/>
   
   <!-- Coffee cup handle -->
