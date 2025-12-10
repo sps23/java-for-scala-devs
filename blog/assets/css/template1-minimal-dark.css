@@ -107,11 +107,20 @@ p {
   font-weight: 600;
   color: var(--text-primary);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .site-title:hover {
   color: var(--accent-color);
   text-decoration: none;
+}
+
+.site-logo-img {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
 }
 
 .site-nav {

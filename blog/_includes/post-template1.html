@@ -1,7 +1,10 @@
 <!-- Template 1: Modern Minimal Dark - Post Page -->
 <header class="site-header">
   <div class="header-wrapper">
-    <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+    <a href="{{ '/' | relative_url }}" class="site-title">
+      <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="Logo" class="site-logo-img">
+      {{ site.title }}
+    </a>
     
     <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
       ☰

@@ -127,6 +127,11 @@ p {
   font-size: 1.25rem;
 }
 
+.site-logo-img {
+  width: 40px;
+  height: 40px;
+}
+
 .site-title {
   font-family: var(--font-display);
   font-size: 1.25rem;
