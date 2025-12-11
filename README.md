@@ -42,7 +42,7 @@ java-for-scala-devs/
 
 ## Blog
 
-Visit the blog at: https://sps23.github.io/java-for-scala-devs
+Visit the blog at: https://javaforscaladevs.com
 
 ## Building
 
@@ -119,6 +119,27 @@ cd blog
 bundle install
 bundle exec jekyll serve
 ```
+
+### Blog Features
+
+The blog includes several custom features to enhance the learning experience:
+
+#### Interactive Code Tabs
+
+Compare Java, Scala, and Kotlin implementations side-by-side with interactive tabs. Click to switch between languages while maintaining syntax highlighting.
+
+- **Implementation:** Button-based with JavaScript switching
+- **Styling:** Language-specific colors (Java=blue, Scala=red, Kotlin=purple)
+- **Compatibility:** GitHub Pages compatible, no plugins required
+- **Documentation:** See [blog/CODE_TABS.md](blog/CODE_TABS.md)
+
+#### Multiple Theme Templates
+
+Choose from three modern dark theme templates, each optimized for different content styles. See [blog/README.md](blog/README.md) for details.
+
+#### Search and Filtering
+
+Built-in search functionality and category filtering to help readers find relevant content quickly.
 
 Then visit `http://localhost:4000/java-for-scala-devs` in your browser.
 
