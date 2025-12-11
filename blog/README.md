@@ -2,6 +2,134 @@
 
 This module contains the Jekyll-based GitHub Pages blog for the Java for Scala Developers project.
 
+## 📚 Documentation
+
+- **[Theme & Syntax Highlighting](THEME_AND_SYNTAX_HIGHLIGHTING.md)** - Complete guide to the Dracula theme implementation, syntax highlighting with Rouge, and interactive code tabs feature
+
+## Ruby Installation on macOS M4 (Apple Silicon)
+
+If you're experiencing OpenSSL issues or need to set up Ruby for this blog, follow these steps to install a modern Ruby version on macOS M4:
+
+### Prerequisites
+
+Ensure you have Xcode command line tools installed:
+
+```bash
+xcode-select --install
+```
+
+### Step 1: Install Homebrew (if not already installed)
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+After installation, add Homebrew to your PATH (M-series Macs):
+
+```bash
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+### Step 2: Install rbenv and Dependencies
+
+`rbenv` is a Ruby version manager that allows you to safely manage multiple Ruby versions without conflicts.
+
+```bash
+brew install rbenv ruby-build openssl@3
+```
+
+### Step 3: Initialize rbenv
+
+```bash
+rbenv init
+```
+
+Add the following line to your shell configuration file (`~/.zshrc` for zsh):
+
+```bash
+eval "$(rbenv init - zsh)"
+```
+
+Reload your shell:
+
+```bash
+exec zsh
+```
+
+### Step 4: Install Ruby with OpenSSL 3 Support
+
+Install Ruby 3.3.0 (or later) with explicit OpenSSL 3 configuration:
+
+```bash
+LDFLAGS="-L$(brew --prefix openssl@3)/lib" \
+CPPFLAGS="-I$(brew --prefix openssl@3)/include" \
+RUBY_CONFIGURE_OPTS="--with-openssl=$(brew --prefix openssl@3)" \
+rbenv install 3.3.0
+```
+
+This command may take several minutes as it compiles Ruby from source.
+
+### Step 5: Set Your Preferred Ruby Version
+
+```bash
+rbenv global 3.3.0
+rbenv rehash
+```
+
+### Step 6: Verify Installation
+
+```bash
+ruby --version
+gem list | grep bundler
+bundle --version
+```
+
+### Why This Works
+
+- **rbenv** - Cleanly manages multiple Ruby versions without conflicting with system Ruby
+- **OpenSSL 3.x** - Modern SSL library with proper Apple Silicon (M4) support
+- **RUBY_CONFIGURE_OPTS** - Explicitly links Ruby against OpenSSL 3 during compilation
+- **M4 Optimization** - Homebrew packages are compiled for ARM64 architecture on Apple Silicon
+- **Avoids OpenSSL errors** - Eliminates common errors like "OPENSSL_1_1_0g not found" or version mismatches
+
+### Running the Blog Locally
+
+Once Ruby is properly installed:
+
+```bash
+cd blog
+bundle install
+bundle exec jekyll serve
+```
+
+Then visit `http://localhost:4000/java-for-scala-devs/` in your browser.
+
+### Troubleshooting
+
+**Issue: "Could not locate Gemfile" error**
+
+Make sure you're in the `blog` directory when running `bundle install`:
+
+```bash
+cd /Users/sylwesterstocki/Workspace/java-for-scala-devs/blog
+bundle install
+```
+
+**Issue: RubyGems version warning**
+
+If you see: "Your RubyGems version (3.0.3.1) has a bug that prevents `required_ruby_version` from working..."
+
+Update RubyGems:
+
+```bash
+gem update --system
+```
+
+This will install the latest compatible version for your Ruby release.
+
+---
+
 ## Theme Templates
 
 This blog includes **three modern dark theme templates** that you can choose from. Each template features:
@@ -87,6 +215,15 @@ blog/
 │   │   └── syntax.css                   # Code syntax highlighting
 │   └── js/
 │       └── theme.js     # Search, filtering, and interactivity
+├── _posts/              # Blog posts in Markdown format
+├── assets/
+│   ├── css/
+│   │   ├── template1-minimal-dark.css   # Template 1 styles
+│   │   ├── template2-tech-pro.css       # Template 2 styles
+│   │   ├── template3-dev-journal.css    # Template 3 styles
+│   │   └── syntax.css                   # Code syntax highlighting
+│   └── js/
+│       └── theme.js     # Search, filtering, and interactivity
 ├── about.md             # About page
 ├── index.md             # Home page
 ├── Gemfile              # Ruby dependencies
@@ -163,6 +300,43 @@ tags: java scala pattern-matching
 ---
 ```
 
+### Code Tabs Feature
+
+The blog supports interactive code tabs that allow readers to switch between Java, Scala, and Kotlin examples. This is perfect for comparing implementations across JVM languages.
+
+**Quick Example:**
+
+```html
+<div class="code-tabs" data-tabs-id="example-1">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java">Java 21</button>
+<button class="tab-button" data-tab="scala">Scala 3</button>
+<button class="tab-button" data-tab="kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Java code here
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Scala code here
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Kotlin code here
+</code></pre></div></div>
+</div>
+</div>
+```
+
+**For complete documentation, see:** [CODE_TABS.md](CODE_TABS.md)
+
+Features:
+- ✅ Button-based tabs with JavaScript switching
+- ✅ Language-specific colors (Java=blue, Scala=red, Kotlin=purple)
+- ✅ GitHub Pages compatible (no plugins)
+- ✅ Works in all modern browsers
+- ✅ Preserves syntax highlighting
+
 ### Categories
 Use categories to group related posts. Common categories:
 - `introduction` - Getting started posts
@@ -176,3 +350,4 @@ Use tags for more specific topics. They appear on post cards and can be used for
 ## Deployment
 
 The blog is automatically deployed to GitHub Pages when changes are pushed to the `main` branch. The deployment is handled by the GitHub Actions workflow in `.github/workflows/build-deploy.yml`.
+
