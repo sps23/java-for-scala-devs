@@ -21,7 +21,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** The fundamental principle behind Spring—let the framework manage your object dependencies instead of creating them yourself. Spring's IoC container creates and wires your beans together.
 
-**Read the full post:** [Inversion of Control and Dependency Injection in Spring](/java-for-scala-devs/blog/2025/12/15/spring-ioc-and-dependency-injection.html)
+**Read the full post:** [Inversion of Control and Dependency Injection in Spring]({{ site.baseurl }}/blog/2025/12/15/spring-ioc-and-dependency-injection.html)
 
 **What You'll Learn:** How Spring's IoC container works, the difference between constructor and setter injection, why constructor injection is preferred, and how to use `@Autowired`, `@Component`, and `@Configuration` annotations. You'll see practical examples of avoiding tight coupling and making your code testable.
 
@@ -38,7 +38,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** Understanding how Spring creates, manages, and destroys beans. Scopes determine how many instances of a bean exist and when they're created.
 
-**Read the full post:** [Spring Bean Scopes and Lifecycle Management](/java-for-scala-devs/blog/2025/12/15/spring-bean-scopes-lifecycle.html)
+**Read the full post:** [Spring Bean Scopes and Lifecycle Management]({{ site.baseurl }}/blog/2025/12/15/spring-bean-scopes-lifecycle.html)
 
 **What You'll Learn:** The difference between singleton, prototype, request, session, and application scopes. You'll learn about lifecycle callbacks (`@PostConstruct`, `@PreDestroy`), `InitializingBean` and `DisposableBean` interfaces, and how to properly manage resources in Spring beans.
 
@@ -55,7 +55,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** How to configure Spring applications using modern annotation-based configuration (`@Configuration`, `@Bean`) versus legacy XML configuration.
 
-**Read the full post:** [Spring Configuration Approaches: From XML to Java Config](/java-for-scala-devs/blog/2025/12/15/spring-configuration-approaches.html)
+**Read the full post:** [Spring Configuration Approaches: From XML to Java Config]({{ site.baseurl }}/blog/2025/12/15/spring-configuration-approaches.html)
 
 **What You'll Learn:** How to create beans using `@Configuration` and `@Bean`, component scanning with `@ComponentScan`, profile-specific configurations with `@Profile`, and when XML configuration might still be relevant. You'll see how to mix different configuration approaches in the same application.
 
@@ -72,7 +72,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** Spring Boot takes the pain out of Spring configuration by providing sensible defaults and auto-configuration. It's the modern way to build Spring applications.
 
-**Read the full post:** [Getting Started with Spring Boot and Auto-Configuration](/java-for-scala-devs/blog/2025/12/15/spring-boot-basics-autoconfiguration.html)
+**Read the full post:** [Getting Started with Spring Boot and Auto-Configuration]({{ site.baseurl }}/blog/2025/12/15/spring-boot-basics-autoconfiguration.html)
 
 **What You'll Learn:** How Spring Boot auto-configuration works, what `@SpringBootApplication` does under the hood, how to customize auto-configuration, working with `application.properties` and `application.yml`, and how to create a production-ready Spring Boot application from scratch.
 
@@ -89,7 +89,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** Building web applications and REST APIs with Spring MVC. This is the bread and butter of most Spring interviews.
 
-**Read the full post:** [Building RESTful APIs with Spring MVC](/java-for-scala-devs/blog/2025/12/15/spring-mvc-restful-apis.html)
+**Read the full post:** [Building RESTful APIs with Spring MVC]({{ site.baseurl }}/blog/2025/12/15/spring-mvc-restful-apis.html)
 
 **What You'll Learn:** How to create REST controllers with `@RestController`, handle HTTP methods with `@GetMapping`, `@PostMapping`, etc., request and response handling, path variables and request parameters, exception handling with `@ExceptionHandler`, and proper HTTP status codes.
 
@@ -110,7 +110,7 @@ You know the basics. Now let's talk about the features that show you've built re
 
 **What It Is:** Spring Data JPA simplifies database access by eliminating boilerplate code. Define repository interfaces and Spring generates the implementations.
 
-**Read the full post:** [Mastering Spring Data JPA for Database Access](/java-for-scala-devs/blog/2025/12/16/spring-data-jpa-database-access.html)
+**Read the full post:** [Mastering Spring Data JPA for Database Access]({{ site.baseurl }}/blog/2025/12/16/spring-data-jpa-database-access.html)
 
 **What You'll Learn:** How to create repository interfaces, use query methods with naming conventions, write custom queries with `@Query`, implement pagination and sorting, use specifications for dynamic queries, and understand the N+1 query problem and how to avoid it with fetch joins.
 
@@ -128,7 +128,7 @@ You know the basics. Now let's talk about the features that show you've built re
 
 **What It Is:** Managing database transactions declaratively using Spring's `@Transactional` annotation. Understanding transaction propagation and isolation levels.
 
-**Read the full post:** [Spring Transaction Management Deep Dive](/java-for-scala-devs/blog/2025/12/16/spring-transaction-management.html)
+**Read the full post:** [Spring Transaction Management Deep Dive]({{ site.baseurl }}/blog/2025/12/16/spring-transaction-management.html)
 
 **What You'll Learn:** How `@Transactional` works, transaction propagation levels (REQUIRED, REQUIRES_NEW, etc.), isolation levels, rollback rules for checked and unchecked exceptions, transaction boundaries and proxy limitations, and best practices for transaction management in service layers.
 
@@ -146,7 +146,7 @@ You know the basics. Now let's talk about the features that show you've built re
 
 **What It Is:** Securing your Spring applications with authentication and authorization. Spring Security is the de facto standard for Java application security.
 
-**Read the full post:** [Spring Security Fundamentals: Authentication and Authorization](/java-for-scala-devs/blog/2025/12/16/spring-security-fundamentals.html)
+**Read the full post:** [Spring Security Fundamentals: Authentication and Authorization]({{ site.baseurl }}/blog/2025/12/16/spring-security-fundamentals.html)
 
 **What You'll Learn:** How Spring Security's filter chain works, implementing authentication with username/password, authorization with role-based access control, securing REST endpoints with method security, JWT token authentication, and password encoding with BCrypt.
 
@@ -164,7 +164,7 @@ You know the basics. Now let's talk about the features that show you've built re
 
 **What It Is:** Cross-cutting concerns like logging, security, and transaction management handled elegantly using aspects rather than scattered throughout your code.
 
-**Read the full post:** [Spring AOP: Handling Cross-Cutting Concerns](/java-for-scala-devs/blog/2025/12/16/spring-aop-cross-cutting-concerns.html)
+**Read the full post:** [Spring AOP: Handling Cross-Cutting Concerns]({{ site.baseurl }}/blog/2025/12/16/spring-aop-cross-cutting-concerns.html)
 
 **What You'll Learn:** What aspects, join points, pointcuts, and advice are, how to create aspects with `@Aspect` and `@Around`, `@Before`, `@After` annotations, writing pointcut expressions, using AOP for logging and performance monitoring, and understanding Spring AOP vs AspectJ.
 
@@ -182,7 +182,7 @@ You know the basics. Now let's talk about the features that show you've built re
 
 **What It Is:** Monitor and manage your Spring Boot applications in production with built-in endpoints for health checks, metrics, and diagnostics.
 
-**Read the full post:** [Production-Ready Spring Boot with Actuator](/java-for-scala-devs/blog/2025/12/16/spring-boot-actuator-production-readiness.html)
+**Read the full post:** [Production-Ready Spring Boot with Actuator]({{ site.baseurl }}/blog/2025/12/16/spring-boot-actuator-production-readiness.html)
 
 **What You'll Learn:** Enabling and configuring Actuator endpoints, health checks and custom health indicators, metrics with Micrometer, exposing endpoints securely, integrating with monitoring systems like Prometheus and Grafana, and best practices for production deployments.
 
@@ -204,7 +204,7 @@ This is where you prove you're not just using Spring, but mastering it. These to
 
 **What It Is:** Managing configuration across different environments (dev, test, prod) using externalized configuration sources and profiles without code changes.
 
-**Read the full post:** [Advanced Spring Boot Configuration and Profile Management](/java-for-scala-devs/blog/2025/12/17/spring-boot-configuration-profiles.html)
+**Read the full post:** [Advanced Spring Boot Configuration and Profile Management]({{ site.baseurl }}/blog/2025/12/17/spring-boot-configuration-profiles.html)
 
 **What You'll Learn:** Configuration precedence in Spring Boot (property files, environment variables, command-line args), profile-specific configuration files, using `@ConfigurationProperties` for type-safe configuration, Spring Cloud Config for centralized configuration, encrypting sensitive properties, and reloading configuration without restarts.
 
@@ -222,7 +222,7 @@ This is where you prove you're not just using Spring, but mastering it. These to
 
 **What It Is:** Building non-blocking, reactive applications with Spring WebFlux using Project Reactor. This is essential for high-throughput, low-latency systems.
 
-**Read the full post:** [Reactive Programming with Spring WebFlux](/java-for-scala-devs/blog/2025/12/17/spring-webflux-reactive-programming.html)
+**Read the full post:** [Reactive Programming with Spring WebFlux]({{ site.baseurl }}/blog/2025/12/17/spring-webflux-reactive-programming.html)
 
 **What You'll Learn:** The difference between blocking and non-blocking I/O, Mono and Flux types from Project Reactor, creating reactive REST APIs, handling backpressure, reactive database access with R2DBC, error handling in reactive streams, and when to choose WebFlux over traditional Spring MVC.
 
@@ -241,7 +241,7 @@ This is where you prove you're not just using Spring, but mastering it. These to
 
 **What It Is:** Building distributed systems and microservices architectures with Spring Cloud components like service discovery, configuration management, and circuit breakers.
 
-**Read the full post:** [Building Microservices with Spring Cloud](/java-for-scala-devs/blog/2025/12/17/spring-cloud-microservices.html)
+**Read the full post:** [Building Microservices with Spring Cloud]({{ site.baseurl }}/blog/2025/12/17/spring-cloud-microservices.html)
 
 **What You'll Learn:** Service discovery with Eureka or Consul, client-side load balancing with Spring Cloud LoadBalancer, declarative REST clients with Feign, circuit breakers with Resilience4j, distributed tracing with Zipkin, and API gateway patterns with Spring Cloud Gateway.
 
@@ -260,7 +260,7 @@ This is where you prove you're not just using Spring, but mastering it. These to
 
 **What It Is:** Enterprise integration patterns implemented in Spring, including message-driven architectures with Kafka, RabbitMQ, and other messaging systems.
 
-**Read the full post:** [Spring Integration and Messaging Patterns](/java-for-scala-devs/blog/2025/12/17/spring-integration-messaging.html)
+**Read the full post:** [Spring Integration and Messaging Patterns]({{ site.baseurl }}/blog/2025/12/17/spring-integration-messaging.html)
 
 **What You'll Learn:** Spring Integration basics and enterprise integration patterns, messaging with Spring JMS and AMQP, working with Apache Kafka using Spring Kafka, message-driven POJOs with `@JmsListener` and `@KafkaListener`, implementing event-driven architectures, handling message ordering and exactly-once delivery, and error handling and retry strategies.
 
@@ -279,7 +279,7 @@ This is where you prove you're not just using Spring, but mastering it. These to
 
 **What It Is:** Compiling Spring Boot applications to native executables using GraalVM for faster startup times and lower memory footprint—critical for serverless and containerized deployments.
 
-**Read the full post:** [Spring Native and GraalVM: Next-Generation Performance](/java-for-scala-devs/blog/2025/12/17/spring-native-graalvm.html)
+**Read the full post:** [Spring Native and GraalVM: Next-Generation Performance]({{ site.baseurl }}/blog/2025/12/17/spring-native-graalvm.html)
 
 **What You'll Learn:** What GraalVM native images are and their benefits, building Spring Boot native applications with Spring Native, AOT (Ahead-of-Time) compilation vs JIT compilation, limitations of native images (reflection, dynamic proxies), configuring reachability metadata, performance characteristics and trade-offs, and use cases for native images (AWS Lambda, Kubernetes, edge computing).
 

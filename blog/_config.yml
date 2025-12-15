@@ -1,7 +1,9 @@
 title: Java for Scala Developers
 description: A practical guide for Scala developers learning modern Java 21+. Compare Java Records, Pattern Matching, Virtual Threads with Scala case classes, match expressions, and more.
-baseurl: "/java-for-scala-devs"
-url: "https://sps23.github.io"
+# baseurl is set by GitHub Actions for GitHub Pages, but empty for production domain
+# Use _config.local.yml for local development
+baseurl: ""
+url: "https://javaforscaladevs.com"
 
 # SEO Configuration
 author:

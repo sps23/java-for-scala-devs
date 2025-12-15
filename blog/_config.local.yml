@@ -1,0 +1,5 @@
+# Local development configuration - ONLY used with: bundle exec jekyll serve --config _config.yml,_config.local.yml
+# This overrides the production baseurl to match local GitHub Pages testing
+baseurl: "/java-for-scala-devs"
+url: "http://localhost:4000"
+

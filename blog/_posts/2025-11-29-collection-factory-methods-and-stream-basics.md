@@ -19,6 +19,7 @@ A common programming task involves processing collections of data: filtering by 
 
 Before Java 9, creating immutable collections was verbose:
 
+{% raw %}
 ```java
 // Java 8 style - verbose and error-prone
 List<String> list = Collections.unmodifiableList(Arrays.asList("a", "b", "c"));
@@ -28,6 +29,7 @@ Map<String, Integer> map = Collections.unmodifiableMap(new HashMap<>() {{
     put("two", 2);
 }});
 ```
+{% endraw %}
 
 Java 9+ introduced elegant factory methods:
 
