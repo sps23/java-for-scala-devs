@@ -1,5 +1,10 @@
 name: Build and Deploy
 
+# Configuration Strategy:
+# - _config.yml uses baseurl: "" for production domain (javaforscaladevs.com)
+# - _config.local.yml (only used locally) has baseurl: "/java-for-scala-devs" for testing
+# - This workflow builds with default _config.yml for production
+
 on:
   push:
     branches: [ main ]
@@ -48,14 +53,10 @@ jobs:
           bundler-cache: true
           working-directory: blog
 
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v4
-
       - name: Build with Jekyll
         run: |
           cd blog
-          bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+          bundle exec jekyll build
         env:
           JEKYLL_ENV: production
 

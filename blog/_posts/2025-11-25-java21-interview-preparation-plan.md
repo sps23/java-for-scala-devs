@@ -21,7 +21,7 @@ These are the must-know topics. If you're shaky on any of these, the interviewer
 
 **What It Is:** Java finally got a concise way to create immutable data classes with records (Java 16+). Think Scala case classes, but for Java.
 
-**Read the full post:** [Immutable Data with Java Records](/java-for-scala-devs/blog/2025/11/26/immutable-data-with-java-records/)
+**Read the full post:** [Immutable Data with Java Records]({{ site.baseurl }}/blog/2025/11/26/immutable-data-with-java-records/)
 
 **What You'll Learn:** The post covers the evolution from verbose Java 8 immutable classes to elegant records, including compact constructors for validation, auto-generated methods, and defensive copying. You'll see side-by-side comparisons with Scala case classes and understand when records shine.
 
@@ -38,7 +38,7 @@ These are the must-know topics. If you're shaky on any of these, the interviewer
 
 **What It Is:** Java 11-17 brought powerful String methods that make text processing actually pleasant.
 
-**Read the full post:** [String Manipulation with Modern APIs](/java-for-scala-devs/blog/2025/11/28/string-manipulation-with-modern-apis/)
+**Read the full post:** [String Manipulation with Modern APIs]({{ site.baseurl }}/blog/2025/11/28/string-manipulation-with-modern-apis/)
 
 **What You'll Learn:** This post shows how to process multi-line text using methods like `isBlank()`, `lines()`, `strip()`, `indent()`, and text blocks. You'll see the evolution from painful Java 8 StringBuilder gymnastics to clean, fluent modern code.
 
@@ -54,7 +54,7 @@ These are the must-know topics. If you're shaky on any of these, the interviewer
 
 **What It Is:** Stop writing `if (thing != null)` checks everywhere. Optional is Java's answer to Scala's Option type.
 
-**Read the full post:** [Null-Safe Programming with Optional](/java-for-scala-devs/blog/2025/11/29/null-safe-programming-with-optional/)
+**Read the full post:** [Null-Safe Programming with Optional]({{ site.baseurl }}/blog/2025/11/29/null-safe-programming-with-optional/)
 
 **What You'll Learn:** The post demonstrates how to refactor nested null checks into elegant Optional chains using `map()`, `flatMap()`, `filter()`, and friends. You'll learn the Java 9+ enhancements and see comparisons with Scala and Kotlin approaches.
 
@@ -71,7 +71,7 @@ These are the must-know topics. If you're shaky on any of these, the interviewer
 
 **What It Is:** Java 9+ made creating and processing collections way less painful with factory methods and improved Stream APIs.
 
-**Read the full post:** [Collection Factory Methods and Stream Basics](/java-for-scala-devs/blog/2025/11/29/collection-factory-methods-and-stream-basics/)
+**Read the full post:** [Collection Factory Methods and Stream Basics]({{ site.baseurl }}/blog/2025/11/29/collection-factory-methods-and-stream-basics/)
 
 **What You'll Learn:** Learn how to use `List.of()`, `Set.of()`, `Map.of()` and process data with streams. The post covers filtering, grouping, statistics, and the difference between immutable and mutable collections.
 
@@ -88,7 +88,7 @@ These are the must-know topics. If you're shaky on any of these, the interviewer
 
 **What It Is:** The `var` keyword (Java 10+) lets you skip explicit types for local variables. Use it wisely!
 
-**Read the full post:** [Local Variable Type Inference with var](/java-for-scala-devs/blog/2025/11/29/local-variable-type-inference-with-var/)
+**Read the full post:** [Local Variable Type Inference with var]({{ site.baseurl }}/blog/2025/11/29/local-variable-type-inference-with-var/)
 
 **What You'll Learn:** This post shows when `var` improves readability and when it makes code cryptic. You'll learn the rules (where you can and can't use it) and best practices for maintainable code.
 
@@ -109,7 +109,7 @@ You know the basics. Now let's talk about the features that separate "knows Java
 
 **What It Is:** Java 17's sealed classes let you control inheritance and write exhaustive pattern matching. It's like Scala's sealed traits finally came to Java!
 
-**Read the full post:** [Sealed Classes and Exhaustive Pattern Matching](/java-for-scala-devs/blog/2025/11/28/sealed-classes-and-exhaustive-pattern-matching/)
+**Read the full post:** [Sealed Classes and Exhaustive Pattern Matching]({{ site.baseurl }}/blog/2025/11/28/sealed-classes-and-exhaustive-pattern-matching/)
 
 **What You'll Learn:** Build a type-safe payment system using sealed classes and pattern matching. The post shows how to model domain logic with compiler-enforced exhaustiveness, using records for data and sealed interfaces for behavior.
 
@@ -127,7 +127,7 @@ You know the basics. Now let's talk about the features that separate "knows Java
 
 **What It Is:** Build reusable, composable code with Java's functional programming features.
 
-**Read the full post:** [Functional Interfaces and Lambda Expressions](/java-for-scala-devs/blog/2025/11/29/functional-interfaces-and-lambda-expressions/)
+**Read the full post:** [Functional Interfaces and Lambda Expressions]({{ site.baseurl }}/blog/2025/11/29/functional-interfaces-and-lambda-expressions/)
 
 **What You'll Learn:** This post builds a configurable retry mechanism from scratch, demonstrating custom functional interfaces, lambda expressions, method references, and function composition. You'll see how Java's functional features compare to Scala and Kotlin.
 
@@ -145,7 +145,7 @@ You know the basics. Now let's talk about the features that separate "knows Java
 
 **What It Is:** Write concurrent code that doesn't block threads. CompletableFuture is Java's answer to Scala Futures and Kotlin coroutines.
 
-**Read the full post:** [CompletableFuture and Asynchronous Programming](/java-for-scala-devs/blog/2025/11/29/completablefuture-and-asynchronous-programming/)
+**Read the full post:** [CompletableFuture and Asynchronous Programming]({{ site.baseurl }}/blog/2025/11/29/completablefuture-and-asynchronous-programming/)
 
 **What You'll Learn:** The post shows how to aggregate data from multiple APIs concurrently with proper timeout handling, error recovery, and composition. You'll learn `thenApply()`, `thenCompose()`, `allOf()`, and exception handling patterns.
 
@@ -163,7 +163,7 @@ You know the basics. Now let's talk about the features that separate "knows Java
 
 **What It Is:** Beyond basic filtering and mapping—custom collectors, parallel streams, and complex data analysis.
 
-**Read the full post:** [Stream API Advanced Operations](/java-for-scala-devs/blog/2025/11/29/stream-api-advanced-operations/)
+**Read the full post:** [Stream API Advanced Operations]({{ site.baseurl }}/blog/2025/11/29/stream-api-advanced-operations/)
 
 **What You'll Learn:** Analyze datasets with running totals, top-N queries, grouping with downstream collectors, and custom collectors. The post covers `takeWhile()`, `dropWhile()`, parallel streams, and performance considerations.
 
@@ -185,7 +185,7 @@ This is where you prove you're not just up-to-date, but ahead of the curve. Thes
 
 **What It Is:** Project Loom revolutionizes Java concurrency. Millions of lightweight threads that don't eat your memory? Yes, please!
 
-**Read the full post:** [Virtual Threads and Structured Concurrency](/java-for-scala-devs/blog/2025/11/29/virtual-threads-and-structured-concurrency/)
+**Read the full post:** [Virtual Threads and Structured Concurrency]({{ site.baseurl }}/blog/2025/11/29/virtual-threads-and-structured-concurrency/)
 
 **What You'll Learn:** Migrate from thread pools to virtual threads, handle thousands of concurrent HTTP requests efficiently, and understand structured concurrency with `StructuredTaskScope`. The post includes comparisons with traditional threading and discusses when to use virtual vs platform threads.
 
@@ -204,7 +204,7 @@ This is where you prove you're not just up-to-date, but ahead of the curve. Thes
 
 **What It Is:** Safe string interpolation that prevents injection attacks. Finally, Java joins the cool kids with string interpolation!
 
-**Read the full post:** [String Templates Preview](/java-for-scala-devs/blog/2025/11/29/string-templates-preview/)
+**Read the full post:** [String Templates Preview]({{ site.baseurl }}/blog/2025/11/29/string-templates-preview/)
 
 **What You'll Learn:** Build safe SQL queries using the `STR` and `FMT` processors, create custom template processors for domain-specific needs, and understand how this prevents injection vulnerabilities. Includes comparisons with Scala and Kotlin string interpolation.
 
@@ -222,7 +222,7 @@ This is where you prove you're not just up-to-date, but ahead of the curve. Thes
 
 **What It Is:** Call native C libraries without the pain of JNI. It's like JNI went to therapy and came back a better person.
 
-**Read the full post:** [Foreign Function and Memory API](/java-for-scala-devs/blog/2025/11/29/foreign-function-and-memory-api/)
+**Read the full post:** [Foreign Function and Memory API]({{ site.baseurl }}/blog/2025/11/29/foreign-function-and-memory-api/)
 
 **What You'll Learn:** Integrate with native libraries using the FFM API's Arena memory management, MemorySegment for direct memory access, and Linker for native function calls. The post shows how this is safer and simpler than traditional JNI.
 
@@ -242,7 +242,7 @@ Alright, you've got the fundamentals down, you know the new features, but there'
 
 Master these, and you'll be absolutely **unbreakable** in your interview. When the interviewer throws you a curveball question about why something behaves unexpectedly, you'll explain it like you wrote the JVM yourself.
 
-**Read the full post:** [Tricky Java Patterns That Everyone Uses](/java-for-scala-devs/blog/2025/12/03/tricky-java-patterns-everyone-uses/)
+**Read the full post:** [Tricky Java Patterns That Everyone Uses]({{ site.baseurl }}/blog/2025/12/03/tricky-java-patterns-everyone-uses/)
 
 This post covers 8 confusing patterns with runnable examples. Here's what you're up against:
 

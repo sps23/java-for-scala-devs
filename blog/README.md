@@ -5,6 +5,7 @@ This module contains the Jekyll-based GitHub Pages blog for the Java for Scala D
 ## 📚 Documentation
 
 - **[Theme & Syntax Highlighting](THEME_AND_SYNTAX_HIGHLIGHTING.md)** - Complete guide to the Dracula theme implementation, syntax highlighting with Rouge, and interactive code tabs feature
+- **[Deployment Configuration](DEPLOYMENT_CONFIG.md)** - Guide to local vs. production configuration, GitHub Actions setup, and multi-environment deployment
 
 ## Ruby Installation on macOS M4 (Apple Silicon)
 
@@ -100,10 +101,12 @@ Once Ruby is properly installed:
 ```bash
 cd blog
 bundle install
-bundle exec jekyll serve
+bundle exec jekyll serve --config _config.yml,_config.local.yml
 ```
 
 Then visit `http://localhost:4000/java-for-scala-devs/` in your browser.
+
+**Note:** The `_config.local.yml` file overrides the `baseurl` to `/java-for-scala-devs` for local testing, matching your GitHub Pages setup. The main `_config.yml` is configured for production (your dedicated domain).
 
 ### Troubleshooting
 
@@ -349,5 +352,41 @@ Use tags for more specific topics. They appear on post cards and can be used for
 
 ## Deployment
 
-The blog is automatically deployed to GitHub Pages when changes are pushed to the `main` branch. The deployment is handled by the GitHub Actions workflow in `.github/workflows/build-deploy.yml`.
+The blog is automatically deployed to your production domain when changes are pushed to the `main` branch. The deployment is handled by the GitHub Actions workflow in `.github/workflows/build-deploy.yml`.
+
+### Configuration Strategy
+
+**Three Configuration Levels:**
+
+1. **`_config.yml`** - Default production configuration
+   - `baseurl: ""` - Works on your dedicated domain (javaforscaladevs.com)
+   - `url: "https://javaforscaladevs.com"`
+   - Used by GitHub Actions for production builds
+
+2. **`_config.local.yml`** - Local development overrides
+   - `baseurl: "/java-for-scala-devs"` - For local GitHub Pages simulation
+   - `url: "http://localhost:4000"`
+   - Only used when explicitly specified with `--config _config.yml,_config.local.yml`
+
+3. **GitHub Actions** - Automatic configuration for GitHub Pages
+   - Automatically sets `--baseurl` via the `configure-pages` action
+   - Overrides are handled by the workflow itself
+   - No additional config files needed for GitHub Pages
+
+### Building for Different Environments
+
+**Local Development:**
+```bash
+bundle exec jekyll serve --config _config.yml,_config.local.yml
+```
+
+**Production Build (manual):**
+```bash
+bundle exec jekyll build
+```
+
+**GitHub Pages (automatic via GitHub Actions):**
+- No manual action needed
+- Workflow automatically uses the correct configuration
+- Commits to `main` trigger automatic builds and deployments
 
