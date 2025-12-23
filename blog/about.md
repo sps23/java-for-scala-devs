@@ -9,6 +9,39 @@ permalink: /about/
 
 This blog is a practical guide for Scala developers who need to work with Java again. Whether you're transitioning to a Java project, working in a polyglot environment, or just curious about modern Java, this guide is for you.
 
+<div class="blog-statistics">
+  <h3>📊 Blog Statistics</h3>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <svg class="stat-icon-large" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+      <span class="stat-value total-blog-views">—</span>
+      <span class="stat-label">Total Visits</span>
+    </div>
+    <div class="stat-card">
+      <svg class="stat-icon-large" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+      </svg>
+      <span class="stat-value">{{ site.posts | size }}</span>
+      <span class="stat-label">Blog Posts</span>
+    </div>
+    <div class="stat-card">
+      <svg class="stat-icon-large" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+        <line x1="7" y1="7" x2="7.01" y2="7"></line>
+      </svg>
+      <span class="stat-value">{% assign all_tags = site.posts | map: "tags" | join: "," | split: "," | uniq | size %}{{ all_tags }}</span>
+      <span class="stat-label">Topics Covered</span>
+    </div>
+  </div>
+</div>
+
 ## Why This Guide?
 
 Many Scala developers started with Java and then moved to Scala for its functional programming features, type inference, and concise syntax. However, Java has evolved significantly, especially with recent releases (Java 17, 21, and beyond).
