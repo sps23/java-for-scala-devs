@@ -33,6 +33,13 @@ test {
             exceptionFormat 'full'
         }
     }
+
+    // Local-only suite: skipped in default/CI runs unless explicitly enabled.
+    if (!project.hasProperty('runLocalOnlyTests')) {
+        filter {
+            excludeTestsMatching 'io.github.sps23.parcollection.MathUtilsTest'
+        }
+    }
 }
 
 spotless {
