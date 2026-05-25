@@ -36,45 +36,43 @@ All three lightweight mechanisms let you run millions of concurrent tasks cheapl
 
 Here's the task: fetch a user profile and their order history concurrently, then combine the results. This is the "hello world" of concurrent programming.
 
-<div class="code-tabs" data-tabs-id="tabs-fork-join">
-<div class="tab-buttons">
-<button class="tab-button active" data-tab="scala">Scala 3 (ZIO)</button>
-<button class="tab-button" data-tab="java">Java 21</button>
-<button class="tab-button" data-tab="kotlin">Kotlin</button>
-</div>
-<div class="tab-content active" data-tab="scala">
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val program: UIO[String] =
+### Scala 3 (ZIO)
+
+```scala
+val program: UIO[String] =
   for
     userFibre  <- fetchUser.fork    // spawn fibre, returns immediately
     orderFibre <- fetchOrders.fork  // spawn another, also immediate
     user       <- userFibre.join    // wait for user result
     orders     <- orderFibre.join   // wait for orders result
   yield s"$user has ${orders.length} orders"
-</code></pre></div></div>
-</div>
-<div class="tab-content" data-tab="java">
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static String fetchUserAndOrders() throws Exception {
+```
+
+### Java 21
+
+```java
+public static String fetchUserAndOrders() throws Exception {
     try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
-        Future&lt;String&gt; userFuture   = executor.submit(VirtualThreadBasics::fetchUser);
-        Future&lt;List&lt;String&gt;&gt; orderFuture = executor.submit(VirtualThreadBasics::fetchOrders);
+        Future<String> userFuture   = executor.submit(VirtualThreadBasics::fetchUser);
+        Future<List<String>> orderFuture = executor.submit(VirtualThreadBasics::fetchOrders);
         String user      = userFuture.get();
-        List&lt;String&gt; orders = orderFuture.get();
+        List<String> orders = orderFuture.get();
         return user + " has " + orders.size() + " orders";
     }
 }
-</code></pre></div></div>
-</div>
-<div class="tab-content" data-tab="kotlin">
-<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>suspend fun fetchUserAndOrders(): String = coroutineScope {
+```
+
+### Kotlin
+
+```kotlin
+suspend fun fetchUserAndOrders(): String = coroutineScope {
     val userDeferred   = async { fetchUser() }    // launch coroutine
     val ordersDeferred = async { fetchOrders() }  // launch another
     val user   = userDeferred.await()
     val orders = ordersDeferred.await()
     "$user has ${orders.size} orders"
 }
-</code></pre></div></div>
-</div>
-</div>
+```
 
 All three versions are parallel and finish in `max(user_latency, order_latency)` instead of `user_latency + order_latency`.
 
@@ -86,14 +84,10 @@ This is where ZIO diverges most sharply from Java and Kotlin.
 
 In ZIO, the error type is part of the method signature: `IO[AppError, String]` tells you *at compile time* that this effect can fail with an `AppError`. Forget to handle it? It won't compile.
 
-<div class="code-tabs" data-tabs-id="tabs-errors">
-<div class="tab-buttons">
-<button class="tab-button active" data-tab="scala">Scala 3 (ZIO)</button>
-<button class="tab-button" data-tab="java">Java 21</button>
-<button class="tab-button" data-tab="kotlin">Kotlin</button>
-</div>
-<div class="tab-content active" data-tab="scala">
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// The error type is in the signature — compiler enforces handling
+### Scala 3 (ZIO)
+
+```scala
+// The error type is in the signature — compiler enforces handling
 val riskyFetch: IO[AppError, String] =
   ZIO.fail(NetworkError("timeout"))
 
@@ -102,25 +96,27 @@ val withFallback: UIO[String] =
   riskyFetch.catchAll:
     case NetworkError(msg) => ZIO.succeed(s"fallback (network: $msg)")
     case ParseError(msg)   => ZIO.succeed(s"fallback (parse: $msg)")
-</code></pre></div></div>
-</div>
-<div class="tab-content" data-tab="java">
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Java: errors are untyped Throwable — no compile-time guarantee
-CompletableFuture&lt;String&gt; withFallback = CompletableFuture
+```
+
+### Java 21
+
+```java
+// Java: errors are untyped Throwable — no compile-time guarantee
+CompletableFuture<String> withFallback = CompletableFuture
     .supplyAsync(() -> {
         throw new NetworkException("timeout");
     })
     .exceptionally(ex -> "fallback (" + ex.getMessage() + ")");
-</code></pre></div></div>
-</div>
-<div class="tab-content" data-tab="kotlin">
-<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Kotlin: also exception-based, but with runCatching for safety
+```
+
+### Kotlin
+
+```kotlin
+// Kotlin: also exception-based, but with runCatching for safety
 suspend fun withFallback(): String =
     runCatching { riskyFetch() }
         .getOrElse { ex -> "fallback (${ex.message})" }
-</code></pre></div></div>
-</div>
-</div>
+```
 
 **ZIO's advantage here is real:** you cannot accidentally forget to handle a `NetworkError`. The compiler will catch the omission. Java and Kotlin both rely on discipline (and tests) to ensure all error cases are covered.
 
@@ -130,24 +126,22 @@ The trade-off is verbosity: `IO[AppError, String]` is noisier than just `String`
 
 ZIO also ships high-level concurrent combinators that make common patterns concise:
 
-<div class="code-tabs" data-tabs-id="tabs-combinators">
-<div class="tab-buttons">
-<button class="tab-button active" data-tab="scala">Scala 3 (ZIO)</button>
-<button class="tab-button" data-tab="java">Java 21</button>
-<button class="tab-button" data-tab="kotlin">Kotlin</button>
-</div>
-<div class="tab-content active" data-tab="scala">
-<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Race: first to finish wins, loser is automatically interrupted
+### Scala 3 (ZIO)
+
+```scala
+// Race: first to finish wins, loser is automatically interrupted
 val fastest: UIO[String] = fromCache race fromDb
 
 // Parallel collection: run all, gather all results
 val allResults: UIO[List[String]] =
   ZIO.collectAllPar(urls.map(url => ZIO.succeed(s"content of $url")))
-</code></pre></div></div>
-</div>
-<div class="tab-content" data-tab="java">
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Race: ShutdownOnSuccess cancels remaining tasks when one succeeds
-try (var scope = new StructuredTaskScope.ShutdownOnSuccess&lt;String&gt;()) {
+```
+
+### Java 21
+
+```java
+// Race: ShutdownOnSuccess cancels remaining tasks when one succeeds
+try (var scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
     scope.fork(() -> { Thread.sleep(10);  return "cached"; });
     scope.fork(() -> { Thread.sleep(200); return "db"; });
     scope.join();
@@ -162,16 +156,16 @@ try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
     scope.join().throwIfFailed();
     return subtasks.stream().map(Subtask::get).toList();
 }
-</code></pre></div></div>
-</div>
-<div class="tab-content" data-tab="kotlin">
-<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Parallel collection: map to async, then awaitAll
-val allResults: List&lt;String&gt; = coroutineScope {
+```
+
+### Kotlin
+
+```kotlin
+// Parallel collection: map to async, then awaitAll
+val allResults: List<String> = coroutineScope {
     urls.map { url -> async { "content of $url" } }.awaitAll()
 }
-</code></pre></div></div>
-</div>
-</div>
+```
 
 The patterns are equivalent, just with different APIs. ZIO's `race` is a one-liner. Java's `ShutdownOnSuccess` is wordier but makes the cancellation policy explicit. Kotlin's `awaitAll()` is the cleanest for the "run all" case.
 
