@@ -13,6 +13,8 @@
 ## Fast Developer Workflow
 - Build all code modules: `./gradlew build`
 - Run all tests: `./gradlew test`
+- Before pushing changes, format and verify style: `./gradlew spotlessApply` then `./gradlew spotlessCheck`.
+- Include local-only Scala 2 suite when needed: `./gradlew :scala2:test -PrunLocalOnlyTests` (`io.github.sps23.parcollection.MathUtilsTest` is excluded by default).
 - Build/test one module: `./gradlew :java21:build`, `./gradlew :scala3:test` (same pattern for `scala2`/`kotlin`).
 - Enforce formatting (required by `check`): `./gradlew spotlessCheck` or auto-fix `./gradlew spotlessApply`.
 - Run blog locally with local overrides: `cd blog && bundle install && bundle exec jekyll serve --config _config.yml,_config.local.yml`.
@@ -27,9 +29,10 @@
   - Kotlin: JUnit 5 + Kotest (`kotlin/build.gradle`)
 
 ## Blog and Content Rules
-- Post files live in `blog/_posts/` with date-prefixed filenames and front matter (`layout`, `title`, `date`, `categories`, `tags`).
+- Post files live in `blog/_posts/` with date-prefixed filenames and six-field front matter (`layout`, `title`, `description`, `date`, `categories`, `tags`), with UTC timestamps (`+0000`).
 - Internal links should use `{{ site.baseurl }}` for environment portability (`blog/DEPLOYMENT_CONFIG.md`).
 - For language switchers, use the exact HTML code-tabs pattern from `blog/CODE_TABS.md`; do not replace with Markdown code fences.
+- In code-tabs blocks, preserve required attributes/ordering: unique `data-tabs-id`, Java button/content first with `active`, and `data-lang` on tab buttons (see `blog/_posts/2025-11-28-sealed-classes-and-exhaustive-pattern-matching.md`).
 - Theme/search/filter behavior is centralized in `blog/assets/js/theme.js`; keep selectors compatible across templates.
 
 ## CI/CD and Integration Points
@@ -38,5 +41,5 @@
 - Local vs production blog config is layered: `_config.yml` base, `_config.local.yml` overrides `baseurl`/`url` for local testing.
 
 ## Sources of AI Guidance in this Repo
-- Primary agent guidance files discovered: `README.md`, `java21/README.md`, `scala2/README.md`, `scala3/README.md`, `kotlin/README.md`, `blog/README.md`, `.github/copilot-instructions.md`.
+- Primary agent guidance files discovered: `AGENTS.md`, `README.md`, `java21/README.md`, `scala2/README.md`, `scala3/README.md`, `kotlin/README.md`, `blog/README.md`, `.github/copilot-instructions.md`.
 
