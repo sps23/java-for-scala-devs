@@ -9,7 +9,8 @@ package io.github.sps23.spring.scopes;
  * entire application context. All classes that depend on this counter share the
  * same count — just like a global variable, but managed by Spring.</li>
  * <li><strong>Prototype</strong>: a brand-new instance is created every time
- * the bean is requested. Each caller gets their own count starting at zero.</li>
+ * the bean is requested. Each caller gets their own count starting at
+ * zero.</li>
  * </ul>
  *
  * <p>
