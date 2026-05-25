@@ -569,6 +569,40 @@ For Scala developers, the mental model is simpler than it might first appear: th
 
 The key takeaway: constructor injection + interfaces + letting Spring manage the wiring = code that is modular, testable, and easy to change. That's not magic. It's just good engineering that Spring makes the path of least resistance.
 
+## Code Samples
+
+All examples in this post are runnable. Find them in the repository under
+`java21/src/main/java/io/github/sps23/spring/ioc/`:
+
+**Interfaces and domain model**
+- [`PaymentGateway.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/PaymentGateway.java) — payment provider abstraction
+- [`EmailSender.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/EmailSender.java) — email delivery abstraction
+- [`OrderRepository.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/OrderRepository.java) — order persistence abstraction
+- [`AuditHandler.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/AuditHandler.java) — plugin interface for audit events
+- [`Order.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/Order.java), [`OrderConfirmation.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/OrderConfirmation.java), [`PaymentResult.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/PaymentResult.java), [`AuditEvent.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/AuditEvent.java) — domain records
+
+**Services (demonstrating injection patterns)**
+- [`OrderService.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/OrderService.java) — constructor injection of mandatory dependencies
+- [`AuditService.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/AuditService.java) — `List<AuditHandler>` injection for plugin-style dispatch
+- [`PaymentRouter.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/PaymentRouter.java) — `Map<String, PaymentGateway>` injection for provider routing
+
+**Stub/fake implementations (for testing without Spring)**
+- [`FakePaymentGateway.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/FakePaymentGateway.java) — configurable fake that can simulate failures
+- [`StubEmailSender.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/StubEmailSender.java) — records sent emails for assertion
+- [`InMemoryOrderRepository.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/InMemoryOrderRepository.java) — thread-safe in-memory store
+- [`LoggingAuditHandler.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/LoggingAuditHandler.java), [`MetricsAuditHandler.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/MetricsAuditHandler.java), [`DatabaseAuditHandler.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/ioc/DatabaseAuditHandler.java) — audit handler implementations
+
+**Tests (no Spring context required)**
+- [`OrderServiceTest.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/spring/ioc/OrderServiceTest.java) — Mockito mocks + hand-rolled stubs; proves constructor injection = no-Spring testability
+- [`AuditServiceTest.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/spring/ioc/AuditServiceTest.java) — verifies `List<AuditHandler>` dispatch, ordering, and edge cases
+- [`PaymentRouterTest.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/spring/ioc/PaymentRouterTest.java) — verifies `Map<String, PaymentGateway>` routing and failure propagation
+
+Run the tests yourself with:
+
+```bash
+./gradlew :java21:test --tests "io.github.sps23.spring.ioc.*"
+```
+
 ---
 
 *This post is part of the [Spring Framework Interview Preparation series]({{ site.baseurl }}{% link _posts/2025-12-14-spring-framework-interview-preparation-guide.md %}). Check out the full plan for all Spring topics.*
