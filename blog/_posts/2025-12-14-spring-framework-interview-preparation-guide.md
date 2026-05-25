@@ -21,7 +21,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** The fundamental principle behind Spring—let the framework manage your object dependencies instead of creating them yourself. Spring's IoC container creates and wires your beans together.
 
-**Read the full post:** [Inversion of Control and Dependency Injection in Spring]({{ site.baseurl }}/blog/2025/12/15/spring-ioc-and-dependency-injection.html)
+**Read the full post:** [Inversion of Control and Dependency Injection in Spring]({{ site.baseurl }}/blog/2026/05/25/spring-ioc-and-dependency-injection.html)
 
 **What You'll Learn:** How Spring's IoC container works, the difference between constructor and setter injection, why constructor injection is preferred, and how to use `@Autowired`, `@Component`, and `@Configuration` annotations. You'll see practical examples of avoiding tight coupling and making your code testable.
 
