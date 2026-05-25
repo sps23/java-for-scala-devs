@@ -9,8 +9,8 @@ import java.util.function.Supplier;
  * <p>
  * In a real Spring application:
  * <ul>
- * <li>A <em>singleton</em> bean is created once, cached in the context, and
- * the same instance is returned every time it is requested.</li>
+ * <li>A <em>singleton</em> bean is created once, cached in the context, and the
+ * same instance is returned every time it is requested.</li>
  * <li>A <em>prototype</em> bean is created afresh every time it is requested
  * from the context — Spring does <em>not</em> cache it.</li>
  * </ul>

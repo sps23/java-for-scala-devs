@@ -38,7 +38,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** Understanding how Spring creates, manages, and destroys beans. Scopes determine how many instances of a bean exist and when they're created.
 
-**Read the full post:** [Spring Bean Scopes and Lifecycle Management]({{ site.baseurl }}/blog/2025/12/15/spring-bean-scopes-lifecycle.html)
+**Read the full post:** [Spring Bean Scopes and Lifecycle Management]({{ site.baseurl }}/blog/2026/05/25/spring-bean-scopes-lifecycle.html)
 
 **What You'll Learn:** The difference between singleton, prototype, request, session, and application scopes. You'll learn about lifecycle callbacks (`@PostConstruct`, `@PreDestroy`), `InitializingBean` and `DisposableBean` interfaces, and how to properly manage resources in Spring beans.
 

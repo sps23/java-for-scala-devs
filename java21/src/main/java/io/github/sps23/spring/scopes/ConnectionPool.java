@@ -34,8 +34,8 @@ public class ConnectionPool {
     }
 
     /**
-     * Initialises the pool. Called by Spring immediately after all dependencies
-     * are injected (equivalent of {@code @PostConstruct}).
+     * Initialises the pool. Called by Spring immediately after all dependencies are
+     * injected (equivalent of {@code @PostConstruct}).
      */
     public void open() {
         this.open = true;
@@ -59,7 +59,8 @@ public class ConnectionPool {
      *
      * @return {@code true} if a slot was available; {@code false} if the pool is
      *         full
-     * @throws IllegalStateException if the pool has not been opened yet
+     * @throws IllegalStateException
+     *             if the pool has not been opened yet
      */
     public boolean borrow() {
         if (!open) {

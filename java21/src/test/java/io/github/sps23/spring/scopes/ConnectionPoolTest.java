@@ -82,17 +82,16 @@ class ConnectionPoolTest {
         pool.close(); // simulates @PreDestroy
 
         assertFalse(pool.isOpen());
-        assertEquals(0, pool.getActiveConnections(),
-                "All connections should be released on close");
+        assertEquals(0, pool.getActiveConnections(), "All connections should be released on close");
     }
 
     @Test
     void fullLifecycle() {
         // Simulates what Spring does: PostConstruct → use → PreDestroy
-        pool.open();                    // @PostConstruct
+        pool.open(); // @PostConstruct
         assertTrue(pool.borrow());
         pool.release();
-        pool.close();                   // @PreDestroy
+        pool.close(); // @PreDestroy
 
         assertFalse(pool.isOpen());
         assertEquals(0, pool.getActiveConnections());
