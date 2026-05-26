@@ -9,7 +9,7 @@ tags: [java, java21, spring, spring-boot, spring-mvc, rest-api, interview-prepar
 
 Your investments may be tanking — down 40% since Tuesday because you bought something called "MoonCoinX" — but at least your REST API is well-structured. In this post we will build a trading API with Spring MVC, and by the end you will know exactly how to answer every Spring MVC interview question thrown at you.
 
-If you are coming from Scala, think of Spring MVC as the HTTP routing layer: you define functions that map URL patterns to logic, and Spring handles all the serialisation, deserialisation, and HTTP plumbing around them. In Scala you might use Play Framework or http4s routes; Spring MVC is the Java equivalent — annotation-heavy but surprisingly predictable once you understand the model.
+If you are coming from Scala, think of Spring MVC as the HTTP routing layer: you define functions that map URL patterns to logic, and Spring handles all the serialization, deserialization, and HTTP plumbing around them. In Scala you might use Play Framework or http4s routes; Spring MVC is the Java equivalent — annotation-heavy but surprisingly predictable once you understand the model.
 
 Let's build a portfolio management API — one that lets traders buy stocks, sell them at the wrong time, and watch their net worth slowly evaporate in real-time.
 
@@ -29,7 +29,7 @@ public class PortfolioViewController {
     }
 }
 
-// @RestController — returns data, serialised to JSON (or XML) automatically
+// @RestController — returns data, serialized to JSON (or XML) automatically
 // @RestController = @Controller + @ResponseBody on every method
 @RestController
 public class TradeController {
@@ -37,7 +37,7 @@ public class TradeController {
     @GetMapping("/api/trades")
     public List<Trade> getAllTrades() {
         return tradeService.getTrades(Optional.empty());
-        // Spring + Jackson serialises this to JSON — no @ResponseBody needed
+        // Spring + Jackson serializes this to JSON — no @ResponseBody needed
     }
 }
 ```
@@ -168,12 +168,12 @@ public Page<Trade> getTrades(
 @PostMapping
 @ResponseStatus(HttpStatus.CREATED)
 public Trade executeTrade(@RequestBody @Valid TradeRequest request) {
-    // Spring + Jackson deserialised the JSON into a TradeRequest record for us
+    // Spring + Jackson deserialized the JSON into a TradeRequest record for us
     return tradeService.executeTrade(request);
 }
 ```
 
-Jackson automatically deserialises the JSON body into a `TradeRequest` record. No XML configuration, no `ObjectMapper` setup — Spring Boot's auto-configuration handles it.
+Jackson automatically deserializes the JSON body into a `TradeRequest` record. No XML configuration, no `ObjectMapper` setup — Spring Boot's auto-configuration handles it.
 
 ## Exception Handling — @ExceptionHandler and @ControllerAdvice
 
@@ -305,7 +305,7 @@ Without `@Valid`, the annotations are decorative — Spring ignores them. Always
 The full validation flow:
 
 ```
-POST /api/trades  →  Jackson deserialises JSON  →  @Valid runs validators
+POST /api/trades  →  Jackson deserializes JSON  →  @Valid runs validators
     ↓ valid                                          ↓ invalid
 handler method                           MethodArgumentNotValidException
     ↓                                          ↓
@@ -458,8 +458,9 @@ Bean Validation annotations (`@NotBlank`, `@Min`, `@DecimalMin`, etc.) declare c
 
 ## Code Samples
 
-All examples in this post are backed by runnable plain-Java code in the repository
-(no Spring runtime required — the same patterns, tested with JUnit 5):
+All examples in this post are backed by runnable plain-Java code in the repository.
+The service layer contains no Spring dependencies — it can be tested with plain JUnit 5,
+without starting a Spring application context:
 
 `java21/src/main/java/io/github/sps23/spring/mvc/`
 

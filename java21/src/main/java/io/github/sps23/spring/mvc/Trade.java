@@ -8,13 +8,14 @@ import java.time.Instant;
  *
  * <p>
  * In a real Spring MVC application this record would be returned from a
- * {@code @RestController} and automatically serialised to JSON by Jackson.
- * The {@code @JsonFormat} annotation (not shown here) would control timestamp formatting.
+ * {@code @RestController} and automatically serialised to JSON by Jackson. The
+ * {@code @JsonFormat} annotation (not shown here) would control timestamp
+ * formatting.
  *
  * <p>
- * Using a Java {@code record} means Spring (via Jackson) can deserialise JSON into it without any
- * boilerplate — no getters, no setters, no {@code @JsonProperty}. The compact constructor handles
- * validation.
+ * Using a Java {@code record} means Spring (via Jackson) can deserialise JSON
+ * into it without any boilerplate — no getters, no setters, no
+ * {@code @JsonProperty}. The compact constructor handles validation.
  *
  * @param tradeId
  *            unique identifier for this trade
@@ -29,13 +30,8 @@ import java.time.Instant;
  * @param executedAt
  *            when the trade was executed (UTC)
  */
-public record Trade(
-        String tradeId,
-        String symbol,
-        TradeType type,
-        int quantity,
-        BigDecimal pricePerShare,
-        Instant executedAt) {
+public record Trade(String tradeId, String symbol, TradeType type, int quantity,
+        BigDecimal pricePerShare, Instant executedAt) {
 
     public Trade {
         if (tradeId == null || tradeId.isBlank()) {

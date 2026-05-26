@@ -19,11 +19,8 @@ import java.util.List;
  * @param totalGainLoss
  *            profit or loss (negative = tanking, as expected)
  */
-public record PortfolioSummary(
-        List<PortfolioPosition> positions,
-        BigDecimal totalInvested,
-        BigDecimal totalCurrentValue,
-        BigDecimal totalGainLoss) {
+public record PortfolioSummary(List<PortfolioPosition> positions, BigDecimal totalInvested,
+        BigDecimal totalCurrentValue, BigDecimal totalGainLoss) {
 
     /**
      * A single stock position within the portfolio.
@@ -39,11 +36,7 @@ public record PortfolioSummary(
      * @param gainLoss
      *            unrealised gain or loss for this position
      */
-    public record PortfolioPosition(
-            String symbol,
-            int sharesHeld,
-            BigDecimal averageCostPerShare,
-            BigDecimal currentValue,
-            BigDecimal gainLoss) {
+    public record PortfolioPosition(String symbol, int sharesHeld, BigDecimal averageCostPerShare,
+            BigDecimal currentValue, BigDecimal gainLoss) {
     }
 }

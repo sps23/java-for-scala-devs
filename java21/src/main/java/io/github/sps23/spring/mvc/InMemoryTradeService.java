@@ -17,15 +17,16 @@ import java.util.stream.Collectors;
  * standalone demonstrations without a database.
  *
  * <p>
- * In a real Spring application this class would be annotated with {@code @Service} and Spring
- * would automatically register it as the {@link TradeService} bean to inject into the controller.
- * This implementation uses a plain {@code List} (not thread-safe) to keep the code readable; a
- * production implementation would use a database-backed Spring Data repository.
+ * This implementation uses a plain unsynchronised {@code ArrayList}. It is
+ * intentionally single-threaded and designed for tests and standalone
+ * demonstrations only. A production implementation would use a database-backed
+ * Spring Data repository and would not need to worry about in-process thread
+ * safety at this layer.
  *
  * <p>
- * Portfolio gain/loss is calculated using a simplified model: the current price of each position
- * is assumed to be the price of the most recent BUY or SELL trade for that symbol. In a real
- * system you would call a market-data API.
+ * Portfolio gain/loss is calculated using a simplified model: the current price
+ * of each position is assumed to be the price of the most recent BUY or SELL
+ * trade for that symbol. In a real system you would call a market-data API.
  */
 public class InMemoryTradeService implements TradeService {
 
@@ -33,30 +34,20 @@ public class InMemoryTradeService implements TradeService {
 
     @Override
     public List<Trade> getTrades(Optional<String> symbol) {
-        return symbol
-                .map(s -> trades.stream()
-                        .filter(t -> t.symbol().equalsIgnoreCase(s))
-                        .collect(Collectors.toList()))
-                .orElseGet(() -> List.copyOf(trades));
+        return symbol.map(s -> trades.stream().filter(t -> t.symbol().equalsIgnoreCase(s))
+                .collect(Collectors.toList())).orElseGet(() -> List.copyOf(trades));
     }
 
     @Override
     public Trade getTradeById(String tradeId) {
-        return trades.stream()
-                .filter(t -> t.tradeId().equals(tradeId))
-                .findFirst()
+        return trades.stream().filter(t -> t.tradeId().equals(tradeId)).findFirst()
                 .orElseThrow(() -> new TradeNotFoundException(tradeId));
     }
 
     @Override
     public Trade executeTrade(TradeRequest request) {
-        var trade = new Trade(
-                UUID.randomUUID().toString(),
-                request.symbol().toUpperCase(),
-                request.type(),
-                request.quantity(),
-                request.pricePerShare(),
-                Instant.now());
+        var trade = new Trade(UUID.randomUUID().toString(), request.symbol().toUpperCase(),
+                request.type(), request.quantity(), request.pricePerShare(), Instant.now());
         trades.add(trade);
         return trade;
     }
@@ -64,9 +55,8 @@ public class InMemoryTradeService implements TradeService {
     @Override
     public PortfolioSummary getPortfolio() {
         // Group trades by symbol and compute net position for each
-        var tradesBySymbol = trades.stream()
-                .collect(Collectors.groupingBy(Trade::symbol, LinkedHashMap::new,
-                        Collectors.toList()));
+        var tradesBySymbol = trades.stream().collect(
+                Collectors.groupingBy(Trade::symbol, LinkedHashMap::new, Collectors.toList()));
 
         var positions = new ArrayList<PortfolioSummary.PortfolioPosition>();
         var totalInvested = new AtomicReference<>(BigDecimal.ZERO);
@@ -76,19 +66,15 @@ public class InMemoryTradeService implements TradeService {
             var position = buildPosition(symbol, symbolTrades);
             if (position.sharesHeld() > 0) {
                 positions.add(position);
-                totalInvested.updateAndGet(v -> v.add(
-                        position.averageCostPerShare()
-                                .multiply(BigDecimal.valueOf(position.sharesHeld()))));
+                totalInvested.updateAndGet(v -> v.add(position.averageCostPerShare()
+                        .multiply(BigDecimal.valueOf(position.sharesHeld()))));
                 totalCurrentValue.updateAndGet(v -> v.add(position.currentValue()));
             }
         });
 
         var invested = totalInvested.get();
         var current = totalCurrentValue.get();
-        return new PortfolioSummary(
-                List.copyOf(positions),
-                invested,
-                current,
+        return new PortfolioSummary(List.copyOf(positions), invested, current,
                 current.subtract(invested));
     }
 
@@ -125,12 +111,8 @@ public class InMemoryTradeService implements TradeService {
         var currentValue = latestPrice.multiply(BigDecimal.valueOf(Math.max(sharesHeld, 0)));
         var gainLoss = currentValue.subtract(totalCost);
 
-        return new PortfolioSummary.PortfolioPosition(
-                symbol,
-                Math.max(sharesHeld, 0),
-                avgCost,
-                currentValue,
-                gainLoss);
+        return new PortfolioSummary.PortfolioPosition(symbol, Math.max(sharesHeld, 0), avgCost,
+                currentValue, gainLoss);
     }
 
     /**

@@ -7,15 +7,16 @@ import java.util.Optional;
  * Business logic for the investment trading REST API.
  *
  * <p>
- * This interface is the service layer that a Spring MVC {@code @RestController} would depend on
- * via constructor injection (as described in the
- * <a href="https://sps23.github.io/java-for-scala-devs/blog/2026/05/25/spring-ioc-and-dependency-injection.html">IoC
+ * This interface is the service layer that a Spring MVC {@code @RestController}
+ * would depend on via constructor injection (as described in the <a href=
+ * "https://sps23.github.io/java-for-scala-devs/blog/2026/05/25/spring-ioc-and-dependency-injection.html">IoC
  * and Dependency Injection</a> post).
  *
  * <p>
- * Keeping business logic in a service (not in the controller) is a core Spring MVC convention. The
- * controller handles HTTP concerns (parsing requests, setting status codes); the service handles
- * domain logic (trade validation, portfolio calculations).
+ * Keeping business logic in a service (not in the controller) is a core Spring
+ * MVC convention. The controller handles HTTP concerns (parsing requests,
+ * setting status codes); the service handles domain logic (trade validation,
+ * portfolio calculations).
  */
 public interface TradeService {
 
