@@ -21,7 +21,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** The fundamental principle behind Spring—let the framework manage your object dependencies instead of creating them yourself. Spring's IoC container creates and wires your beans together.
 
-**Read the full post:** [Inversion of Control and Dependency Injection in Spring]({{ site.baseurl }}/blog/2026/05/25/spring-ioc-and-dependency-injection.html)
+**Read the full post:** [Inversion of Control and Dependency Injection in Spring]({{ site.baseurl }}/blog/2026/05/25/spring-ioc-and-dependency-injection/)
 
 **What You'll Learn:** How Spring's IoC container works, the difference between constructor and setter injection, why constructor injection is preferred, and how to use `@Autowired`, `@Component`, and `@Configuration` annotations. You'll see practical examples of avoiding tight coupling and making your code testable.
 
@@ -38,7 +38,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** Understanding how Spring creates, manages, and destroys beans. Scopes determine how many instances of a bean exist and when they're created.
 
-**Read the full post:** [Spring Bean Scopes and Lifecycle Management]({{ site.baseurl }}/blog/2026/05/25/spring-bean-scopes-lifecycle.html)
+**Read the full post:** [Spring Bean Scopes and Lifecycle Management]({{ site.baseurl }}/blog/2026/05/25/spring-bean-scopes-lifecycle/)
 
 **What You'll Learn:** The difference between singleton, prototype, request, session, and application scopes. You'll learn about lifecycle callbacks (`@PostConstruct`, `@PreDestroy`), `InitializingBean` and `DisposableBean` interfaces, and how to properly manage resources in Spring beans.
 
