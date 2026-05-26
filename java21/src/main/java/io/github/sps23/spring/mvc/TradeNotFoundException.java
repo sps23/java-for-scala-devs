@@ -11,8 +11,7 @@ package io.github.sps23.spring.mvc;
  * {@code
  * @ExceptionHandler(TradeNotFoundException.class)
  * public ResponseEntity<ApiError> handleNotFound(TradeNotFoundException ex) {
- *     return ResponseEntity.status(HttpStatus.NOT_FOUND)
- *         .body(ApiError.of(404, ex.getMessage()));
+ *     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiError.of(404, ex.getMessage()));
  * }
  * }
  * </pre>

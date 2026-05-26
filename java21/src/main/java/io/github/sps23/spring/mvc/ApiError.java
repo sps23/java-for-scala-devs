@@ -3,7 +3,8 @@ package io.github.sps23.spring.mvc;
 import java.time.Instant;
 
 /**
- * Standard error response body returned by the REST API when something goes wrong.
+ * Standard error response body returned by the REST API when something goes
+ * wrong.
  *
  * <p>
  * In a real Spring MVC application this record would be returned from a

@@ -10,17 +10,20 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for {@link InMemoryTradeService} that prove the service-layer logic described in the
- * "Building RESTful APIs with Spring MVC" blog post works correctly.
+ * Unit tests for {@link InMemoryTradeService} that prove the service-layer
+ * logic described in the "Building RESTful APIs with Spring MVC" blog post
+ * works correctly.
  *
  * <p>
- * Key point: the service is instantiated with {@code new InMemoryTradeService()} — no Spring
- * context required. This illustrates the testability benefit of keeping business logic in a
- * plain service class, separate from the {@code @RestController} that handles HTTP concerns.
+ * Key point: the service is instantiated with
+ * {@code new InMemoryTradeService()} — no Spring context required. This
+ * illustrates the testability benefit of keeping business logic in a plain
+ * service class, separate from the {@code @RestController} that handles HTTP
+ * concerns.
  *
  * @see <a href=
- *      "https://javaforscaladevs.com/blog/2025/12/15/spring-mvc-restful-apis.html">Blog post:
- *      Building RESTful APIs with Spring MVC</a>
+ *      "https://javaforscaladevs.com/blog/2025/12/15/spring-mvc-restful-apis.html">Blog
+ *      post: Building RESTful APIs with Spring MVC</a>
  */
 @DisplayName("InMemoryTradeService — Spring MVC service layer")
 class InMemoryTradeServiceTest {
