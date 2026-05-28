@@ -89,7 +89,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** Building web applications and REST APIs with Spring MVC. This is the bread and butter of most Spring interviews.
 
-**Read the full post:** [Building RESTful APIs with Spring MVC]({{ site.baseurl }}/blog/2025/12/15/spring-mvc-restful-apis.html)
+**Read the full post:** [Building RESTful APIs with Spring MVC]({{ site.baseurl }}/blog/2026/05/28/spring-mvc-restful-apis/)
 
 **What You'll Learn:** How to create REST controllers with `@RestController`, handle HTTP methods with `@GetMapping`, `@PostMapping`, etc., request and response handling, path variables and request parameters, exception handling with `@ExceptionHandler`, and proper HTTP status codes.
 
