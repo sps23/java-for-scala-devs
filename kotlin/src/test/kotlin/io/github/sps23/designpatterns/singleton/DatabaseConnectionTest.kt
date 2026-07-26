@@ -19,29 +19,35 @@ class DatabaseConnectionTest {
         val endLatch = CountDownLatch(numThreads)
         val executionCount = java.util.concurrent.atomic.AtomicInteger(0)
 
-        val executor = Executors.newFixedThreadPool(10)
-
-        repeat(numThreads) {
-            executor.submit {
-                try {
-                    startLatch.await()
-                    DatabaseConnection.connect()
-                    executionCount.incrementAndGet()
-                } finally {
-                    endLatch.countDown()
+        /*
+         * How It Works
+         * • use() is Kotlin's idiomatic equivalent to Java's try-with-resources
+         * • It guarantees the resource is closed (executor shutdown) even if an exception occurs
+         * • The resource is available inside the lambda via the executor parameter
+         * • Much more readable than nested try-finally blocks
+         */
+        Executors.newFixedThreadPool(10).use { executor ->
+            repeat(numThreads) {
+                executor.submit {
+                    try {
+                        startLatch.await()
+                        DatabaseConnection.connect()
+                        executionCount.incrementAndGet()
+                    } finally {
+                        endLatch.countDown()
+                    }
                 }
             }
-        }
 
-        startLatch.countDown()
-        endLatch.await()
+            startLatch.countDown()
+            endLatch.await()
+        }
 
         assertEquals(
             numThreads,
             executionCount.get(),
             "All threads should execute without errors",
         )
-        executor.shutdown()
     }
 
     @Test

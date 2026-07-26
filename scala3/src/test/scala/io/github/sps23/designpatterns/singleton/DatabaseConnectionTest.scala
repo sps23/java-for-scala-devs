@@ -3,8 +3,10 @@ package io.github.sps23.designpatterns.singleton
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
+import scala.util.Using
 
 @DisplayName("DatabaseConnection Scala 3 Singleton Tests")
 class DatabaseConnectionTest:
@@ -17,24 +19,24 @@ class DatabaseConnectionTest:
     val endLatch       = CountDownLatch(numThreads)
     val executionCount = new java.util.concurrent.atomic.AtomicInteger(0)
 
-    val executor = Executors.newFixedThreadPool(10)
+    // Scala 2.13+ provides Using for resource management (equivalent to Java try-with-resources):
+    Using(Executors.newFixedThreadPool(10)) { executor =>
+      for _ <- 1 to numThreads do
+        executor.submit(
+          new Runnable:
+            override def run(): Unit =
+              try
+                startLatch.await()
+                DatabaseConnection.connect()
+                executionCount.incrementAndGet()
+              finally endLatch.countDown()
+        )
 
-    for _ <- 1 to numThreads do
-      executor.submit(
-        new Runnable:
-          override def run(): Unit =
-            try
-              startLatch.await()
-              DatabaseConnection.connect()
-              executionCount.incrementAndGet()
-            finally endLatch.countDown()
-      )
+      startLatch.countDown()
+      endLatch.await()
 
-    startLatch.countDown()
-    endLatch.await()
-
-    assertEquals(numThreads, executionCount.get(), "All threads should execute without errors")
-    executor.shutdown()
+      assertEquals(numThreads, executionCount.get(), "All threads should execute without errors")
+    }
 
   @Test
   @DisplayName("Should successfully connect to database")

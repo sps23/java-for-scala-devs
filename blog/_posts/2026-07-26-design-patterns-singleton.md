@@ -31,14 +31,16 @@ When multiple threads might access the singleton simultaneously, we need guarant
 
 <div class="table-wrapper" markdown="1">
 
-| Approach | Thread-Safe | Lazy | Complexity |
-|----------|:-----------:|:----:|:----------:|
-| Eager static initialization | ✓ | ✗ | Low |
-| Double-checked locking | ✓ | ✓ | High |
-| Holder pattern | ✓ | ✓ | Medium |
-| Language keyword (Kotlin/Scala) | ✓ | ✓ | Low |
+| Approach                        | Thread-Safe  | Lazy | Complexity  |
+|---------------------------------|:------------:|:----:|:-----------:|
+| Eager static initialization     |      ✓      |  ✗  |     Low     |
+| Double-checked locking          |      ✓      |  ✓  |    High     |
+| Holder pattern                  |      ✓      |  ✓  |   Medium    |
+| Language keyword (Kotlin/Scala) |      ✓      |  ✓  |     Low     |
 
 </div>
+
+---
 
 ### Initialization Strategies
 
@@ -171,12 +173,12 @@ object LazyLogger {
 
 <div class="table-wrapper" markdown="1">
 
-| Language | Syntax | Boilerplate | Thread-Safe | Lazy | Comments |
-|----------|--------|:-----------:|:-----------:|:----:|----------|
-| **Java 21** | `static final + private constructor` | High | ✓ (by default) | ✗ | Use holder pattern for lazy |
-| **Kotlin** | `object` keyword | Minimal | ✓ | ✓ | Idiomatic, automatic serialization |
-| **Scala 2** | `object` keyword | Minimal | ✓ | ✓ | Idiomatic, similar to Kotlin |
-| **Scala 3** | `object` keyword | Minimal | ✓ | ✓ | Same as Scala 2, cleaner syntax |
+| Language      | Syntax                               | Boilerplate  |   Thread-Safe   | Lazy  | Comments                           |
+|---------------|--------------------------------------|:------------:|:---------------:|:-----:|------------------------------------|
+| **Java 21**   | `static final + private constructor` |     High     | ✓ (by default) |  ✗   | Use holder pattern for lazy        |
+| **Kotlin**    | `object` keyword                     |   Minimal    |       ✓        |  ✓   | Idiomatic, automatic serialization |
+| **Scala 2**   | `object` keyword                     |   Minimal    |       ✓        |  ✓   | Idiomatic, similar to Kotlin       |
+| **Scala 3**   | `object` keyword                     |   Minimal    |       ✓        |  ✓   | Same as Scala 2, cleaner syntax    |
 
 </div>
 

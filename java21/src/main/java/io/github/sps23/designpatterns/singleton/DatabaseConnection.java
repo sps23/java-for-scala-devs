@@ -4,14 +4,11 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * Eager initialization singleton pattern in Java.
- *
- * The instance is created when the class is loaded, guaranteeing thread safety
- * without synchronization overhead. This is the simplest and most recommended
- * approach for most use cases.
- *
- * Trade-offs: - ✓ Thread-safe by default (class loading guarantees atomicity) -
- * ✓ Simple and efficient - ✗ Instance created even if never used
+ * Eager initialization singleton pattern in Java. The instance is created when
+ * the class is loaded, guaranteeing thread safety without synchronization
+ * overhead. This is the simplest and most recommended approach for most use
+ * cases. Trade-offs: - ✓ Thread-safe by default (class loading guarantees
+ * atomicity) - ✓ Simple and efficient - ✗ Instance created even if never used
  */
 public class DatabaseConnection implements Serializable {
     @Serial

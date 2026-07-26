@@ -30,42 +30,43 @@ class DatabaseConnectionTest {
         CountDownLatch endLatch = new CountDownLatch(numThreads);
         Set<DatabaseConnection> instances = new HashSet<>();
 
-        ExecutorService executor = Executors.newFixedThreadPool(10);
-
-        for (int i = 0; i < numThreads; i++) {
-            executor.submit(() -> {
-                try {
-                    startLatch.await();
-                    instances.add(DatabaseConnection.getInstance());
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                } finally {
-                    endLatch.countDown();
-                }
-            });
+        /*
+         * Try-with-resources automatically closes resources that implement
+         * AutoCloseable, even if an exception occurs: ✅ executor.shutdown() called
+         * automatically, guaranteed
+         */
+        try (ExecutorService executor = Executors.newFixedThreadPool(10)) {
+            for (int i = 0; i < numThreads; i++) {
+                executor.submit(() -> {
+                    try {
+                        startLatch.await();
+                        instances.add(DatabaseConnection.getInstance());
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    } finally {
+                        endLatch.countDown();
+                    }
+                });
+            }
+            startLatch.countDown();
+            endLatch.await();
+            assertEquals(1, instances.size(),
+                    "Only one instance should exist despite concurrent access");
         }
-
-        startLatch.countDown();
-        endLatch.await();
-
-        assertEquals(1, instances.size(),
-                "Only one instance should exist despite concurrent access");
-        executor.shutdown();
     }
 
     @Test
     @DisplayName("Should successfully connect to database")
     void testConnectionEstablished() {
         DatabaseConnection conn = DatabaseConnection.getInstance();
-        assertDoesNotThrow(() -> conn.connect(),
-                "Should be able to connect without throwing exception");
+        assertDoesNotThrow(conn::connect, "Should be able to connect without throwing exception");
     }
 
     @Test
     @DisplayName("Should successfully disconnect from database")
     void testDisconnection() {
         DatabaseConnection conn = DatabaseConnection.getInstance();
-        assertDoesNotThrow(() -> conn.disconnect(),
+        assertDoesNotThrow(conn::disconnect,
                 "Should be able to disconnect without throwing exception");
     }
 }

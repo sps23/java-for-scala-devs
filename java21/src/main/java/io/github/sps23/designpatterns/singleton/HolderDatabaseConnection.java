@@ -4,15 +4,13 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * Holder pattern singleton (recommended in Java).
- *
- * Combines lazy initialization with the simplicity of eager initialization by
- * using a static inner class. The inner class is only loaded when getInstance()
- * is called, providing lazy initialization without explicit synchronization.
- *
- * Trade-offs: - ✓ Thread-safe by default (class loading guarantees atomicity) -
- * ✓ Lazy initialization without synchronization - ✓ Simple and efficient - This
- * is the modern best practice in Java
+ * Holder pattern singleton (recommended in Java). Combines lazy initialization
+ * with the simplicity of eager initialization by using a static inner class.
+ * The inner class is only loaded when getInstance() is called, providing lazy
+ * initialization without explicit synchronization. Trade-offs: - ✓ Thread-safe
+ * by default (class loading guarantees atomicity) - ✓ Lazy initialization
+ * without synchronization - ✓ Simple and efficient - This is the modern best
+ * practice in Java
  */
 public class HolderDatabaseConnection implements Serializable {
     @Serial

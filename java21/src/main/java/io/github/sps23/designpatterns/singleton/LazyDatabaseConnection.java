@@ -4,14 +4,12 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * Lazy initialization singleton pattern using double-checked locking.
- *
- * The instance is created only when first requested. This saves resources if
- * the singleton is never used, but adds synchronization complexity.
- *
- * Trade-offs: - ✓ Instance created only if needed - ✗ Requires synchronization
- * (performance overhead) - ✗ More complex than eager initialization - ✗
- * Vulnerable to double-checked locking bugs if not done carefully
+ * Lazy initialization singleton pattern using double-checked locking. The
+ * instance is created only when first requested. This saves resources if the
+ * singleton is never used, but adds synchronization complexity. Trade-offs: - ✓
+ * Instance created only if needed - ✗ Requires synchronization (performance
+ * overhead) - ✗ More complex than eager initialization - ✗ Vulnerable to
+ * double-checked locking bugs if not done carefully
  */
 public class LazyDatabaseConnection implements Serializable {
     @Serial
