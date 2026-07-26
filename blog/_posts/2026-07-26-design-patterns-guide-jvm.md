@@ -44,6 +44,8 @@ These patterns are about communication between objects—how they work together 
 
 ## Creational Patterns - Creating Objects Like a Pro
 
+> **Note:** The following links point to upcoming deep-dive posts in this series. Check back as we publish detailed analysis of each pattern!
+
 ### 1. Singleton Pattern
 
 **What It Is:** A class that can only have one instance, and you access it globally. Think of it as the "one ring to rule them all" of design patterns. There's only one database connection manager, one logger configuration, one...well, you get the idea.
@@ -232,5 +234,5 @@ Start with understanding these ten patterns conceptually. Then, as you work on r
 
 ---
 
-*This is part of our Design Patterns Deep-Dive series for JVM developers. Check back for individual deep-dive posts on each pattern!*
+*This is the main guide for our Design Patterns Deep-Dive series for JVM developers. Individual deep-dive posts for each pattern will be published as the series develops. Stay tuned!*
 
