@@ -3,6 +3,7 @@ layout: post
 title: "Spring Framework Interview Preparation Guide - Master the Framework"
 description: "Comprehensive Spring Framework interview preparation guide covering Core IoC, Spring Boot, Data Access, Security, and more - organized by difficulty level with detailed topics for senior developers."
 date: 2025-12-14 18:00:00 +0000
+updated: 2026-07-26 11:05:20 +0100
 categories: [interview]
 tags: [java, spring, spring-boot, interview, preparation, senior-developer]
 ---

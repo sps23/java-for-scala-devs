@@ -3,6 +3,7 @@ layout: post
 title: "ZIO Fibres vs Java Virtual Threads vs Kotlin Coroutines"
 description: "A practical comparison of ZIO fibres in Scala 3, Java 21 virtual threads, and Kotlin coroutines — covering fork/join, typed error handling, concurrent composition, and when to use each approach."
 date: 2026-05-25 13:00:00 +0000
+updated: 2026-05-25 15:06:25 +0000
 categories: [concurrency]
 tags: [scala, scala3, zio, fibres, java, java21, kotlin, coroutines, virtual-threads, concurrency]
 ---

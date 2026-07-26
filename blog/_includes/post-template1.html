@@ -24,6 +24,7 @@
       <h1 class="article-title">{{ page.title }}</h1>
       <p class="article-meta">
         <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+        {% if page.updated %}<br><small style="color: var(--text-muted);">Updated: <time datetime="{{ page.updated | date_to_xmlschema }}">{{ page.updated | date: "%B %-d, %Y" }}</time></small>{% endif %}
         {% if page.author %} • {{ page.author }}{% endif %}
         {% if page.categories.size > 0 %} • {{ page.categories | join: ", " }}{% endif %}
       </p>

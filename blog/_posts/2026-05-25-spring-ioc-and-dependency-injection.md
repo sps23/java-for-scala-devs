@@ -3,6 +3,7 @@ layout: post
 title: "Inversion of Control and Dependency Injection in Spring"
 description: "How Spring's IoC container manages your beans so you don't have to - covering constructor vs setter injection, @Autowired, @Component, @Configuration, and making your code actually testable."
 date: 2026-05-25 15:00:00 +0000
+updated: 2026-05-25 16:27:35 +0000
 categories: [interview]
 tags: [java, java21, spring, spring-boot, dependency-injection, ioc, interview-preparation]
 ---

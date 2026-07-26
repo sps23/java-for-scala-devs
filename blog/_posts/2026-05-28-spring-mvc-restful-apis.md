@@ -3,6 +3,7 @@ layout: post
 title: "Building RESTful APIs with Spring MVC"
 description: "A practical guide to Spring MVC REST controllers — @RestController, HTTP method mappings, path variables, request/response handling, exception handling with @ControllerAdvice, and @Valid validation — with investment trading examples."
 date: 2026-05-28 14:00:00 +0000
+updated: 2026-05-28 09:51:21 +0100
 categories: [interview]
 tags: [java, java21, spring, spring-boot, spring-mvc, rest-api, interview-preparation]
 ---

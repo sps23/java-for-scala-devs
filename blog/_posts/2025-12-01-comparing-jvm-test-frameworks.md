@@ -3,6 +3,7 @@ layout: post
 title: "Comparing JVM Test Frameworks: JUnit 5, ScalaTest, and Kotest"
 description: "A comprehensive comparison of the most popular test frameworks across Java, Scala, and Kotlin - explore JUnit 5, ScalaTest, and Kotest with practical examples and cross-language usage."
 date: 2025-12-01 23:00:00 +0000
+updated: 2025-12-03 09:57:53 +0000
 categories: [testing]
 tags: [java, scala, kotlin, junit, scalatest, kotest, testing, interview-preparation]
 ---

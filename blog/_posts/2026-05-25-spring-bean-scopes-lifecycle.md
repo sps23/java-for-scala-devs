@@ -3,6 +3,7 @@ layout: post
 title: "Spring Bean Scopes and Lifecycle Management"
 description: "How Spring creates, manages, and destroys beans — covering singleton, prototype, request, session, and application scopes, lifecycle callbacks (@PostConstruct, @PreDestroy), and the classic prototype-in-singleton trap."
 date: 2026-05-25 20:00:00 +0000
+updated: 2026-07-26 11:25:00 +0000
 categories: [interview]
 tags: [java, java21, spring, bean-scopes, lifecycle, interview-preparation]
 ---
@@ -44,15 +45,14 @@ Spring's default scope is **singleton**. One instance per `ApplicationContext`, 
 
 ```java
 @Service  // @Scope("singleton") is the default — you don't need to say it
-public class OrderService {
+public class OrderVolumeTracker {
 
     // This counter is shared across ALL callers — all requests, all threads
-    private int ordersProcessed = 0;
+    private int ordersProcessed;
 
-    public OrderConfirmation placeOrder(Order order) {
-        ordersProcessed++;  // ⚠️ Race condition waiting to happen
-        // ...
-        return new OrderConfirmation(order.id());
+    public synchronized int recordOrderProcessed() {
+        ordersProcessed++;  // ⚠️ Race condition waiting to happen without synchronized
+        return ordersProcessed;
     }
 }
 ```
@@ -90,10 +90,13 @@ This one trips up almost everyone eventually.
 
 ```java
 @Service  // singleton — one instance
-public class ReportService {
+public class StaleReportService {
 
-    @Autowired
-    private ReportBuilder builder;  // ⚠️ prototype injected into singleton!
+    private final ReportBuilder builder;  // ⚠️ prototype resolved once, at startup!
+
+    public StaleReportService(ReportBuilder builder) {
+        this.builder = builder;
+    }
 
     public String generateReport(List<String> sections) {
         // builder is the SAME instance every time — it accumulates sections across calls!
@@ -103,7 +106,7 @@ public class ReportService {
 }
 ```
 
-Spring injects the `ReportBuilder` *once*, when `ReportService` is created. Even though `ReportBuilder` is prototype-scoped, you still get the same (now stale) instance on every call. The singleton's startup wiring happened once — that's it.
+Spring injects the `ReportBuilder` *once*, when `StaleReportService` is created (this is real Spring behavior: constructor arguments are resolved a single time, at the singleton's creation). Even though `ReportBuilder` is prototype-scoped, you still get the same (now stale) instance on every call. The singleton's startup wiring happened once — that's it.
 
 **The fix:** use `ObjectProvider<T>`, which is Spring's factory interface:
 
@@ -129,7 +132,7 @@ public class ReportService {
 
 Now `getObject()` asks the container for a new prototype each time. The singleton acts as a factory without holding a stale reference.
 
-Alternative approaches: `@Lookup`-annotated methods, `javax.inject.Provider<T>`, or `ApplicationContext.getBean()` (though that last one couples your code to the container and should be a last resort).
+Alternative approaches: `@Lookup`-annotated methods, `jakarta.inject.Provider<T>`, or `ApplicationContext.getBean()` (though that last one couples your code to the container and should be a last resort). All three (`ObjectProvider`, `@Lookup`, and the stale-injection bug) are exercised by real Spring tests in this repository — see [Code Samples](#code-samples).
 
 ## Lifecycle Callbacks: @PostConstruct and @PreDestroy
 
@@ -142,29 +145,28 @@ Instantiation → Dependency injection → @PostConstruct → [in use] → @PreD
 You can hook into the two most useful phases with annotations:
 
 ```java
-@Service
-public class ConnectionPool {
+@Component
+public class ManagedConnectionPool {
 
-    private HikariDataSource dataSource;
+    private final Deque<String> connections = new ArrayDeque<>();
+    private boolean open;
 
-    @PostConstruct  // Spring calls this after all @Autowired fields are injected
-    public void initialise() {
-        dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl("jdbc:postgresql://localhost:5432/mydb");
-        dataSource.setMaximumPoolSize(10);
-        System.out.println("Pool open — ready to take connections!");
+    @PostConstruct  // Spring calls this after all dependencies are injected
+    void openPool() {
+        for (int i = 0; i < POOL_SIZE; i++) {
+            connections.push("connection-" + i);
+        }
+        open = true;
     }
 
     @PreDestroy  // Spring calls this before removing the bean from the context
-    public void shutdown() {
-        if (dataSource != null && !dataSource.isClosed()) {
-            dataSource.close();
-            System.out.println("Pool closed — see you after the next restart.");
-        }
+    void closePool() {
+        connections.clear();
+        open = false;
     }
 
-    public DataSource getDataSource() {
-        return dataSource;
+    public String borrowConnection() {
+        // ...
     }
 }
 ```
@@ -180,21 +182,17 @@ Both annotations come from `jakarta.annotation-api` (formerly `javax.annotation`
 Before annotations became fashionable, Spring provided interfaces for the same purpose:
 
 ```java
-@Service
-public class CacheManager implements InitializingBean, DisposableBean {
-
-    private Map<String, Object> cache;
+@Component
+public class LegacyCacheManager implements InitializingBean, DisposableBean {
 
     @Override
     public void afterPropertiesSet() {  // equivalent of @PostConstruct
-        cache = new ConcurrentHashMap<>();
-        System.out.println("Cache initialised — warming up...");
+        // warm up the cache...
     }
 
     @Override
     public void destroy() {  // equivalent of @PreDestroy
-        cache.clear();
-        System.out.println("Cache cleared — memory returned.");
+        // flush the cache...
     }
 }
 ```
@@ -207,16 +205,16 @@ For beans you define with `@Bean` (typically third-party classes you cannot anno
 
 ```java
 @Configuration
-public class InfrastructureConfig {
+public class ScopesLifecycleConfig {
 
     @Bean(initMethod = "start", destroyMethod = "stop")
-    public EmbeddedKafka kafka() {
-        return new EmbeddedKafka("localhost", 9092);
+    public EmbeddedMessageBroker embeddedMessageBroker() {
+        return new EmbeddedMessageBroker();  // a plain POJO you don't own/can't annotate
     }
 }
 ```
 
-Spring will call `start()` after creating the bean and `stop()` before destroying it, without you having to change the `EmbeddedKafka` class at all. Very handy for library classes.
+Spring will call `start()` after creating the bean and `stop()` before destroying it, without you having to change the `EmbeddedMessageBroker` class at all. Very handy for library classes.
 
 ## The Complete Lifecycle, Visualised
 
@@ -246,9 +244,8 @@ In a Spring MVC application, three additional scopes become available:
 // New instance per HTTP request
 @Component
 @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class RequestContext {
-    private final String requestId = UUID.randomUUID().toString();
-    private String currentUserId;
+public class RequestTrace {
+    private final String traceId = UUID.randomUUID().toString();
     // ...
 }
 
@@ -256,12 +253,12 @@ public class RequestContext {
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ShoppingCart {
-    private final List<CartItem> items = new ArrayList<>();
+    private final List<String> items = new ArrayList<>();
     // ...
 }
 ```
 
-The `proxyMode = ScopedProxyMode.TARGET_CLASS` part is important: because `ShoppingCart` lives shorter than the singleton beans that depend on it, Spring creates a *proxy* in their place. The proxy knows how to look up the real `ShoppingCart` for the current session at runtime — similar to the prototype-in-singleton problem, but solved automatically by Spring's proxy machinery.
+The `proxyMode = ScopedProxyMode.TARGET_CLASS` part is important: because `ShoppingCart` lives shorter than the singleton beans that depend on it, Spring creates a *proxy* in their place. The proxy knows how to look up the real `ShoppingCart` for the current session at runtime — similar to the prototype-in-singleton problem, but solved automatically by Spring's proxy machinery. This requires `spring-web` on the classpath (`WebApplicationContext`, the request/session scope implementations, and the `@RequestScope`/`@SessionScope` convenience annotations all live there).
 
 ## Quick Reference: Scope Comparison
 
@@ -288,6 +285,25 @@ The `proxyMode = ScopedProxyMode.TARGET_CLASS` part is important: because `Shopp
 - **`session`** — per-user session state: shopping carts, wizard flow state, preferences. Keep these small — they live in memory (or a session store) for the duration of the session.
 - **`application`** — app-wide shared state that is not a singleton for some reason (rare).
 
+## Spring 7 vs Spring 6: What Changed for Scopes and Lifecycle?
+
+Good news if you're maintaining older code: **nothing** in the scope/lifecycle model itself changed between Spring Framework 6 and 7. `singleton`/`prototype`/`request`/`session`/`application` scopes, `@PostConstruct`/`@PreDestroy`, `InitializingBean`/`DisposableBean`, `ObjectProvider<T>`, `@Lookup`, and `@Bean(initMethod/destroyMethod)` all behave exactly as described above in both versions — this is one of the most stable corners of the framework.
+
+What *did* change in Spring 7, in areas adjacent to this topic:
+
+<div class="table-wrapper" markdown="1">
+
+| Area | Spring 6 | Spring 7 |
+|---|---|---|
+| Bean scopes / lifecycle callbacks | Same API and behavior | Unchanged |
+| Baseline Java version | Java 17 | Java 17 (no change) |
+| Null-safety annotations | `org.springframework.lang.@Nullable`/`@NonNull` | Deprecated in favor of [JSpecify](https://jspecify.dev) `@Nullable` on the type usage, e.g. `private @Nullable String field` |
+| Programmatic bean registration | `@Bean` methods / `BeanDefinitionRegistryPostProcessor` | New `BeanRegistrar` interface for first-class programmatic registration (see the [Spring Configuration post]({{ site.baseurl }}{% link _posts/2026-07-26-spring-configuration-approaches.md %})) |
+
+</div>
+
+In short: if you already know how singleton/prototype/web scopes and lifecycle callbacks work in Spring 6, that knowledge transfers to Spring 7 unchanged. Nothing to relearn here.
+
 ## Conclusion
 
 Spring's scoping system is a lot simpler than it first appears: the default (singleton) is correct for stateless objects, prototype gives you a fresh instance per use, and the web scopes (request/session/application) mirror the natural lifecycles of a web request.
@@ -298,19 +314,28 @@ If you're coming from Scala, you'll find the mental model maps well: singletons 
 
 ## Code Samples
 
-All examples in this post are illustrated with runnable plain-Java code in the repository
-(no Spring runtime required — the same patterns, tested with JUnit 5):
+All examples in this post are backed by a **real Spring Framework 7 `ApplicationContext`** (`spring-context` + `spring-web` + `spring-test`) — no simulation:
 
 `java21/src/main/java/io/github/sps23/spring/scopes/`
 
-- [`ConnectionPool.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/ConnectionPool.java) — lifecycle init/destroy pattern (`@PostConstruct` / `@PreDestroy` equivalent)
-- [`Counter.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/Counter.java) — simple stateful bean illustrating singleton vs prototype behaviour
-- [`BeanScopeSimulator.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/BeanScopeSimulator.java) — simulates singleton caching vs prototype factory using a `Supplier<T>`
+- [`OrderVolumeTracker.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/OrderVolumeTracker.java) — singleton `@Service` with shared mutable state
+- [`ReportBuilder.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/ReportBuilder.java) — `@Component @Scope("prototype")`
+- [`StaleReportService.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/StaleReportService.java) — reproduces the prototype-in-singleton trap
+- [`ReportService.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/ReportService.java) — the `ObjectProvider<T>` fix
+- [`LookupReportService.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/LookupReportService.java) — the `@Lookup` method-injection alternative
+- [`ManagedConnectionPool.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/ManagedConnectionPool.java) — `@PostConstruct` / `@PreDestroy`
+- [`LegacyCacheManager.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/LegacyCacheManager.java) — `InitializingBean` / `DisposableBean`
+- [`EmbeddedMessageBroker.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/EmbeddedMessageBroker.java) — a plain POJO wired with `@Bean(initMethod/destroyMethod)`
+- [`RequestTrace.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/RequestTrace.java) — request-scoped bean with a `TARGET_CLASS` proxy
+- [`ShoppingCart.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/ShoppingCart.java) — session-scoped bean with a `TARGET_CLASS` proxy
+- [`ScopesLifecycleConfig.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/ScopesLifecycleConfig.java) — `@Configuration` wiring all of the above
 
 `java21/src/test/java/io/github/sps23/spring/scopes/`
 
-- [`ConnectionPoolTest.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/spring/scopes/ConnectionPoolTest.java) — verifies the full lifecycle: open → use → close
-- [`BeanScopeSimulatorTest.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/spring/scopes/BeanScopeSimulatorTest.java) — proves singleton shares state while prototype does not; demonstrates the factory fix for prototype-in-singleton
+- [`SingletonScopeTest.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/spring/scopes/SingletonScopeTest.java) — proves singleton identity and shared state, via a real `AnnotationConfigApplicationContext`
+- [`PrototypeScopeAndInjectionTest.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/spring/scopes/PrototypeScopeAndInjectionTest.java) — proves the prototype-in-singleton bug, then proves the `ObjectProvider`/`@Lookup` fixes
+- [`LifecycleCallbacksTest.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/spring/scopes/LifecycleCallbacksTest.java) — proves all three lifecycle callback styles fire at context startup/shutdown
+- [`WebScopedBeansTest.java`](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/spring/scopes/WebScopedBeansTest.java) — proves request/session scope behavior using a real `AnnotationConfigWebApplicationContext` plus mock servlet request/session objects
 
 Run the tests yourself with:
 

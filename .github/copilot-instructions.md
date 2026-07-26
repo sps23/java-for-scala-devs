@@ -294,7 +294,7 @@ blog/_posts/YYYY-MM-DD-kebab-case-title.md
 
 ### Step 3 — Write the Front Matter
 
-Every post **must** open with this exact six-field YAML block:
+Every post **must** open with this seven-field YAML block:
 
 ```yaml
 ---
@@ -302,6 +302,7 @@ layout: post
 title: "Descriptive Title in Title Case"
 description: "One-sentence SEO description covering what the post teaches and why it matters."
 date: 2026-MM-DD HH:MM:00 +0000
+updated: 2026-MM-DD HH:MM:00 +0000
 categories: [<category>]
 tags: [java, java21, scala, scala3, kotlin, topic-tag, topic-tag]
 ---
@@ -344,6 +345,29 @@ date: 2025-11-28 21:00:00 +0000   # ✅
 date: 2026-05-25 +0000            # ❌ missing time
 date: 2026-05-25 13:00:00 +0100   # ❌ wrong timezone
 ```
+
+#### `updated`
+**Optional.** Set this field when a blog post has been meaningfully modified after its initial publication. Format matches `date`: `YYYY-MM-DD HH:MM:00 +ZZZZ`.
+
+- **First publication**: omit `updated` entirely (or use `date` if you prefer explicit tracking)
+- **After edits**: add `updated` with the most recent modification timestamp
+- **Each change**: refresh the `updated` field to the current date/time
+- **Homepage sorting**: posts are sorted by `updated` (if present) or `date` (fallback); posts with newer `updated` dates float to the top of "Latest Posts" and "Post Timeline"
+
+```yaml
+# ✅ New post — no updates yet
+date: 2026-05-25 13:00:00 +0000
+
+# ✅ Post updated once
+date: 2026-05-25 13:00:00 +0000
+updated: 2026-07-26 11:05:20 +0100
+
+# ✅ Post updated multiple times — keep current `updated` date
+date: 2026-05-25 13:00:00 +0000
+updated: 2026-08-10 15:30:00 +0100  # most recent edit
+```
+
+When a post is significantly updated (code samples fixed, examples improved, sections rewritten, links corrected), always refresh `updated` to bring it to the top of the homepage feed.
 
 #### `categories`
 Use **one** primary category from this controlled list. A second category is acceptable only when the post genuinely spans two styles.
@@ -652,8 +676,9 @@ cd blog && bundle exec jekyll serve --config _config.yml,_config.local.yml
 
 ```
 [ ] File named YYYY-MM-DD-slug.md in blog/_posts/
-[ ] All 6 front matter fields present (layout, title, description, date, categories, tags)
+[ ] All 7 front matter fields present (layout, title, description, date, updated [if modified], categories, tags)
 [ ] date uses +0000 timezone with realistic time (HH:MM:00)
+[ ] updated present and accurate if post was edited after initial publication
 [ ] categories uses exactly one value from the controlled list
 [ ] tags includes language tags (java, java21, scala, scala3, kotlin) + topic tags
 [ ] Lead paragraph opens with a problem/scenario, not a definition

@@ -25,11 +25,16 @@ dependencies {
     def springVersion = '7.0.8'
 
     implementation "org.springframework:spring-context:${springVersion}"
+    implementation "org.springframework:spring-web:${springVersion}"
+    // @PostConstruct/@PreDestroy (JSR-250) used for annotation-based bean lifecycle callbacks
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testImplementation 'org.mockito:mockito-core:5.8.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
     testImplementation "org.springframework:spring-test:${springVersion}"
+    // Needed to mock HTTP request/session state when testing request/session-scoped beans
+    testImplementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
