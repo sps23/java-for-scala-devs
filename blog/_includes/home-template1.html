@@ -49,10 +49,10 @@
   <!-- Posts List -->
   <h2>Latest Posts</h2>
   <ul class="post-list">
-    {% assign sorted_posts = site.posts | sort: "updated" | reverse %}
+    {% assign sorted_posts = site.posts | sort: "date" | reverse %}
     {% for post in sorted_posts %}
     {% assign display_date = post.updated | default: post.date %}
-    <li class="post-item" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}">
+    <li class="post-item" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}" data-date="{{ post.date | date_to_xmlschema }}" data-updated="{% if post.updated %}{{ post.updated | date_to_xmlschema }}{% endif %}">
       <h3 class="post-title">
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
       </h3>
@@ -74,10 +74,10 @@
   <!-- Timeline View -->
   <h2>Post Timeline</h2>
   <div class="timeline">
-    {% assign sorted_posts = site.posts | sort: "updated" | reverse %}
+    {% assign sorted_posts = site.posts | sort: "date" | reverse %}
     {% for post in sorted_posts %}
     {% assign display_date = post.updated | default: post.date %}
-    <div class="timeline-item" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}">
+    <div class="timeline-item" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}" data-date="{{ post.date | date_to_xmlschema }}" data-updated="{% if post.updated %}{{ post.updated | date_to_xmlschema }}{% endif %}">
       <span class="timeline-date">{{ display_date | date: "%b %d, %Y" }}</span>
       <h3 class="post-title">
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
@@ -100,3 +100,6 @@
     <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll.</p>
   </div>
 </footer>
+
+<!-- Post Sorting Script -->
+<script src="{{ '/assets/js/post-sorting.js' | relative_url }}"></script>

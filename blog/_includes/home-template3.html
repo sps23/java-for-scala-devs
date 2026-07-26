@@ -79,7 +79,7 @@
     <!-- Posts Timeline -->
     <section class="posts-timeline">
       {% for post in site.posts %}
-      <article class="timeline-post" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}">
+      <article class="timeline-post" data-categories="{{ post.categories | join: ' ' }}" data-tags="{{ post.tags | join: ' ' }}" data-date="{{ post.date | date_to_xmlschema }}" data-updated="{% if post.updated %}{{ post.updated | date_to_xmlschema }}{% endif %}">
         <div class="timeline-marker">
           <span class="timeline-date">{{ post.date | date: "%b %d" }}</span>
           <span class="timeline-dot"></span>
@@ -142,3 +142,6 @@
     <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll & ❤️</p>
   </div>
 </footer>
+
+<!-- Post Sorting Script -->
+<script src="{{ '/assets/js/post-sorting.js' | relative_url }}"></script>
