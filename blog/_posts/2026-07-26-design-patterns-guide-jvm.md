@@ -4,7 +4,7 @@ title: "Design Patterns in JVM Languages - Your Guide to the Top 10"
 description: "Comprehensive guide to the 10 most commonly used design patterns in Java, Scala, and Kotlin - learn what design patterns are, why you need them, and explore Creational, Structural, and Behavioral pattern categories with real-world examples and interview prep."
 date: 2026-07-26 13:00:00 +0000
 categories: [interview]
-tags: [java, scala, kotlin, design-patterns, interview, preparation, creational, structural, behavioral]
+tags: [java, java21, scala, scala2, scala3, kotlin, design-patterns, interview, interview-preparation, creational, structural, behavioral]
 ---
 
 So, you've been writing code for a few years now, and you keep hearing other developers throw around phrases like "Oh, that's a classic Singleton pattern" or "We should use a Factory here" or "I'll implement the Observer pattern for this." And you're sitting there thinking, "Uh... okay? Is that just... code?" 
@@ -234,5 +234,5 @@ Start with understanding these ten patterns conceptually. Then, as you work on r
 
 ---
 
-*This is the main guide for our Design Patterns Deep-Dive series for JVM developers. Individual deep-dive posts for each pattern will be published as the series develops. Stay tuned!*
+*This is the main guide for our Design Patterns Deep-Dive series. Bookmark this page to track our progress as we publish detailed deep-dives for each pattern!*
 
