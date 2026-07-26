@@ -48,7 +48,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** A class that can only have one instance, and you access it globally. Think of it as the "one ring to rule them all" of design patterns. There's only one database connection manager, one logger configuration, one...well, you get the idea.
 
-**Read the full post:** [Singleton Pattern: When There Can Be Only One]({{ site.baseurl }}/blog/2026/07/27/design-patterns-singleton/)
+**Read the full post:** [Singleton Pattern: When There Can Be Only One]({{ site.baseurl }}/interview/2026/07/27/design-patterns-singleton/)
 
 **What You'll Learn:** How to implement thread-safe singletons in Java (eager vs. lazy initialization), why static initialization is powerful, how to handle serialization and reflection attacks, and when NOT to use singletons (spoiler: thread-local singletons aren't real singletons). You'll see how Scala and Kotlin handle the same pattern more elegantly with language-level features.
 
@@ -65,7 +65,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Instead of directly creating objects with `new`, you use a factory method or factory class to create them. It's like a factory assembly line—you ask for what you want, and the factory figures out exactly what to give you.
 
-**Read the full post:** [Factory Pattern: Let Someone Else Do the Creating]({{ site.baseurl }}/blog/2026/07/28/design-patterns-factory/)
+**Read the full post:** [Factory Pattern: Let Someone Else Do the Creating]({{ site.baseurl }}/interview/2026/07/28/design-patterns-factory/)
 
 **What You'll Learn:** The difference between Simple Factory, Factory Method, and Abstract Factory patterns. You'll learn when to use each one, how to reduce coupling in your codebase, and how to make testing easier by injecting factories instead of constructors. You'll see practical examples of how frameworks like Spring use factory patterns extensively.
 
@@ -82,7 +82,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Instead of passing a dozen constructor parameters or overloading constructors endlessly, a Builder gives you a fluent, readable way to construct complex objects step by step.
 
-**Read the full post:** [Builder Pattern: Constructing Complexity with Elegance]({{ site.baseurl }}/blog/2026/07/29/design-patterns-builder/)
+**Read the full post:** [Builder Pattern: Constructing Complexity with Elegance]({{ site.baseurl }}/interview/2026/07/29/design-patterns-builder/)
 
 **What You'll Learn:** How to write effective builders in Java (before and after records), why they beat telescoping constructors, and how to make your builders thread-safe and immutable. You'll see how Scala case classes with default parameters achieve similar goals more concisely, and how Kotlin's named parameters make builders less necessary.
 
@@ -99,7 +99,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Create new objects by copying an existing object (the prototype) rather than creating from scratch. It's less common in modern Java, but powerful when you need deep copies or want to avoid expensive object creation.
 
-**Read the full post:** [Prototype Pattern: Cloning for Success]({{ site.baseurl }}/blog/2026/07/30/design-patterns-prototype/)
+**Read the full post:** [Prototype Pattern: Cloning for Success]({{ site.baseurl }}/interview/2026/07/30/design-patterns-prototype/)
 
 **What You'll Learn:** How to implement cloning correctly, shallow vs. deep copying, the dangers of the `Cloneable` interface, and when prototyping actually saves you performance. You'll see how immutability in Scala and functional programming approaches reduce the need for this pattern.
 
@@ -118,7 +118,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Convert the interface of one class into another interface that clients expect. It's like a power adapter—you've got a European plug but an American outlet, so you use an adapter. Adapters make incompatible things work together.
 
-**Read the full post:** [Adapter Pattern: Making Incompatible Things Play Nice]({{ site.baseurl }}/blog/2026/07/31/design-patterns-adapter/)
+**Read the full post:** [Adapter Pattern: Making Incompatible Things Play Nice]({{ site.baseurl }}/interview/2026/07/31/design-patterns-adapter/)
 
 **What You'll Learn:** When to use class adapters vs. object adapters, how to write adapters that don't add unnecessary complexity, and how adapters help when you're integrating legacy code or third-party libraries. You'll see real examples of how adapters simplify API migration.
 
@@ -135,7 +135,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Add behavior to objects dynamically, without modifying their structure. Instead of subclassing endlessly to add features, you wrap objects with decorators. It's like adding accessories to your outfit—you can keep the same core outfit and just add or remove decorations.
 
-**Read the full post:** [Decorator Pattern: Wrapping Objects with Style]({{ site.baseurl }}/blog/2026/08/01/design-patterns-decorator/)
+**Read the full post:** [Decorator Pattern: Wrapping Objects with Style]({{ site.baseurl }}/interview/2026/08/01/design-patterns-decorator/)
 
 **What You'll Learn:** How to implement decorators without bloating your class hierarchy, how Java's I/O streams (BufferedInputStream, etc.) are a textbook example of decorators, and when decorators are better than inheritance. You'll see how functional composition in Scala and Kotlin provides alternatives to decorators.
 
@@ -152,7 +152,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Provide a unified, simplified interface to a complex subsystem. A facade hides the complexity, letting clients work with the subsystem through a simple entry point. Think of it as the customer service representative for your codebase—they handle all the complexity behind the scenes.
 
-**Read the full post:** [Facade Pattern: Simplifying Complex Systems]({{ site.baseurl }}/blog/2026/08/02/design-patterns-facade/)
+**Read the full post:** [Facade Pattern: Simplifying Complex Systems]({{ site.baseurl }}/interview/2026/08/02/design-patterns-facade/)
 
 **What You'll Learn:** How to identify when a subsystem needs a facade, how to design facades that don't just add a thin wrapper, and how facades improve testability. You'll see examples from popular libraries (Spring's various template classes, for example) that use the facade pattern extensively.
 
@@ -171,7 +171,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Define a family of algorithms, encapsulate each one, and make them interchangeable. It's like having different strategies to solve a problem, and you pick the right one for the situation.
 
-**Read the full post:** [Strategy Pattern: Choosing Algorithms at Runtime]({{ site.baseurl }}/blog/2026/08/03/design-patterns-strategy/)
+**Read the full post:** [Strategy Pattern: Choosing Algorithms at Runtime]({{ site.baseurl }}/interview/2026/08/03/design-patterns-strategy/)
 
 **What You'll Learn:** How to avoid massive if-else chains by using strategies, how to compose strategies, and how dependency injection often replaces explicit strategy switching. You'll see how functional programming (lambdas in Java, first-class functions in Scala) simplifies strategy implementation.
 
@@ -188,7 +188,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Define a one-to-many dependency where when one object changes state, all its dependents are notified automatically. It's the foundation for event-driven programming and reactive systems. When something important happens, tell everyone who cares.
 
-**Read the full post:** [Observer Pattern: Reacting to Changes]({{ site.baseurl }}/blog/2026/08/04/design-patterns-observer/)
+**Read the full post:** [Observer Pattern: Reacting to Changes]({{ site.baseurl }}/interview/2026/08/04/design-patterns-observer/)
 
 **What You'll Learn:** How to implement observers without creating memory leaks, the dangers of strong vs. weak references, and how modern reactive frameworks (RxJava, ZIO) are sophisticated implementations of the observer pattern. You'll see how event listeners in GUI frameworks use this pattern, and how it powers real-time applications.
 
@@ -205,7 +205,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Encapsulate a request as an object, allowing you to parameterize clients with different requests, queue requests, and support undoable operations. It's like putting instructions in a bottle and passing it around—the recipient doesn't need to know who sent it, just how to execute it.
 
-**Read the full post:** [Command Pattern: Making Requests into Objects]({{ site.baseurl }}/blog/2026/08/05/design-patterns-command/)
+**Read the full post:** [Command Pattern: Making Requests into Objects]({{ site.baseurl }}/interview/2026/08/05/design-patterns-command/)
 
 **What You'll Learn:** How to implement undo/redo systems, how to queue and execute commands, and how command patterns enable macro recording and complex transaction handling. You'll see how this pattern is essential for implementing features like undo/redo, and how it differs from simple callbacks.
 
