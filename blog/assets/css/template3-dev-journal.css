@@ -803,3 +803,115 @@ th {
     display: block;
   }
 }
+
+
+/* View Counter & Analytics Styles */
+.article-meta-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.article-meta-wrapper .article-meta {
+  margin-bottom: 0;
+}
+
+.article-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-left: auto;
+}
+
+.stat-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.stat-icon {
+  opacity: 0.7;
+}
+
+.view-count {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.view-count.loaded {
+  color: var(--accent-color);
+}
+
+/* Reading Progress Bar */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--bg-tertiary);
+  z-index: 1000;
+}
+
+.reading-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--gradient-warm);
+  transition: width 0.1s ease-out;
+}
+
+.reading-progress-fill.completed {
+  background: var(--accent-secondary);
+}
+
+/* Blog Statistics Section */
+.blog-statistics {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: var(--space-lg);
+  margin: var(--space-xl) 0;
+}
+
+.blog-statistics h3 {
+  margin-top: 0;
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-md);
+}
+
+.stat-card {
+  background-color: var(--bg-card);
+  border-radius: 8px;
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.stat-card .stat-value {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.stat-card .stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.stat-card .stat-icon-large {
+  display: block;
+  margin: 0 auto var(--space-sm);
+  opacity: 0.7;
+}
