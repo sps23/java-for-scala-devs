@@ -181,12 +181,94 @@ Follow every step in order and cross-check against the real post examples cited.
 Valid topics are strictly limited to:
 - A **Java 21 feature** explained for Scala developers (records, sealed classes, pattern matching, `var`, virtual threads, `Optional`, streams, `switch` expressions, text blocks, structured concurrency)
 - A **cross-JVM language comparison** (Java 21 vs Scala 2/3 vs Kotlin) on a shared concept
+- A **Spring / Java framework interview topic** when it is core to day-to-day JVM development (IoC, bean scopes, Spring MVC, configuration, testing, transactions, security)
 - **Testing** on the JVM (JUnit 5, ScalaTest, Kotest, Mockito)
 - **Interview preparation** for Java/JVM roles
 
-Do **not** write about: non-JVM languages, Spring Boot internals, cloud deployment, unrelated design patterns, or opinion pieces without code.
+Do **not** write about: non-JVM languages, cloud deployment, unrelated design patterns, or opinion pieces without code.
 
 **Check existing posts** in `blog/_posts/` first — if a post already covers the topic, extend it or write a complementary angle rather than duplicating.
+
+---
+
+### Step 1.5 — Identify the Post Family First
+
+Before writing, classify the post. Existing posts in this repository fall into a few recurring families, and each family has a different structure.
+
+#### 1. Aggregated roadmap / guide posts
+
+Use this shape for umbrella posts that introduce a subject and list subtopics:
+- `2025-11-25-java21-interview-preparation-plan.md`
+- `2025-12-14-spring-framework-interview-preparation-guide.md`
+
+These posts:
+- usually use category `interview`
+- open with a conversational "why this guide exists" introduction
+- organise material into **Basic / Medium / Advanced** sections (optionally Bonus)
+- list many subtopics rather than going deep on one
+- use a repeated pattern per topic:
+  - `### N. Topic Name`
+  - `**What It Is:**`
+  - `**Read the full post:**`
+  - `**What You'll Learn:**`
+  - `**Interview Questions You Might Face:**`
+  - horizontal rule `---`
+
+Write an aggregated guide only when the user wants a **main subject page**, a **series index**, or an **interview roadmap**.
+
+#### 2. Deep-dive interview/tutorial posts
+
+Use this shape for the main body of the blog. Examples:
+- `2025-11-26-immutable-data-with-java-records.md`
+- `2025-11-29-collection-factory-methods-and-stream-basics.md`
+- `2026-05-25-spring-ioc-and-dependency-injection.md`
+- `2026-07-26-spring-configuration-approaches.md`
+
+These posts:
+- usually use category `interview`, `concurrency`, `functional-programming`, or `testing`
+- start with a concrete problem or scenario
+- teach one focused subject end-to-end
+- include runnable code and practical trade-offs
+- usually end with `## Code Samples` and a series footer when applicable
+
+Prefer this family unless the user explicitly asks for an overview/index post.
+
+#### 3. Cross-language comparison posts
+
+Use this shape when the same idea is shown in Java, Scala, and optionally Kotlin. Examples:
+- `2025-11-29-collection-factory-methods-and-stream-basics.md`
+- `2026-05-25-zio-fibres-vs-virtual-threads-vs-coroutines.md`
+- `2025-12-01-comparing-jvm-test-frameworks.md`
+
+These posts:
+- compare syntax, ergonomics, and trade-offs across JVM languages
+- use **HTML code-tabs** for equivalent multi-language examples
+- include one or more comparison tables
+- explicitly explain how the Java feature maps to a Scala/Kotlin mental model
+
+Default to Java + Scala. Add Kotlin when the repository already contains a matching Kotlin example or the comparison would feel incomplete without it.
+
+#### 4. Java-only framework / best-practice posts
+
+Use this shape for Spring, testing, or Java gotcha posts where forcing Scala/Kotlin would add noise. Examples:
+- `2025-12-03-tricky-java-patterns-everyone-uses.md`
+- `2025-12-14-effective-unit-testing-in-java.md`
+- the Spring series posts under `2026-05-*` and `2026-07-26`
+
+These posts:
+- are usually Java-centric
+- still speak to Scala developers by referencing familiar ideas and trade-offs
+- may organise content by numbered patterns, subsections, or a table of contents instead of code-tabs
+- should still include runnable Java code and practical guidance
+
+For Spring posts, do **not** force Scala/Kotlin tabs just for symmetry. Keep them Java-focused unless a comparison genuinely helps explain the concept.
+
+#### 5. Lightweight intro / announcement posts
+
+Use only for short orientation posts such as:
+- `2025-11-22-welcome-to-java-for-scala-devs.md`
+
+These are shorter, simpler, and more welcoming than the rest of the blog. Do not use this lightweight structure for serious technical articles.
 
 ---
 
@@ -264,16 +346,18 @@ date: 2026-05-25 13:00:00 +0100   # ❌ wrong timezone
 ```
 
 #### `categories`
-Use **one** category from this controlled list. Two are acceptable only if both genuinely apply (rare).
+Use **one** primary category from this controlled list. A second category is acceptable only when the post genuinely spans two styles.
 
 | Category | When to use |
 |---|---|
 | `introduction` | Welcome or overview posts (`2025-11-22-welcome-to-java-for-scala-devs.md`) |
-| `features` | Single Java 21 feature deep-dives: records, sealed, pattern matching |
+| `features` | Focused language-feature comparisons, especially older concise Java-vs-Scala posts |
 | `functional-programming` | Lambdas, streams, `Optional`, higher-order functions |
 | `concurrency` | Virtual threads, ZIO fibres, coroutines, structured concurrency |
 | `testing` | JUnit 5, ScalaTest, Kotest, testing patterns, anti-patterns |
-| `interview` | Interview prep series, practical exercises with mirrored code |
+| `interview` | Interview prep series, framework guides, and practical deep-dives used in interview preparation |
+| `best-practices` | Java-only gotchas, performance pitfalls, and practice-oriented guidance |
+| `humor` | Secondary category only for intentionally playful posts such as satire; do not use by default |
 
 ```yaml
 categories: [concurrency]          # ✅ typical
@@ -297,6 +381,12 @@ tags: [scala, scala3, zio, fibres, java, java21, kotlin, coroutines, virtual-thr
 
 # Testing post
 tags: [java, scala, kotlin, junit, scalatest, kotest, testing]
+
+# Java-only Spring / framework post
+tags: [java, java21, spring, spring-boot, dependency-injection, ioc, interview-preparation]
+
+# Java-only gotchas / best-practices post
+tags: [java, java21, performance, best-practices, gotchas, optimization]
 ```
 
 ---
@@ -324,7 +414,11 @@ A sealed class is a class that restricts which other classes can extend it.
 
 ### Step 5 — Structure the Body
 
-Use this section order as a template:
+Use the structure that matches the post family.
+
+#### Default structure for deep-dive posts
+
+Use this section order as the baseline template:
 
 ```
 ## The Problem / Context           ← what are we solving, and why does it matter?
@@ -338,6 +432,68 @@ Use this section order as a template:
 ```
 
 Not every post needs all sections, but this order must be preserved when sections exist.
+
+#### Structure for aggregated roadmap / guide posts
+
+Use this shape instead of the deep-dive template when writing an overview/index post:
+
+```
+Lead paragraph(s): why this guide exists, who it is for
+## Basic Level - ...
+### 1. Topic Name
+**What It Is:**
+**Read the full post:**
+**What You'll Learn:**
+**Interview Questions You Might Face:**
+---
+## Medium Level - ...
+... repeat ...
+## Advanced Level - ...
+... repeat ...
+## Conclusion / Next Step (optional)
+```
+
+These guide posts are intentionally repetitive and scannable. Do not add large code blocks to the guide itself; save code for the linked deep-dive posts.
+
+#### Structure for Java-only best-practice / gotcha posts
+
+When the post is organised around multiple pitfalls or patterns, use this shape:
+
+```
+Lead paragraph: why these pitfalls matter
+## 1. Pattern / Pitfall Name
+### The Problem / Confusion
+### The Truth / Explanation
+### Correct Approach / Takeaway
+## 2. ...
+## Key Takeaways / Conclusion
+```
+
+This is the pattern used by `2025-12-03-tricky-java-patterns-everyone-uses.md`.
+
+#### Structure for longer Java-only testing/framework guides
+
+When the post is a long Java-only reference article (for example testing or Spring), a table of contents is acceptable:
+
+```
+Lead paragraph
+## Table of Contents
+## Section 1
+## Section 2
+...
+## Best Practices
+## Common Anti-Patterns / Conclusion
+```
+
+Use this shape only when the article genuinely needs many long sections. Prefer the deep-dive template for normal posts.
+
+#### Note on old vs. current house style
+
+Some early posts in `2025-11-22` and `2025-11-23` are shorter and simpler. Treat them as historical examples, not the default target. For new posts, prefer the richer, more structured style used by:
+- `2025-11-26-immutable-data-with-java-records.md`
+- `2025-11-29-collection-factory-methods-and-stream-basics.md`
+- `2026-05-25-spring-ioc-and-dependency-injection.md`
+- `2026-07-26-spring-configuration-approaches.md`
 
 ---
 
@@ -422,6 +578,15 @@ When the **same concept** is shown in Java, Scala, and Kotlin side by side, use 
 - If a block exceeds 30 lines, split into multiple smaller examples with intermediate explanations
 - Add comments inside code to highlight the Java ↔ Scala difference (e.g. `// No default needed - compiler verifies all cases are covered`)
 
+#### When NOT to use code-tabs
+
+Do **not** use code-tabs when:
+- the post is intentionally Java-only (Spring, JUnit/Mockito, tricky Java patterns)
+- there is no meaningful matching Scala/Kotlin implementation
+- the examples are not equivalent across languages
+
+In those cases, use normal fenced code blocks and explain the Scala/Kotlin mental model in prose instead.
+
 ---
 
 ### Step 8 — Internal Links and Repo Links
@@ -461,6 +626,11 @@ All examples in this post are runnable. Find them in the repository:
 *This is part of our Java 21 Interview Preparation series. Check out the
 [full preparation plan]({{ site.baseurl }}/interview/2025/11/25/java21-interview-preparation-plan) for more topics.*
 ```
+
+Use the correct series footer for the subject:
+- Java 21 interview topics → link to `2025-11-25-java21-interview-preparation-plan.md`
+- Spring posts → link to `2025-12-14-spring-framework-interview-preparation-guide.md`
+- Standalone posts (for example tricky Java patterns) may omit the footer if there is no real parent series
 
 ---
 

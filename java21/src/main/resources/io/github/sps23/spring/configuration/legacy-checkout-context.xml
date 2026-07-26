@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="invoiceClock" class="java.time.Clock" factory-method="systemUTC" />
+
+    <bean id="paymentClient" class="io.github.sps23.spring.configuration.SandboxPaymentClient">
+        <constructor-arg value="xml-terminal" />
+    </bean>
+
+    <bean id="taxCalculator" class="io.github.sps23.spring.configuration.TaxCalculator" />
+
+    <bean id="invoiceFormatter" class="io.github.sps23.spring.configuration.InvoiceFormatter">
+        <constructor-arg ref="invoiceClock" />
+        <constructor-arg value="EUR" />
+    </bean>
+
+    <bean id="legacySupportPolicy"
+        class="io.github.sps23.spring.configuration.LegacySupportPolicy">
+        <constructor-arg value="xml-partner-ops" />
+        <constructor-arg value="xml-general-support" />
+    </bean>
+
+    <bean id="checkoutService" class="io.github.sps23.spring.configuration.CheckoutService">
+        <constructor-arg ref="paymentClient" />
+        <constructor-arg ref="taxCalculator" />
+        <constructor-arg ref="invoiceFormatter" />
+        <constructor-arg ref="legacySupportPolicy" />
+    </bean>
+</beans>

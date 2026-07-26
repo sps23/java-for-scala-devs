@@ -55,7 +55,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** How to configure Spring applications using modern annotation-based configuration (`@Configuration`, `@Bean`) versus legacy XML configuration.
 
-**Read the full post:** [Spring Configuration Approaches: From XML to Java Config]({{ site.baseurl }}/blog/2025/12/15/spring-configuration-approaches.html)
+**Read the full post:** [Spring Configuration Approaches: From XML to Java Config]({{ site.baseurl }}/blog/2026/07/26/spring-configuration-approaches/)
 
 **What You'll Learn:** How to create beans using `@Configuration` and `@Bean`, component scanning with `@ComponentScan`, profile-specific configurations with `@Profile`, and when XML configuration might still be relevant. You'll see how to mix different configuration approaches in the same application.
 

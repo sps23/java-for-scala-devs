@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="legacySupportPolicy"
+        class="io.github.sps23.spring.configuration.LegacySupportPolicy">
+        <constructor-arg value="xml-partner-ops" />
+        <constructor-arg value="xml-general-support" />
+    </bean>
+</beans>
