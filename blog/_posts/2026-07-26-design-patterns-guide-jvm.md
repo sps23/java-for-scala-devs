@@ -67,7 +67,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Instead of directly creating objects with `new`, you use a factory method or factory class to create them. It's like a factory assembly line—you ask for what you want, and the factory figures out exactly what to give you.
 
-**Read the full post:** [Factory Pattern: Let Someone Else Do the Creating]({{ site.baseurl }}/interview/2026/07/28/design-patterns-factory)
+**Read the full post:** [Factory Pattern: Let Someone Else Do the Creating]({{ site.baseurl }}/interview/2026/07/30/design-patterns-factory)
 
 **What You'll Learn:** The difference between Simple Factory, Factory Method, and Abstract Factory patterns. You'll learn when to use each one, how to reduce coupling in your codebase, and how to make testing easier by injecting factories instead of constructors. You'll see practical examples of how frameworks like Spring use factory patterns extensively.
 
@@ -235,4 +235,3 @@ Start with understanding these ten patterns conceptually. Then, as you work on r
 ---
 
 *This is part of our Design Patterns series for JVM developers. Bookmark this guide to track our progress as we publish detailed deep-dives for each pattern!*
-
