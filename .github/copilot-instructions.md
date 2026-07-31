@@ -593,8 +593,63 @@ When the **same concept** is shown in Java, Scala, and Kotlin side by side, use 
 | No blank lines inside `<div>` | Jekyll inserts `<p>` tags around blank lines, breaking the structure |
 | `<code>` ends on its own line | The closing `</code>` must be on a line immediately after the last code line |
 | Language class matches | `language-java`, `language-scala`, `language-kotlin` must match the actual language |
+| **Pre-tokenized `<span>` markup — REQUIRED** | See rule below |
 
-**Real post to study:** `2025-11-28-sealed-classes-and-exhaustive-pattern-matching.md` — three full code-tabs blocks from `tabs-1` to `tabs-3`.
+#### ⚠️ CRITICAL: Code inside `<code>` MUST use pre-tokenized `<span class="...">` markup
+
+Raw source code placed directly inside a `<code>` block in a code-tab **will NOT be syntax-highlighted** in the rendered blog. Jekyll's Liquid/Rouge pipeline does not process code inside raw HTML `<div>` blocks.
+
+**The ONLY way to get syntax highlighting in code-tabs is to write pre-tokenized HTML** — every token wrapped in the correct `<span class="...">` as Rouge would emit.
+
+**❌ WRONG — raw code, no highlighting:**
+```html
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class NotificationFactory {
+    public static Notification create(String channel) {
+        return switch (channel) {
+            case "email" -> new EmailNotification();
+            default -> throw new IllegalArgumentException("Unknown: " + channel);
+        };
+    }
+}
+</code></pre></div></div>
+```
+
+**✅ CORRECT — pre-tokenized `<span>` markup:**
+```html
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotificationFactory</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">Notification</span> <span class="nf">create</span><span class="o">(</span><span class="nc">String</span> <span class="n">channel</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">switch</span> <span class="o">(</span><span class="n">channel</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">case</span> <span class="s">"email"</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">EmailNotification</span><span class="o">();</span>
+            <span class="k">default</span> <span class="o">-&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Unknown: "</span> <span class="o">+</span> <span class="n">channel</span><span class="o">);</span>
+        <span class="o">};</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+```
+
+**Token class quick-reference — apply consistently across all languages:**
+
+| Token class | Meaning | Java examples | Scala/Kotlin examples |
+|---|---|---|---|
+| `kd` | Declaration keyword | `public`, `private`, `static`, `final`, `class`, `sealed` | `class`, `object`, `sealed` |
+| `k` | Control keyword | `return`, `throw`, `new`, `switch`, `case`, `default`, `if` | `def`, `val`, `var`, `return`, `throw`, `match`, `case`, `when`, `if` |
+| `kc` | Constant literal keyword | `null`, `true`, `false` | `null`, `true`, `false` |
+| `nc` | Class/type name | `NotificationFactory`, `String` | `NotificationFactory`, `String` |
+| `nf` | Function/method name | `create`, `send`, `getInstance` | `create`, `send` |
+| `n` | Variable/identifier | `channel`, `notification`, `instance` | `channel`, `notification` |
+| `nd` | Annotation | `@Test`, `@Override`, `@DisplayName` | `@Test` |
+| `s` | String literal | `"email"`, `"fax"` | `"email"`, `"fax"` |
+| `si` | String interpolation variable | — | `$channel` inside `s"..."` |
+| `o` | Operator / punctuation | `{`, `}`, `(`, `)`, `->`, `+`, `==`, `.` | `{`, `}`, `(`, `)`, `=>`, `.`, `:` |
+| `kt` | Type keyword | — | `String`, `Unit`, `Int`, `Notification` (in type position in Scala) |
+| `mi` | Integer literal | `100`, `1` | `100`, `1` |
+| `p` | Punctuation (Kotlin only) | — | `{`, `}`, `(`, `)`, `:`, `.` |
+| `py` | Kotlin property name | — | val/var names in Kotlin |
+| `c1` | Single-line comment | `// comment` | `// comment` |
+
+**How to determine the correct spans:** look at an existing blog post that already renders correctly (e.g. `2026-07-26-design-patterns-singleton.md` or `2026-07-30-design-patterns-factory.md`) and copy the span pattern for the same token kind. When in doubt, match the exact span classes from those reference posts.
+
+**Real post to study:** `2026-07-26-design-patterns-singleton.md` and `2026-07-30-design-patterns-factory.md` — both have fully tokenized code-tab blocks for Java, Kotlin, Scala 2, and Scala 3.
 
 #### Code size guidelines
 
@@ -684,6 +739,7 @@ cd blog && bundle exec jekyll serve --config _config.yml,_config.local.yml
 [ ] Lead paragraph opens with a problem/scenario, not a definition
 [ ] Comparison tables wrapped in <div class="table-wrapper" markdown="1">
 [ ] Multi-language code uses HTML code-tabs (not Markdown fences)
+[ ] Code inside code-tabs uses pre-tokenized <span class="..."> markup (NOT raw source code)
 [ ] Every code-tabs block has a unique data-tabs-id within the post
 [ ] Java tab comes first and has class="active"
 [ ] No blank lines inside <div> tags in code-tabs
