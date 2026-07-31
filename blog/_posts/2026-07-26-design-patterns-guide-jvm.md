@@ -84,7 +84,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Instead of passing a dozen constructor parameters or overloading constructors endlessly, a Builder gives you a fluent, readable way to construct complex objects step by step.
 
-**Read the full post:** [Builder Pattern: Constructing Complexity with Elegance]({{ site.baseurl }}/interview/2026/07/29/design-patterns-builder)
+**Read the full post:** [Builder Pattern: Constructing Complexity with Elegance]({{ site.baseurl }}/interview/2026/07/31/design-patterns-builder)
 
 **What You'll Learn:** How to write effective builders in Java (before and after records), why they beat telescoping constructors, and how to make your builders thread-safe and immutable. You'll see how Scala case classes with default parameters achieve similar goals more concisely, and how Kotlin's named parameters make builders less necessary.
 
