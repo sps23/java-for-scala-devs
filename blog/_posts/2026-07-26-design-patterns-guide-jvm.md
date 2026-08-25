@@ -3,6 +3,7 @@ layout: post
 title: "Design Patterns in JVM Languages - Your Guide to the Top 10"
 description: "Comprehensive guide to the 10 most commonly used design patterns in Java, Scala, and Kotlin - learn what design patterns are, why you need them, and explore Creational, Structural, and Behavioral pattern categories with real-world examples and interview prep."
 date: 2026-07-26 13:00:00 +0000
+updated: 2026-08-23 12:00:00 +0000
 categories: [interview, best-practices]
 tags: [java, java21, scala, scala3, kotlin, design-patterns]
 ---
@@ -101,7 +102,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Create new objects by copying an existing object (the prototype) rather than creating from scratch. It's less common in modern Java, but powerful when you need deep copies or want to avoid expensive object creation.
 
-**Read the full post:** [Prototype Pattern: Cloning for Success]({{ site.baseurl }}/interview/2026/07/30/design-patterns-prototype)
+**Read the full post:** [Prototype Pattern: Cloning for Success]({{ site.baseurl }}/interview/2026/08/23/design-patterns-prototype)
 
 **What You'll Learn:** How to implement cloning correctly, shallow vs. deep copying, the dangers of the `Cloneable` interface, and when prototyping actually saves you performance. You'll see how immutability in Scala and functional programming approaches reduce the need for this pattern.
 

@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Builder pattern in Java 21.
- * Real-world style HTTP client configuration with required fields, optional
- * defaults, and cross-field validation.
+ * Builder pattern in Java 21. Real-world style HTTP client configuration with
+ * required fields, optional defaults, and cross-field validation.
  */
 public final class HttpClientConfig {
     private final String host;
