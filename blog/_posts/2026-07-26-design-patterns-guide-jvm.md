@@ -3,7 +3,7 @@ layout: post
 title: "Design Patterns in JVM Languages - Your Guide to the Top 10"
 description: "Comprehensive guide to the 10 most commonly used design patterns in Java, Scala, and Kotlin - learn what design patterns are, why you need them, and explore Creational, Structural, and Behavioral pattern categories with real-world examples and interview prep."
 date: 2026-07-26 13:00:00 +0000
-updated: 2026-08-23 12:00:00 +0000
+updated: 2026-08-25 13:00:00 +0000
 categories: [interview, best-practices]
 tags: [java, java21, scala, scala3, kotlin, design-patterns]
 ---
@@ -121,7 +121,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Convert the interface of one class into another interface that clients expect. It's like a power adapter—you've got a European plug but an American outlet, so you use an adapter. Adapters make incompatible things work together.
 
-**Read the full post:** [Adapter Pattern: Making Incompatible Things Play Nice]({{ site.baseurl }}/interview/2026/07/31/design-patterns-adapter)
+**Read the full post:** [Adapter Pattern: Making Incompatible Things Play Nice]({{ site.baseurl }}/interview/2026/08/25/design-patterns-adapter)
 
 **What You'll Learn:** When to use class adapters vs. object adapters, how to write adapters that don't add unnecessary complexity, and how adapters help when you're integrating legacy code or third-party libraries. You'll see real examples of how adapters simplify API migration.
 
