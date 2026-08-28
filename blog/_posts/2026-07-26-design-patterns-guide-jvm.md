@@ -3,7 +3,7 @@ layout: post
 title: "Design Patterns in JVM Languages - Your Guide to the Top 10"
 description: "Comprehensive guide to the 10 most commonly used design patterns in Java, Scala, and Kotlin - learn what design patterns are, why you need them, and explore Creational, Structural, and Behavioral pattern categories with real-world examples and interview prep."
 date: 2026-07-26 13:00:00 +0000
-updated: 2026-08-25 13:00:00 +0000
+updated: 2026-08-27 11:00:00 +0000
 categories: [interview, best-practices]
 tags: [java, java21, scala, scala3, kotlin, design-patterns]
 ---
@@ -138,7 +138,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Add behavior to objects dynamically, without modifying their structure. Instead of subclassing endlessly to add features, you wrap objects with decorators. It's like adding accessories to your outfit—you can keep the same core outfit and just add or remove decorations.
 
-**Read the full post:** [Decorator Pattern: Wrapping Objects with Style]({{ site.baseurl }}/interview/2026/08/01/design-patterns-decorator)
+**Read the full post:** [Decorator Pattern: Wrapping Objects with Style]({{ site.baseurl }}/interview/2026/08/27/design-patterns-decorator)
 
 **What You'll Learn:** How to implement decorators without bloating your class hierarchy, how Java's I/O streams (BufferedInputStream, etc.) are a textbook example of decorators, and when decorators are better than inheritance. You'll see how functional composition in Scala and Kotlin provides alternatives to decorators.
 
