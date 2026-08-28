@@ -218,6 +218,60 @@ You will see Builder used heavily in production code where objects have many opt
 
 This is exactly why Builder is so valuable: it balances **readability**, **safe defaults**, and **validation** while still making call sites pleasant to read.
 
+## Interview Q&A: Builder Pattern in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>When do you use the Builder pattern?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      You use a builder when a class has many optional settings, a lot of constructor arguments, or rules that must be checked before creation. It is especially useful for configuration objects, HTTP clients, or domain commands where the object is easier to read when you set each field clearly. The builder keeps the construction step readable without forcing callers to remember a long parameter list.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why is a Builder easier to read than a long constructor?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A long constructor is easy to get wrong because the arguments are just values in a row. A builder makes each option obvious: you can see `timeout()`, `retries()`, and `tls()` as named steps instead of guessing which number is which. This makes the code easier to maintain and much less likely to cause mistakes when someone adds a new field later.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How is Builder different from default parameters or records?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Default parameters and records are great when the object is simple and the number of fields is small. Builder shines when the object becomes more complex, when some values are required and others are optional, or when you want to validate the final object before it is created. In other words, builder is often about readability and safety, not just syntax convenience.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is a real-world example of a Builder?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A web client configuration is a good example. You may need a base URL, timeout, retry count, TLS setting, and a list of headers. Calling a builder like `clientBuilder.withTimeout(30_000).withRetries(3).withTls(true)` is much easier to follow than a constructor with ten positional arguments. Many HTTP libraries and SDKs use this pattern for exactly that reason.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Can Builder make validation easier?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Yes. A builder is a natural place to validate data before the final object is created. You can check required values, reject impossible combinations, and fail early with an obvious message. That is much cleaner than creating an object in a half-valid state and discovering the problem later during runtime. Good builders help enforce the rules of the domain.
+    </div>
+  </details>
+</div>
+
 ## Code Samples
 
 All examples in this post are available in the repository:

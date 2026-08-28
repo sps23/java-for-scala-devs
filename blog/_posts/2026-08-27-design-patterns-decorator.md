@@ -278,6 +278,60 @@ Avoid it when:
 2. The "behaviors" actually change the object's core identity or contract, not just add to it (that is closer to Strategy or plain inheritance).
 3. Deep decorator chains become hard to debug; consider a pipeline or middleware abstraction instead once the chain grows very long.
 
+## Interview Q&A: Decorator Pattern in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>How is the Decorator pattern different from inheritance?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Inheritance adds behavior by creating a new subclass. That is useful when the change is fixed and permanent, but it gets messy fast when you need many optional combinations. Decorator works differently: you keep the original object and wrap it with small extra layers. This lets you add one feature at a time, such as compression or audit logging, without creating a giant class tree like `CompressedEncryptedAuditedReportExporter`.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is a real-world example of decorators in Java?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      The best-known Java example is the I/O stack. `BufferedInputStream`, `GZIPInputStream`, and `DataInputStream` all wrap an existing stream and add behavior. The caller still works with a stream object, but the final object can read data differently, compress it, or add buffering. That is exactly the decorator idea: add features around a base object without rewriting the core type.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Can decorators be stacked? How do you manage that?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Yes, and that is one of the main reasons decorators are useful. You start with a plain exporter, then wrap it with a compression decorator, then an encryption decorator, and finally an audit decorator if needed. Each layer keeps the same outer contract, so the caller still uses one method. The order matters, because the chain is executed from the outside in. That makes the behavior predictable and easy to reason about when you build it intentionally.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When would you choose decoration over inheritance?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Choose decoration when the extra features are optional and can be mixed in different ways. If a report is sometimes compressed, sometimes encrypted, and sometimes audited, a decorator chain is much cleaner than a huge hierarchy of subclasses. Use inheritance when the behavior is a core part of the type itself and not just a temporary add-on. If the class is really “a different kind of thing,” inheritance is fine. If it is “the same thing, with extra optional behavior,” decoration is usually the better fit.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How does functional composition relate to decorators?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Both ideas solve the same basic problem: combine small pieces of behavior into a bigger behavior without rewriting everything from scratch. In a decorator chain, each wrapper calls the inner object and then adds its own step. In functional code, you often build a pipeline with functions that transform the value one step at a time. The difference is mainly style and tooling. Decorators are object-oriented and explicit, while functional composition tends to be more concise and data-focused. Both are ways of keeping logic modular and composable.
+    </div>
+  </details>
+</div>
+
 ## Code Samples
 
 All examples in this post are available in the repository:

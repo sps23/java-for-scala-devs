@@ -285,6 +285,60 @@ Avoid it when:
 2. Your language gives you safer copy mechanisms (Kotlin `data class`, Scala case class).
 3. Deep-copy logic becomes so complex that a builder or factory is clearer.
 
+## Interview Q&A: Prototype Pattern in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What problem does the Prototype pattern solve?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It solves the problem of creating a new object that is very similar to an existing one. Instead of rebuilding everything from scratch, you clone or copy an existing object and then change only the pieces you need. This is useful when object creation is expensive or when you want to start from a known-good model.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the difference between shallow copy and deep copy?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A shallow copy creates a new object, but it may still share inner objects with the original. A deep copy creates a fully independent duplicate of the nested data as well. This matters a lot when the object has lists, maps, or child objects. If you only copy the top-level object, the two versions may still affect each other unexpectedly.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why is the Prototype pattern less common in modern Java?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Modern Java often uses constructors, records, and immutable data structures, which makes copying simpler and safer in many cases. The prototype pattern is still useful when you have a complex object or a configuration template that should be cloned repeatedly, but in everyday code it is less common than it used to be. The language and standard libraries have reduced the need for it in many situations.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Can you give a real-world example of Prototype?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Think of a document template or an email draft. You start with a base version that already has the right layout, brand styling, and default sections. Then you create a copy for a new client or a new campaign and adjust only the small differences. That is a good use of prototype-style cloning because the base object already has the correct structure.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why do Scala and Kotlin make Prototype simpler?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Scala case classes and Kotlin data classes already give you a clean, safe copy operation. In many projects, that reduces the need for a custom prototype implementation. The point of the pattern is still the same: create a new object based on an existing one. The modern language features just make that easier and less error-prone.
+    </div>
+  </details>
+</div>
+
 ## Code Samples
 
 All examples in this post are available in the repository:

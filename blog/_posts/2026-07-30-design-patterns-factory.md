@@ -233,6 +233,60 @@ Use a factory when:
 
 Avoid it when creation is trivial and unlikely to change; a direct constructor may be simpler.
 
+## Interview Q&A: Factory Pattern in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What problem does the Factory pattern solve?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It solves the problem of object creation being spread across the codebase. Instead of having callers know all the concrete classes and the rules for choosing them, a factory owns that decision. The client asks for the right kind of object by a simple input, and the factory handles the creation logic. This keeps code easier to change when new product types are added later.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How is a Factory different from a constructor?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A constructor is usually a direct, fixed way to create one class. A factory is a higher-level decision point that can choose among multiple implementations. That is why factories are useful when the right object depends on runtime data, such as a channel name, a country code, or a user type. Constructors are simpler for straightforward creation; factories are better when creation logic is dynamic or complex.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why is a factory easier to test?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Because the creation logic is in one place, you can test that logic separately from the rest of the system. You can also replace the factory with a stub or fake in tests, which means your code does not have to know which concrete class it is using. This makes testing easier and lets you change the implementation without rewriting your callers.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Can you give a real-world example of a factory?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A typical example is a notification system. The application may send emails, SMS messages, or push notifications depending on the user settings or the event type. A factory receives the channel name, checks the valid options, and returns the correct concrete notifier. The rest of the code can treat them all as the same interface without caring which implementation was created.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When would you avoid a factory?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      If object creation is trivial and the decision is always obvious, a direct constructor or a plain `new` call is simpler. The factory pattern is most valuable when creation logic is not trivial, when you want to hide implementation details, or when the number of possible types is expected to grow. If the code becomes a giant factory with too much business logic, you may need to split responsibilities instead of pushing everything into one class.
+    </div>
+  </details>
+</div>
+
 ## Code Samples
 
 All examples in this post are available in the repository:

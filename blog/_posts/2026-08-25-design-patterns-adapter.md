@@ -231,6 +231,60 @@ Use an adapter when:
 
 Avoid it when both interfaces are already under your control and can be unified directly.
 
+## Interview Q&A: Adapter Pattern in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What does the Adapter pattern do?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      An adapter helps two incompatible pieces of code work together. It keeps one side unchanged and creates a wrapper that translates the required calls into the format the other side expects. The aim is not to change the underlying library or system, but to make it fit the interface your application already uses.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How is an Adapter different from a Facade?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      An adapter solves a mismatch between two interfaces. A facade simplifies a whole complex subsystem behind one easy entry point. So if two pieces of code cannot talk to each other because their APIs do not match, use an adapter. If a system is hard to use because it has many moving parts, use a facade.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why not just change the legacy code directly?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Sometimes you can, but often you should not. Legacy systems, third-party libraries, and vendor APIs may be outside your control. Changing them directly can be risky, expensive, or impossible. An adapter gives you a safe layer that keeps your core application clean while reducing the impact of external code.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is a real-world example of an adapter?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A common example is integrating a payment provider from another team or vendor. Your app wants to call a clean `charge(customer, amount)` method, but the provider exposes a different API with different field names and response types. The adapter translates your request into their format and converts their response back into your own model. This keeps the rest of the application simple.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When would you avoid using an adapter?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      If both sides are already under your control and can be aligned directly, an adapter may be unnecessary. It is also a bad fit when the adapter starts doing too much business logic instead of just translating calls. The right adapter is a thin boundary: it translates, not transforms the meaning of the system.
+    </div>
+  </details>
+</div>
+
 ## Code Samples
 
 All examples in this post are available in the repository:

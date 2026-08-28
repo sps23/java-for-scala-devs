@@ -397,6 +397,60 @@ All tests verify:
 
 ---
 
+## Interview Q&A: Singleton Pattern in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the purpose of the Singleton pattern?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A singleton makes sure one class has only one shared instance in the application. This is useful for things like a configuration manager, a connection pool, or a process-wide logger, where having two copies would cause confusion or duplicate work. The goal is not to make everything global by default; it is to limit a real resource to one well-defined instance.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why not just use a static field instead of a Singleton?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A static field can give you one instance, but it often gives you less structure and more hidden state. A singleton is a class with a clear lifecycle and a single entry point, which makes the design easier to understand and test. Static state is also easier to misuse because it can be mutated from many places. With a singleton, the class still owns the behavior and lifecycle, which is usually a cleaner idea.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Can a singleton be broken?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Yes, if you are careless. In Java, reflection can sometimes create a second instance, and serialization can also create a new object during deserialization. That is why singletons need careful implementation details, such as a private constructor guard and a `readResolve()` method when needed. In Kotlin and Scala, the language-level object syntax helps a lot because the runtime enforces the single-instance model much more naturally.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When is a singleton a good idea?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It is a good idea when you truly have one shared resource or one source of truth. Examples include a configuration holder, a logger, or a connection manager that is supposed to be shared by the whole application. It is a bad idea when people use it as a shortcut for global mutable state. If the state changes often and many parts of the app depend on it, you usually want dependency injection or a narrower service instead.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why do Scala and Kotlin make singletons easier?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      In Kotlin and Scala, the language gives you a built-in singleton object, so the compiler handles the design for you. That means less boilerplate and fewer easy-to-miss mistakes. In Java, you need to be more careful with the constructor, serialization, and reflection edge cases. The idea is the same, but the modern JVM languages make the safe version simpler to write and easier to read.
+    </div>
+  </details>
+</div>
+
 ## Code Samples
 
 All examples in this post are available in the repository:
