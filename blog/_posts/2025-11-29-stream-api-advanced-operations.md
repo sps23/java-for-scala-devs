@@ -3,6 +3,7 @@ layout: post
 title: "Stream API Advanced Operations"
 description: "Advanced Java Stream API operations - learn takeWhile, dropWhile, custom collectors, parallel streams, and data analysis patterns with Scala and Kotlin comparisons."
 date: 2025-11-29 16:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, streams, collectors, parallel, interview-preparation]
 ---
@@ -624,6 +625,61 @@ See the complete implementations in our repository:
 - [Scala 3 OrderAnalyzer.scala](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/streams/OrderAnalyzer.scala)
 - [Kotlin Order.kt](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/streams/Order.kt)
 - [Kotlin OrderAnalyzer.kt](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/streams/OrderAnalyzer.kt)
+
+## Interview Q&A: Stream API in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the benefit of <code>takeWhile()</code> and <code>dropWhile()</code>?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      They make it easier to work with ordered data where you want to stop or skip based on a condition. For example, you might take items while they are still in stock or drop items after a threshold is reached. This can be clearer than writing custom loop logic.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why do people use <code>groupingBy()</code> so often?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Because many business tasks involve “group these things by some property and then summarize each group.” For example, grouping orders by customer or status and then counting or totaling them. It keeps the code short and expresses the intent clearly.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When should I use parallel streams?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Only when the work is CPU-heavy, the data set is large, and the cost of splitting and merging is worth it. Parallel streams are not a free improvement. For small collections or operations with lots of I/O, they often make things worse instead of better.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is a custom collector?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It is a way to define exactly how a stream should be reduced into a custom result. Instead of using a built-in collector, you can say: “take this stream and produce this domain object.” This is useful when the data needs a special summary or structure.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What should I remember about stream interviews?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      The important idea is not just “streams are nice.” It is that streams are a way to describe transformations over data in a declarative style. Interviewers often want to hear you explain grouping, filtering, reduction, and when not to use streams. That shows both syntax knowledge and practical judgement.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

@@ -3,6 +3,7 @@ layout: post
 title: "Virtual Threads and Structured Concurrency in Java 21"
 description: "Master Java 21 virtual threads and Project Loom - migrate from thread pools, use StructuredTaskScope, understand scoped values, and compare with Scala ZIO and Kotlin coroutines."
 date: 2025-11-29 17:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, virtual-threads, concurrency, project-loom, interview-preparation]
 ---
@@ -389,6 +390,61 @@ With 1000 URLs that each take 1 second to fetch:
 </div>
 
 Virtual threads achieve maximum parallelism with minimal memory!
+
+## Interview Q&A: Virtual Threads in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What are virtual threads?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Virtual threads are lightweight threads from Java's Project Loom. They let you run a very large number of tasks without using a huge amount of memory, which is especially helpful for I/O-heavy systems. In practical terms, they make the “one thread per task” model much more realistic.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why do they matter for Java 21?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Because they reduce the cost of concurrency. Traditional platform threads are expensive, so many systems use thread pools with limited size. Virtual threads make it easier to scale to many concurrent requests or tasks without turning the system into a complicated tuning exercise.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How are they different from platform threads?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Platform threads are tied to the OS thread model and consume more memory. Virtual threads are much lighter, and the JVM can schedule many of them efficiently. That makes them better suited to high-concurrency workloads, especially when tasks spend time waiting on I/O.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When would I still use a platform thread?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      When the task is CPU-bound, long-lived, or tightly coupled to platform-specific behavior, a platform thread may still be a better fit. Not every concurrency problem needs virtual threads. The right answer is usually: use virtual threads for many small tasks, and platform threads when you need a more traditional lower-level model.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How do they compare to Kotlin coroutines?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Both aim to make concurrency cheaper and easier to write. Kotlin coroutines are a language-level abstraction with strong syntax support, while Java virtual threads are a platform feature that works with the JVM runtime. They solve similar problems in slightly different ways, and both are useful in their own ecosystems.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

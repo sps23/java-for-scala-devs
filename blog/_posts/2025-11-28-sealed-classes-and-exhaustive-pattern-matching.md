@@ -3,6 +3,7 @@ layout: post
 title: "Sealed Classes and Exhaustive Pattern Matching"
 description: "Model type-safe domain logic with Java 17 sealed classes and exhaustive pattern matching - compare with Scala sealed traits and Kotlin sealed classes with payment system examples."
 date: 2025-11-28 21:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, sealed-classes, pattern-matching, interview-preparation]
 ---
@@ -298,6 +299,61 @@ Sealed classes are ideal for:
 3. **Validate in constructors** - Ensure invariants at construction time
 4. **Leverage exhaustiveness** - Don't add default cases; let the compiler help you
 5. **Document the hierarchy** - Make the permitted subtypes clear
+
+## Interview Q&A: Sealed Classes in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What is a sealed class in Java?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A sealed class limits which other types can extend or implement it. That gives you a strong boundary around a domain model. For example, if you model payment methods, you can say that only credit card, bank transfer, and wallet are valid subtypes. This is a very good fit for business rules.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why is exhaustive pattern matching useful?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Because the compiler can check that all valid cases are handled. That reduces bugs where a new subtype is added but someone forgets to handle it. In a real system, this kind of safety is valuable because it catches missing business logic before runtime.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the difference between Java's sealed hierarchy and a normal interface?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A normal interface can be implemented anywhere, which means the system can grow in unexpected ways. A sealed hierarchy says: these are the only valid implementations. That makes the model tighter and gives the compiler more information for safe matching and validation.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How does this compare to Scala sealed traits?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It is very similar in purpose. Scala sealed traits also restrict the allowed subtypes and make exhaustive matching easier. Java's version is a bit more explicit because the compiler needs the allowed subclasses listed up front. The mental model is the same: use a closed set of domain events or business types.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When should I not use sealed classes?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      They are a great fit for closed domain models, but not for every object in the system. If your hierarchy is open, or if third-party code needs to extend it, a normal abstract class or interface is better. Sealed types work best when the allowed cases are known and intentional.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

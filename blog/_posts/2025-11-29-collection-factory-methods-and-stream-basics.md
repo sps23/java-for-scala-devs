@@ -3,6 +3,7 @@ layout: post
 title: "Collection Factory Methods and Stream Basics"
 description: "Master Java 9+ collection factories (List.of, Set.of, Map.of) and Stream API fundamentals - compare with Scala 3 collections and Kotlin stdlib approaches."
 date: 2025-11-29 14:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, collections, streams, interview-preparation]
 ---
@@ -507,6 +508,61 @@ See the complete implementations in our repository:
 - [Scala 3 TransactionProcessor.scala](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/collections/TransactionProcessor.scala)
 - [Kotlin Transaction.kt](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/collections/Transaction.kt)
 - [Kotlin TransactionProcessor.kt](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/collections/TransactionProcessor.kt)
+
+## Interview Q&A: Collection APIs in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>Why are <code>List.of()</code>, <code>Set.of()</code>, and <code>Map.of()</code> useful?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      They give you a short, clear way to build collections without all the boilerplate of older Java code. They also encourage immutability by default, which is useful in code that should not accidentally change a collection after creation. That makes the code safer and easier to reason about.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the main advantage of immutable collections?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Immutable collections are easier to share safely. If one part of the program cannot change them, it is much easier to reason about the behavior of the system. They are also good for concurrency because fewer state changes mean fewer accidental race conditions.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why do streams matter so much in Java?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Streams let you express transformations like filtering, grouping, and summarizing in a clear, declarative style. Instead of writing long loops, you can say what you want to compute. That often leads to shorter code and makes the business rule stand out more clearly.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is <code>Collectors.teeing()</code> for?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It is useful when you want to compute two different summaries from the same stream and combine them into one result. For example, you might compute both the total revenue and the number of orders at the same time, then return a small summary object with both values. It is a neat way to keep the logic compact.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When should I avoid streams?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Streams are great for readability when the logic is naturally data-oriented. But they are not always the best choice for very short loops, very heavy side effects, or code that is hard to debug step by step. A classic loop may still be clearer when performance or control flow matters more than elegance.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

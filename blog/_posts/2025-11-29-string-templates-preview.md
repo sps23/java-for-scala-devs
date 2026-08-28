@@ -3,6 +3,7 @@ layout: post
 title: "String Templates (Preview) - Safe String Interpolation"
 description: "Java 21 String Templates preview - build safe SQL queries with STR and FMT processors, create custom template processors, and compare with Scala and Kotlin interpolation."
 date: 2025-11-29 21:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, string-templates, interview-preparation, preview]
 ---
@@ -437,6 +438,61 @@ See the complete implementations in our repository:
 - [Java 21 StringTemplates.java](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/stringtemplates/StringTemplates.java)
 - [Scala 3 StringTemplates.scala](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/stringtemplates/StringTemplates.scala)
 - [Kotlin StringTemplates.kt](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/stringtemplates/StringTemplates.kt)
+
+## Interview Q&A: String Templates in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What are string templates in Java 21?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      String templates are a way to embed values directly in a string while keeping the result safe and readable. Instead of concatenating strings by hand, you can write a template and plug in values inside it. This helps with SQL building, HTML, and other text-heavy tasks.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why are they safer than string concatenation?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Because a template system can process values in a controlled way instead of injecting raw user input into a bigger string. That reduces the risk of injection in queries, HTML, or formatted output. In short, they make the safe path easier and the unsafe path harder.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the difference between <code>STR</code> and <code>FMT</code>?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      <code>STR</code> is the simplest form and is often used for plain string interpolation. <code>FMT</code> is a formatted version that works more like a template with formatting rules. The exact names are not the main point: the important idea is that Java is trying to make safe, readable interpolation more standard.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why are string templates still a preview feature?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Because the feature is still being refined. Java often ships preview features before finalizing the design, so developers can experiment, give feedback, and shape the final API. That means you should be careful in production work until it is fully finalized.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How does this compare to Scala or Kotlin?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Scala and Kotlin have had interpolation features for a long time, so Java is catching up to a pattern that already feels natural in those languages. The idea is the same: embed values in strings in a readable, type-safe way that does not force a lot of manual formatting logic.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

@@ -3,6 +3,7 @@ layout: post
 title: "Foreign Function and Memory API in Java 21"
 description: "Integrate with native C libraries using Java 21's FFM API - a modern JNI alternative with Arena memory management, MemorySegment, and Linker examples."
 date: 2025-11-29 19:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, ffm, native, jni, interview-preparation]
 ---
@@ -426,6 +427,61 @@ Kotlin's null-safety complements FFM's safety features.
 4. **Use Arenas** for memory management instead of manual allocation
 5. **Remove** native C/C++ glue code
 6. **Simplify build** by removing native compilation steps
+
+## Interview Q&A: Foreign Function and Memory API in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the Foreign Function and Memory API?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It is Java's modern way to call native code and work with memory outside the JVM heap. It is a safer and cleaner replacement for older tools like JNI, which were harder to use and easier to get wrong. The goal is to make native interop more controlled and less fragile.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why is it better than JNI?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      JNI is powerful but often difficult to manage. The FFM API gives you a more explicit model for native memory and safer lifetimes. It reduces the risk of crashes caused by incorrect memory handling and makes the code easier to reason about.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is <code>MemorySegment</code> used for?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It represents a region of memory that can be accessed safely from Java. Think of it as a controlled handle to native memory. That makes the data flow more explicit and helps keep memory operations under the program's control instead of letting them drift into unsafe territory.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When would I use it in production?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      You would use it when you need to call a native library or work with data that lives outside the JVM heap, such as a C library or a system API. It is not a replacement for normal Java code; it is for the cases where Java needs to work with native systems directly.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How should I explain it in an interview?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A good answer is: “The FFM API is Java's modern native interop story. It lets Java call native code and manage external memory more safely than JNI, while keeping native access under clearer ownership and lifetime rules.” That shows both practical understanding and the reason the feature exists.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

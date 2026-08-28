@@ -3,6 +3,7 @@ layout: post
 title: "Null-Safe Programming with Optional"
 description: "Eliminate NullPointerException with Java Optional API - learn map, flatMap, filter patterns and compare with Scala Option and Kotlin null-safety features."
 date: 2025-11-29 18:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, optional, null-safety, interview-preparation]
 ---
@@ -564,6 +565,61 @@ See the complete implementations in our repository:
 - [Scala 3 UserPreferenceService.scala](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/optional/UserPreferenceService.scala)
 - [Kotlin UserPreference.kt](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/optional/UserPreference.kt)
 - [Kotlin UserPreferenceService.kt](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/optional/UserPreferenceService.kt)
+
+## Interview Q&A: Optional in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>Why do we use <code>Optional</code> instead of returning null?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      <code>Optional</code> makes the “missing value” idea explicit in the type system. A method that returns an optional value is telling the caller: “this may be absent, so handle it carefully.” That is much clearer than using <code>null</code> and hoping every caller remembers to check it.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When should I use <code>orElse()</code> and when should I use <code>orElseGet()</code>?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Use <code>orElse()</code> when the fallback value is already created or is very cheap. Use <code>orElseGet()</code> when creating the fallback may be expensive or may have side effects. The important difference is that <code>orElse()</code> evaluates the default immediately, while <code>orElseGet()</code> only runs it if the optional is empty.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What does <code>flatMap()</code> help with?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It prevents nested optional values. Without <code>flatMap()</code>, a transformation that returns another optional can easily produce <code>Optional&lt;Optional&lt;T&gt;&gt;</code>, which is awkward and hard to reason about. With <code>flatMap()</code>, the result stays flat and easy to process.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Should every nullable field use <code>Optional</code>?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      No. <code>Optional</code> is most useful as a return type or a value that represents a possible absence in a method chain. It is not meant to replace every field in your domain object. If a field is conceptually required, a normal nullable reference or a language feature like Kotlin nullability may be clearer.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How does this compare to Scala or Kotlin?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Java's <code>Optional</code> is closest to Scala's <code>Option</code> in spirit: both model “maybe there is a value.” Kotlin does not use <code>Optional</code> in the same way; it uses nullable types and the Elvis operator. In practice, the goal is the same in all three languages: make missing values explicit and keep the code easier to read.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

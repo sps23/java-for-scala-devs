@@ -3,6 +3,7 @@ layout: post
 title: "Tricky Java Patterns That Everyone Uses But Few Understand"
 description: "Explore 8 confusing Java code patterns that look simple but hide surprising complexity - from ArrayList.toArray() optimization to Virtual Thread pinning in Java 21."
 date: 2025-12-03 11:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [best-practices]
 tags: [java, java21, performance, best-practices, gotchas, virtual-threads, patterns, optimization]
 ---
@@ -677,6 +678,61 @@ void handleRequest(Request req) {
 | Virtual thread pinning | High-concurrency apps | Replace `synchronized` with `ReentrantLock` |
 
 </div>
+
+## Interview Q&A: Tricky Java Patterns in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>Why does <code>ArrayList.toArray()</code> sometimes matter?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Because the size of the output array matters. If you give Java a too-small array, it creates a new one for you. That sounds harmless, but it can cause surprises in code that expects a stable array size or that is trying to avoid extra allocation. This is a classic interview gotcha and a good example of subtle API behavior.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why is string concatenation inside a loop slow?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Because each concatenation creates a new string or triggers extra work under the hood. In a loop, that can cause repeated copying and a lot of wasted memory. A <code>StringBuilder</code> or a stream-based approach is much more efficient when you are assembling a large result.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the <code>==</code> trap with integers?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Java caches some integer values, especially small numbers, so <code>Integer.valueOf(10)</code> may be the same object as another one with the same value. That means <code>==</code> can look like it is comparing values, but it is actually comparing references. For object types, value comparison should use <code>equals()</code>.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why is <code>Stream.of()</code> different from <code>Arrays.stream()</code> for primitive arrays?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Because they produce different stream types. <code>Arrays.stream(int[])</code> creates an <code>IntStream</code>, which is much better for primitive data. <code>Stream.of(int[])</code> creates a stream of the array itself, which is a different shape and often not what you want. This mismatch is easy to miss in real code.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is double-checked locking and why does it matter?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It is a pattern for lazy initialization in multithreaded code. The tricky part is that a naive version can still allow partially constructed objects to be seen by other threads. Modern Java gives you better options such as static initialization or the holder pattern, which are much safer and simpler.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

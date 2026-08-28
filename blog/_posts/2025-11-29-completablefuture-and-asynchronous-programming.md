@@ -3,6 +3,7 @@ layout: post
 title: "CompletableFuture and Asynchronous Programming"
 description: "Build concurrent applications with Java CompletableFuture - learn async composition, timeouts, and error handling with comparisons to Scala Futures and Kotlin Coroutines."
 date: 2025-11-29 10:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [concurrency]
 tags: [java, scala, kotlin, async, futures, completablefuture, coroutines]
 ---
@@ -295,6 +296,61 @@ Check out the complete implementation in our repository:
 - [Java CompletableFuture](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/interview/preparation/async)
 - [Scala 3 Future](https://github.com/sps23/java-for-scala-devs/tree/main/scala3/src/main/scala/io/github/sps23/interview/preparation/async)
 - [Kotlin Coroutines](https://github.com/sps23/java-for-scala-devs/tree/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/async)
+
+## Interview Q&A: CompletableFuture in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What is <code>CompletableFuture</code> used for?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It is Java's way to represent work that may finish later. You can start a task, combine it with other tasks, and react when each one completes. This is especially useful when you need to fetch several results at the same time or handle asynchronous operations without blocking the whole thread.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the difference between <code>thenApply()</code> and <code>thenCompose()</code>?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      <code>thenApply()</code> transforms the result of a future when it is ready. <code>thenCompose()</code> is for when the transformation itself produces another future. In plain English, one handles a value, and the other handles a whole async step that may itself still be running.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How do you combine multiple futures?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      You usually use methods such as <code>allOf()</code> or <code>anyOf()</code>. <code>allOf()</code> waits for everything to finish, while <code>anyOf()</code> continues when the first one completes. These patterns are very common in service code that fetches data from several APIs at the same time.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the difference between <code>exceptionally()</code> and <code>handle()</code>?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Both are used for error recovery, but <code>handle()</code> gets called for both success and failure. <code>exceptionally()</code> only runs when the future fails. So <code>handle()</code> is a bit more general and is useful when you want to deal with both outcomes in one place.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How is this related to Scala futures or Kotlin coroutines?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      The idea is the same: start background work, compose it, and react when it finishes. Scala futures and Kotlin coroutines usually feel more modern and more expressive, but Java's <code>CompletableFuture</code> is still a powerful and common tool when you need strong async composition in Java code.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

@@ -3,6 +3,7 @@ layout: post
 title: "Immutable Data with Java Records"
 description: "Master Java Records for immutable data classes - compare with Scala case classes and Kotlin data classes, learn validation patterns, and see before/after code examples."
 date: 2025-11-26 21:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [interview]
 tags: [java, java21, records, immutability, interview-preparation]
 ---
@@ -318,6 +319,60 @@ void process(Object obj) {
 4. **Use static factory methods for complex construction** - Name them `of()`, `from()`, or `create()`.
 
 5. **Remember records are final** - They cannot be extended, but can implement interfaces.
+
+    ## Interview Q&A: Records in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>How do you create an immutable data class in modern Java?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      You usually write a record. A record gives you a compact way to describe a value object: the data fields, the constructor, and the usual methods like <code>equals()</code>, <code>hashCode()</code>, and <code>toString()</code> are generated for you. That means you spend less time on boilerplate and more time on the business meaning of the object. For a Scala developer, the mental model is very close to a case class.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What's the difference between a record and a normal class with private final fields?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A normal class needs you to write the fields, constructor, getters, and comparison methods by hand. A record does most of that for you. The record is also designed for immutable data: once created, its values are fixed. That makes records easier to read, easier to test, and safer when you want value-based equality instead of object identity.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Can records have validation and custom methods?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Yes. You can add a compact constructor to validate the incoming values before the record is created. You can also add custom instance methods and static factory methods. This is one of the strongest parts of records: they stay concise, but they are not just a dumb container. They can still enforce rules and offer helper behavior that matches the domain you are modeling.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How do records compare to Scala case classes or Kotlin data classes?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      They are very similar in intent. All three are meant to model data values rather than mutable state. Scala case classes and Kotlin data classes are often a little more flexible and have richer features out of the box, but Java records give Java developers a clean, modern way to do the same core idea without lots of repetitive code. In a Java interview, the best answer is: “records are Java's straightforward value object, much like a case class in Scala.”
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When would you not use a record?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      You would avoid a record when the object is not just a value. If it needs mutable state, deep lifecycle management, inheritance, or a lot of logic that changes over time, a normal class is often a better fit. Records are best for data carrier objects: requests, responses, domain values, and configuration objects. They are not a replacement for every class in the system.
+    </div>
+  </details>
+</div>
 
 ## Code Sample
 

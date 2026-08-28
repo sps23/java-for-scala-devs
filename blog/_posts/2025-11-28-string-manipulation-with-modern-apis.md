@@ -3,6 +3,7 @@ layout: post
 title: "String Manipulation with Modern APIs"
 description: "Learn modern Java String APIs (Java 11-17) including isBlank(), lines(), strip(), indent(), and text blocks - with comparisons to Scala 3 and Kotlin approaches."
 date: 2025-11-28 22:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, strings, interview-preparation]
 ---
@@ -409,6 +410,61 @@ See the complete implementations in our repository:
 - [Java 21 StringManipulation.java](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/strings/StringManipulation.java)
 - [Scala 3 StringManipulation.scala](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/strings/StringManipulation.scala)
 - [Kotlin StringManipulation.kt](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/strings/StringManipulation.kt)
+
+## Interview Q&A: String APIs in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the main benefit of the modern Java String APIs?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      They make a very common task easier: working with text without writing a lot of manual parsing and trimming code. Methods like <code>isBlank()</code>, <code>strip()</code>, and <code>lines()</code> let you express the intent directly. In other words, the code reads more like the problem than like a low-level string hack.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why is <code>strip()</code> better than <code>trim()</code> in many cases?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      <code>trim()</code> only removes a small set of whitespace characters. <code>strip()</code> is Unicode-aware, so it handles more kinds of spaces and invisible characters more predictably. That makes it safer when you are processing user input or data that may come from outside the system.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When would I use text blocks?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Text blocks are great for multi-line templates such as SQL, JSON, HTML, or long configuration snippets. They keep the text readable without escaping every newline and quote. The result is easier to maintain and easier for humans to read.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How does <code>formatted()</code> help?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      It gives you a clean way to insert values into a template without using <code>String.format()</code> or a lot of string concatenation. It reads well and keeps the text block or format string close to the message you want to produce. That often makes debugging and review easier.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What should I remember for a Java interview?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      The key idea is that Java moved from manual string handling to clear, readable APIs. The most useful names to remember are <code>isBlank()</code>, <code>lines()</code>, <code>strip()</code>, <code>indent()</code>, text blocks, and <code>formatted()</code>. If you can explain when each one helps, you already sound very comfortable with modern Java.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

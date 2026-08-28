@@ -3,6 +3,7 @@ layout: post
 title: "Functional Interfaces and Lambda Expressions"
 description: "Master Java functional interfaces, lambda expressions, and method references - build a configurable retry mechanism with comparisons to Scala and Kotlin functions."
 date: 2025-11-29 15:00:00 +0000
+updated: 2026-08-28 15:00:00 +0000
 categories: [functional-programming]
 tags: [java, scala, kotlin, lambdas, functional-interfaces, method-references]
 ---
@@ -371,6 +372,61 @@ Check out the complete implementation in our repository:
 - [Java Retry Executor](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/interview/preparation/retry)
 - [Scala 3 Retry Executor](https://github.com/sps23/java-for-scala-devs/tree/main/scala3/src/main/scala/io/github/sps23/interview/preparation/retry)
 - [Kotlin Retry Executor](https://github.com/sps23/java-for-scala-devs/tree/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/retry)
+
+## Interview Q&A: Functional Interfaces in Practice
+
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What makes an interface a functional interface?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A functional interface is an interface with exactly one abstract method. That gives Java a target for lambda expressions and method references. In simple terms, it lets you pass small pieces of behavior as values, which is a big deal in functional programming.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the difference between a lambda and a method reference?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A lambda is a small anonymous implementation of the method. A method reference points to an existing method that already matches the functional interface. The result is usually shorter and more readable when the method already exists and has the right signature.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>Why do functional interfaces matter for retry logic or callback code?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Because they let you pass behavior as a parameter. A retry mechanism can accept a function that performs the action, and the framework can call it several times with different inputs or error handling. That keeps the logic reusable and avoids writing many one-off implementations.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>How does Java compare to Scala here?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      Scala was built around functions from the start, so the syntax feels more natural there. Java's approach is a little more explicit because interfaces still exist. But the idea is the same: you can pass behavior around as a value and compose it into bigger operations.
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>
+      <span>When should I avoid overusing lambdas?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      When the logic becomes too hard to read in a single chain or when the lambda does too many things. If a lambda is long, hidden, or full of side effects, it is often better to extract a method. The goal is clarity, not cleverness.
+    </div>
+  </details>
+</div>
+
 
 ## Conclusion
 

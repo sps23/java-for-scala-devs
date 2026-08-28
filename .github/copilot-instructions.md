@@ -308,6 +308,8 @@ tags: [java, java21, scala, scala3, kotlin, topic-tag, topic-tag]
 ---
 ```
 
+**Updated metadata rule:** whenever a post is edited after its first publication, always add or refresh the `updated:` field. Use the current UTC timestamp, rounded to the hour. For this session, the required value is `2026-08-28 15:00:00 +0000`.
+
 #### `layout`
 Always `post`. Never omit.
 
