@@ -3,7 +3,7 @@ layout: post
 title: "Design Patterns in JVM Languages - Your Guide to the Top 10"
 description: "Comprehensive guide to the 10 most commonly used design patterns in Java, Scala, and Kotlin - learn what design patterns are, why you need them, and explore Creational, Structural, and Behavioral pattern categories with real-world examples and interview prep."
 date: 2026-07-26 13:00:00 +0000
-updated: 2026-08-27 11:00:00 +0000
+updated: 2026-08-28 11:00:00 +0000
 categories: [interview, best-practices]
 tags: [java, java21, scala, scala3, kotlin, design-patterns]
 ---
@@ -155,7 +155,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Provide a unified, simplified interface to a complex subsystem. A facade hides the complexity, letting clients work with the subsystem through a simple entry point. Think of it as the customer service representative for your codebase—they handle all the complexity behind the scenes.
 
-**Read the full post:** [Facade Pattern: Simplifying Complex Systems]({{ site.baseurl }}/interview/2026/08/02/design-patterns-facade)
+**Read the full post:** [Facade Pattern: Simplifying Complex Systems]({{ site.baseurl }}/interview/2026/08/28/design-patterns-facade)
 
 **What You'll Learn:** How to identify when a subsystem needs a facade, how to design facades that don't just add a thin wrapper, and how facades improve testability. You'll see examples from popular libraries (Spring's various template classes, for example) that use the facade pattern extensively.
 

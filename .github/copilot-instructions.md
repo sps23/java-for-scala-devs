@@ -541,6 +541,50 @@ The blank lines inside the div are **required** for `markdown="1"` to parse the 
 
 ---
 
+### Step 6.5 — Interview Q&A Accordion Pattern
+
+When a plan section or a post includes interview-style questions, add a dedicated Q&A block immediately before the Conclusion section. This is not optional decoration — it is part of the post’s educational value and should look like a reusable knowledge capsule.
+
+Use the HTML structure below, exactly in spirit:
+
+```html
+<div class="faq-list">
+  <details class="faq-item" open>
+    <summary>
+      <span>What is the purpose of the Facade pattern?</span>
+      <span class="faq-toggle" aria-hidden="true"></span>
+    </summary>
+    <div class="faq-answer">
+      A facade gives a complex system a simple front door. Instead of every caller learning how inventory, payment, shipping, and notifications work, they call one method and trust the facade to do the orchestration for them. It does not remove the complexity; it hides it so the rest of the code stays easier to read and test.
+    </div>
+  </details>
+</div>
+```
+
+Rules:
+- Place the Q&A block directly before the `## Conclusion` section.
+- Use one `details` item per question/answer pair.
+- Each item must use `open` on the first render so users see both the question and answer immediately.
+- Use a right-side toggle arrow via `.faq-toggle` for expand/collapse behavior.
+- Keep the text plain, practical, and simple enough for a secondary-school graduate to understand, but still specific enough to be technically accurate.
+- Prefer slightly longer answers than the usual interview-short-answer style. Explain the idea, then give a concrete example or consequence.
+- Do not write fluffy or abstract answers; answer the question in clear business language.
+- Use the dark theme card style defined in `blog/assets/css/template1-minimal-dark.css`, not inline CSS.
+- The answer area should be visually grouped as a card with rounded edges, border, and spacing that matches the site’s table/card design.
+
+Good answer style:
+- start with the core idea in one sentence
+- explain the practical effect in everyday language
+- give a concrete example or “why it matters” sentence
+- keep it readable without jargon overload
+
+Bad answer style:
+- short, vague answers such as “It simplifies complexity” without explaining how or why
+- dense technical phrasing without a real-world interpretation
+- answers that feel like lecture notes rather than helpful explanation
+
+---
+
 ### Step 7 — Code Examples
 
 #### Single-language blocks — use Markdown fences

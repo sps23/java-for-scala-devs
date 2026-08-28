@@ -33,6 +33,10 @@
 - Internal links should use `{{ site.baseurl }}` for environment portability (`blog/DEPLOYMENT_CONFIG.md`).
 - For language switchers, use the exact HTML code-tabs pattern from `blog/CODE_TABS.md`; do not replace with Markdown code fences.
 - In code-tabs blocks, preserve required attributes/ordering: unique `data-tabs-id`, Java button/content first with `active`, and `data-lang` on tab buttons (see `blog/_posts/2025-11-28-sealed-classes-and-exhaustive-pattern-matching.md`).
+- When a post contains interview-style Q&A, place it immediately before the Conclusion section and format it as an accessible accordion using HTML `<details>` + `<summary>`.
+- Use one Q/A pair per `details` item, and keep the answer expanded by default with the `open` attribute. The right side of the summary should include a visual toggle marker via `.faq-toggle` so users can collapse/expand the answer.
+- Write each answer in plain, practical language: start with the direct idea, explain the real-world effect, then add one concrete example or consequence. Keep it simple enough for a secondary-school graduate, but still precise and technically correct.
+- Q&A cards must match the site’s dark minimal styling in `blog/assets/css/template1-minimal-dark.css`: rounded corners, subtle borders, card-like background separation, and consistent spacing with the surrounding content. Do not inline CSS in Markdown for this feature.
 - Theme/search/filter behavior is centralized in `blog/assets/js/theme.js`; keep selectors compatible across templates.
 
 ## CI/CD and Integration Points
