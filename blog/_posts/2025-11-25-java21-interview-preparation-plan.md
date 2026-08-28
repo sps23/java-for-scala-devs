@@ -4,7 +4,7 @@ title: "Java 21 Interview Preparation Guide - Your Roadmap to Success"
 description: "Comprehensive Java 21 interview preparation guide for senior developers - covers Records, Virtual Threads, Pattern Matching, and more modern Java features with actual blog posts and interview questions."
 date: 2025-11-25 20:00:00 +0000
 categories: [interview]
-tags: [java, java21, interview, preparation, senior-developer]
+tags: [java, java21, interview, preparation, senior-developer, roadmap]
 ---
 
 So, you've got a Java interview coming up, and you haven't touched Java since the Java 8 era when lambdas were the hot new thing? Or maybe you're a Scala developer wondering what the JVM folks have been up to? Welcome, friend! 

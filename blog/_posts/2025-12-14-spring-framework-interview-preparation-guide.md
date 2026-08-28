@@ -5,7 +5,7 @@ description: "Comprehensive Spring Framework interview preparation guide coverin
 date: 2025-12-14 18:00:00 +0000
 updated: 2026-07-26 11:05:20 +0100
 categories: [interview]
-tags: [java, spring, spring-boot, interview, preparation, senior-developer]
+tags: [java, spring, spring-boot, interview, preparation, senior-developer, roadmap]
 ---
 
 So, you've got a Spring Framework interview coming up, and you need to brush up on everything from dependency injection to Spring Security? Or maybe you're a Scala developer who's heard about Spring but never really dug into it? Welcome!

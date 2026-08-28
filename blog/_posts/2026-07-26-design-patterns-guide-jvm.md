@@ -5,7 +5,7 @@ description: "Comprehensive guide to the 10 most commonly used design patterns i
 date: 2026-07-26 13:00:00 +0000
 updated: 2026-08-28 11:00:00 +0000
 categories: [interview, best-practices]
-tags: [java, java21, scala, scala3, kotlin, design-patterns]
+tags: [java, java21, scala, scala3, kotlin, design-patterns, roadmap]
 ---
 
 So, you've been writing code for a few years now, and you keep hearing other developers throw around phrases like "Oh, that's a classic Singleton pattern" or "We should use a Factory here" or "I'll implement the Observer pattern for this." And you're sitting there thinking, "Uh... okay? Is that just... code?" 

@@ -82,38 +82,125 @@
    * Filter posts by category/tag
    */
   function initCategoryFilter() {
-    const categoryBtns = document.querySelectorAll('.category-btn, .category-badge, .category-pill');
-    if (!categoryBtns.length) return;
+    const filterContainer = document.querySelector('.category-filter');
+    if (!filterContainer) return;
 
     const posts = document.querySelectorAll('.post-item, .post-card, .timeline-post, .post-list-item');
-    
+    if (!posts.length) return;
+
+    const tagCounts = {};
+    posts.forEach(function(post) {
+      const rawTags = post.dataset.tags || '';
+      const tags = rawTags.split(/\s+/).filter(Boolean);
+      tags.forEach(function(tag) {
+        const key = tag.toLowerCase();
+        tagCounts[key] = (tagCounts[key] || 0) + 1;
+      });
+    });
+
+    const sortedTags = Object.entries(tagCounts)
+      .sort(function(a, b) {
+        return b[1] - a[1] || a[0].localeCompare(b[0]);
+      })
+      .map(function(entry) {
+        return entry[0];
+      });
+
+    const visibleTags = sortedTags.slice(0, 5);
+    const moreTags = sortedTags.slice(5);
+
+    filterContainer.innerHTML = '';
+
+    const row = document.createElement('div');
+    row.className = 'filter-main-row';
+
+    const allBtn = document.createElement('button');
+    allBtn.type = 'button';
+    allBtn.className = 'category-btn active';
+    allBtn.dataset.category = 'all';
+    allBtn.textContent = 'All Posts';
+    row.appendChild(allBtn);
+
+    visibleTags.forEach(function(tag) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'category-btn';
+      btn.dataset.category = tag;
+      btn.textContent = tag.charAt(0).toUpperCase() + tag.slice(1);
+      row.appendChild(btn);
+    });
+
+    if (moreTags.length) {
+      const wrap = document.createElement('div');
+      wrap.className = 'filter-more-wrap';
+
+      const moreBtn = document.createElement('button');
+      moreBtn.type = 'button';
+      moreBtn.className = 'filter-more-btn';
+      moreBtn.setAttribute('aria-expanded', 'false');
+      moreBtn.setAttribute('aria-label', 'Toggle more filters');
+      moreBtn.title = 'Toggle more filters';
+
+      const toggle = document.createElement('span');
+      toggle.className = 'filter-more-toggle';
+      toggle.setAttribute('aria-hidden', 'true');
+      moreBtn.appendChild(toggle);
+
+      const panel = document.createElement('div');
+      panel.className = 'filter-more-panel';
+
+      moreTags.forEach(function(tag) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'category-btn';
+        btn.dataset.category = tag;
+        btn.textContent = tag.charAt(0).toUpperCase() + tag.slice(1);
+        panel.appendChild(btn);
+      });
+
+      moreBtn.addEventListener('click', function() {
+        const expanded = moreBtn.getAttribute('aria-expanded') === 'true';
+        moreBtn.setAttribute('aria-expanded', String(!expanded));
+        panel.classList.toggle('visible', !expanded);
+      });
+
+      row.appendChild(moreBtn);
+      wrap.appendChild(row);
+      wrap.appendChild(panel);
+      filterContainer.appendChild(wrap);
+    } else {
+      filterContainer.appendChild(row);
+    }
+
+    const categoryBtns = document.querySelectorAll('.category-btn, .category-badge, .category-pill');
     categoryBtns.forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
-        
-        // Update active state
-        categoryBtns.forEach(b => b.classList.remove('active'));
+
+        categoryBtns.forEach(function(b) {
+          b.classList.remove('active');
+        });
         btn.classList.add('active');
-        
+
         const category = btn.dataset.category || btn.textContent.trim().toLowerCase();
-        
-        // "all" shows everything
+
         if (category === 'all') {
-          posts.forEach(post => post.style.display = '');
+          posts.forEach(function(post) {
+            post.style.display = '';
+          });
           return;
         }
-        
-        // Filter posts
+
         posts.forEach(function(post) {
           const postCategories = post.dataset.categories || '';
           const postTags = post.dataset.tags || '';
           const categoryEl = post.querySelector('.post-category, .post-card-category');
           const categoryText = categoryEl ? categoryEl.textContent.toLowerCase() : '';
-          
+
           const matches = postCategories.toLowerCase().includes(category) ||
                          postTags.toLowerCase().includes(category) ||
                          categoryText.includes(category);
-          
+
           post.style.display = matches ? '' : 'none';
         });
       });

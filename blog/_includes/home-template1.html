@@ -36,15 +36,7 @@
   </div>
   
   <!-- Category Filter -->
-  <div class="category-filter">
-    <button class="category-btn active" data-category="all">All Posts</button>
-    {% assign categories = site.posts | map: "categories" | join: "," | split: "," | uniq | sort %}
-    {% for category in categories %}
-      {% if category != "" %}
-      <button class="category-btn" data-category="{{ category | downcase }}">{{ category | capitalize }}</button>
-      {% endif %}
-    {% endfor %}
-  </div>
+  <div class="category-filter" aria-label="Post filters"></div>
   
   <!-- Posts List -->
   <h2>Latest Posts</h2>
