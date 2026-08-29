@@ -3,7 +3,7 @@ layout: post
 title: "String Templates (Preview) - Safe String Interpolation"
 description: "Java 21 String Templates preview - build safe SQL queries with STR and FMT processors, create custom template processors, and compare with Scala and Kotlin interpolation."
 date: 2025-11-29 21:00:00 +0000
-updated: 2026-08-28 15:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, string-templates, interview-preparation, preview]
 ---
@@ -507,4 +507,4 @@ For Scala and Kotlin developers, the concepts are familiar but the syntax differ
 
 ---
 
-*This is Part 8 of our Java 21 Interview Preparation series. Check out [Part 7: Virtual Threads and Structured Concurrency](/interview/2025/11/29/virtual-threads-and-structured-concurrency.html) and the [full preparation plan](/interview/2025/11/28/java21-interview-preparation-plan.html).*
+*This post is part of the [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Foreign Function and Memory API]({{ site.baseurl }}{% link _posts/2025-11-29-foreign-function-and-memory-api.md %}) and [Tricky Java Patterns That Everyone Uses]({{ site.baseurl }}{% link _posts/2025-12-03-tricky-java-patterns-everyone-uses.md %}).*

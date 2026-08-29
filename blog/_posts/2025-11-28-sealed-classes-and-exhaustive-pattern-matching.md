@@ -4,6 +4,7 @@ title: "Sealed Classes and Exhaustive Pattern Matching"
 description: "Model type-safe domain logic with Java 17 sealed classes and exhaustive pattern matching - compare with Scala sealed traits and Kotlin sealed classes with payment system examples."
 date: 2025-11-28 21:00:00 +0000
 updated: 2026-08-28 15:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, sealed-classes, pattern-matching, interview-preparation]
 ---
@@ -377,4 +378,4 @@ See the complete implementations in our repository:
 
 ---
 
-*This is part of our Java 21 Interview Preparation series. Check out the [full preparation plan](/interview/2025/11/28/java21-interview-preparation-plan.html) for more topics.*
+*This post is part of the [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Functional Interfaces and Lambda Expressions]({{ site.baseurl }}{% link _posts/2025-11-29-functional-interfaces-and-lambda-expressions.md %}) and [CompletableFuture and Asynchronous Programming]({{ site.baseurl }}{% link _posts/2025-11-29-completablefuture-and-asynchronous-programming.md %}).*

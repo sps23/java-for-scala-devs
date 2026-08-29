@@ -3,7 +3,7 @@ layout: post
 title: "Functional Interfaces and Lambda Expressions"
 description: "Master Java functional interfaces, lambda expressions, and method references - build a configurable retry mechanism with comparisons to Scala and Kotlin functions."
 date: 2025-11-29 15:00:00 +0000
-updated: 2026-08-28 15:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [functional-programming]
 tags: [java, scala, kotlin, lambdas, functional-interfaces, method-references]
 ---
@@ -443,3 +443,7 @@ For Scala developers working with Java:
 - Default methods provide composition like extension methods
 
 Happy functional programming! 🚀
+
+---
+
+*This post is part of the [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [CompletableFuture and Asynchronous Programming]({{ site.baseurl }}{% link _posts/2025-11-29-completablefuture-and-asynchronous-programming.md %}) and [Stream API Advanced Operations]({{ site.baseurl }}{% link _posts/2025-11-29-stream-api-advanced-operations.md %}).*

@@ -3,7 +3,7 @@ layout: post
 title: "Stream API Advanced Operations"
 description: "Advanced Java Stream API operations - learn takeWhile, dropWhile, custom collectors, parallel streams, and data analysis patterns with Scala and Kotlin comparisons."
 date: 2025-11-29 16:00:00 +0000
-updated: 2026-08-28 15:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, streams, collectors, parallel, interview-preparation]
 ---
@@ -694,4 +694,4 @@ Choose based on your team's expertise and the specific requirements of your data
 
 ---
 
-*This is Part 4 of our Java 21 Interview Preparation series. Check out [Part 1: Immutable Data with Java Records](/interview/2025/11/26/immutable-data-with-java-records.html), [Part 2: String Manipulation with Modern APIs](/interview/2025/11/28/string-manipulation-with-modern-apis.html), [Part 3: Collection Factory Methods and Stream Basics](/interview/2025/11/29/collection-factory-methods-and-stream-basics.html), and the [full preparation plan](/interview/2025/11/25/java21-interview-preparation-plan.html).*
+*This post is part of the [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Virtual Threads and Structured Concurrency]({{ site.baseurl }}{% link _posts/2025-11-29-virtual-threads-and-structured-concurrency.md %}) and [String Templates Preview]({{ site.baseurl }}{% link _posts/2025-11-29-string-templates-preview.md %}).*

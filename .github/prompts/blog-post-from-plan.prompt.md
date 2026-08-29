@@ -18,7 +18,11 @@ Create a new blog post for `${input:planSection}` as defined in `${input:planFil
 Requirements:
 
 1. Read `${input:planFile}` and locate `${input:planSection}`. Extract the topic intent,
-   scope, and any linked “full post” placeholders to fill in.
+   scope, the parent guide post, and the ordered sibling topics around it. Identify:
+   - the parent guide title + file path
+   - the current topic entry
+   - the next 1-3 sibling topics from the same guide that already have real published posts
+   - if there are no later published siblings, the nearest 1-2 related published siblings to use as fallback navigation
 2. Use a realistic business case instead of toy examples. Avoid method/type names that
    collide with Scala 3 soft keywords such as `export`, `given`, `enum`, `extension`,
    or `then`.
@@ -53,4 +57,12 @@ Requirements:
    `layout: wip` pattern from `blog/_layouts/wip.html` with a `guide_url` back-link,
    a brief “What You'll Learn” preview, and the shared styling in
    `blog/assets/css/template1-minimal-dark.css`.
-11. Report back with a concise summary of the changes made.
+11. Add a guide-navigation footer at the bottom of the article, after `## Code Samples`.
+    The footer must:
+    - link back to the parent guide using the guide post's actual title as the anchor text
+    - include 1-3 next related published posts from the same guide
+    - fall back to nearby related siblings when this article is the last published item
+    - use `{{ site.baseurl }}{% link _posts/YYYY-MM-DD-slug.md %}` for every internal post link so the rendered URL resolves to `/blog/YYYY/MM/DD/slug/`
+12. When you update `${input:planFile}`, keep its topic order accurate because downstream
+    child posts depend on that order to build related-post navigation correctly.
+13. Report back with a concise summary of the changes made.

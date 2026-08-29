@@ -3,7 +3,7 @@ layout: post
 title: "Null-Safe Programming with Optional"
 description: "Eliminate NullPointerException with Java Optional API - learn map, flatMap, filter patterns and compare with Scala Option and Kotlin null-safety features."
 date: 2025-11-29 18:00:00 +0000
-updated: 2026-08-28 15:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, optional, null-safety, interview-preparation]
 ---
@@ -633,4 +633,4 @@ For Scala developers, Java's Optional will feel familiar but more verbose. The g
 
 ---
 
-*This is Part 4 of our Java 21 Interview Preparation series. Check out [Part 1: Immutable Data with Java Records](/interview/2025/11/26/immutable-data-with-java-records.html), [Part 2: Sealed Classes and Exhaustive Pattern Matching](/interview/2025/11/28/sealed-classes-and-exhaustive-pattern-matching.html), [Part 3: Collection Factory Methods and Stream Basics](/interview/2025/11/29/collection-factory-methods-and-stream-basics.html), and the [full preparation plan](/interview/2025/11/25/java21-interview-preparation-plan.html).*
+*This is Part 4 of our [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Collection Factory Methods and Stream Basics]({{ site.baseurl }}{% link _posts/2025-11-29-collection-factory-methods-and-stream-basics.md %}) and [Local Variable Type Inference with var]({{ site.baseurl }}{% link _posts/2025-11-29-local-variable-type-inference-with-var.md %}).*

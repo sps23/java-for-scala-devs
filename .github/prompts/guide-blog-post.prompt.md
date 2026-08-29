@@ -90,9 +90,15 @@ Requirements:
 8. **Handle links correctly.**
    - Internal links to existing posts must use the exact format
      `{{ site.baseurl }}/blog/YYYY/MM/DD/slug/`.
+   - For existing posts, prefer `{{ site.baseurl }}{% link _posts/YYYY-MM-DD-slug.md %}` so
+     Jekyll derives the exact permalink instead of relying on a manually typed date.
    - Match the year/month/day to the target post filename exactly.
    - Do not use category prefixes like `/interview/`.
    - Do not guess missing links.
+   - Treat the guide's topic order as canonical. Child posts generated from this guide use that
+     order to build their parent-guide and related-post footer navigation.
+   - Child posts generated from this guide must link back to this guide using this guide post's
+     actual title as the anchor text, not a generic label like `full guide` or `full preparation plan`.
    - If a topic does not have a real article yet, leave the guide entry pointing to the planned
      target only if that is already the repository convention for that guide, and do **not**
      auto-create WIP pages as part of this prompt.

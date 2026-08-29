@@ -3,7 +3,7 @@ layout: post
 title: "Building RESTful APIs with Spring MVC"
 description: "A practical guide to Spring MVC REST controllers — @RestController, HTTP method mappings, path variables, request/response handling, exception handling with @ControllerAdvice, and @Valid validation — with investment trading examples."
 date: 2026-05-28 14:00:00 +0000
-updated: 2026-05-28 09:51:21 +0100
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview]
 tags: [java, java21, spring, spring-boot, spring-mvc, rest-api, interview-preparation]
 ---
@@ -486,4 +486,4 @@ Run the tests yourself with:
 
 ---
 
-*This post is part of the [Spring Framework Interview Preparation series]({{ site.baseurl }}{% link _posts/2025-12-14-spring-framework-interview-preparation-guide.md %}). Check out the full plan for all Spring topics.*
+*This post is part of the [Spring Framework Interview Preparation Guide - Master the Framework]({{ site.baseurl }}{% link _posts/2025-12-14-spring-framework-interview-preparation-guide.md %}). Nearby related posts from the same guide: [Spring Configuration Approaches: From XML to Java Config]({{ site.baseurl }}{% link _posts/2026-07-26-spring-configuration-approaches.md %}) and [Spring Bean Scopes and Lifecycle Management]({{ site.baseurl }}{% link _posts/2026-05-25-spring-bean-scopes-lifecycle.md %}).*

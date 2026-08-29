@@ -3,6 +3,7 @@ layout: post
 title: "Spring Configuration Approaches: From XML to Java Config"
 description: "Learn how to wire Spring applications with @Configuration, @Bean, @ComponentScan, @Profile, and legacy XML — including when XML still earns its keep and what Spring 7 changes compared with Spring 6."
 date: 2026-07-26 10:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview]
 tags: [java, java21, spring, spring-framework, configuration, xml, annotations, component-scan, profiles]
 ---
@@ -287,4 +288,4 @@ All examples in this post are runnable. Find them in the repository:
 
 ---
 
-*This is part of our Spring Framework interview preparation track. Start with the [Spring Framework Interview Preparation Guide]({{ site.baseurl }}/blog/2025/12/14/spring-framework-interview-preparation-guide/) for the full topic map.*
+*This post is part of the [Spring Framework Interview Preparation Guide - Master the Framework]({{ site.baseurl }}{% link _posts/2025-12-14-spring-framework-interview-preparation-guide.md %}). Next related post: [Building RESTful APIs with Spring MVC]({{ site.baseurl }}{% link _posts/2026-05-28-spring-mvc-restful-apis.md %}).*

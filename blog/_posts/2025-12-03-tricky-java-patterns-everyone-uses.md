@@ -3,7 +3,7 @@ layout: post
 title: "Tricky Java Patterns That Everyone Uses But Few Understand"
 description: "Explore 8 confusing Java code patterns that look simple but hide surprising complexity - from ArrayList.toArray() optimization to Virtual Thread pinning in Java 21."
 date: 2025-12-03 11:00:00 +0000
-updated: 2026-08-28 15:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [best-practices]
 tags: [java, java21, performance, best-practices, gotchas, virtual-threads, patterns, optimization]
 ---
@@ -751,3 +751,7 @@ The examples in this post are runnable and available in the [GitHub repository](
 For Scala developers learning Java: These gotchas show why Scala made different design choices (immutability by default, no primitives, no null). But understanding Java's quirks makes you a better JVM developer.
 
 Happy coding, and may your code be explicit about its complexity! 🚀
+
+---
+
+*This post is part of the [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Nearby related posts from the same guide: [Foreign Function and Memory API]({{ site.baseurl }}{% link _posts/2025-11-29-foreign-function-and-memory-api.md %}) and [String Templates Preview]({{ site.baseurl }}{% link _posts/2025-11-29-string-templates-preview.md %}).*

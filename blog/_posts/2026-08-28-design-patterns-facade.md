@@ -3,7 +3,7 @@ layout: post
 title: "Facade Pattern: Simplifying Complex Systems"
 description: "Use the Facade pattern to hide a complex order pipeline in Java 21, Scala 2/3, and Kotlin with a realistic checkout flow and a clean public API."
 date: 2026-08-28 09:00:00 +0000
-updated: 2026-08-28 09:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, scala2, scala3, kotlin, design-patterns, structural-patterns, facade-pattern]
 ---
@@ -304,4 +304,4 @@ All examples in this post are runnable in the repository:
 
 ---
 
-*This is part of our Design Patterns in JVM Languages series. See the [design patterns guide]({{ site.baseurl }}/interview/2026/07/26/design-patterns-guide-jvm) for the full roadmap.*
+*This post is part of the [Design Patterns in JVM Languages - Your Guide to the Top 10]({{ site.baseurl }}{% link _posts/2026-07-26-design-patterns-guide-jvm.md %}). Nearby related posts from the same guide: [Decorator Pattern: Wrapping Objects with Style]({{ site.baseurl }}{% link _posts/2026-08-27-design-patterns-decorator.md %}) and [Adapter Pattern: Making Incompatible Payment APIs Work Together]({{ site.baseurl }}{% link _posts/2026-08-25-design-patterns-adapter.md %}).*

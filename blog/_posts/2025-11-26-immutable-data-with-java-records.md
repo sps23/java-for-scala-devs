@@ -4,6 +4,7 @@ title: "Immutable Data with Java Records"
 description: "Master Java Records for immutable data classes - compare with Scala case classes and Kotlin data classes, learn validation patterns, and see before/after code examples."
 date: 2025-11-26 21:00:00 +0000
 updated: 2026-08-28 15:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview]
 tags: [java, java21, records, immutability, interview-preparation]
 ---
@@ -402,4 +403,4 @@ Records bring Java much closer to Scala's case classes, making the transition be
 
 ---
 
-*This is Part 1 of our Java 21 Interview Preparation series. Check out the [full preparation plan](/interview/2025/11/28/java21-interview-preparation-plan.html) for more topics.*
+*This is Part 1 of our [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [String Manipulation with Modern APIs]({{ site.baseurl }}{% link _posts/2025-11-28-string-manipulation-with-modern-apis.md %}) and [Null-Safe Programming with Optional]({{ site.baseurl }}{% link _posts/2025-11-29-null-safe-programming-with-optional.md %}).*

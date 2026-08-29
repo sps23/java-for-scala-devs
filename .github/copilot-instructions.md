@@ -779,7 +779,7 @@ In those cases, use normal fenced code blocks and explain the Scala/Kotlin menta
 
 ### Step 8 — Internal Links and Repo Links
 
-**Internal links** — the site permalink is configured as `/blog/:year/:month/:day/:title/`. Every internal link to another post **must** use this exact structure:
+**Internal links** — the site permalink is configured as `/blog/:year/:month/:day/:title/`. Every internal link to another post must render to this exact structure:
 
 ```
 {{ site.baseurl }}/blog/YYYY/MM/DD/post-slug/
@@ -789,9 +789,10 @@ In those cases, use normal fenced code blocks and explain the Scala/Kotlin menta
 - Use the **exact date from the target post's filename** (`YYYY-MM-DD-slug.md` → `/YYYY/MM/DD/slug/`).
 - Always include the **trailing slash**.
 - Never guess or invent a date — always derive it from the filename.
+- For links to an existing post inside Markdown, prefer `{{ site.baseurl }}{% link _posts/YYYY-MM-DD-slug.md %}`. It still resolves to `/blog/YYYY/MM/DD/slug/`, but it removes the risk of hard-coding the wrong prefix or date.
 
 ```markdown
-[full preparation plan]({{ site.baseurl }}/blog/2025/11/25/java21-interview-preparation-plan/)
+[Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}/blog/2025/11/25/java21-interview-preparation-plan/)
 [Singleton Pattern]({{ site.baseurl }}/blog/2026/07/26/design-patterns-singleton/)
 ```
 
@@ -830,18 +831,25 @@ All examples in this post are runnable. Find them in the repository:
 - [Kotlin implementation](https://github.com/sps23/java-for-scala-devs/tree/main/kotlin/src/main/kotlin/io/github/sps23/...)
 ```
 
-**Series footer** — if the post belongs to a series, add an italicised footnote:
+**Series footer** — if the post belongs to a series, add an italicised footnote after `## Code Samples`:
 ```markdown
 ---
 
-*This is part of our Java 21 Interview Preparation series. Check out the
-[full preparation plan]({{ site.baseurl }}/blog/2025/11/25/java21-interview-preparation-plan/) for more topics.*
+*This is part of our Java 21 Interview Preparation series. Start with
+[Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}).
+Next related posts: [String Manipulation with Modern APIs]({{ site.baseurl }}{% link _posts/2025-11-28-string-manipulation-with-modern-apis.md %})
+and [Null-Safe Programming with Optional]({{ site.baseurl }}{% link _posts/2025-11-29-null-safe-programming-with-optional.md %}).*
 ```
 
 Use the correct series footer for the subject:
 - Java 21 interview topics → link to `2025-11-25-java21-interview-preparation-plan.md`
 - Spring posts → link to `2025-12-14-spring-framework-interview-preparation-guide.md`
 - Standalone posts (for example tricky Java patterns) may omit the footer if there is no real parent series
+- Every guide-derived article must include:
+  - the parent guide link using the guide post's actual title as the anchor text
+  - 1-3 **next published** sibling posts from that guide
+  - a fallback to 1-2 nearby related siblings when the current article is already the last published item
+- Derive related-post order from the guide itself instead of inventing an arbitrary list.
 
 ---
 

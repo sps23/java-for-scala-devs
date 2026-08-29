@@ -3,7 +3,7 @@ layout: post
 title: "Adapter Pattern: Making Incompatible Payment APIs Work Together"
 description: "Learn the Adapter pattern with a real checkout-to-legacy-bank integration example in Java 21, Scala 2, Scala 3, and Kotlin, including production-style tests and trade-offs."
 date: 2026-08-25 10:00:00 +0000
-updated: 2026-08-25 10:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview, best-practices]
 tags: [java, java21, scala, scala2, scala3, kotlin, design-patterns, structural-patterns, adapter-pattern]
 ---
@@ -303,4 +303,4 @@ All examples in this post are available in the repository:
 
 ---
 
-*This is part of our Design Patterns in JVM Languages series. Check out the [full design patterns guide]({{ site.baseurl }}/interview/2026/07/26/design-patterns-guide-jvm) for more patterns and interview preparation.*
+*This post is part of the [Design Patterns in JVM Languages - Your Guide to the Top 10]({{ site.baseurl }}{% link _posts/2026-07-26-design-patterns-guide-jvm.md %}). Next related posts: [Decorator Pattern: Wrapping Objects with Style]({{ site.baseurl }}{% link _posts/2026-08-27-design-patterns-decorator.md %}) and [Facade Pattern: Simplifying Complex Systems]({{ site.baseurl }}{% link _posts/2026-08-28-design-patterns-facade.md %}).*

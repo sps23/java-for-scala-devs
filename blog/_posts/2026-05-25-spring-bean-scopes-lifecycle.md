@@ -3,7 +3,7 @@ layout: post
 title: "Spring Bean Scopes and Lifecycle Management"
 description: "How Spring creates, manages, and destroys beans — covering singleton, prototype, request, session, and application scopes, lifecycle callbacks (@PostConstruct, @PreDestroy), and the classic prototype-in-singleton trap."
 date: 2026-05-25 20:00:00 +0000
-updated: 2026-07-26 11:25:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview]
 tags: [java, java21, spring, bean-scopes, lifecycle, interview-preparation]
 ---
@@ -345,4 +345,4 @@ Run the tests yourself with:
 
 ---
 
-*This post is part of the [Spring Framework Interview Preparation series]({{ site.baseurl }}{% link _posts/2025-12-14-spring-framework-interview-preparation-guide.md %}). Check out the full plan for all Spring topics.*
+*This post is part of the [Spring Framework Interview Preparation Guide - Master the Framework]({{ site.baseurl }}{% link _posts/2025-12-14-spring-framework-interview-preparation-guide.md %}). Next related posts: [Spring Configuration Approaches: From XML to Java Config]({{ site.baseurl }}{% link _posts/2026-07-26-spring-configuration-approaches.md %}) and [Building RESTful APIs with Spring MVC]({{ site.baseurl }}{% link _posts/2026-05-28-spring-mvc-restful-apis.md %}).*

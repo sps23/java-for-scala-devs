@@ -3,6 +3,7 @@ layout: post
 title: "Singleton Pattern: When There Can Be Only One"
 description: "Master the singleton design pattern across Java 21, Kotlin, Scala 2, and Scala 3. Compare eager vs lazy initialization, language-specific implementations, and when to use (or avoid) this creational pattern."
 date: 2026-07-26 20:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview, best-practices]
 tags: [java, java21, scala, scala2, scala3, kotlin, design-patterns, creational-patterns]
 ---
@@ -483,4 +484,4 @@ All examples in this post are available in the repository:
 
 ---
 
-*This is part of our Design Patterns in JVM Languages series. Check out the [full design patterns guide]({{ site.baseurl }}/interview/2026/07/26/design-patterns-guide-jvm) for more patterns and interview preparation.*
+*This post is part of the [Design Patterns in JVM Languages - Your Guide to the Top 10]({{ site.baseurl }}{% link _posts/2026-07-26-design-patterns-guide-jvm.md %}). Next related posts: [Factory Pattern: Let Someone Else Do the Creating]({{ site.baseurl }}{% link _posts/2026-07-30-design-patterns-factory.md %}) and [Builder Pattern: Constructing Complex Objects Clearly]({{ site.baseurl }}{% link _posts/2026-07-31-design-patterns-builder.md %}).*

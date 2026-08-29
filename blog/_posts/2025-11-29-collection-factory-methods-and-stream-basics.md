@@ -3,7 +3,7 @@ layout: post
 title: "Collection Factory Methods and Stream Basics"
 description: "Master Java 9+ collection factories (List.of, Set.of, Map.of) and Stream API fundamentals - compare with Scala 3 collections and Kotlin stdlib approaches."
 date: 2025-11-29 14:00:00 +0000
-updated: 2026-08-28 15:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, collections, streams, interview-preparation]
 ---
@@ -577,4 +577,4 @@ For Scala and Kotlin developers, modern Java feels more familiar. While Scala an
 
 ---
 
-*This is Part 3 of our Java 21 Interview Preparation series. Check out [Part 1: Immutable Data with Java Records](/interview/2025/11/28/immutable-data-with-java-records.html), [Part 2: String Manipulation with Modern APIs](/interview/2025/11/28/string-manipulation-with-modern-apis.html), and the [full preparation plan](/interview/2025/11/28/java21-interview-preparation-plan.html).*
+*This is Part 3 of our [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Local Variable Type Inference with var]({{ site.baseurl }}{% link _posts/2025-11-29-local-variable-type-inference-with-var.md %}) and [Sealed Classes and Exhaustive Pattern Matching]({{ site.baseurl }}{% link _posts/2025-11-28-sealed-classes-and-exhaustive-pattern-matching.md %}).*

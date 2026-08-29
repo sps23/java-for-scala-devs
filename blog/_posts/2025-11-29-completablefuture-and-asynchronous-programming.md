@@ -3,7 +3,7 @@ layout: post
 title: "CompletableFuture and Asynchronous Programming"
 description: "Build concurrent applications with Java CompletableFuture - learn async composition, timeouts, and error handling with comparisons to Scala Futures and Kotlin Coroutines."
 date: 2025-11-29 10:00:00 +0000
-updated: 2026-08-28 15:00:00 +0000
+updated: 2026-08-29 14:00:00 +0000
 categories: [concurrency]
 tags: [java, scala, kotlin, async, futures, completablefuture, coroutines]
 ---
@@ -365,3 +365,7 @@ All three languages provide powerful async primitives. For Scala developers movi
 The patterns are similar, just with different syntax. The key is understanding the mental model: futures represent values that will be available in the future, and all three languages let you compose them elegantly.
 
 Happy async coding! 🚀
+
+---
+
+*This post is part of the [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Stream API Advanced Operations]({{ site.baseurl }}{% link _posts/2025-11-29-stream-api-advanced-operations.md %}) and [Virtual Threads and Structured Concurrency]({{ site.baseurl }}{% link _posts/2025-11-29-virtual-threads-and-structured-concurrency.md %}).*
