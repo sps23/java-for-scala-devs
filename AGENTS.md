@@ -19,6 +19,11 @@
 - Enforce formatting (required by `check`): `./gradlew spotlessCheck` or auto-fix `./gradlew spotlessApply`.
 - Run blog locally with local overrides: `cd blog && bundle install && bundle exec jekyll serve --config _config.yml,_config.local.yml`.
 
+## Repository Skills
+- Repo-scoped Copilot skills live in `.github/skills/`.
+- The `/grill-me` skill in `.github/skills/grill-me.md` is in the correct location and is meant to be a stateless interview helper: depth-first questioning, recommended default answers, small prerequisite batches, and no file writes.
+- Do not treat this skill as a repo-editing workflow; it is a conversational interview tool, not a code-generation or file-modification command.
+
 ## Conventions You Must Preserve
 - Use package prefix `io.github.sps23` in code modules (`java21/README.md`, `scala2/README.md`, `scala3/README.md`, `kotlin/README.md`).
 - Keep Java 21 preview support intact where configured (`--enable-preview` in `java21/build.gradle`, also enabled in `kotlin/build.gradle` and `scala3/build.gradle`).
@@ -34,6 +39,9 @@
 - Internal links should use `{{ site.baseurl }}/blog/YYYY/MM/DD/slug/` — prefix is always `/blog/`, the date matches the target post's filename exactly, and the trailing slash is required. Never use a category name (e.g. `/interview/`) as the prefix and never guess the date. See `.github/copilot-instructions.md` Step 8 for the full rule.
 - For language switchers, use the exact HTML code-tabs pattern from `blog/CODE_TABS.md`; do not replace with Markdown code fences.
 - In code-tabs blocks, preserve required attributes/ordering: unique `data-tabs-id`, Java button/content first with `active`, and `data-lang` on tab buttons (see `blog/_posts/2025-11-28-sealed-classes-and-exhaustive-pattern-matching.md`).
+- WIP placeholder pages are intentionally created only after a guide post is finalized and only for sections that do not have a real post yet. Do not auto-create WIP pages when the guide is first authored.
+- WIP pages use `layout: wip`, include a `guide_url` back-link to the parent guide, and rely on the shared styling in `blog/assets/css/template1-minimal-dark.css` (`.wip-banner`, `.wip-eta`, `.wip-what-you-learn`, `.wip-back-link`). The page should read like a temporary notice, not a complete article.
+- A WIP page is built from the guide post by adding a short preview of what the missing post will cover, a humorous coming-soon banner, and a clear link back to the guide. Example pattern: banner + “What You'll Learn” box + guide back-link.
 - When a post contains interview-style Q&A, place it immediately before the Conclusion section and format it as an accessible accordion using HTML `<details>` + `<summary>`.
 - Use one Q/A pair per `details` item, and keep the answer expanded by default with the `open` attribute. The right side of the summary should include a visual toggle marker via `.faq-toggle` so users can collapse/expand the answer.
 - Write each answer in plain, practical language: start with the direct idea, explain the real-world effect, then add one concrete example or consequence. Keep it simple enough for a secondary-school graduate, but still precise and technically correct.

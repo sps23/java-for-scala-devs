@@ -47,4 +47,10 @@ Requirements:
    do not use raw code inside `<code>` blocks.
 9. Update `${input:planFile}` so the topic entry links to the new post and refresh the
    `updated:` date.
-10. Report back with a concise summary of the changes made.
+10. Do not create placeholder WIP pages during the initial creation of a guide post. WIP
+   pages are intentionally created only after the guide itself is finalized and only for
+   sections whose final article does not yet exist. When a WIP page is needed, use the
+   `layout: wip` pattern from `blog/_layouts/wip.html` with a `guide_url` back-link,
+   a brief “What You'll Learn” preview, and the shared styling in
+   `blog/assets/css/template1-minimal-dark.css`.
+11. Report back with a concise summary of the changes made.

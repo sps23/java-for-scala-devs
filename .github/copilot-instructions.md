@@ -21,6 +21,15 @@ Prefer clear, runnable examples and explicit trade-offs over framework-heavy abs
 - Keep examples beginner-friendly, practical, and self-contained — they must compile and run from the module root as-is.
 - Show "Java vs Scala" by default; add Kotlin when a matching example already exists in the `kotlin/` module.
 
+## Repository Skills
+
+Custom Copilot skills live under `.github/skills/`. The file `.github/skills/grill-me.md` is in the correct location and follows the expected skill convention for a slash-command-style interaction.
+
+- Skill name: `/grill-me`
+- Purpose: interview the user in a depth-first, branching manner and provide a recommended answer for each question by default.
+- Behaviour rules: ask in batches of settled prerequisites only, keep the interaction stateless, and do not write files or modify the repository.
+- When the skill is invoked, stay focused on the current topic, ask one clarifying step at a time, and advance only after the previous prerequisite has been resolved.
+
 ---
 
 ## Code Formatting — No Tabs Anywhere
@@ -215,6 +224,60 @@ These posts:
   - horizontal rule `---`
 
 Write an aggregated guide only when the user wants a **main subject page**, a **series index**, or an **interview roadmap**.
+
+#### WIP placeholder pages for unfinished guide entries (manual, not automatic)
+
+Do not create placeholder WIP pages while the guide post is still being drafted or as part of the original guide creation. The correct workflow is:
+
+1. Create the main guide post and finalize the section structure.
+2. Once the guide is stable and the user wants the missing article links to avoid 404s, create WIP placeholder pages for the topics that do not yet have a real post.
+3. Link those WIP pages from the guide only after the guide is finalized.
+
+Use a WIP page only when a guide entry points to a post that does not exist yet. WIP pages are intentionally temporary and should feel explicit: the content is not finished, the reader is told where to return, and the page points back to the guide.
+
+The WIP layout is built in `blog/_layouts/wip.html` and uses the shared styling in `blog/assets/css/template1-minimal-dark.css` (`.wip-banner`, `.wip-banner-icon`, `.wip-eta`, `.wip-what-you-learn`, `.wip-back-link`). The page is constructed from the guide by setting `layout: wip`, a friendly `title`, a `guide_url` in the front matter, and a brief “What You'll Learn” preview in the content body. The page should not pretend to be the final article; it should clearly explain that the post is in progress and offer a return path to the series guide.
+
+Example front matter:
+
+```yaml
+---
+layout: wip
+title: "Strategy Pattern: Choosing Algorithms at Runtime"
+description: "Coming soon: learn how the Strategy pattern ..."
+date: 2026-08-29 07:00:00 +0000
+categories: [interview, best-practices]
+tags: [java, java21, scala, scala3, kotlin, design-patterns, strategy-pattern]
+guide_url: /blog/2026/07/26/design-patterns-guide-jvm/
+---
+```
+
+Example body pattern:
+
+```html
+<div class="wip-what-you-learn">
+  <h3>What You'll Learn When This Post Is Ready</h3>
+  <ul>
+    <li>How to avoid giant if-else chains ...</li>
+    <li>How to swap algorithms at runtime ...</li>
+    <li>How Java 21, Scala 3, and Kotlin handle this differently ...</li>
+  </ul>
+</div>
+```
+
+The page should also include a small banner and the guide link back to the parent page, e.g.:
+
+```html
+<div class="wip-banner">
+  <span class="wip-banner-icon">🚧</span>
+  <div>
+    <strong>Coming Soon — We're Still Hammering This One Out</strong>
+    This post is on the roadmap ...
+    <span class="wip-eta">⏳ &nbsp;Post in progress</span>
+  </div>
+</div>
+```
+
+Do not add these placeholder pages automatically when a guide post is first created. Create them only after the guide itself is finalised and only for missing linked sections that are intentionally deferred.
 
 #### 2. Deep-dive interview/tutorial posts
 
