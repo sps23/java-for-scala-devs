@@ -31,7 +31,7 @@
 ## Blog and Content Rules
 - Post files live in `blog/_posts/` with date-prefixed filenames and front matter that includes `layout`, `title`, `description`, `date`, `updated` (when edited after publication), `categories`, and `tags`, with UTC timestamps (`+0000`).
 - When a blog post is modified after publication, always add or refresh `updated:` using the current UTC timestamp rounded to the hour.
-- Internal links should use `{{ site.baseurl }}` for environment portability (`blog/DEPLOYMENT_CONFIG.md`).
+- Internal links should use `{{ site.baseurl }}/blog/YYYY/MM/DD/slug/` — prefix is always `/blog/`, the date matches the target post's filename exactly, and the trailing slash is required. Never use a category name (e.g. `/interview/`) as the prefix and never guess the date. See `.github/copilot-instructions.md` Step 8 for the full rule.
 - For language switchers, use the exact HTML code-tabs pattern from `blog/CODE_TABS.md`; do not replace with Markdown code fences.
 - In code-tabs blocks, preserve required attributes/ordering: unique `data-tabs-id`, Java button/content first with `active`, and `data-lang` on tab buttons (see `blog/_posts/2025-11-28-sealed-classes-and-exhaustive-pattern-matching.md`).
 - When a post contains interview-style Q&A, place it immediately before the Conclusion section and format it as an accessible accordion using HTML `<details>` + `<summary>`.

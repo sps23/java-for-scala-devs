@@ -3,7 +3,7 @@ layout: post
 title: "Design Patterns in JVM Languages - Your Guide to the Top 10"
 description: "Comprehensive guide to the 10 most commonly used design patterns in Java, Scala, and Kotlin - learn what design patterns are, why you need them, and explore Creational, Structural, and Behavioral pattern categories with real-world examples and interview prep."
 date: 2026-07-26 13:00:00 +0000
-updated: 2026-08-28 11:00:00 +0000
+updated: 2026-08-29 07:00:00 +0000
 categories: [interview, best-practices]
 tags: [java, java21, scala, scala3, kotlin, design-patterns, roadmap]
 ---
@@ -51,7 +51,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** A class that can only have one instance, and you access it globally. Think of it as the "one ring to rule them all" of design patterns. There's only one database connection manager, one logger configuration, one...well, you get the idea.
 
-**Read the full post:** [Singleton Pattern: When There Can Be Only One]({{ site.baseurl }}/interview/2026/07/27/design-patterns-singleton)
+**Read the full post:** [Singleton Pattern: When There Can Be Only One]({{ site.baseurl }}/blog/2026/07/26/design-patterns-singleton/)
 
 **What You'll Learn:** How to implement thread-safe singletons in Java (eager vs. lazy initialization), why static initialization is powerful, how to handle serialization and reflection attacks, and when NOT to use singletons (spoiler: thread-local singletons aren't real singletons). You'll see how Scala and Kotlin handle the same pattern more elegantly with language-level features.
 
@@ -68,7 +68,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Instead of directly creating objects with `new`, you use a factory method or factory class to create them. It's like a factory assembly line—you ask for what you want, and the factory figures out exactly what to give you.
 
-**Read the full post:** [Factory Pattern: Let Someone Else Do the Creating]({{ site.baseurl }}/interview/2026/07/30/design-patterns-factory)
+**Read the full post:** [Factory Pattern: Let Someone Else Do the Creating]({{ site.baseurl }}/blog/2026/07/30/design-patterns-factory/)
 
 **What You'll Learn:** The difference between Simple Factory, Factory Method, and Abstract Factory patterns. You'll learn when to use each one, how to reduce coupling in your codebase, and how to make testing easier by injecting factories instead of constructors. You'll see practical examples of how frameworks like Spring use factory patterns extensively.
 
@@ -85,7 +85,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Instead of passing a dozen constructor parameters or overloading constructors endlessly, a Builder gives you a fluent, readable way to construct complex objects step by step.
 
-**Read the full post:** [Builder Pattern: Constructing Complexity with Elegance]({{ site.baseurl }}/interview/2026/07/31/design-patterns-builder)
+**Read the full post:** [Builder Pattern: Constructing Complexity with Elegance]({{ site.baseurl }}/blog/2026/07/31/design-patterns-builder/)
 
 **What You'll Learn:** How to write effective builders in Java (before and after records), why they beat telescoping constructors, and how to make your builders thread-safe and immutable. You'll see how Scala case classes with default parameters achieve similar goals more concisely, and how Kotlin's named parameters make builders less necessary.
 
@@ -102,7 +102,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Create new objects by copying an existing object (the prototype) rather than creating from scratch. It's less common in modern Java, but powerful when you need deep copies or want to avoid expensive object creation.
 
-**Read the full post:** [Prototype Pattern: Cloning for Success]({{ site.baseurl }}/interview/2026/08/23/design-patterns-prototype)
+**Read the full post:** [Prototype Pattern: Cloning for Success]({{ site.baseurl }}/blog/2026/08/23/design-patterns-prototype/)
 
 **What You'll Learn:** How to implement cloning correctly, shallow vs. deep copying, the dangers of the `Cloneable` interface, and when prototyping actually saves you performance. You'll see how immutability in Scala and functional programming approaches reduce the need for this pattern.
 
@@ -121,7 +121,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Convert the interface of one class into another interface that clients expect. It's like a power adapter—you've got a European plug but an American outlet, so you use an adapter. Adapters make incompatible things work together.
 
-**Read the full post:** [Adapter Pattern: Making Incompatible Things Play Nice]({{ site.baseurl }}/interview/2026/08/25/design-patterns-adapter)
+**Read the full post:** [Adapter Pattern: Making Incompatible Things Play Nice]({{ site.baseurl }}/blog/2026/08/25/design-patterns-adapter/)
 
 **What You'll Learn:** When to use class adapters vs. object adapters, how to write adapters that don't add unnecessary complexity, and how adapters help when you're integrating legacy code or third-party libraries. You'll see real examples of how adapters simplify API migration.
 
@@ -138,7 +138,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Add behavior to objects dynamically, without modifying their structure. Instead of subclassing endlessly to add features, you wrap objects with decorators. It's like adding accessories to your outfit—you can keep the same core outfit and just add or remove decorations.
 
-**Read the full post:** [Decorator Pattern: Wrapping Objects with Style]({{ site.baseurl }}/interview/2026/08/27/design-patterns-decorator)
+**Read the full post:** [Decorator Pattern: Wrapping Objects with Style]({{ site.baseurl }}/blog/2026/08/27/design-patterns-decorator/)
 
 **What You'll Learn:** How to implement decorators without bloating your class hierarchy, how Java's I/O streams (BufferedInputStream, etc.) are a textbook example of decorators, and when decorators are better than inheritance. You'll see how functional composition in Scala and Kotlin provides alternatives to decorators.
 
@@ -155,7 +155,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Provide a unified, simplified interface to a complex subsystem. A facade hides the complexity, letting clients work with the subsystem through a simple entry point. Think of it as the customer service representative for your codebase—they handle all the complexity behind the scenes.
 
-**Read the full post:** [Facade Pattern: Simplifying Complex Systems]({{ site.baseurl }}/interview/2026/08/28/design-patterns-facade)
+**Read the full post:** [Facade Pattern: Simplifying Complex Systems]({{ site.baseurl }}/blog/2026/08/28/design-patterns-facade/)
 
 **What You'll Learn:** How to identify when a subsystem needs a facade, how to design facades that don't just add a thin wrapper, and how facades improve testability. You'll see examples from popular libraries (Spring's various template classes, for example) that use the facade pattern extensively.
 

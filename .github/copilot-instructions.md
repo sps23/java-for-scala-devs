@@ -716,9 +716,32 @@ In those cases, use normal fenced code blocks and explain the Scala/Kotlin menta
 
 ### Step 8 — Internal Links and Repo Links
 
-**Internal links** — always use `{{ site.baseurl }}`:
+**Internal links** — the site permalink is configured as `/blog/:year/:month/:day/:title/`. Every internal link to another post **must** use this exact structure:
+
+```
+{{ site.baseurl }}/blog/YYYY/MM/DD/post-slug/
+```
+
+- Use `{{ site.baseurl }}` as the prefix (never a category name like `/interview/`).
+- Use the **exact date from the target post's filename** (`YYYY-MM-DD-slug.md` → `/YYYY/MM/DD/slug/`).
+- Always include the **trailing slash**.
+- Never guess or invent a date — always derive it from the filename.
+
 ```markdown
-[full preparation plan]({{ site.baseurl }}/interview/2025/11/25/java21-interview-preparation-plan)
+[full preparation plan]({{ site.baseurl }}/blog/2025/11/25/java21-interview-preparation-plan/)
+[Singleton Pattern]({{ site.baseurl }}/blog/2026/07/26/design-patterns-singleton/)
+```
+
+❌ Common mistakes to avoid:
+```markdown
+# Wrong prefix (category name instead of /blog/)
+{{ site.baseurl }}/interview/2026/07/26/design-patterns-singleton
+
+# Wrong date (doesn't match filename)
+{{ site.baseurl }}/blog/2026/07/27/design-patterns-singleton/
+
+# Missing trailing slash
+{{ site.baseurl }}/blog/2026/07/26/design-patterns-singleton
 ```
 
 **Repo links** — link directly to GitHub with full path:
@@ -749,7 +772,7 @@ All examples in this post are runnable. Find them in the repository:
 ---
 
 *This is part of our Java 21 Interview Preparation series. Check out the
-[full preparation plan]({{ site.baseurl }}/interview/2025/11/25/java21-interview-preparation-plan) for more topics.*
+[full preparation plan]({{ site.baseurl }}/blog/2025/11/25/java21-interview-preparation-plan/) for more topics.*
 ```
 
 Use the correct series footer for the subject:
@@ -791,7 +814,7 @@ cd blog && bundle exec jekyll serve --config _config.yml,_config.local.yml
 [ ] No blank lines inside <div> tags in code-tabs
 [ ] data-lang attribute present on all tab buttons
 [ ] Code blocks are 10-30 lines each
-[ ] Internal links use {{ site.baseurl }}
+[ ] Internal links use `{{ site.baseurl }}/blog/YYYY/MM/DD/slug/` format (prefix `/blog/`, date from filename, trailing slash)
 [ ] Post ends with Code Samples section linking to GitHub repo paths
 [ ] Previewed locally with Jekyll before committing
 ```
