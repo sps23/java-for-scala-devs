@@ -1,0 +1,76 @@
+---
+layout: default
+---
+
+<!-- Template 1: WIP / Coming Soon Post Page -->
+<header class="site-header">
+  <div class="header-wrapper">
+    <a href="{{ '/' | relative_url }}" class="site-title">
+      <img src="{{ '/assets/images/logo-blue.svg' | relative_url }}" alt="Java for Scala Developers logo" class="site-logo-img">
+      {{ site.title }}
+    </a>
+
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      ☰
+    </button>
+
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <a href="{{ site.baseurl }}/about/">About</a>
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs" target="_blank">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-content">
+  <article class="article">
+    <header class="article-header">
+      <h1 class="article-title">{{ page.title }}</h1>
+      <p class="article-meta">
+        {% if page.categories.size > 0 %}{{ page.categories | join: ", " }}{% endif %}
+      </p>
+      {% if page.tags.size > 0 %}
+      <div class="tags">
+        {% for tag in page.tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </header>
+
+    <div class="article-content">
+      <div class="wip-banner">
+        <span class="wip-banner-icon">🚧</span>
+        <div>
+          <strong>Coming Soon — We're Still Hammering This One Out</strong>
+          This post is on the roadmap and is being actively crafted. Think of it as
+          a movie trailer: the good stuff is coming, you just caught us before the
+          popcorn was ready. Check back soon — or bookmark the
+          <a href="{{ page.guide_url | default: site.baseurl }}">series guide</a>
+          to track all posts as they land.
+          <br>
+          <span class="wip-eta">⏳ &nbsp;Post in progress</span>
+        </div>
+      </div>
+
+      {{ content }}
+    </div>
+  </article>
+
+  <nav style="display: flex; justify-content: flex-start; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+    <a class="wip-back-link" href="{{ page.guide_url | default: site.baseurl }}">
+      ← Back to the Design Patterns Guide
+    </a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-wrapper">
+    <div class="footer-links">
+      <a href="https://github.com/{{ site.github_username }}/java-for-scala-devs">GitHub</a>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a>
+      <a href="{{ site.baseurl }}/about/">About</a>
+    </div>
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll.</p>
+  </div>
+</footer>

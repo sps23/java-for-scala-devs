@@ -174,7 +174,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Define a family of algorithms, encapsulate each one, and make them interchangeable. It's like having different strategies to solve a problem, and you pick the right one for the situation.
 
-**Read the full post:** [Strategy Pattern: Choosing Algorithms at Runtime]({{ site.baseurl }}/interview/2026/08/03/design-patterns-strategy)
+**Read the full post:** [Strategy Pattern: Choosing Algorithms at Runtime]({{ site.baseurl }}/blog/2026/08/29/design-patterns-strategy/)
 
 **What You'll Learn:** How to avoid massive if-else chains by using strategies, how to compose strategies, and how dependency injection often replaces explicit strategy switching. You'll see how functional programming (lambdas in Java, first-class functions in Scala) simplifies strategy implementation.
 
@@ -191,7 +191,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Define a one-to-many dependency where when one object changes state, all its dependents are notified automatically. It's the foundation for event-driven programming and reactive systems. When something important happens, tell everyone who cares.
 
-**Read the full post:** [Observer Pattern: Reacting to Changes]({{ site.baseurl }}/interview/2026/08/04/design-patterns-observer)
+**Read the full post:** [Observer Pattern: Reacting to Changes]({{ site.baseurl }}/blog/2026/08/29/design-patterns-observer/)
 
 **What You'll Learn:** How to implement observers without creating memory leaks, the dangers of strong vs. weak references, and how modern reactive frameworks (RxJava, ZIO) are sophisticated implementations of the observer pattern. You'll see how event listeners in GUI frameworks use this pattern, and how it powers real-time applications.
 
@@ -208,7 +208,7 @@ These patterns are about communication between objects—how they work together 
 
 **What It Is:** Encapsulate a request as an object, allowing you to parameterize clients with different requests, queue requests, and support undoable operations. It's like putting instructions in a bottle and passing it around—the recipient doesn't need to know who sent it, just how to execute it.
 
-**Read the full post:** [Command Pattern: Making Requests into Objects]({{ site.baseurl }}/interview/2026/08/05/design-patterns-command)
+**Read the full post:** [Command Pattern: Making Requests into Objects]({{ site.baseurl }}/blog/2026/08/29/design-patterns-command/)
 
 **What You'll Learn:** How to implement undo/redo systems, how to queue and execute commands, and how command patterns enable macro recording and complex transaction handling. You'll see how this pattern is essential for implementing features like undo/redo, and how it differs from simple callbacks.
 

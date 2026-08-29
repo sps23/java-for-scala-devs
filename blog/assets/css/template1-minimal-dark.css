@@ -545,6 +545,82 @@ tr:last-child td {
   margin-bottom: var(--space-xs);
 }
 
+/* WIP / Coming Soon Pages */
+.wip-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(88, 166, 255, 0.08);
+  border: 1px solid rgba(88, 166, 255, 0.30);
+  border-radius: 8px;
+  padding: 1.2rem 1.4rem;
+  margin: 2rem 0 2.5rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.wip-banner-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.wip-banner strong {
+  color: #58a6ff;
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.wip-eta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(88, 166, 255, 0.10);
+  border: 1px solid rgba(88, 166, 255, 0.20);
+  border-radius: 20px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.85rem;
+  color: #58a6ff;
+  margin-top: 1rem;
+}
+
+.wip-what-you-learn {
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.4rem 1.6rem;
+  margin: 1.5rem 0;
+}
+
+.wip-what-you-learn h3 {
+  color: var(--accent-color);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+.wip-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.wip-back-link:hover {
+  border-bottom-color: var(--accent-color);
+  text-decoration: none;
+}
+
 /* Footer */
 .site-footer {
   background-color: var(--bg-secondary);
