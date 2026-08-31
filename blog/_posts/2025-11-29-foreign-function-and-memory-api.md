@@ -56,87 +56,85 @@ public class NativeLib {
 
 With the FFM API, the same functionality is pure Java:
 
-### Java 21
+### FFM API Example
 
-```java
-public class NativeLibFFM {
-    private static final Linker LINKER = Linker.nativeLinker();
-    private static final SymbolLookup STDLIB = LINKER.defaultLookup();
+<div class="code-tabs" data-tabs-id="ffm-api-example">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+<button class="tab-button" data-tab="scala3" data-lang="Scala 3">Scala 3</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NativeLibFFM</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">Linker</span> <span class="n">LINKER</span> <span class="o">=</span> <span class="nc">Linker</span><span class="o">.</span><span class="na">nativeLinker</span><span class="o">();</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">SymbolLookup</span> <span class="n">STDLIB</span> <span class="o">=</span> <span class="n">LINKER</span><span class="o">.</span><span class="na">defaultLookup</span><span class="o">();</span>
 
-    public static long strlen(String s) throws Throwable {
-        // Find the native strlen function
-        MemorySegment strlenSymbol = STDLIB.find("strlen")
-                .orElseThrow(() -> new RuntimeException("strlen not found"));
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">long</span> <span class="nf">strlen</span><span class="o">(</span><span class="nc">String</span> <span class="n">s</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="nc">MemorySegment</span> <span class="n">strlenSymbol</span> <span class="o">=</span> <span class="n">STDLIB</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="s">"strlen"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">orElseThrow</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">RuntimeException</span><span class="o">(</span><span class="s">"strlen not found"</span><span class="o">));</span>
 
-        // Define the function signature: size_t strlen(const char*)
-        FunctionDescriptor descriptor = FunctionDescriptor.of(
-                ValueLayout.JAVA_LONG,  // return type (size_t)
-                ValueLayout.ADDRESS     // parameter (const char*)
-        );
+        <span class="nc">FunctionDescriptor</span> <span class="n">descriptor</span> <span class="o">=</span> <span class="nc">FunctionDescriptor</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                <span class="nc">ValueLayout</span><span class="o">.</span><span class="na">JAVA_LONG</span><span class="o">,</span>
+                <span class="nc">ValueLayout</span><span class="o">.</span><span class="na">ADDRESS</span>
+        <span class="o">);</span>
 
-        // Create a method handle for the native function
-        MethodHandle strlen = LINKER.downcallHandle(strlenSymbol, descriptor);
+        <span class="nc">MethodHandle</span> <span class="n">strlen</span> <span class="o">=</span> <span class="n">LINKER</span><span class="o">.</span><span class="na">downcallHandle</span><span class="o">(</span><span class="n">strlenSymbol</span><span class="o">,</span> <span class="n">descriptor</span><span class="o">);</span>
 
-        // Call the native function with an Arena for memory management
-        try (Arena arena = Arena.ofConfined()) {
-            MemorySegment nativeString = arena.allocateUtf8String(s);
-            return (long) strlen.invokeExact(nativeString);
-        }
-    }
-}
-```
+        <span class="k">try</span> <span class="o">(</span><span class="nc">Arena</span> <span class="n">arena</span> <span class="o">=</span> <span class="nc">Arena</span><span class="o">.</span><span class="na">ofConfined</span><span class="o">())</span> <span class="o">{</span>
+            <span class="nc">MemorySegment</span> <span class="n">nativeString</span> <span class="o">=</span> <span class="n">arena</span><span class="o">.</span><span class="na">allocateUtf8String</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+            <span class="k">return</span> <span class="o">(</span><span class="kt">long</span><span class="o">)</span> <span class="n">strlen</span><span class="o">.</span><span class="na">invokeExact</span><span class="o">(</span><span class="n">nativeString</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">object</span> <span class="nc">NativeLibFFM</span> <span class="p">{</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">linker</span><span class="p">:</span> <span class="nc">Linker</span> <span class="p">=</span> <span class="nc">Linker</span><span class="p">.</span><span class="n">nativeLinker</span><span class="p">()</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">stdlib</span><span class="p">:</span> <span class="nc">SymbolLookup</span> <span class="p">=</span> <span class="n">linker</span><span class="p">.</span><span class="n">defaultLookup</span><span class="p">()</span>
 
-### Scala 3
+    <span class="k">fun</span> <span class="nf">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nc">String</span><span class="p">):</span> <span class="nc">Long</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">strlenSymbol</span> <span class="p">=</span> <span class="n">stdlib</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="s">"strlen"</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">orElseThrow</span> <span class="p">{</span> <span class="nc">RuntimeException</span><span class="p">(</span><span class="s">"strlen not found"</span><span class="p">)</span> <span class="p">}</span>
 
-```scala
-object NativeLibFFM:
-  private val linker: Linker = Linker.nativeLinker()
-  private val stdlib: SymbolLookup = linker.defaultLookup()
+        <span class="k">val</span> <span class="py">descriptor</span> <span class="p">=</span> <span class="nc">FunctionDescriptor</span><span class="p">.</span><span class="nf">of</span><span class="p">(</span>
+            <span class="nc">ValueLayout</span><span class="p">.</span><span class="n">JAVA_LONG</span><span class="p">,</span>
+            <span class="nc">ValueLayout</span><span class="p">.</span><span class="n">ADDRESS</span>
+        <span class="p">)</span>
 
-  def strlen(s: String): Long =
-    val strlenSymbol = stdlib.find("strlen")
-      .orElseThrow(() => RuntimeException("strlen not found"))
+        <span class="k">val</span> <span class="py">strlenHandle</span> <span class="p">=</span> <span class="n">linker</span><span class="p">.</span><span class="nf">downcallHandle</span><span class="p">(</span><span class="n">strlenSymbol</span><span class="p">,</span> <span class="n">descriptor</span><span class="p">)</span>
 
-    // Function signature: size_t strlen(const char*)
-    val descriptor = FunctionDescriptor.of(
-      ValueLayout.JAVA_LONG,  // return type
-      ValueLayout.ADDRESS     // parameter
-    )
+        <span class="k">return</span> <span class="nc">Arena</span><span class="p">.</span><span class="nf">ofConfined</span><span class="p">().</span><span class="nf">use</span> <span class="p">{</span> <span class="n">arena</span> <span class="p">-&gt;</span>
+            <span class="k">val</span> <span class="py">nativeString</span> <span class="p">=</span> <span class="n">arena</span><span class="p">.</span><span class="nf">allocateUtf8String</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">strlenHandle</span><span class="p">.</span><span class="nf">invokeExact</span><span class="p">(</span><span class="n">nativeString</span><span class="p">)</span> <span class="k">as</span> <span class="nc">Long</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala3">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">object</span> <span class="nc">NativeLibFFM</span><span class="k">:</span>
+  <span class="k">private</span> <span class="k">val</span> <span class="nv">linker</span><span class="k">:</span> <span class="kt">Linker</span> <span class="o">=</span> <span class="nc">Linker</span><span class="o">.</span><span class="py">nativeLinker</span><span class="o">()</span>
+  <span class="k">private</span> <span class="k">val</span> <span class="nv">stdlib</span><span class="k">:</span> <span class="kt">SymbolLookup</span> <span class="o">=</span> <span class="n">linker</span><span class="o">.</span><span class="py">defaultLookup</span><span class="o">()</span>
 
-    val strlenHandle = linker.downcallHandle(strlenSymbol, descriptor)
+  <span class="k">def</span> <span class="nf">strlen</span><span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Long</span> <span class="o">=</span>
+    <span class="k">val</span> <span class="nv">strlenSymbol</span> <span class="k">=</span> <span class="n">stdlib</span><span class="o">.</span><span class="py">find</span><span class="o">(</span><span class="s">"strlen"</span><span class="o">)</span>
+      <span class="o">.</span><span class="py">orElseThrow</span><span class="o">(()</span> <span class="k">=&gt;</span> <span class="nc">RuntimeException</span><span class="o">(</span><span class="s">"strlen not found"</span><span class="o">))</span>
 
-    Using.resource(Arena.ofConfined()) { arena =>
-      val nativeString = arena.allocateUtf8String(s)
-      strlenHandle.invokeExact(nativeString).asInstanceOf[Long]
-    }
-```
+    <span class="k">val</span> <span class="nv">descriptor</span> <span class="k">=</span> <span class="nc">FunctionDescriptor</span><span class="o">.</span><span class="py">of</span><span class="o">(</span>
+      <span class="nc">ValueLayout</span><span class="o">.</span><span class="py">JAVA_LONG</span><span class="o">,</span>
+      <span class="nc">ValueLayout</span><span class="o">.</span><span class="py">ADDRESS</span>
+    <span class="o">)</span>
 
-### Kotlin
+    <span class="k">val</span> <span class="nv">strlenHandle</span> <span class="k">=</span> <span class="n">linker</span><span class="o">.</span><span class="py">downcallHandle</span><span class="o">(</span><span class="n">strlenSymbol</span><span class="o">,</span> <span class="n">descriptor</span><span class="o">)</span>
 
-```kotlin
-object NativeLibFFM {
-    private val linker: Linker = Linker.nativeLinker()
-    private val stdlib: SymbolLookup = linker.defaultLookup()
-
-    fun strlen(s: String): Long {
-        val strlenSymbol = stdlib.find("strlen")
-            .orElseThrow { RuntimeException("strlen not found") }
-
-        // Function signature: size_t strlen(const char*)
-        val descriptor = FunctionDescriptor.of(
-            ValueLayout.JAVA_LONG,
-            ValueLayout.ADDRESS
-        )
-
-        val strlenHandle = linker.downcallHandle(strlenSymbol, descriptor)
-
-        return Arena.ofConfined().use { arena ->
-            val nativeString = arena.allocateUtf8String(s)
-            strlenHandle.invokeExact(nativeString) as Long
-        }
-    }
-}
-```
+    <span class="nc">Using</span><span class="o">.</span><span class="py">resource</span><span class="o">(</span><span class="nc">Arena</span><span class="o">.</span><span class="py">ofConfined</span><span class="o">())</span> <span class="o">{</span> <span class="n">arena</span> <span class="k">=&gt;</span>
+      <span class="k">val</span> <span class="nv">nativeString</span> <span class="k">=</span> <span class="n">arena</span><span class="o">.</span><span class="py">allocateUtf8String</span><span class="o">(</span><span class="n">s</span><span class="o">)</span>
+      <span class="n">strlenHandle</span><span class="o">.</span><span class="py">invokeExact</span><span class="o">(</span><span class="n">nativeString</span><span class="o">).</span><span class="py">asInstanceOf</span><span class="o">[</span><span class="kt">Long</span><span class="o">]</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
 ## Key FFM API Concepts
 
