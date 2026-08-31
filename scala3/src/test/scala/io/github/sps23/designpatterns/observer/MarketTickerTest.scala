@@ -7,7 +7,7 @@ import org.scalatest.matchers.should.Matchers
 class MarketTickerTest extends AnyFunSuite with Matchers:
 
   test("Observer should notify subscribers when a new price is published") {
-    val ticker = new MarketTicker
+    val ticker   = new MarketTicker
     val received = scala.collection.mutable.ListBuffer.empty[String]
     val observer = new ticker.PriceObserver:
       override def onPriceUpdate(update: ticker.PriceUpdate): Unit =
@@ -23,7 +23,7 @@ class MarketTickerTest extends AnyFunSuite with Matchers:
   }
 
   test("Observer should stop notifying unsubscribed listeners") {
-    val ticker = new MarketTicker
+    val ticker   = new MarketTicker
     val received = scala.collection.mutable.ListBuffer.empty[String]
     val observer = new ticker.PriceObserver:
       override def onPriceUpdate(update: ticker.PriceUpdate): Unit =
@@ -38,16 +38,18 @@ class MarketTickerTest extends AnyFunSuite with Matchers:
 
   test("Observer should notify multiple listeners with the same update") {
     val ticker = new MarketTicker
-    val first = scala.collection.mutable.ListBuffer.empty[String]
+    val first  = scala.collection.mutable.ListBuffer.empty[String]
     val second = scala.collection.mutable.ListBuffer.empty[String]
 
-    ticker.subscribe(new ticker.PriceObserver:
-      override def onPriceUpdate(update: ticker.PriceUpdate): Unit =
-        first += s"${update.symbol}:${update.price}"
+    ticker.subscribe(
+      new ticker.PriceObserver:
+        override def onPriceUpdate(update: ticker.PriceUpdate): Unit =
+          first += s"${update.symbol}:${update.price}"
     )
-    ticker.subscribe(new ticker.PriceObserver:
-      override def onPriceUpdate(update: ticker.PriceUpdate): Unit =
-        second += s"${update.symbol}:${update.price}"
+    ticker.subscribe(
+      new ticker.PriceObserver:
+        override def onPriceUpdate(update: ticker.PriceUpdate): Unit =
+          second += s"${update.symbol}:${update.price}"
     )
 
     ticker.publishPrice("NVDA", BigDecimal("129.10"))
