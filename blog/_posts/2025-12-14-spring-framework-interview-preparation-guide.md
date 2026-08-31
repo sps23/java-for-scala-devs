@@ -73,7 +73,7 @@ These are the core Spring concepts that every developer should know cold. If you
 
 **What It Is:** Spring Boot takes the pain out of Spring configuration by providing sensible defaults and auto-configuration. It's the modern way to build Spring applications.
 
-**Read the full post:** [Getting Started with Spring Boot and Auto-Configuration]({{ site.baseurl }}/blog/2025/12/15/spring-boot-basics-autoconfiguration.html)
+**Read the full post:** [Spring Boot Basics and Auto-Configuration]({{ site.baseurl }}{% link _posts/2026-08-31-spring-boot-basics-autoconfiguration.md %})
 
 **What You'll Learn:** How Spring Boot auto-configuration works, what `@SpringBootApplication` does under the hood, how to customize auto-configuration, working with `application.properties` and `application.yml`, and how to create a production-ready Spring Boot application from scratch.
 

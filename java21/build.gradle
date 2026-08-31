@@ -23,9 +23,12 @@ tasks.withType(Test).configureEach {
 
 dependencies {
     def springVersion = '7.0.8'
+    def springBootVersion = '3.4.10'
 
     implementation "org.springframework:spring-context:${springVersion}"
     implementation "org.springframework:spring-web:${springVersion}"
+    implementation "org.springframework.boot:spring-boot:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
     // @PostConstruct/@PreDestroy (JSR-250) used for annotation-based bean lifecycle callbacks
     implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 
