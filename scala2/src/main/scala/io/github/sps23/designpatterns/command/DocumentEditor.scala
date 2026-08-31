@@ -11,7 +11,10 @@ final class DocumentEditor {
   }
 
   def delete(start: Int, end: Int): Unit = {
-    require(start >= 0 && end >= start && end <= content.length, s"Range is invalid: [$start, $end]")
+    require(
+      start >= 0 && end >= start && end <= content.length,
+      s"Range is invalid: [$start, $end]"
+    )
     content.delete(start, end)
   }
 
@@ -23,7 +26,8 @@ trait Command {
   def undo(): Unit
 }
 
-final case class InsertTextCommand(editor: DocumentEditor, index: Int, value: String) extends Command {
+final case class InsertTextCommand(editor: DocumentEditor, index: Int, value: String)
+    extends Command {
   override def execute(): Unit = editor.insert(index, value)
 
   override def undo(): Unit = editor.delete(index, index + value.length)

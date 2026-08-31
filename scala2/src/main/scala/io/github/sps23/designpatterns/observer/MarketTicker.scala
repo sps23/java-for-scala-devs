@@ -11,7 +11,7 @@ class MarketTicker {
     def onPriceUpdate(update: PriceUpdate): Unit
   }
 
-  private val observers = mutable.Set.empty[PriceObserver]
+  private val observers    = mutable.Set.empty[PriceObserver]
   private val latestPrices = mutable.Map.empty[String, BigDecimal]
 
   def subscribe(observer: PriceObserver): Unit = observers += observer
