@@ -17,7 +17,8 @@ class MarketTickerTest {
     void shouldNotifySubscribersWhenPriceChanges() {
         var ticker = new MarketTicker();
         var received = new ArrayList<String>();
-        MarketTicker.PriceObserver observer = update -> received.add(update.symbol() + ":" + update.price());
+        MarketTicker.PriceObserver observer = update -> received
+                .add(update.symbol() + ":" + update.price());
 
         ticker.subscribe(observer);
         var update = ticker.publishPrice("AAPL", new BigDecimal("198.75"));
@@ -33,7 +34,8 @@ class MarketTickerTest {
     void shouldStopNotifyingUnsubscribedObservers() {
         var ticker = new MarketTicker();
         var received = new ArrayList<String>();
-        MarketTicker.PriceObserver observer = update -> received.add(update.symbol() + ":" + update.price());
+        MarketTicker.PriceObserver observer = update -> received
+                .add(update.symbol() + ":" + update.price());
 
         ticker.subscribe(observer);
         ticker.unsubscribe(observer);

@@ -1,9 +1,9 @@
 package io.github.sps23.designpatterns.observer
 
-import java.math.BigDecimal
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 
 @DisplayName("MarketTicker Kotlin Tests")
 class MarketTickerTest {
