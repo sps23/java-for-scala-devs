@@ -29,14 +29,16 @@ class AtomicOperationsExamplesTest extends AnyFunSuite with Matchers:
       () =>
         await(start)
         alexClaimed.set(office.claimTicket("Alex"))
-        finished.countDown(),
+        finished.countDown()
+      ,
       "alex-claimer"
     )
     val second = new Thread(
       () =>
         await(start)
         samClaimed.set(office.claimTicket("Sam"))
-        finished.countDown(),
+        finished.countDown()
+      ,
       "sam-claimer"
     )
 
@@ -55,9 +57,9 @@ class AtomicOperationsExamplesTest extends AnyFunSuite with Matchers:
   }
 
   test("Should show that separate atomics do not make a full sequence atomic") {
-    val office          = AtomicOperationsExamples.SplitAtomicTicketOffice(1)
-    val seenRemaining   = new AtomicInteger(-1)
-    val sawSoldOutFlag  = new AtomicBoolean(true)
+    val office         = AtomicOperationsExamples.SplitAtomicTicketOffice(1)
+    val seenRemaining  = new AtomicInteger(-1)
+    val sawSoldOutFlag = new AtomicBoolean(true)
 
     val claimed = office.claimLastTicket {
       seenRemaining.set(office.remainingTicketsValue)

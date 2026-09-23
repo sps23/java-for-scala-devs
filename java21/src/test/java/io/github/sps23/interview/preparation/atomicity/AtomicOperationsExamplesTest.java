@@ -28,7 +28,7 @@ class AtomicOperationsExamplesTest {
     @Test
     @DisplayName("Should allow only one buyer to claim the last ticket")
     void shouldAllowOnlyOneBuyerToClaimTheLastTicket() {
-        var office = new AtomicOperationsExamples.AtomicTicketOffice(1, 4_500L);
+        var office = new AtomicTicketOffice(1, 4_500L);
         var start = new CountDownLatch(1);
         var finished = new CountDownLatch(2);
         var alexClaimed = new AtomicBoolean();
@@ -60,9 +60,41 @@ class AtomicOperationsExamplesTest {
     }
 
     @Test
+    @DisplayName("Should atomically replace the complete ticket snapshot")
+    void shouldAtomicallyReplaceTheCompleteTicketSnapshot() {
+        var office = new AtomicReferenceTicketOffice(1);
+        var start = new CountDownLatch(1);
+        var finished = new CountDownLatch(2);
+        var alexClaimed = new AtomicBoolean();
+        var samClaimed = new AtomicBoolean();
+
+        var first = new Thread(() -> {
+            await(start);
+            alexClaimed.set(office.claimTicket("Alex"));
+            finished.countDown();
+        }, "atomic-reference-alex-claimer");
+        var second = new Thread(() -> {
+            await(start);
+            samClaimed.set(office.claimTicket("Sam"));
+            finished.countDown();
+        }, "atomic-reference-sam-claimer");
+
+        first.start();
+        second.start();
+        start.countDown();
+        await(finished);
+
+        assertEquals(1, countSuccessfulClaims(alexClaimed.get(), samClaimed.get()));
+        var snapshot = office.snapshot();
+        assertEquals(0, snapshot.ticketsRemaining());
+        assertFalse(snapshot.sellingOpen());
+        assertTrue(Set.of("Alex", "Sam").contains(snapshot.lastBuyer()));
+    }
+
+    @Test
     @DisplayName("Should show that separate atomics do not make a full sequence atomic")
     void shouldShowThatSeparateAtomicsDoNotMakeAFullSequenceAtomic() {
-        var office = new AtomicOperationsExamples.SplitAtomicTicketOffice(1);
+        var office = new SplitAtomicTicketOffice(1);
         var seenRemaining = new AtomicInteger(-1);
         var sawSoldOutFlag = new AtomicBoolean(true);
 
