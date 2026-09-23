@@ -128,8 +128,6 @@ If step 2 fails, you now have half-applied business state. Concurrent collection
 - Use `CopyOnWriteArrayList` only when writes are rare and reader stability matters more than write cost.
 - When one operation spans multiple structures, coordinate with a higher-level lock or transaction strategy.
 
-## Interview Q&A
-
 <div class="faq-list">
   <details class="faq-item" open>
     <summary>
@@ -187,6 +185,6 @@ All examples in this post are runnable:
 ---
 
 *This is part of our Java 21 Interview Preparation series. Start with [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}).
-Next related posts: [Atomic Operations: Defuse the Race Condition]({{ site.baseurl }}{% link _posts/2026-09-23-atomic-operations-defuse-the-race-condition.md %}),
-[Immutability in Java 21: Beyond Records]({{ site.baseurl }}{% link _posts/2026-09-23-immutability-in-java-21.md %}),
+Next related posts: [Collection Factory Methods and Stream Basics]({{ site.baseurl }}{% link _posts/2025-11-29-collection-factory-methods-and-stream-basics.md %}),
+[CompletableFuture and Asynchronous Programming]({{ site.baseurl }}{% link _posts/2025-11-29-completablefuture-and-asynchronous-programming.md %}),
 and [Virtual Threads and Structured Concurrency]({{ site.baseurl }}{% link _posts/2025-11-29-virtual-threads-and-structured-concurrency.md %}).*
