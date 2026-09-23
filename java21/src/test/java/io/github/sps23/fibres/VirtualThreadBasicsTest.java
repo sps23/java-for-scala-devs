@@ -2,7 +2,10 @@ package io.github.sps23.fibres;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,12 +22,21 @@ class VirtualThreadBasicsTest {
     @Test
     @DisplayName("fetchUserAndOrders runs concurrently (not sequentially)")
     void fetchUserAndOrdersRunsConcurrently() throws Exception {
-        long start = System.currentTimeMillis();
-        VirtualThreadBasics.fetchUserAndOrders();
-        long elapsed = System.currentTimeMillis() - start;
-        // Sequential would be 100 + 80 = 180ms; parallel finishes in ~100ms
-        assertTrue(elapsed < 170,
-                "Expected concurrent execution in <170ms but took " + elapsed + "ms");
+        CountDownLatch userStarted = new CountDownLatch(1);
+        CountDownLatch ordersStarted = new CountDownLatch(1);
+
+        String result = assertTimeoutPreemptively(Duration.ofSeconds(1),
+                () -> VirtualThreadBasics.fetchUserAndOrders(() -> {
+                    userStarted.countDown();
+                    assertTrue(ordersStarted.await(1, TimeUnit.SECONDS));
+                    return "Alice";
+                }, () -> {
+                    ordersStarted.countDown();
+                    assertTrue(userStarted.await(1, TimeUnit.SECONDS));
+                    return List.of("order-1", "order-2");
+                }));
+
+        assertEquals("Alice has 2 orders", result);
     }
 
     @Test

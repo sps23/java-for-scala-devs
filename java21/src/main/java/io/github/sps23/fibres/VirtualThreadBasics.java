@@ -1,6 +1,7 @@
 package io.github.sps23.fibres;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -42,9 +43,16 @@ public class VirtualThreadBasics {
      *             if either task fails
      */
     public static String fetchUserAndOrders() throws Exception {
+        return fetchUserAndOrders(VirtualThreadBasics::fetchUser, VirtualThreadBasics::fetchOrders);
+    }
+
+    // Callables keep the fetch operations injectable so the test can verify
+    // concurrency deterministically.
+    static String fetchUserAndOrders(Callable<String> userFetcher,
+            Callable<List<String>> ordersFetcher) throws Exception {
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
-            Future<String> userFuture = executor.submit(VirtualThreadBasics::fetchUser);
-            Future<List<String>> orderFuture = executor.submit(VirtualThreadBasics::fetchOrders);
+            Future<String> userFuture = executor.submit(userFetcher);
+            Future<List<String>> orderFuture = executor.submit(ordersFetcher);
             String user = userFuture.get();
             List<String> orders = orderFuture.get();
             return user + " has " + orders.size() + " orders";
