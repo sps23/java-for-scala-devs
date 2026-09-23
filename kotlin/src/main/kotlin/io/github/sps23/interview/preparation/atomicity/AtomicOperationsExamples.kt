@@ -119,7 +119,9 @@ object AtomicOperationsExamples {
             require(initialTickets >= 0) { "initialTickets cannot be negative" }
         }
 
-        fun claimLastTicket(beforeSoldOutFlagUpdate: (() -> Unit)? = null): Boolean {
+        fun claimLastTicket(): Boolean = claimLastTicket { }
+
+        internal fun claimLastTicket(beforeSoldOutFlagUpdate: () -> Unit): Boolean {
             while (true) {
                 val observed = remainingTickets.get()
                 if (observed == 0) {
@@ -128,7 +130,7 @@ object AtomicOperationsExamples {
                 }
 
                 if (remainingTickets.compareAndSet(observed, observed - 1)) {
-                    beforeSoldOutFlagUpdate?.invoke()
+                    beforeSoldOutFlagUpdate()
                     if (observed - 1 == 0) {
                         soldOut.set(true)
                     }

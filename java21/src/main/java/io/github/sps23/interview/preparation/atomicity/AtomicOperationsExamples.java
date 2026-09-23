@@ -155,7 +155,7 @@ public final class AtomicOperationsExamples {
             });
         }
 
-        public boolean claimLastTicket(Runnable beforeSoldOutFlagUpdate) {
+        boolean claimLastTicket(Runnable beforeSoldOutFlagUpdate) {
             Objects.requireNonNull(beforeSoldOutFlagUpdate, "beforeSoldOutFlagUpdate cannot be null");
 
             while (true) {
