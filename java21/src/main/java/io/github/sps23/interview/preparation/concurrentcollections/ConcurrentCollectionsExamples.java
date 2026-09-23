@@ -116,8 +116,8 @@ public final class ConcurrentCollectionsExamples {
     public record CopyOnWriteSnapshot(List<String> iterated, List<String> finalView) {
     }
 
-    private static void stagedHashMapIncrement(HashMap<String, Integer> sharedPot, CountDownLatch start,
-            CountDownLatch bothRead, CountDownLatch allowWrite) {
+    private static void stagedHashMapIncrement(HashMap<String, Integer> sharedPot,
+            CountDownLatch start, CountDownLatch bothRead, CountDownLatch allowWrite) {
         await(start);
         var observed = sharedPot.get("spoons");
         bothRead.countDown();

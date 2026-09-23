@@ -86,7 +86,7 @@ The repository includes a mirrored `ConcurrentCollectionsExamples` implementatio
 The same file also includes:
 
 - `drainOrdersWithConcurrentLinkedQueue()` for non-blocking FIFO draining.
-- `drainOrdersWithBlockingQueue()` for consumer-waits-for-work flow.
+- `drainOrdersWithBlockingQueue()` for consumer-waits-with-timeout flow.
 - `copyOnWriteWaitersSnapshot()` to show snapshot iteration (`Ana`, `Ben`) while writes (`Cara`) happen concurrently.
 
 Those tests make the semantics explicit instead of hand-wavy interview claims.
@@ -144,7 +144,7 @@ If step 2 fails, you now have half-applied business state. Concurrent collection
       <span class="faq-toggle" aria-hidden="true"></span>
     </summary>
     <div class="faq-answer">
-      Choose <code>BlockingQueue</code> when consumers should wait for work instead of spinning or sleeping. It simplifies producer/consumer pipelines because <code>take()</code> naturally blocks until data arrives. Use <code>ConcurrentLinkedQueue</code> when you want non-blocking behavior and can handle empty polls explicitly.
+      Choose <code>BlockingQueue</code> when consumers should wait for work instead of spinning or sleeping. In this repository we use a timed <code>poll</code>, so the consumer can still fail fast instead of hanging forever when no new item appears. Use <code>ConcurrentLinkedQueue</code> when you want non-blocking behavior and can handle empty polls explicitly.
     </div>
   </details>
   <details class="faq-item" open>
