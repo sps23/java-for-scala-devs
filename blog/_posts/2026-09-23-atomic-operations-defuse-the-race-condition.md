@@ -3,7 +3,6 @@ layout: post
 title: "Atomic Operations: Defuse the Race Condition"
 description: "Learn how Java 21 atomics prevent lost updates, when to use compare-and-set or LongAdder, and how the same JVM atomic patterns map to Scala 3 and Kotlin."
 date: 2026-09-23 13:00:00 +0000
-updated: 2026-09-23 13:00:00 +0000
 categories: [concurrency]
 tags: [java, java21, scala, scala3, kotlin, atomicity, atomics, concurrency, compare-and-set, longadder]
 ---
@@ -95,7 +94,6 @@ The repository examples use one immutable `TicketSnapshot` value and publish upd
 <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="n">claimTicket</span><span class="o">(</span><span class="n">buyer</span><span class="o">:</span> <span class="kt">String</span><span class="o">):</span> <span class="kt">Boolean</span> <span class="o">=</span>
   <span class="k">val</span> <span class="n">normalizedBuyer</span> <span class="o">=</span> <span class="n">normalizeBuyer</span><span class="o">(</span><span class="n">buyer</span><span class="o">)</span>
   <span class="n">claimAttempts</span><span class="o">.</span><span class="n">increment</span><span class="o">()</span>
-
   <span class="nd">@tailrec</span>
   <span class="k">def</span> <span class="n">attempt</span><span class="o">():</span> <span class="kt">Boolean</span> <span class="o">=</span>
     <span class="k">val</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">ticketState</span><span class="o">.</span><span class="n">get</span><span class="o">()</span>
@@ -110,7 +108,6 @@ The repository examples use one immutable `TicketSnapshot` value and publish upd
         <span class="n">soldOut</span><span class="o">.</span><span class="n">set</span><span class="o">(</span><span class="n">updated</span><span class="o">.</span><span class="n">ticketsRemaining</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
         <span class="kc">true</span>
       <span class="k">else</span> <span class="n">attempt</span><span class="o">()</span>
-
   <span class="n">attempt</span><span class="o">()</span>
 </code></pre></div></div>
 <p><a href="https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamples.scala">View full Scala example</a></p>
@@ -265,4 +262,4 @@ All examples in this post are runnable. Find them in the repository:
 
 ---
 
-*This is part of our [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [CompletableFuture and Asynchronous Programming]({{ site.baseurl }}{% link _posts/2025-11-29-completablefuture-and-asynchronous-programming.md %}), [Stream API Advanced Operations]({{ site.baseurl }}{% link _posts/2025-11-29-stream-api-advanced-operations.md %}), and [Virtual Threads and Structured Concurrency]({{ site.baseurl }}{% link _posts/2025-11-29-virtual-threads-and-structured-concurrency.md %}).*
+*This is part of our [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Stream API Advanced Operations]({{ site.baseurl }}{% link _posts/2025-11-29-stream-api-advanced-operations.md %}), [Virtual Threads and Structured Concurrency]({{ site.baseurl }}{% link _posts/2025-11-29-virtual-threads-and-structured-concurrency.md %}), and [String Templates Preview]({{ site.baseurl }}{% link _posts/2025-11-29-string-templates-preview.md %}).*
