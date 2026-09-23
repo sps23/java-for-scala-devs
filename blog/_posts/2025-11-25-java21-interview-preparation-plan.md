@@ -3,6 +3,7 @@ layout: post
 title: "Java 21 Interview Preparation Guide - Your Roadmap to Success"
 description: "Comprehensive Java 21 interview preparation guide for senior developers - covers Records, Virtual Threads, Pattern Matching, and more modern Java features with actual blog posts and interview questions."
 date: 2025-11-25 20:00:00 +0000
+updated: 2026-09-23 13:00:00 +0000
 categories: [interview]
 tags: [java, java21, interview, preparation, senior-developer, roadmap]
 ---
@@ -159,7 +160,24 @@ You know the basics. Now let's talk about the features that separate "knows Java
 
 ---
 
-### 4. Stream API Advanced Operations
+### 4. Atomic Operations and Race Conditions
+
+**What It Is:** Protect shared mutable state when multiple threads try to change the same value at once.
+
+**Read the full post:** [Atomic Operations: Defuse the Race Condition]({{ site.baseurl }}/blog/2026/09/23/atomic-operations-defuse-the-race-condition/)
+
+**What You'll Learn:** This post explains why `counter++` can still lose updates even when the field is `volatile`, how `AtomicInteger`, `AtomicLong`, `AtomicBoolean`, `AtomicReference`, and `LongAdder` fit different jobs, and how compare-and-set prevents double-selling the last ticket. It also shows the boundary of atomicity: one atomic variable does not make a whole sequence atomic.
+
+**Interview Questions You Might Face:**
+- "Why doesn't `volatile` make `counter++` thread-safe?"
+- "When would you use `AtomicReference` instead of several smaller atomics?"
+- "Explain compare-and-set in plain English."
+- "What's the difference between `AtomicLong` and `LongAdder`?"
+- "How would you stop two buyers from claiming the last available ticket?"
+
+---
+
+### 5. Stream API Advanced Operations
 
 **What It Is:** Beyond basic filtering and mapping—custom collectors, parallel streams, and complex data analysis.
 
