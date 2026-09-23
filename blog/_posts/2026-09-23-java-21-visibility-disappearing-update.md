@@ -3,7 +3,6 @@ layout: post
 title: "Java 21 Visibility: The Case of the Disappearing Update"
 description: "Understand Java 21 visibility with volatile, happens-before, and why counter++ still races, with direct JVM comparisons to Scala 3 and Kotlin."
 date: 2026-09-23 15:00:00 +0000
-updated: 2026-09-23 15:00:00 +0000
 categories: [concurrency]
 tags: [java, java21, scala, scala3, kotlin, visibility, volatile, java-memory-model, happens-before, concurrency]
 ---
@@ -123,7 +122,7 @@ So the rule is: immutable values reduce mutation risk, and visibility rules make
 
 </div>
 
-## Visibility in Practice:
+## Visibility in Practice
 
 <div class="faq-list">
   <details class="faq-item" open>
@@ -174,12 +173,12 @@ For Scala developers moving to Java 21, visibility is the missing rule behind ma
 ## Code Samples
 
 All examples in this post are runnable. Find them in the repository:
-- [Java 21 VisibilityExamples](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/visibility/VisibilityExamples.java)
-- [Scala 3 VisibilityExamples](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/visibility/VisibilityExamples.scala)
-- [Kotlin VisibilityExamples](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/visibility/VisibilityExamples.kt)
-- [Java 21 tests](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/interview/preparation/visibility/VisibilityExamplesTest.java)
-- [Scala 3 tests](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/test/scala/io/github/sps23/interview/preparation/visibility/VisibilityExamplesTest.scala)
-- [Kotlin tests](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/test/kotlin/io/github/sps23/interview/preparation/visibility/VisibilityExamplesTest.kt)
+- [Java 21 VisibilityExamples](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/interview/preparation/visibility/VisibilityExamples.java)
+- [Scala 3 VisibilityExamples](https://github.com/sps23/java-for-scala-devs/tree/main/scala3/src/main/scala/io/github/sps23/interview/preparation/visibility/VisibilityExamples.scala)
+- [Kotlin VisibilityExamples](https://github.com/sps23/java-for-scala-devs/tree/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/visibility/VisibilityExamples.kt)
+- [Java 21 tests](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/test/java/io/github/sps23/interview/preparation/visibility/VisibilityExamplesTest.java)
+- [Scala 3 tests](https://github.com/sps23/java-for-scala-devs/tree/main/scala3/src/test/scala/io/github/sps23/interview/preparation/visibility/VisibilityExamplesTest.scala)
+- [Kotlin tests](https://github.com/sps23/java-for-scala-devs/tree/main/kotlin/src/test/kotlin/io/github/sps23/interview/preparation/visibility/VisibilityExamplesTest.kt)
 
 ---
 
