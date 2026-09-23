@@ -150,7 +150,14 @@ public final class AtomicOperationsExamples {
             this.soldOut.set(initialTickets == 0);
         }
 
+        public boolean claimLastTicket() {
+            return claimLastTicket(() -> {
+            });
+        }
+
         public boolean claimLastTicket(Runnable beforeSoldOutFlagUpdate) {
+            Objects.requireNonNull(beforeSoldOutFlagUpdate, "beforeSoldOutFlagUpdate cannot be null");
+
             while (true) {
                 var observed = remainingTickets.get();
                 if (observed == 0) {
@@ -159,9 +166,7 @@ public final class AtomicOperationsExamples {
                 }
 
                 if (remainingTickets.compareAndSet(observed, observed - 1)) {
-                    if (beforeSoldOutFlagUpdate != null) {
-                        beforeSoldOutFlagUpdate.run();
-                    }
+                    beforeSoldOutFlagUpdate.run();
                     if (observed - 1 == 0) {
                         soldOut.set(true);
                     }
