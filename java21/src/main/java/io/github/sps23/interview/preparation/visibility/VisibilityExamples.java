@@ -12,11 +12,13 @@ public final class VisibilityExamples {
     }
 
     public static final class VolatileRunningFlag {
+        // volatile makes a write in one thread visible to the worker's read.
         private volatile boolean running = true;
 
         public Thread startWorker(CountDownLatch started, CountDownLatch stopped) {
             var worker = new Thread(() -> {
                 started.countDown();
+                // Without volatile, this loop could keep reading a stale true value.
                 while (running) {
                     Thread.onSpinWait();
                 }
@@ -27,11 +29,14 @@ public final class VisibilityExamples {
         }
 
         public void stop() {
+            // The volatile write publishes the stop request to the worker thread.
             running = false;
         }
     }
 
     public static final class VolatileCounter {
+        // volatile provides visibility, but it does not make counter++ one atomic
+        // action.
         private volatile int counter;
 
         public int loseOneIncrementDeterministically() {
@@ -50,6 +55,7 @@ public final class VisibilityExamples {
             second.start();
 
             start.countDown();
+            // Release both workers after they have reached the read phase.
             await(bothRead);
             allowWrite.countDown();
             join(first);
@@ -64,9 +70,12 @@ public final class VisibilityExamples {
         private void stagedIncrement(CountDownLatch start, CountDownLatch bothRead,
                 CountDownLatch allowWrite) {
             await(start);
+            // Both workers can observe the same value before either one writes.
             var observed = counter;
+            // This makes the read/read interleaving deterministic for the example.
             bothRead.countDown();
             await(allowWrite);
+            // Each worker writes observed + 1, so one increment is overwritten.
             counter = observed + 1;
         }
     }
@@ -91,7 +100,8 @@ public final class VisibilityExamples {
             }
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
-            throw new IllegalStateException("Interrupted while waiting for the demo thread", exception);
+            throw new IllegalStateException("Interrupted while waiting for the demo thread",
+                    exception);
         }
     }
 }

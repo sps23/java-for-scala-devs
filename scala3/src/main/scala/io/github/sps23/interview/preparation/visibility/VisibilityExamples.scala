@@ -5,12 +5,14 @@ import java.util.concurrent.TimeUnit
 
 object VisibilityExamples:
   final class VolatileRunningFlag:
+    // volatile makes a write in one thread visible to the worker's read.
     @volatile private var running = true
 
     def startWorker(started: CountDownLatch, stopped: CountDownLatch): Thread =
       val worker = Thread(
         () =>
           started.countDown()
+          // Without volatile, this loop could keep reading a stale true value.
           while running do Thread.onSpinWait()
           stopped.countDown()
         ,
@@ -20,9 +22,11 @@ object VisibilityExamples:
       worker
 
     def stop(): Unit =
+      // The volatile write publishes the stop request to the worker thread.
       running = false
 
   final class VolatileCounter:
+    // volatile provides visibility, but it does not make counter += 1 atomic.
     @volatile private var counter = 0
 
     def loseOneIncrementDeterministically(): Int =
@@ -42,6 +46,7 @@ object VisibilityExamples:
       second.start()
 
       start.countDown()
+      // Release both workers after they have reached the read phase.
       await(bothRead)
       allowWrite.countDown()
       join(first)
@@ -56,9 +61,12 @@ object VisibilityExamples:
         allowWrite: CountDownLatch
     ): Unit =
       await(start)
+      // Both workers can observe the same value before either one writes.
       val observed = counter
+      // This makes the read/read interleaving deterministic for the example.
       bothRead.countDown()
       await(allowWrite)
+      // Each worker writes observed + 1, so one increment is overwritten.
       counter = observed + 1
 
   private def await(latch: CountDownLatch): Unit =
@@ -73,7 +81,8 @@ object VisibilityExamples:
   private def join(thread: Thread): Unit =
     try
       thread.join(1000L)
-      if thread.isAlive then throw IllegalStateException("Timed out while waiting for the demo thread")
+      if thread.isAlive then
+        throw IllegalStateException("Timed out while waiting for the demo thread")
     catch
       case exception: InterruptedException =>
         Thread.currentThread().interrupt()
