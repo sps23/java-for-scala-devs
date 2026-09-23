@@ -3,6 +3,7 @@ layout: post
 title: "Atomic Operations: Defuse the Race Condition"
 description: "Learn how Java 21 atomics prevent lost updates, when to use compare-and-set or LongAdder, and how the same JVM atomic patterns map to Scala 3 and Kotlin."
 date: 2026-09-23 13:00:00 +0000
+updated: 2026-09-23 13:00:00 +0000
 categories: [concurrency]
 tags: [java, java21, scala, scala3, kotlin, atomicity, atomics, concurrency, compare-and-set, longadder]
 ---
