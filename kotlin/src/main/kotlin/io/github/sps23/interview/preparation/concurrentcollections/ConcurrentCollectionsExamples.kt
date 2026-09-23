@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.TimeUnit
 
 object ConcurrentCollectionsExamples {
     fun loseOneUpdateWithHashMapRace(): Int {
@@ -131,7 +132,8 @@ object ConcurrentCollectionsExamples {
 
     private fun take(orders: LinkedBlockingQueue<String>): String =
         try {
-            orders.take()
+            val order = orders.poll(1, TimeUnit.SECONDS)
+            order ?: throw IllegalStateException("Timed out while waiting for an order")
         } catch (exception: InterruptedException) {
             Thread.currentThread().interrupt()
             throw IllegalStateException("Interrupted while waiting for an order", exception)
