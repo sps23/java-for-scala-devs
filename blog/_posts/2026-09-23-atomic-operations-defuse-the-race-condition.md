@@ -82,6 +82,7 @@ The repository examples use one immutable `TicketSnapshot` value and publish upd
         <span class="kd">var</span> <span class="n">updated</span> <span class="o">=</span> <span class="n">observed</span><span class="o">.</span><span class="na">sellTo</span><span class="o">(</span><span class="n">normalizedBuyer</span><span class="o">);</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">ticketState</span><span class="o">.</span><span class="na">compareAndSet</span><span class="o">(</span><span class="n">observed</span><span class="o">,</span> <span class="n">updated</span><span class="o">))</span> <span class="o">{</span>
             <span class="n">totalRevenueInCents</span><span class="o">.</span><span class="na">addAndGet</span><span class="o">(</span><span class="n">ticketPriceInCents</span><span class="o">);</span>
+            <span class="n">displayedQueueSize</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">updated</span><span class="o">.</span><span class="na">ticketsRemaining</span><span class="o">());</span>
             <span class="n">soldOut</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">updated</span><span class="o">.</span><span class="na">ticketsRemaining</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">);</span>
             <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
         <span class="o">}</span>
@@ -105,6 +106,7 @@ The repository examples use one immutable `TicketSnapshot` value and publish upd
       <span class="k">val</span> <span class="n">updated</span> <span class="o">=</span> <span class="n">observed</span><span class="o">.</span><span class="n">sellTo</span><span class="o">(</span><span class="n">normalizedBuyer</span><span class="o">)</span>
       <span class="k">if</span> <span class="n">ticketState</span><span class="o">.</span><span class="n">compareAndSet</span><span class="o">(</span><span class="n">observed</span><span class="o">,</span> <span class="n">updated</span><span class="o">)</span> <span class="k">then</span>
         <span class="n">totalRevenueInCents</span><span class="o">.</span><span class="n">addAndGet</span><span class="o">(</span><span class="n">ticketPriceInCents</span><span class="o">)</span>
+        <span class="n">displayedQueueSize</span><span class="o">.</span><span class="n">set</span><span class="o">(</span><span class="n">updated</span><span class="o">.</span><span class="n">ticketsRemaining</span><span class="o">)</span>
         <span class="n">soldOut</span><span class="o">.</span><span class="n">set</span><span class="o">(</span><span class="n">updated</span><span class="o">.</span><span class="n">ticketsRemaining</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
         <span class="kc">true</span>
       <span class="k">else</span> <span class="n">attempt</span><span class="o">()</span>
@@ -126,6 +128,7 @@ The repository examples use one immutable `TicketSnapshot` value and publish upd
         <span class="k">val</span> <span class="py">updated</span> <span class="p">=</span> <span class="n">observed</span><span class="p">.</span><span class="nf">sellTo</span><span class="p">(</span><span class="n">normalizedBuyer</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">ticketState</span><span class="p">.</span><span class="nf">compareAndSet</span><span class="p">(</span><span class="n">observed</span><span class="p">,</span> <span class="n">updated</span><span class="p">))</span> <span class="p">{</span>
             <span class="n">totalRevenueInCents</span><span class="p">.</span><span class="nf">addAndGet</span><span class="p">(</span><span class="n">ticketPriceInCents</span><span class="p">)</span>
+            <span class="n">displayedQueueSize</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="n">updated</span><span class="p">.</span><span class="n">ticketsRemaining</span><span class="p">)</span>
             <span class="n">soldOut</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="n">updated</span><span class="p">.</span><span class="n">ticketsRemaining</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">true</span>
         <span class="p">}</span>
@@ -258,3 +261,8 @@ All examples in this post are runnable. Find them in the repository:
 - [Java 21 tests](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamplesTest.java)
 - [Scala 3 tests](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/test/scala/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamplesTest.scala)
 - [Kotlin tests](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/test/kotlin/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamplesTest.kt)
+
+
+---
+
+*This is part of our [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [CompletableFuture and Asynchronous Programming]({{ site.baseurl }}{% link _posts/2025-11-29-completablefuture-and-asynchronous-programming.md %}), [Stream API Advanced Operations]({{ site.baseurl }}{% link _posts/2025-11-29-stream-api-advanced-operations.md %}), and [Virtual Threads and Structured Concurrency]({{ site.baseurl }}{% link _posts/2025-11-29-virtual-threads-and-structured-concurrency.md %}).*
