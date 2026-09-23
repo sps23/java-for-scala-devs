@@ -3,7 +3,6 @@ layout: post
 title: "Atomic Operations: Defuse the Race Condition"
 description: "Learn how Java 21 atomics prevent lost updates, when to use compare-and-set or LongAdder, and how the same JVM atomic patterns map to Scala 3 and Kotlin."
 date: 2026-09-23 13:00:00 +0000
-updated: 2026-09-23 13:00:00 +0000
 categories: [concurrency]
 tags: [java, java21, scala, scala3, kotlin, atomicity, atomics, concurrency, compare-and-set, longadder]
 ---
@@ -263,4 +262,4 @@ All examples in this post are runnable. Find them in the repository:
 
 ---
 
-*This is part of our [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Stream API Advanced Operations]({{ site.baseurl }}{% link _posts/2025-11-29-stream-api-advanced-operations.md %}), [Virtual Threads and Structured Concurrency]({{ site.baseurl }}{% link _posts/2025-11-29-virtual-threads-and-structured-concurrency.md %}), and [String Templates Preview]({{ site.baseurl }}{% link _posts/2025-11-29-string-templates-preview.md %}).*
+*This is part of our [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Stream API Advanced Operations]({{ site.baseurl }}{% link _posts/2025-11-29-stream-api-advanced-operations.md %}).*

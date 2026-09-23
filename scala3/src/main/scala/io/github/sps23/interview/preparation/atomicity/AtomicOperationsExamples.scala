@@ -112,8 +112,10 @@ object AtomicOperationsExamples:
     private val remainingTickets = new AtomicInteger(initialTickets)
     private val soldOut          = new AtomicBoolean(initialTickets == 0)
 
+    def claimLastTicket(): Boolean = claimLastTicket(())
+
     @tailrec
-    final def claimLastTicket(beforeSoldOutFlagUpdate: => Unit): Boolean =
+    private[atomicity] final def claimLastTicket(beforeSoldOutFlagUpdate: => Unit): Boolean =
       val observed = remainingTickets.get()
       if observed == 0 then
         soldOut.set(true)
