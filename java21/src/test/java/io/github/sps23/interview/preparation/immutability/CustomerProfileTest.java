@@ -55,9 +55,8 @@ class CustomerProfileTest {
     @Test
     @DisplayName("Should reject invalid email")
     void shouldRejectInvalidEmail() {
-        var error = assertThrows(IllegalArgumentException.class,
-                () -> new CustomerProfile(1L, "invalid-email", java.util.List.of("user"),
-                        java.util.Map.of("tier", "standard")));
+        var error = assertThrows(IllegalArgumentException.class, () -> new CustomerProfile(1L,
+                "invalid-email", java.util.List.of("user"), java.util.Map.of("tier", "standard")));
 
         assertEquals("email must contain '@'", error.getMessage());
     }
