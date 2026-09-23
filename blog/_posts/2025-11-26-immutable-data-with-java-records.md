@@ -213,77 +213,71 @@ The table below summarizes the similarities and differences between Scala case c
 
 Below are equivalent immutable Employee data classes in all three languages, each with validation:
 
-#### **Scala 3**
+<div class="code-tabs" data-tabs-id="employee-records-side-by-side">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">record</span> <span class="nc">Employee</span><span class="o">(</span>
+    <span class="kt">long</span> <span class="n">id</span><span class="o">,</span>
+    <span class="nc">String</span> <span class="n">name</span><span class="o">,</span>
+    <span class="nc">String</span> <span class="n">email</span><span class="o">,</span>
+    <span class="nc">String</span> <span class="n">department</span><span class="o">,</span>
+    <span class="kt">double</span> <span class="n">salary</span>
+<span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Employee</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">id</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Employee ID must be positive"</span><span class="o">);</span>
+        <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="s">"Employee name cannot be null"</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">isBlank</span><span class="o">())</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Employee name cannot be blank"</span><span class="o">);</span>
+        <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">email</span><span class="o">,</span> <span class="s">"Employee email cannot be null"</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">email</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"@"</span><span class="o">))</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Invalid email format"</span><span class="o">);</span>
+        <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">department</span><span class="o">,</span> <span class="s">"Department cannot be null"</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">salary</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"Salary cannot be negative"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">case</span> <span class="k">class</span> <span class="nc">Employee</span><span class="o">(</span>
+  <span class="n">id</span><span class="o">:</span> <span class="kt">Long</span><span class="o">,</span>
+  <span class="n">name</span><span class="o">:</span> <span class="kt">String</span><span class="o">,</span>
+  <span class="n">email</span><span class="o">:</span> <span class="kt">String</span><span class="o">,</span>
+  <span class="n">department</span><span class="o">:</span> <span class="kt">String</span><span class="o">,</span>
+  <span class="n">salary</span><span class="o">:</span> <span class="kt">Double</span>
+<span class="o">)</span> <span class="o">{</span>
+  <span class="n">require</span><span class="o">(</span><span class="n">id</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">,</span> <span class="s">"Employee ID must be positive"</span><span class="o">)</span>
+  <span class="n">require</span><span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="n">nonEmpty</span><span class="o">,</span> <span class="s">"Employee name cannot be empty"</span><span class="o">)</span>
+  <span class="n">require</span><span class="o">(</span><span class="n">email</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="s">"@"</span><span class="o">),</span> <span class="s">"Invalid email format"</span><span class="o">)</span>
+  <span class="n">require</span><span class="o">(</span><span class="n">department</span><span class="o">.</span><span class="n">nonEmpty</span><span class="o">,</span> <span class="s">"Department cannot be empty"</span><span class="o">)</span>
+  <span class="n">require</span><span class="o">(</span><span class="n">salary</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">,</span> <span class="s">"Salary cannot be negative"</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">data</span> <span class="k">class</span> <span class="nc">EmployeeDataClass</span><span class="p">(</span>
+    <span class="k">val</span> <span class="py">id</span><span class="p">:</span> <span class="nc">Long</span><span class="p">,</span>
+    <span class="k">val</span> <span class="py">name</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="k">val</span> <span class="py">email</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="k">val</span> <span class="py">department</span><span class="p">:</span> <span class="nc">String</span><span class="p">,</span>
+    <span class="k">val</span> <span class="py">salary</span><span class="p">:</span> <span class="nc">Double</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="k">init</span> <span class="p">{</span>
+        <span class="n">require</span><span class="p">(</span><span class="n">id</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="s">"Employee ID must be positive"</span> <span class="p">}</span>
+        <span class="n">require</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">isNotBlank</span><span class="p">())</span> <span class="p">{</span> <span class="s">"Employee name cannot be blank"</span> <span class="p">}</span>
+        <span class="n">require</span><span class="p">(</span><span class="n">email</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s">"@"</span><span class="p">))</span> <span class="p">{</span> <span class="s">"Invalid email format: </span><span class="si">$email</span><span class="s">"</span> <span class="p">}</span>
+        <span class="n">require</span><span class="p">(</span><span class="n">department</span><span class="o">.</span><span class="n">isNotBlank</span><span class="p">())</span> <span class="p">{</span> <span class="s">"Department cannot be blank"</span> <span class="p">}</span>
+        <span class="n">require</span><span class="p">(</span><span class="n">salary</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="s">"Salary cannot be negative"</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
-```scala
-case class Employee(
-  id: Long,
-  name: String,
-  email: String,
-  department: String,
-  salary: Double
-) {
-  require(id > 0, "Employee ID must be positive")
-  require(name.nonEmpty, "Employee name cannot be empty")
-  require(email.contains("@"), "Invalid email format")
-  require(department.nonEmpty, "Department cannot be empty")
-  require(salary >= 0, "Salary cannot be negative")
-}
-```
-
-[View full Scala 3 example →](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/Employee.scala)
-
----
-
-#### **Java 21**
-
-```java
-public record Employee(
-    long id,
-    String name,
-    String email,
-    String department,
-    double salary
-) {
-    public Employee {
-        if (id <= 0) throw new IllegalArgumentException("Employee ID must be positive");
-        Objects.requireNonNull(name, "Employee name cannot be null");
-        if (name.isBlank()) throw new IllegalArgumentException("Employee name cannot be blank");
-        Objects.requireNonNull(email, "Employee email cannot be null");
-        if (!email.contains("@")) throw new IllegalArgumentException("Invalid email format");
-        Objects.requireNonNull(department, "Department cannot be null");
-        if (salary < 0) throw new IllegalArgumentException("Salary cannot be negative");
-    }
-}
-```
-
-[View full Java example →](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/Employee.java)
-
----
-
-#### **Kotlin**
-
-```kotlin
-data class EmployeeDataClass(
-    val id: Long,
-    val name: String,
-    val email: String,
-    val department: String,
-    val salary: Double
-) {
-    init {
-        require(id > 0) { "Employee ID must be positive" }
-        require(name.isNotBlank()) { "Employee name cannot be blank" }
-        require(email.contains("@")) { "Invalid email format: $email" }
-        require(department.isNotBlank()) { "Department cannot be blank" }
-        require(salary >= 0) { "Salary cannot be negative" }
-    }
-}
-```
-
+[View full Java example →](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/Employee.java)  
+[View full Scala 3 example →](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/Employee.scala)  
 [View full Kotlin example →](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/EmployeeDataClass.kt)
-
----
 
 ## Pattern Matching with Records (Java 21)
 
