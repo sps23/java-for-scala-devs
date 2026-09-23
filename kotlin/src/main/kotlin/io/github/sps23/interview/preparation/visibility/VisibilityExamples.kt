@@ -5,14 +5,19 @@ import java.util.concurrent.TimeUnit
 
 object VisibilityExamples {
     class VolatileRunningFlag {
+        // volatile makes a write in one thread visible to the worker's read.
         @Volatile
         private var running = true
 
-        fun startWorker(started: CountDownLatch, stopped: CountDownLatch): Thread {
+        fun startWorker(
+            started: CountDownLatch,
+            stopped: CountDownLatch,
+        ): Thread {
             val worker =
                 Thread(
                     {
                         started.countDown()
+                        // Without volatile, this loop could keep reading a stale true value.
                         while (running) {
                             Thread.onSpinWait()
                         }
@@ -25,11 +30,13 @@ object VisibilityExamples {
         }
 
         fun stop() {
+            // The volatile write publishes the stop request to the worker thread.
             running = false
         }
     }
 
     class VolatileCounter {
+        // volatile provides visibility, but it does not make counter++ one atomic action.
         @Volatile
         private var counter: Int = 0
 
@@ -47,6 +54,7 @@ object VisibilityExamples {
             second.start()
 
             start.countDown()
+            // Release both workers after they have reached the read phase.
             await(bothRead)
             allowWrite.countDown()
             join(first)
@@ -62,9 +70,12 @@ object VisibilityExamples {
             allowWrite: CountDownLatch,
         ) {
             await(start)
+            // Both workers can observe the same value before either one writes.
             val observed = counter
+            // This makes the read/read interleaving deterministic for the example.
             bothRead.countDown()
             await(allowWrite)
+            // Each worker writes observed + 1, so one increment is overwritten.
             counter = observed + 1
         }
     }
