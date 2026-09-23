@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Small concurrent collection demos for interview preparation.
@@ -126,7 +127,11 @@ public final class ConcurrentCollectionsExamples {
 
     private static String take(LinkedBlockingQueue<String> orders) {
         try {
-            return orders.take();
+            var order = orders.poll(1, TimeUnit.SECONDS);
+            if (order == null) {
+                throw new IllegalStateException("Timed out while waiting for an order");
+            }
+            return order;
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException("Interrupted while waiting for an order", exception);

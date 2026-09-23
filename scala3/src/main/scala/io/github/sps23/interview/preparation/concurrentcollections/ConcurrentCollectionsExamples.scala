@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.TimeUnit
 
 import scala.jdk.CollectionConverters.*
 
@@ -116,7 +117,10 @@ object ConcurrentCollectionsExamples:
     sharedPot.put("spoons", observed + 1)
 
   private def take(orders: LinkedBlockingQueue[String]): String =
-    try orders.take()
+    try
+      val order = orders.poll(1, TimeUnit.SECONDS)
+      if order == null then throw IllegalStateException("Timed out while waiting for an order")
+      order
     catch
       case exception: InterruptedException =>
         Thread.currentThread().interrupt()
