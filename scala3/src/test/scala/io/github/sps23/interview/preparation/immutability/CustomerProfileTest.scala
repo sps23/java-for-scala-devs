@@ -3,6 +3,8 @@ package io.github.sps23.interview.preparation.immutability
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
+import scala.jdk.CollectionConverters.*
+
 class CustomerProfileTest extends AnyFunSuite with Matchers:
 
   test("Should defensively copy mutable constructor inputs") {
@@ -40,4 +42,19 @@ class CustomerProfileTest extends AnyFunSuite with Matchers:
     )
 
     error.getMessage shouldBe "requirement failed: email must contain '@'"
+  }
+
+  test("Should expose immutable collections to Java callers as well") {
+    val profile = CustomerProfile.create(
+      1L,
+      "alex@example.com",
+      Seq("user"),
+      Map("tier" -> "standard")
+    )
+
+    val javaRoles       = profile.roles.asJava
+    val javaPreferences = profile.preferences.asJava
+
+    the[UnsupportedOperationException] thrownBy javaRoles.add("admin")
+    the[UnsupportedOperationException] thrownBy javaPreferences.put("region", "eu")
   }

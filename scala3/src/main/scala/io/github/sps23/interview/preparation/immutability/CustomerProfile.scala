@@ -25,14 +25,16 @@ object CustomerProfile:
     val normalizedEmail = Option(email).map(_.trim).getOrElse("")
     require(normalizedEmail.contains("@"), "email must contain '@'")
 
-    val immutableRoles = roles.toList
+    val immutableRoles = roles.toList.map(role => Option(role).map(_.trim).getOrElse(""))
     require(immutableRoles.nonEmpty, "roles cannot be empty")
-    immutableRoles.foreach(role => require(role.trim.nonEmpty, "role cannot be blank"))
+    immutableRoles.foreach(role => require(role.nonEmpty, "role cannot be blank"))
 
-    val immutablePreferences = preferences.toMap
-    immutablePreferences.foreach { (key, value) =>
-      require(key.trim.nonEmpty, "preference key cannot be blank")
-      require(value.trim.nonEmpty, "preference value cannot be blank")
-    }
+    val immutablePreferences = preferences.map { (key, value) =>
+      val normalizedKey   = Option(key).map(_.trim).getOrElse("")
+      val normalizedValue = Option(value).map(_.trim).getOrElse("")
+      require(normalizedKey.nonEmpty, "preference key cannot be blank")
+      require(normalizedValue.nonEmpty, "preference value cannot be blank")
+      normalizedKey -> normalizedValue
+    }.toMap
 
     CustomerProfile(id, normalizedEmail, immutableRoles, immutablePreferences)

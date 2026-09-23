@@ -12,7 +12,8 @@ import java.util.Objects;
 public record CustomerProfile(long id, String email, List<String> roles,
         Map<String, String> preferences) {
 
-    public CustomerProfile {
+    public CustomerProfile(long id, String email, List<String> roles,
+            Map<String, String> preferences) {
         if (id <= 0) {
             throw new IllegalArgumentException("id must be positive");
         }
@@ -30,25 +31,31 @@ public record CustomerProfile(long id, String email, List<String> roles,
         });
 
         preferences.forEach((key, value) -> {
-            if (key == null || key.isBlank() || value == null || value.isBlank()) {
+            if (key == null || value == null) {
+                throw new IllegalArgumentException("preference keys and values must be non-null");
+            }
+            if (key.isBlank() || value.isBlank()) {
                 throw new IllegalArgumentException("preference keys and values must be non-blank");
             }
         });
 
-        roles = List.copyOf(roles);
-        preferences = Map.copyOf(preferences);
+        this.id = id;
+        this.email = email;
+        this.roles = List.copyOf(roles);
+        this.preferences = Map.copyOf(preferences);
     }
 
     public CustomerProfile withRole(String role) {
-        if (role == null || role.isBlank()) {
+        var normalizedRole = role == null ? "" : role.trim();
+        if (normalizedRole.isBlank()) {
             throw new IllegalArgumentException("role cannot be blank");
         }
-        if (roles.contains(role)) {
+        if (roles.contains(normalizedRole)) {
             return this;
         }
 
         var updatedRoles = new ArrayList<>(roles);
-        updatedRoles.add(role);
+        updatedRoles.add(normalizedRole);
         return new CustomerProfile(id, email, updatedRoles, new LinkedHashMap<>(preferences));
     }
 }

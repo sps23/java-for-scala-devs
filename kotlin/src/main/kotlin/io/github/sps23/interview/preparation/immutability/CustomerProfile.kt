@@ -9,11 +9,12 @@ data class CustomerProfile private constructor(
     val preferences: Map<String, String>,
 ) {
     fun withRole(role: String): CustomerProfile {
-        require(role.isNotBlank()) { "role cannot be blank" }
-        if (roles.contains(role)) {
+        val normalizedRole = role.trim()
+        require(normalizedRole.isNotBlank()) { "role cannot be blank" }
+        if (roles.contains(normalizedRole)) {
             return this
         }
-        return copy(roles = Collections.unmodifiableList(roles + role))
+        return copy(roles = Collections.unmodifiableList(roles + normalizedRole))
     }
 
     companion object {
@@ -24,19 +25,27 @@ data class CustomerProfile private constructor(
             preferences: Map<String, String>,
         ): CustomerProfile {
             require(id > 0) { "id must be positive" }
-            require(email.contains("@")) { "email must contain '@'" }
-            require(roles.isNotEmpty()) { "roles cannot be empty" }
-            require(roles.all { it.isNotBlank() }) { "role cannot be blank" }
-            require(preferences.keys.all { it.isNotBlank() }) { "preference key cannot be blank" }
-            require(preferences.values.all { it.isNotBlank() }) {
+            val normalizedEmail = email.trim()
+            require(normalizedEmail.contains("@")) { "email must contain '@'" }
+            val normalizedRoles = roles.map { it.trim() }
+            require(normalizedRoles.isNotEmpty()) { "roles cannot be empty" }
+            require(normalizedRoles.all { it.isNotBlank() }) { "role cannot be blank" }
+            val normalizedPreferences =
+                preferences.map { (key, value) ->
+                    key.trim() to value.trim()
+                }
+            require(normalizedPreferences.all { (key, _) -> key.isNotBlank() }) {
+                "preference key cannot be blank"
+            }
+            require(normalizedPreferences.all { (_, value) -> value.isNotBlank() }) {
                 "preference value cannot be blank"
             }
 
             return CustomerProfile(
                 id = id,
-                email = email.trim(),
-                roles = Collections.unmodifiableList(roles.toList()),
-                preferences = Collections.unmodifiableMap(preferences.toMap()),
+                email = normalizedEmail,
+                roles = Collections.unmodifiableList(normalizedRoles),
+                preferences = Collections.unmodifiableMap(normalizedPreferences.toMap()),
             )
         }
     }
