@@ -98,7 +98,7 @@ count++; // read, add, write
 
 Another thread can intervene between the read and the write. That is why the visibility sample tests include a deterministic lost-update demonstration.
 
-For the fix, use atomic updates such as `AtomicInteger.incrementAndGet()` or compare-and-set loops. See [Atomic Operations: Defuse the Race Condition]({{ site.baseurl }}{% link _posts/2026-09-23-atomic-operations-defuse-the-race-condition.md %}) for the full walk-through.
+For the fix, use atomic updates such as `AtomicInteger.incrementAndGet()` or compare-and-set loops. See [Atomic Operations: Defuse the Race Condition]({{ site.baseurl }}/blog/2026/09/23/atomic-operations-defuse-the-race-condition/) for the full walk-through.
 
 Kotlin's JVM concurrency guidance makes the same distinction: visibility (`@Volatile`) is useful, but arithmetic updates still need atomic coordination.
 
@@ -109,7 +109,7 @@ Immutability and visibility fit together:
 - An immutable object is safer to share across threads after publication.
 - But if you replace the reference over time, you still need safe publication for that changing reference.
 
-So the rule is: immutable values reduce mutation risk, and visibility rules make publication reliable. If you missed the first part, start with [Immutability in Java 21: Beyond Records]({{ site.baseurl }}{% link _posts/2026-09-23-immutability-in-java-21.md %}).
+So the rule is: immutable values reduce mutation risk, and visibility rules make publication reliable. If you missed the first part, start with [Immutability in Java 21: Beyond Records]({{ site.baseurl }}/blog/2026/09/23/immutability-in-java-21/).
 
 ## Decision Guide
 
@@ -183,4 +183,4 @@ All examples in this post are runnable. Find them in the repository:
 
 ---
 
-*This is part of our [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Immutability in Java 21: Beyond Records]({{ site.baseurl }}{% link _posts/2026-09-23-immutability-in-java-21.md %}) and [Atomic Operations: Defuse the Race Condition]({{ site.baseurl }}{% link _posts/2026-09-23-atomic-operations-defuse-the-race-condition.md %}).*
+*This is part of our [Java 21 Interview Preparation Guide - Your Roadmap to Success]({{ site.baseurl }}{% link _posts/2025-11-25-java21-interview-preparation-plan.md %}). Next related posts: [Immutability in Java 21: Beyond Records]({{ site.baseurl }}/blog/2026/09/23/immutability-in-java-21/) and [Atomic Operations: Defuse the Race Condition]({{ site.baseurl }}/blog/2026/09/23/atomic-operations-defuse-the-race-condition/).*
