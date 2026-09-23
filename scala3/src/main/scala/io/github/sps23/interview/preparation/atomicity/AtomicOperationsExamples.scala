@@ -65,7 +65,7 @@ object AtomicOperationsExamples:
     private val ticketState = new AtomicReference[TicketSnapshot](
       TicketSnapshot(initialTickets, initialTickets > 0, None)
     )
-    private val displayedQueueSize = new AtomicInteger(initialTickets)
+    private val displayedQueueSize  = new AtomicInteger(initialTickets)
     private val totalRevenueInCents = new AtomicLong(0L)
     private val soldOut             = new AtomicBoolean(initialTickets == 0)
     private val claimAttempts       = new LongAdder()
@@ -115,15 +115,14 @@ object AtomicOperationsExamples:
     def claimLastTicket(): Boolean = claimLastTicket(())
 
     @tailrec
-    private[atomicity] final def claimLastTicket(beforeSoldOutFlagUpdate: => Unit): Boolean =
+    private[atomicity] def claimLastTicket(beforeSoldOutFlagUpdate: => Unit): Boolean =
       val observed = remainingTickets.get()
       if observed == 0 then
         soldOut.set(true)
         false
       else if remainingTickets.compareAndSet(observed, observed - 1) then
         beforeSoldOutFlagUpdate
-        if observed - 1 == 0 then
-          soldOut.set(true)
+        if observed - 1 == 0 then soldOut.set(true)
         true
       else claimLastTicket(beforeSoldOutFlagUpdate)
 

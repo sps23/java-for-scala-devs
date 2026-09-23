@@ -1,13 +1,13 @@
 package io.github.sps23.interview.preparation.atomicity
 
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicInteger
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 
 @DisplayName("Atomic operations Kotlin tests")
 class AtomicOperationsExamplesTest {
@@ -25,7 +25,7 @@ class AtomicOperationsExamplesTest {
     @Test
     @DisplayName("Should allow only one buyer to claim the last ticket")
     fun shouldAllowOnlyOneBuyerToClaimTheLastTicket() {
-        val office = AtomicOperationsExamples.AtomicTicketOffice(1, 4_500L)
+        val office = AtomicTicketOffice(1, 4_500L)
         val start = CountDownLatch(1)
         val finished = CountDownLatch(2)
         val alexClaimed = AtomicBoolean(false)
@@ -67,7 +67,7 @@ class AtomicOperationsExamplesTest {
     @Test
     @DisplayName("Should show that separate atomics do not make a full sequence atomic")
     fun shouldShowThatSeparateAtomicsDoNotMakeAFullSequenceAtomic() {
-        val office = AtomicOperationsExamples.SplitAtomicTicketOffice(1)
+        val office = SplitAtomicTicketOffice(1)
         val seenRemaining = AtomicInteger(-1)
         val sawSoldOutFlag = AtomicBoolean(true)
 

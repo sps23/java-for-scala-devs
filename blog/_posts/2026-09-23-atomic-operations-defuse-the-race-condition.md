@@ -3,6 +3,7 @@ layout: post
 title: "Atomic Operations: Defuse the Race Condition"
 description: "Learn how Java 21 atomics prevent lost updates, when to use compare-and-set or LongAdder, and how the same JVM atomic patterns map to Scala 3 and Kotlin."
 date: 2026-09-23 13:00:00 +0000
+updated: 2026-09-23 14:00:00 +0000
 categories: [concurrency]
 tags: [java, java21, scala, scala3, kotlin, atomicity, atomics, concurrency, compare-and-set, longadder]
 ---
@@ -88,7 +89,7 @@ The repository examples use one immutable `TicketSnapshot` value and publish upd
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
-<p><a href="https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamples.java">View full Java example</a></p>
+<p><a href="https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/atomicity/AtomicTicketOffice.java">View full Java example</a></p>
 </div>
 <div class="tab-content" data-tab="scala">
 <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="n">claimTicket</span><span class="o">(</span><span class="n">buyer</span><span class="o">:</span> <span class="kt">String</span><span class="o">):</span> <span class="kt">Boolean</span> <span class="o">=</span>
@@ -132,9 +133,63 @@ The repository examples use one immutable `TicketSnapshot` value and publish upd
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p><a href="https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamples.kt">View full Kotlin example</a></p>
+<p><a href="https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/atomicity/AtomicTicketOffice.kt">View full Kotlin example</a></p>
 </div>
 </div>
+
+## A Complete Java `AtomicReference` Example
+
+The complete Java version keeps the ticket count, selling status, and last buyer in one immutable `TicketSnapshot`. Each buyer reads the current snapshot, creates a replacement, and publishes it only when `compareAndSet` confirms that no other buyer changed the state first.
+
+```java
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+
+record TicketSnapshot(int ticketsRemaining, boolean sellingOpen, String lastBuyer) {
+    TicketSnapshot sellTo(String buyer) {
+        var updatedRemaining = ticketsRemaining - 1;
+        return new TicketSnapshot(updatedRemaining, updatedRemaining > 0, buyer);
+    }
+}
+
+public final class AtomicReferenceTicketOffice {
+    private final AtomicReference<TicketSnapshot> state;
+
+    public AtomicReferenceTicketOffice(int initialTickets) {
+        if (initialTickets < 0) {
+            throw new IllegalArgumentException("initialTickets cannot be negative");
+        }
+        state = new AtomicReference<>(
+                new TicketSnapshot(initialTickets, initialTickets > 0, null));
+    }
+
+    public boolean claimTicket(String buyer) {
+        Objects.requireNonNull(buyer, "buyer cannot be null");
+        var normalizedBuyer = buyer.trim();
+        if (normalizedBuyer.isBlank()) {
+            throw new IllegalArgumentException("buyer cannot be blank");
+        }
+
+        while (true) {
+            var observed = state.get();
+            if (!observed.sellingOpen()) {
+                return false;
+            }
+
+            var updated = observed.sellTo(normalizedBuyer);
+            if (state.compareAndSet(observed, updated)) {
+                return true;
+            }
+        }
+    }
+
+    public TicketSnapshot snapshot() {
+        return state.get();
+    }
+}
+```
+
+Here, `TicketSnapshot` is a Java record, so the state is replaced rather than mutated. The full runnable implementation is available in the repository.
 
 ## Compare-and-Set: "Only If Nothing Changed"
 
@@ -201,7 +256,16 @@ The runnable tests in all three modules check three practical claims:
 
 That gives you a compact interview-ready story with real code instead of vague concurrency folklore.
 
-## Interview Q&A: Atomicity in Practice
+## Best Practices for Atomic Operations
+
+- Choose the smallest atomic type that matches the job: use `AtomicInteger` or `AtomicLong` for exact counters, `AtomicReference` for replacing an immutable state snapshot, and `LongAdder` for highly contended metrics.
+- Keep the value held by an `AtomicReference` immutable. Build a new snapshot for each successful update instead of mutating the object that other threads may already be reading.
+- Put the complete business decision inside the compare-and-set retry loop. Check the current state, calculate the next state, and publish it only if the state has not changed since you read it.
+- Do not combine several independent atomic variables and assume the whole sequence is atomic. If readers must see fields change together, store them in one immutable object and update it through one `AtomicReference`.
+- Use locks or higher-level concurrency tools when the operation involves many resources, blocking work, or coordination that is difficult to express as a short atomic update.
+- Treat atomic classes as coordination tools, not a replacement for good domain design. Give shared state clear ownership, keep critical sections small, and test the failure path where compare-and-set loses a race.
+
+## Atomicity in Practice:
 
 <div class="faq-list">
   <details class="faq-item" open>
@@ -252,9 +316,14 @@ For Scala developers learning Java 21, atomicity is the reminder that visibility
 ## Code Samples
 
 All examples in this post are runnable. Find them in the repository:
-- [Java 21 AtomicOperationsExamples](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamples.java)
+- [Java 21 AtomicTicketOffice](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/atomicity/AtomicTicketOffice.java)
+- [Java 21 AtomicReferenceTicketOffice](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/atomicity/AtomicReferenceTicketOffice.java)
+- [Java 21 SplitAtomicTicketOffice](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/atomicity/SplitAtomicTicketOffice.java)
+- [Java 21 TicketSnapshot](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/atomicity/TicketSnapshot.java)
 - [Scala 3 AtomicOperationsExamples](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/main/scala/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamples.scala)
-- [Kotlin AtomicOperationsExamples](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamples.kt)
+- [Kotlin AtomicTicketOffice](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/atomicity/AtomicTicketOffice.kt)
+- [Kotlin SplitAtomicTicketOffice](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/atomicity/SplitAtomicTicketOffice.kt)
+- [Kotlin TicketSnapshot](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/main/kotlin/io/github/sps23/interview/preparation/atomicity/TicketSnapshot.kt)
 - [Java 21 tests](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamplesTest.java)
 - [Scala 3 tests](https://github.com/sps23/java-for-scala-devs/blob/main/scala3/src/test/scala/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamplesTest.scala)
 - [Kotlin tests](https://github.com/sps23/java-for-scala-devs/blob/main/kotlin/src/test/kotlin/io/github/sps23/interview/preparation/atomicity/AtomicOperationsExamplesTest.kt)
