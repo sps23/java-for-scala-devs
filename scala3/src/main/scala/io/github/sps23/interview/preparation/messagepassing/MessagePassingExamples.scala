@@ -7,27 +7,21 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
 object MessagePassingExamples:
-  private val Stop      = "__stop__"
-  private val StopTopUp = Int.MinValue
-
   def handOffOrdersWithBlockingQueue(incomingOrders: List[String]): List[String] =
     val orders = new LinkedBlockingQueue[String]()
     val prepared = scala.collection.mutable.ListBuffer.empty[String]
 
     val kitchenWorker = Thread(
       () =>
-        var done = false
-        while !done do
+        for _ <- incomingOrders.indices do
           val order = takeStringMessage(orders)
-          if order == Stop then done = true
-          else prepared += s"prepared:$order"
+          prepared += s"prepared:$order"
       ,
       "kitchen-worker"
     )
 
     kitchenWorker.start()
     incomingOrders.foreach(orders.offer)
-    orders.offer(Stop)
     join(kitchenWorker)
     prepared.toList
 
@@ -50,6 +44,7 @@ object MessagePassingExamples:
     require(producerCount >= 1, "producerCount must be at least one")
     require(topUpsPerProducer >= 0, "topUpsPerProducer cannot be negative")
     require(centsPerTopUp >= 0, "centsPerTopUp cannot be negative")
+    val expectedTopUps = Math.multiplyExact(producerCount, topUpsPerProducer)
 
     val topUpMessages       = new LinkedBlockingQueue[Int]()
     val start               = new CountDownLatch(1)
@@ -59,13 +54,10 @@ object MessagePassingExamples:
     val walletOwner = Thread(
       () =>
         var localBalance = 0
-        var done         = false
-        while !done do
+        for _ <- 0 until expectedTopUps do
           val message = takeIntMessage(topUpMessages)
-          if message == StopTopUp then
-            finalBalanceInCents.set(localBalance)
-            done = true
-          else localBalance += message
+          localBalance += message
+        finalBalanceInCents.set(localBalance)
       ,
       "wallet-owner"
     )
@@ -84,7 +76,6 @@ object MessagePassingExamples:
 
     start.countDown()
     await(producersDone)
-    put(topUpMessages, StopTopUp)
     join(walletOwner)
     finalBalanceInCents.get()
 

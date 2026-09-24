@@ -7,9 +7,6 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
 object MessagePassingExamples {
-    private const val STOP = "__stop__"
-    private const val STOP_TOP_UP = Int.MIN_VALUE
-
     fun handOffOrdersWithBlockingQueue(incomingOrders: List<String>): List<String> {
         val orders = LinkedBlockingQueue<String>()
         val prepared = mutableListOf<String>()
@@ -17,20 +14,15 @@ object MessagePassingExamples {
         val kitchenWorker =
             Thread(
                 {
-                    while (true) {
+                    repeat(incomingOrders.size) {
                         val order = takeStringMessage(orders)
-                        if (order == STOP) {
-                            return@Thread
-                        }
                         prepared.add("prepared:$order")
                     }
                 },
                 "kitchen-worker",
             )
-
         kitchenWorker.start()
         incomingOrders.forEach(orders::offer)
-        orders.offer(STOP)
         join(kitchenWorker)
         return prepared.toList()
     }
@@ -54,6 +46,7 @@ object MessagePassingExamples {
         require(producerCount >= 1) { "producerCount must be at least one" }
         require(topUpsPerProducer >= 0) { "topUpsPerProducer cannot be negative" }
         require(centsPerTopUp >= 0) { "centsPerTopUp cannot be negative" }
+        val expectedTopUps = Math.multiplyExact(producerCount, topUpsPerProducer)
 
         val topUpMessages = LinkedBlockingQueue<Int>()
         val start = CountDownLatch(1)
@@ -64,14 +57,11 @@ object MessagePassingExamples {
             Thread(
                 {
                     var localBalance = 0
-                    while (true) {
+                    repeat(expectedTopUps) {
                         val message = takeIntMessage(topUpMessages)
-                        if (message == STOP_TOP_UP) {
-                            finalBalanceInCents.set(localBalance)
-                            return@Thread
-                        }
                         localBalance += message
                     }
+                    finalBalanceInCents.set(localBalance)
                 },
                 "wallet-owner",
             )
@@ -94,7 +84,6 @@ object MessagePassingExamples {
 
         start.countDown()
         await(producersDone)
-        put(topUpMessages, STOP_TOP_UP)
         join(walletOwner)
         return finalBalanceInCents.get()
     }
