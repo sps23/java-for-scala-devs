@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Immutability and Concurrency Preparation Guide"
-description: "A practical roadmap for Scala developers learning Java 21 immutability and concurrency, covering records, visibility, atomics, concurrent collections, virtual threads, and planned next topics."
+description: "A practical roadmap for Scala developers learning Java 21 immutability and concurrency, covering records, visibility, atomics, concurrent collections, virtual threads, locks, and follow-up topics."
 date: 2026-09-24 15:00:00 +0000
 updated: 2026-09-24 20:00:00 +0000
 categories: [interview]
