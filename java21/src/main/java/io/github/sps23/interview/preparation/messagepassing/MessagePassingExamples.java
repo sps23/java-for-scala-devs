@@ -12,9 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Message-passing demos that avoid shared mutable state.
  */
 public final class MessagePassingExamples {
-    private static final String STOP = "__stop__";
-    private static final int STOP_TOP_UP = Integer.MIN_VALUE;
-
     private MessagePassingExamples() {
     }
 
@@ -23,18 +20,14 @@ public final class MessagePassingExamples {
         var prepared = new ArrayList<String>();
 
         var kitchenWorker = new Thread(() -> {
-            while (true) {
+            for (var processed = 0; processed < incomingOrders.size(); processed++) {
                 var order = takeStringMessage(orders);
-                if (STOP.equals(order)) {
-                    return;
-                }
                 prepared.add("prepared:" + order);
             }
         }, "kitchen-worker");
 
         kitchenWorker.start();
         incomingOrders.forEach(orders::offer);
-        orders.offer(STOP);
         join(kitchenWorker);
         return List.copyOf(prepared);
     }
@@ -63,6 +56,7 @@ public final class MessagePassingExamples {
         if (centsPerTopUp < 0) {
             throw new IllegalArgumentException("centsPerTopUp cannot be negative");
         }
+        var expectedTopUps = Math.multiplyExact(producerCount, topUpsPerProducer);
 
         var topUpMessages = new LinkedBlockingQueue<Integer>();
         var start = new CountDownLatch(1);
@@ -71,14 +65,11 @@ public final class MessagePassingExamples {
 
         var walletOwner = new Thread(() -> {
             var localBalance = 0;
-            while (true) {
+            for (var processed = 0; processed < expectedTopUps; processed++) {
                 var message = takeIntMessage(topUpMessages);
-                if (message == STOP_TOP_UP) {
-                    finalBalanceInCents.set(localBalance);
-                    return;
-                }
                 localBalance += message;
             }
+            finalBalanceInCents.set(localBalance);
         }, "wallet-owner");
         walletOwner.start();
 
@@ -92,10 +83,8 @@ public final class MessagePassingExamples {
             }, "top-up-producer-" + producerIndex);
             producer.start();
         }
-
         start.countDown();
         await(producersDone);
-        put(topUpMessages, STOP_TOP_UP);
         join(walletOwner);
         return finalBalanceInCents.get();
     }

@@ -50,17 +50,15 @@ public static int processWalletTopUpsWithSingleOwner(
 ) {
     var topUpMessages = new LinkedBlockingQueue<Integer>();
     var finalBalanceInCents = new AtomicInteger(0);
+    var expectedTopUps = Math.multiplyExact(producerCount, topUpsPerProducer);
 
     var walletOwner = new Thread(() -> {
         var localBalance = 0;
-        while (true) {
-            var message = take(topUpMessages);
-            if (message == Integer.MIN_VALUE) {
-                finalBalanceInCents.set(localBalance);
-                return;
-            }
+        for (var processed = 0; processed < expectedTopUps; processed++) {
+            var message = takeIntMessage(topUpMessages);
             localBalance += message;
         }
+        finalBalanceInCents.set(localBalance);
     });
 
     // Producers only enqueue messages; they never mutate localBalance directly.
@@ -161,4 +159,4 @@ All examples in this post are runnable. Find them in the repository:
 
 ---
 
-*This is part of our [Immutability and Concurrency Preparation Guide]({{ site.baseurl }}{% link _posts/2026-09-24-java21-immutability-concurrency-preparation-guide.md %}). Next related posts: [Atomic Operations: Defuse the Race Condition]({{ site.baseurl }}{% link _posts/2026-09-23-atomic-operations-defuse-the-race-condition.md %}) and [Concurrent Collections: One Pot, Many Spoons.]({{ site.baseurl }}{% link _posts/2026-09-23-concurrent-collections-one-pot-many-spoons.md %}).*
+*This is part of our [Immutability and Concurrency Preparation Guide]({{ site.baseurl }}{% link _posts/2026-09-24-java21-immutability-concurrency-preparation-guide.md %}). Next related posts: [Atomic Operations: Defuse the Race Condition]({{ site.baseurl }}{% link _posts/2026-09-23-atomic-operations-defuse-the-race-condition.md %}) and [Concurrent Collections: One Pot, Many Spoons]({{ site.baseurl }}{% link _posts/2026-09-23-concurrent-collections-one-pot-many-spoons.md %}).*
