@@ -3,6 +3,7 @@ layout: post
 title: "Immutability and Concurrency Preparation Guide"
 description: "A practical roadmap for Scala developers learning Java 21 immutability and concurrency, covering records, visibility, atomics, concurrent collections, virtual threads, and planned next topics."
 date: 2026-09-24 15:00:00 +0000
+updated: 2026-09-24 20:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, scala3, kotlin, immutability, concurrency, atomicity, visibility, virtual-threads, interview-preparation]
 ---
@@ -194,11 +195,10 @@ who want a precise answer to "What feels familiar in Java 21, and what still wor
 **What It Is:** Sometimes one field is not the problem. The real problem is that several pieces of
 state must change together, and atomics alone cannot protect the whole dance.
 
-**Read the full post:** Coming soon - planned follow-up post.
+**Read the full post:** [Locks in Java 21: When One Atomic Value Isn't Enough]({{ site.baseurl }}{% link _posts/2026-09-24-locks-when-one-atomic-value-isnt-enough.md %})
 
-**What You'll Learn:** This planned article should cover `synchronized` vs `ReentrantLock`,
-cross-field invariants, lock scope, deadlock avoidance, and how virtual-thread pinning changes the
-conversation in Java 21.
+**What You'll Learn:** This post covers `synchronized` vs `ReentrantLock`, cross-field invariants,
+lock scope, deadlock avoidance, and how virtual-thread pinning changes the conversation in Java 21.
 
 **Interview Questions You Might Face:**
 - "When is a lock better than an atomic variable?"
