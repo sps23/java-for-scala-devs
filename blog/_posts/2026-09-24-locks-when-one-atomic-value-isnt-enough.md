@@ -160,9 +160,9 @@ Locks are not "old-fashioned" tools; they are what you use when your state updat
 
 Related runnable examples in this repository:
 
-- [Virtual thread pinning patterns in Java 21](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/trickypatterns/VirtualThreadPinningPattern.java)
-- [Virtual vs platform threads guide (pinning notes)](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/virtualthreads/VirtualVsPlatformThreadsGuide.java)
-- [Spring singleton scope tracker with synchronized methods](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/spring/scopes/OrderVolumeTracker.java)
+- [Java 21 pinning and lock patterns](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/trickypatterns)
+- [Java 21 virtual threads interview examples](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/interview/preparation/virtualthreads)
+- [Java 21 Spring scope synchronization examples](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/spring/scopes)
 
 ---
 
