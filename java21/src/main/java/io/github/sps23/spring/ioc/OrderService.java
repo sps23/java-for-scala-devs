@@ -25,8 +25,7 @@ public class OrderService {
     private final EmailSender emailSender;
     private final OrderRepository repository;
 
-    public OrderService(PaymentGateway paymentGateway, EmailSender emailSender,
-            OrderRepository repository) {
+    public OrderService(PaymentGateway paymentGateway, EmailSender emailSender, OrderRepository repository) {
         this.paymentGateway = paymentGateway;
         this.emailSender = emailSender;
         this.repository = repository;

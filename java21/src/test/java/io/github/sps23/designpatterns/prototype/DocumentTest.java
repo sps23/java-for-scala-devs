@@ -21,22 +21,19 @@ class DocumentTest {
         deepCopy.getSections().add("Conclusion");
 
         assertNotSame(original, deepCopy, "Deep copy should be a new object");
-        assertEquals(2, original.getSections().size(),
-                "Original should keep its original sections");
+        assertEquals(2, original.getSections().size(), "Original should keep its original sections");
         assertEquals(3, deepCopy.getSections().size(), "Deep copy should be mutable independently");
     }
 
     @Test
     @DisplayName("Shallow clone should share mutable nested state")
     void shallowCloneShouldShareNestedState() {
-        Document original = new Document("Annual Report", "Ada",
-                new ArrayList<>(List.of("Introduction")));
+        Document original = new Document("Annual Report", "Ada", new ArrayList<>(List.of("Introduction")));
 
         Document shallowCopy = original.clone();
         shallowCopy.getSections().add("Conclusion");
 
         assertNotSame(original, shallowCopy, "Clone should be a new object");
-        assertEquals(2, original.getSections().size(),
-                "Original sections are shared with the shallow clone");
+        assertEquals(2, original.getSections().size(), "Original sections are shared with the shallow clone");
     }
 }

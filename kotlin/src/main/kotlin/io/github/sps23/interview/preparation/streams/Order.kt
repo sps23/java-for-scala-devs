@@ -55,12 +55,7 @@ data class Order(
          * @param items list of items
          * @return new Order instance with current date
          */
-        fun today(
-            id: Long,
-            category: String,
-            amount: Double,
-            customer: String,
-            items: List<String>,
-        ): Order = Order(id, category, amount, customer, LocalDate.now(), items)
+        fun today(id: Long, category: String, amount: Double, customer: String, items: List<String>): Order =
+            Order(id, category, amount, customer, LocalDate.now(), items)
     }
 }

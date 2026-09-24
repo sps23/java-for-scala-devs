@@ -28,14 +28,13 @@ object CoroutineBasics {
      * Both [async] blocks start immediately. [await] then collects the results once both are done.
      * Total time ≈ max(100ms, 80ms) rather than 100ms + 80ms = 180ms.
      */
-    suspend fun fetchUserAndOrders(): String =
-        coroutineScope {
-            val userDeferred = async { fetchUser() }
-            val ordersDeferred = async { fetchOrders() }
-            val user = userDeferred.await()
-            val orders = ordersDeferred.await()
-            "$user has ${orders.size} orders"
-        }
+    suspend fun fetchUserAndOrders(): String = coroutineScope {
+        val userDeferred = async { fetchUser() }
+        val ordersDeferred = async { fetchOrders() }
+        val user = userDeferred.await()
+        val orders = ordersDeferred.await()
+        "$user has ${orders.size} orders"
+    }
 
     /**
      * Fetches all URLs in parallel and collects every result.
@@ -43,10 +42,9 @@ object CoroutineBasics {
      * `awaitAll()` is the idiomatic way to run a list of [async] coroutines and collect all
      * results – equivalent to ZIO's `collectAllPar` and Java's `ShutdownOnFailure` scope.
      */
-    suspend fun fetchAllUrls(urls: List<String>): List<String> =
-        coroutineScope {
-            urls.map { url -> async { "content of $url" } }.awaitAll()
-        }
+    suspend fun fetchAllUrls(urls: List<String>): List<String> = coroutineScope {
+        urls.map { url -> async { "content of $url" } }.awaitAll()
+    }
 
     /** Simulates a remote user-profile fetch (100 ms latency). */
     private suspend fun fetchUser(): String {

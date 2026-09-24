@@ -26,11 +26,8 @@ public final class ConcurrentCollectionsExamples {
         var bothRead = new CountDownLatch(2);
         var allowWrite = new CountDownLatch(1);
 
-        var first = new Thread(() -> stagedHashMapIncrement(sharedPot, start, bothRead, allowWrite),
-                "hashmap-chef-1");
-        var second = new Thread(
-                () -> stagedHashMapIncrement(sharedPot, start, bothRead, allowWrite),
-                "hashmap-chef-2");
+        var first = new Thread(() -> stagedHashMapIncrement(sharedPot, start, bothRead, allowWrite), "hashmap-chef-1");
+        var second = new Thread(() -> stagedHashMapIncrement(sharedPot, start, bothRead, allowWrite), "hashmap-chef-2");
 
         first.start();
         second.start();
@@ -116,8 +113,8 @@ public final class ConcurrentCollectionsExamples {
     public record CopyOnWriteSnapshot(List<String> iterated, List<String> finalView) {
     }
 
-    private static void stagedHashMapIncrement(HashMap<String, Integer> sharedPot,
-            CountDownLatch start, CountDownLatch bothRead, CountDownLatch allowWrite) {
+    private static void stagedHashMapIncrement(HashMap<String, Integer> sharedPot, CountDownLatch start,
+            CountDownLatch bothRead, CountDownLatch allowWrite) {
         await(start);
         var observed = sharedPot.get("spoons");
         bothRead.countDown();
@@ -152,8 +149,7 @@ public final class ConcurrentCollectionsExamples {
             thread.join();
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
-            throw new IllegalStateException("Interrupted while waiting for the demo threads",
-                    exception);
+            throw new IllegalStateException("Interrupted while waiting for the demo threads", exception);
         }
     }
 }

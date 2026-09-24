@@ -9,10 +9,7 @@ object VisibilityExamples {
         @Volatile
         private var running = true
 
-        fun startWorker(
-            started: CountDownLatch,
-            stopped: CountDownLatch,
-        ): Thread {
+        fun startWorker(started: CountDownLatch, stopped: CountDownLatch): Thread {
             val worker =
                 Thread(
                     {
@@ -64,11 +61,7 @@ object VisibilityExamples {
 
         fun currentValue(): Int = counter
 
-        private fun stagedIncrement(
-            start: CountDownLatch,
-            bothRead: CountDownLatch,
-            allowWrite: CountDownLatch,
-        ) {
+        private fun stagedIncrement(start: CountDownLatch, bothRead: CountDownLatch, allowWrite: CountDownLatch) {
             await(start)
             // Both workers can observe the same value before either one writes.
             val observed = counter

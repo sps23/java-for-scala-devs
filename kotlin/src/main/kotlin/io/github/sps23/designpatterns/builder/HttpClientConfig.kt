@@ -73,10 +73,7 @@ class HttpClientConfigBuilder private constructor(
         return this
     }
 
-    fun addDefaultHeader(
-        key: String,
-        value: String,
-    ): HttpClientConfigBuilder {
+    fun addDefaultHeader(key: String, value: String): HttpClientConfigBuilder {
         defaultHeaders[key] = value
         return this
     }
@@ -132,9 +129,6 @@ class HttpClientConfigBuilder private constructor(
     }
 
     companion object {
-        fun builder(
-            host: String,
-            port: Int,
-        ): HttpClientConfigBuilder = HttpClientConfigBuilder(host, port)
+        fun builder(host: String, port: Int): HttpClientConfigBuilder = HttpClientConfigBuilder(host, port)
     }
 }

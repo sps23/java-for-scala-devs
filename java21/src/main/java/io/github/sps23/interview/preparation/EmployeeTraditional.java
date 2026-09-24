@@ -45,8 +45,7 @@ public final class EmployeeTraditional {
      * @throws NullPointerException
      *             if name, email, or department is null
      */
-    public EmployeeTraditional(long id, String name, String email, String department,
-            double salary) {
+    public EmployeeTraditional(long id, String name, String email, String department, double salary) {
         // Validate id
         if (id <= 0) {
             throw new IllegalArgumentException("Employee ID must be positive, got: " + id);
@@ -115,9 +114,8 @@ public final class EmployeeTraditional {
             return false;
         }
         EmployeeTraditional that = (EmployeeTraditional) o;
-        return id == that.id && Double.compare(salary, that.salary) == 0
-                && Objects.equals(name, that.name) && Objects.equals(email, that.email)
-                && Objects.equals(department, that.department);
+        return id == that.id && Double.compare(salary, that.salary) == 0 && Objects.equals(name, that.name)
+                && Objects.equals(email, that.email) && Objects.equals(department, that.department);
     }
 
     @Override
@@ -127,8 +125,8 @@ public final class EmployeeTraditional {
 
     @Override
     public String toString() {
-        return "EmployeeTraditional[" + "id=" + id + ", name=" + name + ", email=" + email
-                + ", department=" + department + ", salary=" + salary + ']';
+        return "EmployeeTraditional[" + "id=" + id + ", name=" + name + ", email=" + email + ", department="
+                + department + ", salary=" + salary + ']';
     }
 
     /**
@@ -137,8 +135,7 @@ public final class EmployeeTraditional {
      * @return formatted employee information
      */
     public String toFormattedString() {
-        return String.format("Employee #%d: %s (%s) - %s - $%.2f", id, name, email, department,
-                salary);
+        return String.format("Employee #%d: %s (%s) - %s - $%.2f", id, name, email, department, salary);
     }
 
     /**
@@ -156,8 +153,7 @@ public final class EmployeeTraditional {
      *            employee salary
      * @return new EmployeeTraditional instance
      */
-    public static EmployeeTraditional of(long id, String name, String email, String department,
-            double salary) {
+    public static EmployeeTraditional of(long id, String name, String email, String department, double salary) {
         return new EmployeeTraditional(id, name, email, department, salary);
     }
 }

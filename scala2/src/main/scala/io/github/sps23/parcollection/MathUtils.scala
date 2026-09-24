@@ -4,9 +4,9 @@ import scala.annotation.tailrec
 
 /** Utility functions used in examples and tests for collection processing.
   *
-  * This object contains small, well-commented utility methods that demonstrate numeric
-  * type-parameterization, parallel and sequential aggregation, and common algorithms (factorial,
-  * gcd, distance) used as educational examples for Scala developers learning about Java-like APIs.
+  * This object contains small, well-commented utility methods that demonstrate numeric type-parameterization, parallel
+  * and sequential aggregation, and common algorithms (factorial, gcd, distance) used as educational examples for Scala
+  * developers learning about Java-like APIs.
   */
 object MathUtils {
 
@@ -26,8 +26,8 @@ object MathUtils {
 
   /** Square each element of a sequence in parallel using a fork/join style helper.
     *
-    * This is a demonstration of running an element-wise transformation in parallel with a
-    * configurable level of parallelism. It requires a Numeric instance for the element type.
+    * This is a demonstration of running an element-wise transformation in parallel with a configurable level of
+    * parallelism. It requires a Numeric instance for the element type.
     *
     * @tparam T
     *   numeric element type
@@ -45,8 +45,8 @@ object MathUtils {
 
   /** Compute the sum of squares of the input sequence.
     *
-    * Useful as a building block for variance and similar statistics. Runs the operation in parallel
-    * using the provided ParCollection helper.
+    * Useful as a building block for variance and similar statistics. Runs the operation in parallel using the provided
+    * ParCollection helper.
     *
     * @tparam T
     *   numeric element type

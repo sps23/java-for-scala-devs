@@ -26,6 +26,7 @@
 
 ## Conventions You Must Preserve
 - Use package prefix `io.github.sps23` in code modules (`java21/README.md`, `scala2/README.md`, `scala3/README.md`, `kotlin/README.md`).
+- Keep the configured maximum line length at 120 characters/columns for Java, Scala 2, Scala 3, and Kotlin.
 - Keep Java 21 preview support intact where configured (`--enable-preview` in `java21/build.gradle`, also enabled in `kotlin/build.gradle` and `scala3/build.gradle`).
 - Do not remove `tasks.named('check') { dependsOn spotlessCheck }` gates in module builds.
 - Tests intentionally use multiple engines by module:

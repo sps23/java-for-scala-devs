@@ -53,16 +53,13 @@ public final class TransactionProcessor {
      * @return immutable list of sample transactions
      */
     public static List<Transaction> createSampleTransactionsWithListOf() {
-        return List.of(
-                new Transaction(1, "Food", 25.50, "Grocery shopping", LocalDate.of(2025, 1, 15)),
+        return List.of(new Transaction(1, "Food", 25.50, "Grocery shopping", LocalDate.of(2025, 1, 15)),
                 new Transaction(2, "Transport", 45.00, "Uber ride", LocalDate.of(2025, 1, 15)),
-                new Transaction(3, "Entertainment", 120.00, "Concert tickets",
-                        LocalDate.of(2025, 1, 16)),
+                new Transaction(3, "Entertainment", 120.00, "Concert tickets", LocalDate.of(2025, 1, 16)),
                 new Transaction(4, "Food", 35.75, "Restaurant dinner", LocalDate.of(2025, 1, 17)),
                 new Transaction(5, "Transport", 30.00, "Train ticket", LocalDate.of(2025, 1, 18)),
                 new Transaction(6, "Food", 15.25, "Coffee shop", LocalDate.of(2025, 1, 18)),
-                new Transaction(7, "Entertainment", 60.00, "Movie night",
-                        LocalDate.of(2025, 1, 19)),
+                new Transaction(7, "Entertainment", 60.00, "Movie night", LocalDate.of(2025, 1, 19)),
                 new Transaction(8, "Shopping", 250.00, "New shoes", LocalDate.of(2025, 1, 20)),
                 new Transaction(9, "Food", 42.50, "Takeout order", LocalDate.of(2025, 1, 20)),
                 new Transaction(10, "Transport", 55.00, "Taxi fare", LocalDate.of(2025, 1, 21)));
@@ -100,9 +97,8 @@ public final class TransactionProcessor {
      * @return immutable map of category descriptions
      */
     public static Map<String, String> getCategoryDescriptionsWithMapOf() {
-        return Map.of("Food", "Food and dining expenses", "Transport",
-                "Transportation and travel costs", "Entertainment",
-                "Entertainment and leisure activities", "Shopping", "Shopping and retail purchases",
+        return Map.of("Food", "Food and dining expenses", "Transport", "Transportation and travel costs",
+                "Entertainment", "Entertainment and leisure activities", "Shopping", "Shopping and retail purchases",
                 "Utilities", "Utility bills and services");
     }
 
@@ -117,9 +113,8 @@ public final class TransactionProcessor {
      * @return immutable map of category budgets
      */
     public static Map<String, Double> getCategoryBudgetsWithMapOfEntries() {
-        return Map.ofEntries(Map.entry("Food", 500.0), Map.entry("Transport", 200.0),
-                Map.entry("Entertainment", 150.0), Map.entry("Shopping", 300.0),
-                Map.entry("Utilities", 250.0), Map.entry("Healthcare", 100.0));
+        return Map.ofEntries(Map.entry("Food", 500.0), Map.entry("Transport", 200.0), Map.entry("Entertainment", 150.0),
+                Map.entry("Shopping", 300.0), Map.entry("Utilities", 250.0), Map.entry("Healthcare", 100.0));
     }
 
     // ========================================================================
@@ -189,8 +184,7 @@ public final class TransactionProcessor {
      *            minimum amount threshold
      * @return filtered list of transactions
      */
-    public static List<Transaction> filterByMinAmount(List<Transaction> transactions,
-            double minAmount) {
+    public static List<Transaction> filterByMinAmount(List<Transaction> transactions, double minAmount) {
         return transactions.stream().filter(t -> t.amount() >= minAmount).toList(); // Java 16+
     }
 
@@ -203,8 +197,7 @@ public final class TransactionProcessor {
      *            category to filter by
      * @return filtered list of transactions
      */
-    public static List<Transaction> filterByCategory(List<Transaction> transactions,
-            String category) {
+    public static List<Transaction> filterByCategory(List<Transaction> transactions, String category) {
         return transactions.stream().filter(t -> t.category().equals(category)).toList();
     }
 
@@ -227,8 +220,8 @@ public final class TransactionProcessor {
      * @return map of category to total amount
      */
     public static Map<String, Double> calculateTotalByCategory(List<Transaction> transactions) {
-        return transactions.stream().collect(Collectors.groupingBy(Transaction::category,
-                Collectors.summingDouble(Transaction::amount)));
+        return transactions.stream()
+                .collect(Collectors.groupingBy(Transaction::category, Collectors.summingDouble(Transaction::amount)));
     }
 
     /**
@@ -252,10 +245,9 @@ public final class TransactionProcessor {
      *            list of transactions
      * @return map of category to statistics
      */
-    public static Map<String, DoubleSummaryStatistics> calculateStatisticsByCategory(
-            List<Transaction> transactions) {
-        return transactions.stream().collect(Collectors.groupingBy(Transaction::category,
-                Collectors.summarizingDouble(Transaction::amount)));
+    public static Map<String, DoubleSummaryStatistics> calculateStatisticsByCategory(List<Transaction> transactions) {
+        return transactions.stream().collect(
+                Collectors.groupingBy(Transaction::category, Collectors.summarizingDouble(Transaction::amount)));
     }
 
     // ========================================================================
@@ -285,10 +277,10 @@ public final class TransactionProcessor {
      * @return MinMaxResult containing both min and max transactions
      */
     public static MinMaxResult findMinAndMaxTransaction(List<Transaction> transactions) {
-        return transactions.stream().collect(Collectors.teeing(
-                Collectors.minBy((t1, t2) -> Double.compare(t1.amount(), t2.amount())),
-                Collectors.maxBy((t1, t2) -> Double.compare(t1.amount(), t2.amount())),
-                (minOpt, maxOpt) -> new MinMaxResult(minOpt.orElse(null), maxOpt.orElse(null))));
+        return transactions.stream()
+                .collect(Collectors.teeing(Collectors.minBy((t1, t2) -> Double.compare(t1.amount(), t2.amount())),
+                        Collectors.maxBy((t1, t2) -> Double.compare(t1.amount(), t2.amount())),
+                        (minOpt, maxOpt) -> new MinMaxResult(minOpt.orElse(null), maxOpt.orElse(null))));
     }
 
     /**
@@ -312,9 +304,8 @@ public final class TransactionProcessor {
      * @return SummaryResult with total, count, and average
      */
     public static SummaryResult calculateSummary(List<Transaction> transactions) {
-        return transactions.stream().collect(Collectors.teeing(
-                Collectors.summingDouble(Transaction::amount), Collectors.counting(),
-                (sum, count) -> new SummaryResult(sum, count, count > 0 ? sum / count : 0.0)));
+        return transactions.stream().collect(Collectors.teeing(Collectors.summingDouble(Transaction::amount),
+                Collectors.counting(), (sum, count) -> new SummaryResult(sum, count, count > 0 ? sum / count : 0.0)));
     }
 
     // ========================================================================
@@ -330,10 +321,10 @@ public final class TransactionProcessor {
      *            minimum amount threshold
      * @return mutable list of filtered transactions
      */
-    public static List<Transaction> filterJava8Style(List<Transaction> transactions,
-            double minAmount) {
-        return transactions.stream().filter(t -> t.amount() >= minAmount)
-                .collect(Collectors.toList()); // Returns mutable ArrayList
+    public static List<Transaction> filterJava8Style(List<Transaction> transactions, double minAmount) {
+        return transactions.stream().filter(t -> t.amount() >= minAmount).collect(Collectors.toList()); // Returns
+                                                                                                        // mutable
+                                                                                                        // ArrayList
     }
 
     /**
@@ -346,8 +337,7 @@ public final class TransactionProcessor {
      *            minimum amount threshold
      * @return immutable list of filtered transactions
      */
-    public static List<Transaction> filterModernStyle(List<Transaction> transactions,
-            double minAmount) {
+    public static List<Transaction> filterModernStyle(List<Transaction> transactions, double minAmount) {
         return transactions.stream().filter(t -> t.amount() >= minAmount).toList(); // Returns
                                                                                     // unmodifiable
                                                                                     // list
@@ -375,8 +365,7 @@ public final class TransactionProcessor {
 
         // 1. Filter high-value transactions
         System.out.println("--- High-Value Transactions (>$50) ---");
-        filterByMinAmount(transactions, 50.0)
-                .forEach(t -> System.out.println("  " + t.toFormattedString()));
+        filterByMinAmount(transactions, 50.0).forEach(t -> System.out.println("  " + t.toFormattedString()));
 
         // 2. Group by category
         System.out.println("\n--- Transactions by Category ---");
@@ -452,8 +441,7 @@ public final class TransactionProcessor {
         System.out.println("\n--- Stream.toList() vs Collectors.toList() ---\n");
         List<Transaction> java8Result = filterJava8Style(transactions, 50.0);
         List<Transaction> modernResult = filterModernStyle(transactions, 50.0);
-        System.out.printf("Java 8 style (Collectors.toList()): %d transactions%n",
-                java8Result.size());
+        System.out.printf("Java 8 style (Collectors.toList()): %d transactions%n", java8Result.size());
         System.out.printf("Modern style (Stream.toList()): %d transactions%n", modernResult.size());
         System.out.println("Note: Stream.toList() returns an unmodifiable list!");
 

@@ -34,12 +34,11 @@ object FeeCalculator {
      * @param payment the payment method to calculate fee for
      * @return the calculated fee amount, rounded to 2 decimal places
      */
-    fun calculateFee(payment: PaymentMethod): BigDecimal =
-        when (payment) {
-            is CreditCard -> calculateCreditCardFee(payment.amount)
-            is BankTransfer -> calculateBankTransferFee(payment.amount)
-            is DigitalWallet -> calculateDigitalWalletFee(payment.amount)
-        }
+    fun calculateFee(payment: PaymentMethod): BigDecimal = when (payment) {
+        is CreditCard -> calculateCreditCardFee(payment.amount)
+        is BankTransfer -> calculateBankTransferFee(payment.amount)
+        is DigitalWallet -> calculateDigitalWalletFee(payment.amount)
+    }
 
     /**
      * Calculates fee using `when` expression with additional conditions.
@@ -51,23 +50,22 @@ object FeeCalculator {
      * @param payment the payment method
      * @return a description of the fee calculation
      */
-    fun describeFee(payment: PaymentMethod): String =
-        when (payment) {
-            is CreditCard ->
-                if (payment.amount > BigDecimal("100")) {
-                    "Credit card (high value): 2.9% + \$0.30 on ${payment.cardNumber.takeLast(4)}"
-                } else {
-                    "Credit card (standard): 2.9% + \$0.30 on ${payment.cardNumber.takeLast(4)}"
-                }
-            is BankTransfer ->
-                if (payment.amount >= BANK_TRANSFER_THRESHOLD) {
-                    "Bank transfer (high value): flat \$5.00 to ${payment.bankCode}"
-                } else {
-                    "Bank transfer (standard): flat \$2.50 to ${payment.bankCode}"
-                }
-            is DigitalWallet ->
-                "Digital wallet (${payment.provider}): 2.5% (min \$0.50)"
-        }
+    fun describeFee(payment: PaymentMethod): String = when (payment) {
+        is CreditCard ->
+            if (payment.amount > BigDecimal("100")) {
+                "Credit card (high value): 2.9% + \$0.30 on ${payment.cardNumber.takeLast(4)}"
+            } else {
+                "Credit card (standard): 2.9% + \$0.30 on ${payment.cardNumber.takeLast(4)}"
+            }
+        is BankTransfer ->
+            if (payment.amount >= BANK_TRANSFER_THRESHOLD) {
+                "Bank transfer (high value): flat \$5.00 to ${payment.bankCode}"
+            } else {
+                "Bank transfer (standard): flat \$2.50 to ${payment.bankCode}"
+            }
+        is DigitalWallet ->
+            "Digital wallet (${payment.provider}): 2.5% (min \$0.50)"
+    }
 
     /**
      * Demonstrates simple type-based `when` expression.
@@ -75,12 +73,11 @@ object FeeCalculator {
      * @param payment the payment method
      * @return the payment type name
      */
-    fun getPaymentTypeName(payment: PaymentMethod): String =
-        when (payment) {
-            is CreditCard -> "Credit Card"
-            is BankTransfer -> "Bank Transfer"
-            is DigitalWallet -> "Digital Wallet"
-        }
+    fun getPaymentTypeName(payment: PaymentMethod): String = when (payment) {
+        is CreditCard -> "Credit Card"
+        is BankTransfer -> "Bank Transfer"
+        is DigitalWallet -> "Digital Wallet"
+    }
 
     private fun calculateCreditCardFee(amount: BigDecimal): BigDecimal =
         (amount * CREDIT_CARD_PERCENTAGE + CREDIT_CARD_FIXED_FEE).setScale(2, RoundingMode.HALF_UP)

@@ -16,6 +16,6 @@ import java.math.BigDecimal;
  * @param supportQueue
  *            queue selected by legacy XML configuration
  */
-public record CheckoutReceipt(String transactionId, String paymentMode, BigDecimal total,
-        String invoiceLine, String supportQueue) {
+public record CheckoutReceipt(String transactionId, String paymentMode, BigDecimal total, String invoiceLine,
+        String supportQueue) {
 }

@@ -8,8 +8,7 @@ enum PaymentMethod {
     CARD, BANK_TRANSFER, DIGITAL_WALLET, BUY_NOW_PAY_LATER
 }
 
-record PaymentRequest(PaymentMethod paymentMethod, BigDecimal amount, String currency,
-        boolean vipCustomer) {
+record PaymentRequest(PaymentMethod paymentMethod, BigDecimal amount, String currency, boolean vipCustomer) {
     PaymentRequest {
         if (paymentMethod == null) {
             throw new IllegalArgumentException("Payment method must not be null");
@@ -23,8 +22,7 @@ record PaymentRequest(PaymentMethod paymentMethod, BigDecimal amount, String cur
     }
 }
 
-record FeeQuote(PaymentMethod paymentMethod, BigDecimal baseAmount, BigDecimal fee,
-        BigDecimal totalAmount) {
+record FeeQuote(PaymentMethod paymentMethod, BigDecimal baseAmount, BigDecimal fee, BigDecimal totalAmount) {
 }
 
 @FunctionalInterface
@@ -52,10 +50,8 @@ public final class PaymentFeeService {
     }
 
     public static PaymentFeeService defaultService() {
-        PaymentFeeStrategy card = request -> scale(
-                request.amount().multiply(money("0.029")).add(money("0.30")));
-        PaymentFeeStrategy bankTransfer = request -> scale(
-                request.amount().multiply(money("0.008")));
+        PaymentFeeStrategy card = request -> scale(request.amount().multiply(money("0.029")).add(money("0.30")));
+        PaymentFeeStrategy bankTransfer = request -> scale(request.amount().multiply(money("0.008")));
         PaymentFeeStrategy digitalWallet = request -> {
             var baseFee = request.amount().multiply(money("0.017"));
             if (request.vipCustomer()) {
@@ -64,16 +60,15 @@ public final class PaymentFeeService {
             return scale(baseFee);
         };
 
-        return new PaymentFeeService(Map.of(PaymentMethod.CARD, card, PaymentMethod.BANK_TRANSFER,
-                bankTransfer.withCap(money("7.50")), PaymentMethod.DIGITAL_WALLET,
-                digitalWallet.withMinimumFee(money("0.25"))));
+        return new PaymentFeeService(
+                Map.of(PaymentMethod.CARD, card, PaymentMethod.BANK_TRANSFER, bankTransfer.withCap(money("7.50")),
+                        PaymentMethod.DIGITAL_WALLET, digitalWallet.withMinimumFee(money("0.25"))));
     }
 
     public FeeQuote quote(PaymentRequest request) {
         var strategy = strategies.get(request.paymentMethod());
         if (strategy == null) {
-            throw new IllegalArgumentException(
-                    "No strategy configured for payment method: " + request.paymentMethod());
+            throw new IllegalArgumentException("No strategy configured for payment method: " + request.paymentMethod());
         }
 
         var baseAmount = scale(request.amount());

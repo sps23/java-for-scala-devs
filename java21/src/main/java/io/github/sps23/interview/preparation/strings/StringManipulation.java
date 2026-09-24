@@ -144,8 +144,7 @@ public final class StringManipulation {
             return "";
         }
 
-        return text.lines().map(String::strip).filter(line -> !line.isBlank())
-                .collect(Collectors.joining("\n"));
+        return text.lines().map(String::strip).filter(line -> !line.isBlank()).collect(Collectors.joining("\n"));
     }
 
     /**
@@ -166,8 +165,7 @@ public final class StringManipulation {
 
         int[] lineNumber = {1}; // Effectively final wrapper for use in lambda
 
-        return text.lines().map(line -> "%3d: %s".formatted(lineNumber[0]++, line))
-                .collect(Collectors.joining("\n"));
+        return text.lines().map(line -> "%3d: %s".formatted(lineNumber[0]++, line)).collect(Collectors.joining("\n"));
     }
 
     // ========================================================================
@@ -210,8 +208,7 @@ public final class StringManipulation {
             return "";
         }
 
-        return text.transform(s -> s.strip()).transform(s -> s.toUpperCase())
-                .transform(s -> "[%s]".formatted(s));
+        return text.transform(s -> s.strip()).transform(s -> s.toUpperCase()).transform(s -> "[%s]".formatted(s));
     }
 
     /**
@@ -237,9 +234,8 @@ public final class StringManipulation {
             return "";
         }
 
-        return text.lines().map(String::strip).filter(line -> !line.isBlank())
-                .map(line -> "• %s".formatted(line)).collect(Collectors.joining("\n"))
-                .transform(result -> "Processed Content:\n" + result)
+        return text.lines().map(String::strip).filter(line -> !line.isBlank()).map(line -> "• %s".formatted(line))
+                .collect(Collectors.joining("\n")).transform(result -> "Processed Content:\n" + result)
                 .transform(result -> result.indent(2).stripTrailing());
     }
 
@@ -306,8 +302,8 @@ public final class StringManipulation {
         String isEmpty = text.isEmpty() ? "empty" : "not empty";
         String isBlank = text.isBlank() ? "blank" : "not blank";
 
-        return "String '%s': %s, %s".formatted(
-                text.replace("\n", "\\n").replace("\t", "\\t").replace(" ", "·"), isEmpty, isBlank);
+        return "String '%s': %s, %s".formatted(text.replace("\n", "\\n").replace("\t", "\\t").replace(" ", "·"),
+                isEmpty, isBlank);
     }
 
     // ========================================================================
@@ -338,9 +334,8 @@ public final class StringManipulation {
                 Original: '%s'
                 trim():   '%s'
                 strip():  '%s'
-                Same result: %s""".formatted(text.replace("\n", "\\n"),
-                trimmed.replace("\n", "\\n"), stripped.replace("\n", "\\n"),
-                trimmed.equals(stripped));
+                Same result: %s""".formatted(text.replace("\n", "\\n"), trimmed.replace("\n", "\\n"),
+                stripped.replace("\n", "\\n"), trimmed.equals(stripped));
     }
 
     /**

@@ -14,8 +14,8 @@ import scala.util.Using
   *   - Resource cleanup is guaranteed
   *   - Stack traces are meaningful
   *
-  * For Scala developers: This is similar to ZIO's structured concurrency (ZIO.foreachPar with
-  * scoped resources) or Cats Effect's Resource + Fiber patterns.
+  * For Scala developers: This is similar to ZIO's structured concurrency (ZIO.foreachPar with scoped resources) or Cats
+  * Effect's Resource + Fiber patterns.
   *
   * Note: This is a preview feature in Java 21. The JVM must be started with --enable-preview.
   *
@@ -32,8 +32,7 @@ object StructuredConcurrencyExample:
 
   /** Demonstrates ShutdownOnFailure - fails fast if any task fails.
     *
-    * Use case: When you need ALL results to proceed (e.g., aggregating data from multiple required
-    * services).
+    * Use case: When you need ALL results to proceed (e.g., aggregating data from multiple required services).
     *
     * Behavior:
     *   - If any task throws an exception, all other tasks are cancelled
@@ -108,8 +107,7 @@ object StructuredConcurrencyExample:
 
     val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())
 
-    if response.statusCode() != 200 then
-      throw new RuntimeException(s"HTTP ${response.statusCode()} for $url")
+    if response.statusCode() != 200 then throw new RuntimeException(s"HTTP ${response.statusCode()} for $url")
 
     response.body().length
 

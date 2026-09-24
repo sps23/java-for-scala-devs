@@ -38,10 +38,8 @@ import java.util.function.Function;
  *
  * <pre>{@code
  * var executor = RetryExecutor.<String>builder()
- *         .withPolicy(
- *                 RetryPolicy.exponentialBackoff(Duration.ofMillis(100), Duration.ofSeconds(5)))
- *         .withCondition(RetryCondition.maxAttempts(3)
- *                 .and(RetryCondition.forExceptions(IOException.class)))
+ *         .withPolicy(RetryPolicy.exponentialBackoff(Duration.ofMillis(100), Duration.ofSeconds(5)))
+ *         .withCondition(RetryCondition.maxAttempts(3).and(RetryCondition.forExceptions(IOException.class)))
  *         .withRetryListener((ctx, delay) -> System.out.println("Retrying in " + delay))
  *         .withResultTransformer(String::trim).build();
  *
@@ -323,15 +321,12 @@ public final class RetryExecutor<T> {
 
         var executor = RetryExecutor.<String>builder()
                 // Custom functional interface lambda
-                .withPolicy(RetryPolicy.exponentialBackoff(Duration.ofMillis(100),
-                        Duration.ofSeconds(2)))
+                .withPolicy(RetryPolicy.exponentialBackoff(Duration.ofMillis(100), Duration.ofSeconds(2)))
                 // Combining conditions with and()
-                .withCondition(RetryCondition.maxAttempts(4)
-                        .and(RetryCondition.forExceptions(RuntimeException.class)))
+                .withCondition(RetryCondition.maxAttempts(4).and(RetryCondition.forExceptions(RuntimeException.class)))
                 // Consumer lambda for logging
-                .withRetryListener(
-                        event -> System.out.println("  Retry attempt " + event.context().attempt()
-                                + ", waiting " + event.delay().toMillis() + "ms"))
+                .withRetryListener(event -> System.out.println("  Retry attempt " + event.context().attempt()
+                        + ", waiting " + event.delay().toMillis() + "ms"))
                 // Function method reference
                 .withResultTransformer(String::trim).andThenTransform(String::toLowerCase).build();
 
@@ -352,20 +347,20 @@ public final class RetryExecutor<T> {
         // Pattern matching on result
         System.out.println("\n4. Result (using pattern matching):");
         switch (result) {
-            case RetryResult.Success<String> s -> System.out
-                    .println("  Success: '" + s.value() + "' in " + s.attempts() + " attempts");
-            case RetryResult.Failure<String> f -> System.out.println("  Failure: "
-                    + f.error().getMessage() + " after " + f.attempts() + " attempts");
+            case RetryResult.Success<String> s ->
+                System.out.println("  Success: '" + s.value() + "' in " + s.attempts() + " attempts");
+            case RetryResult.Failure<String> f ->
+                System.out.println("  Failure: " + f.error().getMessage() + " after " + f.attempts() + " attempts");
         }
 
         // Demonstrate composition
         System.out.println("\n5. Policy composition:");
-        var combinedPolicy = RetryPolicy.fixed(Duration.ofMillis(100)).maxWith(
-                RetryPolicy.exponentialBackoff(Duration.ofMillis(50), Duration.ofSeconds(1)));
-        System.out.println("  Combined policy delay for attempt 1: "
-                + combinedPolicy.delayFor(1, new RuntimeException()));
-        System.out.println("  Combined policy delay for attempt 3: "
-                + combinedPolicy.delayFor(3, new RuntimeException()));
+        var combinedPolicy = RetryPolicy.fixed(Duration.ofMillis(100))
+                .maxWith(RetryPolicy.exponentialBackoff(Duration.ofMillis(50), Duration.ofSeconds(1)));
+        System.out.println(
+                "  Combined policy delay for attempt 1: " + combinedPolicy.delayFor(1, new RuntimeException()));
+        System.out.println(
+                "  Combined policy delay for attempt 3: " + combinedPolicy.delayFor(3, new RuntimeException()));
 
         System.out.println("\n=== Demo Complete ===");
     }

@@ -3,8 +3,7 @@ package io.github.sps23.testing.examples
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-/** ScalaTest FunSuite examples for Calculator. Demonstrates idiomatic Scala testing with ScalaTest.
-  */
+/** ScalaTest FunSuite examples for Calculator. Demonstrates idiomatic Scala testing with ScalaTest. */
 class CalculatorScalaTestFunSuite extends AnyFunSuite with Matchers:
 
   val calculator = new Calculator

@@ -61,17 +61,16 @@ object LocalVariableTypeInference {
     /**
      * Creates sample transaction data for demonstrations.
      */
-    fun sampleTransactions(): List<Transaction> =
-        listOf(
-            Transaction(1, "Laptop", "Electronics", 1200.00, 2, LocalDate.of(2024, 1, 15), "North"),
-            Transaction(2, "Mouse", "Electronics", 25.00, 10, LocalDate.of(2024, 1, 16), "South"),
-            Transaction(3, "Desk Chair", "Furniture", 350.00, 3, LocalDate.of(2024, 1, 17), "North"),
-            Transaction(4, "Monitor", "Electronics", 400.00, 5, LocalDate.of(2024, 1, 18), "East"),
-            Transaction(5, "Bookshelf", "Furniture", 180.00, 2, LocalDate.of(2024, 1, 19), "West"),
-            Transaction(6, "Keyboard", "Electronics", 75.00, 8, LocalDate.of(2024, 1, 20), "North"),
-            Transaction(7, "Coffee Table", "Furniture", 220.00, 1, LocalDate.of(2024, 1, 21), "South"),
-            Transaction(8, "Webcam", "Electronics", 90.00, 6, LocalDate.of(2024, 1, 22), "East"),
-        )
+    fun sampleTransactions(): List<Transaction> = listOf(
+        Transaction(1, "Laptop", "Electronics", 1200.00, 2, LocalDate.of(2024, 1, 15), "North"),
+        Transaction(2, "Mouse", "Electronics", 25.00, 10, LocalDate.of(2024, 1, 16), "South"),
+        Transaction(3, "Desk Chair", "Furniture", 350.00, 3, LocalDate.of(2024, 1, 17), "North"),
+        Transaction(4, "Monitor", "Electronics", 400.00, 5, LocalDate.of(2024, 1, 18), "East"),
+        Transaction(5, "Bookshelf", "Furniture", 180.00, 2, LocalDate.of(2024, 1, 19), "West"),
+        Transaction(6, "Keyboard", "Electronics", 75.00, 8, LocalDate.of(2024, 1, 20), "North"),
+        Transaction(7, "Coffee Table", "Furniture", 220.00, 1, LocalDate.of(2024, 1, 21), "South"),
+        Transaction(8, "Webcam", "Electronics", 90.00, 6, LocalDate.of(2024, 1, 22), "East"),
+    )
 
     // ========================================================================
     // GOOD: When type inference improves readability

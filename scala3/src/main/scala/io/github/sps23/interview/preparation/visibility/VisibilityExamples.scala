@@ -81,8 +81,7 @@ object VisibilityExamples:
   private def join(thread: Thread): Unit =
     try
       thread.join(1000L)
-      if thread.isAlive then
-        throw IllegalStateException("Timed out while waiting for the demo thread")
+      if thread.isAlive then throw IllegalStateException("Timed out while waiting for the demo thread")
     catch
       case exception: InterruptedException =>
         Thread.currentThread().interrupt()

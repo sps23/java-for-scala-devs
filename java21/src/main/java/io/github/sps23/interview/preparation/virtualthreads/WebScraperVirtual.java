@@ -158,12 +158,11 @@ public class WebScraperVirtual {
      */
     private ScrapedResult scrapeUrl(String url) {
         try {
-            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url))
-                    .timeout(Duration.ofSeconds(30)).GET().build();
+            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).timeout(Duration.ofSeconds(30)).GET()
+                    .build();
 
             // This blocking call doesn't waste resources with virtual threads!
-            HttpResponse<String> response = httpClient.send(request,
-                    HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             return ScrapedResult.success(url, response.statusCode(), response.body().length());
         } catch (Exception e) {
@@ -191,8 +190,7 @@ public class WebScraperVirtual {
      * <p>
      * The builder pattern allows setting thread name, daemon status, etc.
      */
-    public Thread scrapeUrlWithBuilder(String url,
-            java.util.function.Consumer<ScrapedResult> callback) {
+    public Thread scrapeUrlWithBuilder(String url, java.util.function.Consumer<ScrapedResult> callback) {
         return Thread.ofVirtual().name("scraper-", 0) // Named threads: scraper-0, scraper-1, etc.
                 .start(() -> {
                     ScrapedResult result = scrapeUrl(url);
@@ -210,8 +208,7 @@ public class WebScraperVirtual {
 
         // Sample URLs (using httpbin.org for testing)
         List<String> urls = List.of("https://httpbin.org/delay/1", "https://httpbin.org/get",
-                "https://httpbin.org/headers", "https://httpbin.org/ip",
-                "https://httpbin.org/user-agent");
+                "https://httpbin.org/headers", "https://httpbin.org/ip", "https://httpbin.org/user-agent");
 
         WebScraperVirtual scraper = new WebScraperVirtual();
 

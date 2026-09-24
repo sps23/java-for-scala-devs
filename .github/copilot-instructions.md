@@ -39,7 +39,7 @@ Tabs are **never** used as indentation in this project across all languages.
 ### Java 21 (`java21/`)
 
 - **Indentation**: 4 spaces (enforced by Eclipse formatter — `java21/.eclipse-formatter.xml`)
-- **Max line length**: 100 characters
+- **Max line length**: 120 characters
 - **Brace style**: K&R (opening brace at end of line)
 - **Spaces inside parens**: none — `method(arg)` not `method( arg )`
 - Spotless enforces this via `eclipse('4.30').configFile(rootProject.file('java21/.eclipse-formatter.xml'))`.
@@ -56,7 +56,7 @@ public record Person(String name, int age) {
 ### Scala 2.13 (`scala2/`)
 
 - **Indentation**: 2 spaces (enforced by Scalafmt — `scala2/.scalafmt.conf`)
-- **Max column**: 100
+- **Max column**: 120
 - **Dialect**: `scala213`
 - **Rewrites**: `RedundantBraces`, `RedundantParens`, `SortImports`, `SortModifiers`
 - **Alignment**: `align.preset = more`; aligns `<-`, `=`, `=>` tokens
@@ -71,7 +71,7 @@ case class Person(name: String, age: Int) {
 ### Scala 3 (`scala3/`)
 
 - **Indentation**: 2 spaces (enforced by Scalafmt — `scala3/.scalafmt.conf`)
-- **Max column**: 100
+- **Max column**: 120
 - **Dialect**: `scala3`
 - **Rewrites**: same as Scala 2 plus `rewrite.scala3.convertToNewSyntax = true` and `rewrite.scala3.removeOptionalBraces = true`
 - Prefer new Scala 3 indentation syntax (no braces); use `end` markers for long blocks.
@@ -85,7 +85,7 @@ case class Person(name: String, age: Int):
 ### Kotlin (`kotlin/`)
 
 - **Indentation**: 4 spaces (enforced by ktlint via Spotless)
-- **Max line length**: standard ktlint default (100)
+- **Max line length**: 120 characters (configured via Spotless)
 - Spotless runs `ktlint('1.1.1')`.
 
 ```kotlin

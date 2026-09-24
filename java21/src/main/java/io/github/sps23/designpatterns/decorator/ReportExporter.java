@@ -94,8 +94,7 @@ final class EncryptionDecorator extends ReportExporterDecorator {
     public static String decrypt(String encoded, int key) {
         String payload = encoded.startsWith(PREFIX) ? encoded.substring(PREFIX.length()) : encoded;
         byte[] decoded = Base64.getDecoder().decode(payload);
-        return new String(xor(new String(decoded, StandardCharsets.UTF_8), key),
-                StandardCharsets.UTF_8);
+        return new String(xor(new String(decoded, StandardCharsets.UTF_8), key), StandardCharsets.UTF_8);
     }
 
     private static byte[] xor(String text, int key) {

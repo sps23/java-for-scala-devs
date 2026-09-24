@@ -72,8 +72,7 @@ public class StructuredTaskScopeDemo {
      */
     public static List<String> fetchAllUrls(List<String> urls) throws Exception {
         try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-            List<Subtask<String>> subtasks = urls.stream()
-                    .map(url -> scope.fork(() -> "content of " + url)).toList();
+            List<Subtask<String>> subtasks = urls.stream().map(url -> scope.fork(() -> "content of " + url)).toList();
             scope.join().throwIfFailed();
             return subtasks.stream().map(Subtask::get).toList();
         }

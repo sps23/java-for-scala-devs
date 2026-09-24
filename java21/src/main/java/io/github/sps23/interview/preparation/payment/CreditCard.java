@@ -32,8 +32,7 @@ import java.util.Objects;
  * @param amount
  *            the transaction amount
  */
-public record CreditCard(String cardNumber, YearMonth expiryDate,
-        BigDecimal amount) implements PaymentMethod {
+public record CreditCard(String cardNumber, YearMonth expiryDate, BigDecimal amount) implements PaymentMethod {
 
     /**
      * Compact constructor for validation.

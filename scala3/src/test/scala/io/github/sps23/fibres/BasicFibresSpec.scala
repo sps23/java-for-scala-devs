@@ -6,8 +6,8 @@ import zio.*
 
 /** Tests for BasicFibres using ScalaTest with ZIO's runtime.
   *
-  * We run ZIO effects synchronously using `Runtime.default.unsafe.run(...)` so they fit naturally
-  * into the ScalaTest lifecycle.
+  * We run ZIO effects synchronously using `Runtime.default.unsafe.run(...)` so they fit naturally into the ScalaTest
+  * lifecycle.
   */
 class BasicFibresSpec extends AnyFlatSpec with Matchers:
 

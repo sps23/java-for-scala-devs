@@ -50,8 +50,7 @@ class OrderServiceTest {
         @DisplayName("Should charge payment, save order, and send confirmation email")
         void shouldChargePaymentAndSendConfirmationEmail() {
             // Arrange
-            var order = new Order("order-1", "cust-42", new BigDecimal("99.99"),
-                    "test@example.com");
+            var order = new Order("order-1", "cust-42", new BigDecimal("99.99"), "test@example.com");
             var paymentResult = new PaymentResult("txn_abc123", new BigDecimal("99.99"));
             when(mockGateway.charge(order.amount(), order.customerId())).thenReturn(paymentResult);
 
@@ -69,8 +68,7 @@ class OrderServiceTest {
         @Test
         @DisplayName("Should return confirmation with payment transaction id")
         void shouldReturnConfirmationWithTransactionId() {
-            var order = new Order("order-99", "cust-7", new BigDecimal("250.00"),
-                    "buyer@example.com");
+            var order = new Order("order-99", "cust-7", new BigDecimal("250.00"), "buyer@example.com");
             when(mockGateway.charge(any(), any()))
                     .thenReturn(new PaymentResult("txn_xyz789", new BigDecimal("250.00")));
 
@@ -83,10 +81,8 @@ class OrderServiceTest {
         @Test
         @DisplayName("Should send confirmation to the customer's email address")
         void shouldSendConfirmationToCustomerEmail() {
-            var order = new Order("order-2", "cust-1", new BigDecimal("10.00"),
-                    "customer@company.org");
-            when(mockGateway.charge(any(), any()))
-                    .thenReturn(new PaymentResult("txn_1", new BigDecimal("10.00")));
+            var order = new Order("order-2", "cust-1", new BigDecimal("10.00"), "customer@company.org");
+            when(mockGateway.charge(any(), any())).thenReturn(new PaymentResult("txn_1", new BigDecimal("10.00")));
 
             orderService.placeOrder(order);
 
@@ -103,8 +99,7 @@ class OrderServiceTest {
         @Test
         @DisplayName("Should propagate PaymentException when gateway rejects the charge")
         void shouldPropagatePaymentFailure() {
-            var order = new Order("order-2", "cust-99", new BigDecimal("500.00"),
-                    "test@example.com");
+            var order = new Order("order-2", "cust-99", new BigDecimal("500.00"), "test@example.com");
             when(mockGateway.charge(any(), any())).thenThrow(new PaymentException("Card declined"));
 
             assertThrows(PaymentException.class, () -> orderService.placeOrder(order));
@@ -114,8 +109,7 @@ class OrderServiceTest {
         @DisplayName("Should NOT save order when payment fails")
         void shouldNotSaveOrderWhenPaymentFails() {
             var order = new Order("order-3", "cust-5", new BigDecimal("50.00"), "test@example.com");
-            when(mockGateway.charge(any(), any()))
-                    .thenThrow(new PaymentException("Insufficient funds"));
+            when(mockGateway.charge(any(), any())).thenThrow(new PaymentException("Insufficient funds"));
 
             assertThrows(PaymentException.class, () -> orderService.placeOrder(order));
 

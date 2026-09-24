@@ -4,9 +4,8 @@ import java.time.YearMonth
 
 /** A sealed trait representing different payment methods in a payment system.
   *
-  * In Scala, sealed traits provide the same functionality as Java's sealed interfaces: they
-  * restrict which classes can extend them to those defined in the same file, enabling exhaustive
-  * pattern matching.
+  * In Scala, sealed traits provide the same functionality as Java's sealed interfaces: they restrict which classes can
+  * extend them to those defined in the same file, enabling exhaustive pattern matching.
   *
   * Key concepts demonstrated:
   *   - `sealed` trait - restricts subtypes to the same compilation unit
@@ -25,8 +24,7 @@ sealed trait PaymentMethod:
   * @param amount
   *   the transaction amount
   */
-case class CreditCard(cardNumber: String, expiryDate: YearMonth, amount: BigDecimal)
-    extends PaymentMethod:
+case class CreditCard(cardNumber: String, expiryDate: YearMonth, amount: BigDecimal) extends PaymentMethod:
   require(
     cardNumber != null && cardNumber.length == 16 && cardNumber.forall(_.isDigit),
     "Card number must be 16 digits"
@@ -66,8 +64,7 @@ case class BankTransfer(iban: String, bankCode: String, amount: BigDecimal) exte
   * @param amount
   *   the payment amount
   */
-case class DigitalWallet(provider: String, accountId: String, amount: BigDecimal)
-    extends PaymentMethod:
+case class DigitalWallet(provider: String, accountId: String, amount: BigDecimal) extends PaymentMethod:
   require(provider != null && provider.nonEmpty, "Provider cannot be blank")
   require(accountId != null && accountId.nonEmpty, "Account ID cannot be blank")
   require(amount != null && amount > 0, "Amount must be positive")

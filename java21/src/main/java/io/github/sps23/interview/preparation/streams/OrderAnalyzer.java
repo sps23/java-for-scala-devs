@@ -52,30 +52,21 @@ public final class OrderAnalyzer {
      */
     public static List<Order> createSampleOrders() {
         return List.of(
-                new Order(1, "Electronics", 1299.99, "Alice", LocalDate.of(2025, 1, 15),
-                        List.of("Laptop", "Mouse")),
+                new Order(1, "Electronics", 1299.99, "Alice", LocalDate.of(2025, 1, 15), List.of("Laptop", "Mouse")),
                 new Order(2, "Books", 45.50, "Bob", LocalDate.of(2025, 1, 15),
                         List.of("Java Programming", "Design Patterns")),
-                new Order(3, "Electronics", 799.00, "Charlie", LocalDate.of(2025, 1, 16),
-                        List.of("Tablet")),
-                new Order(4, "Clothing", 125.00, "Alice", LocalDate.of(2025, 1, 17),
-                        List.of("Jacket", "Jeans")),
-                new Order(5, "Books", 32.99, "Diana", LocalDate.of(2025, 1, 18),
-                        List.of("Scala for Impatient")),
+                new Order(3, "Electronics", 799.00, "Charlie", LocalDate.of(2025, 1, 16), List.of("Tablet")),
+                new Order(4, "Clothing", 125.00, "Alice", LocalDate.of(2025, 1, 17), List.of("Jacket", "Jeans")),
+                new Order(5, "Books", 32.99, "Diana", LocalDate.of(2025, 1, 18), List.of("Scala for Impatient")),
                 new Order(6, "Electronics", 2499.99, "Eve", LocalDate.of(2025, 1, 18),
                         List.of("Desktop Computer", "Monitor", "Keyboard")),
-                new Order(7, "Clothing", 89.99, "Frank", LocalDate.of(2025, 1, 19),
-                        List.of("Shirt", "Tie")),
+                new Order(7, "Clothing", 89.99, "Frank", LocalDate.of(2025, 1, 19), List.of("Shirt", "Tie")),
                 new Order(8, "Books", 89.00, "Alice", LocalDate.of(2025, 1, 20),
                         List.of("Kotlin in Action", "Effective Java", "Clean Code")),
-                new Order(9, "Electronics", 349.99, "Bob", LocalDate.of(2025, 1, 20),
-                        List.of("Headphones")),
-                new Order(10, "Clothing", 250.00, "Charlie", LocalDate.of(2025, 1, 21),
-                        List.of("Suit")),
-                new Order(11, "Books", 28.50, "Diana", LocalDate.of(2025, 1, 22),
-                        List.of("Functional Programming")),
-                new Order(12, "Electronics", 599.00, "Eve", LocalDate.of(2025, 1, 22),
-                        List.of("Smartphone")));
+                new Order(9, "Electronics", 349.99, "Bob", LocalDate.of(2025, 1, 20), List.of("Headphones")),
+                new Order(10, "Clothing", 250.00, "Charlie", LocalDate.of(2025, 1, 21), List.of("Suit")),
+                new Order(11, "Books", 28.50, "Diana", LocalDate.of(2025, 1, 22), List.of("Functional Programming")),
+                new Order(12, "Electronics", 599.00, "Eve", LocalDate.of(2025, 1, 22), List.of("Smartphone")));
     }
 
     // ========================================================================
@@ -155,11 +146,9 @@ public final class OrderAnalyzer {
      *            maximum amount (exclusive via take)
      * @return orders in the specified amount range
      */
-    public static List<Order> getOrdersInAmountRange(List<Order> orders, double minAmount,
-            double maxAmount) {
+    public static List<Order> getOrdersInAmountRange(List<Order> orders, double minAmount, double maxAmount) {
         return orders.stream().sorted(Comparator.comparingDouble(Order::amount))
-                .dropWhile(order -> order.amount() < minAmount)
-                .takeWhile(order -> order.amount() < maxAmount).toList();
+                .dropWhile(order -> order.amount() < minAmount).takeWhile(order -> order.amount() < maxAmount).toList();
     }
 
     // ========================================================================
@@ -174,8 +163,7 @@ public final class OrderAnalyzer {
      * @return map of category to order count
      */
     public static Map<String, Long> countOrdersByCategory(List<Order> orders) {
-        return orders.stream()
-                .collect(Collectors.groupingBy(Order::category, Collectors.counting()));
+        return orders.stream().collect(Collectors.groupingBy(Order::category, Collectors.counting()));
     }
 
     /**
@@ -186,8 +174,7 @@ public final class OrderAnalyzer {
      * @return map of category to total amount
      */
     public static Map<String, Double> totalAmountByCategory(List<Order> orders) {
-        return orders.stream().collect(
-                Collectors.groupingBy(Order::category, Collectors.summingDouble(Order::amount)));
+        return orders.stream().collect(Collectors.groupingBy(Order::category, Collectors.summingDouble(Order::amount)));
     }
 
     /**
@@ -198,8 +185,8 @@ public final class OrderAnalyzer {
      * @return map of category to summary statistics
      */
     public static Map<String, DoubleSummaryStatistics> statisticsByCategory(List<Order> orders) {
-        return orders.stream().collect(Collectors.groupingBy(Order::category,
-                Collectors.summarizingDouble(Order::amount)));
+        return orders.stream()
+                .collect(Collectors.groupingBy(Order::category, Collectors.summarizingDouble(Order::amount)));
     }
 
     /**
@@ -211,8 +198,8 @@ public final class OrderAnalyzer {
      * @return map of category to list of unique customer names
      */
     public static Map<String, List<String>> customersByCategory(List<Order> orders) {
-        return orders.stream().collect(Collectors.groupingBy(Order::category,
-                Collectors.mapping(Order::customer, Collectors.toList())));
+        return orders.stream().collect(
+                Collectors.groupingBy(Order::category, Collectors.mapping(Order::customer, Collectors.toList())));
     }
 
     /**
@@ -224,8 +211,8 @@ public final class OrderAnalyzer {
      * @return map of category to set of unique customer names
      */
     public static Map<String, Set<String>> uniqueCustomersByCategory(List<Order> orders) {
-        return orders.stream().collect(Collectors.groupingBy(Order::category,
-                Collectors.mapping(Order::customer, Collectors.toSet())));
+        return orders.stream().collect(
+                Collectors.groupingBy(Order::category, Collectors.mapping(Order::customer, Collectors.toSet())));
     }
 
     /**
@@ -235,10 +222,8 @@ public final class OrderAnalyzer {
      *            list of orders
      * @return nested map of category -> customer -> list of orders
      */
-    public static Map<String, Map<String, List<Order>>> ordersByCategoryAndCustomer(
-            List<Order> orders) {
-        return orders.stream().collect(
-                Collectors.groupingBy(Order::category, Collectors.groupingBy(Order::customer)));
+    public static Map<String, Map<String, List<Order>>> ordersByCategoryAndCustomer(List<Order> orders) {
+        return orders.stream().collect(Collectors.groupingBy(Order::category, Collectors.groupingBy(Order::customer)));
     }
 
     /**
@@ -249,11 +234,8 @@ public final class OrderAnalyzer {
      * @return map of category to highest value order
      */
     public static Map<String, Order> highestOrderByCategory(List<Order> orders) {
-        return orders.stream()
-                .collect(Collectors.groupingBy(Order::category,
-                        Collectors.collectingAndThen(
-                                Collectors.maxBy(Comparator.comparingDouble(Order::amount)),
-                                opt -> opt.orElse(null))));
+        return orders.stream().collect(Collectors.groupingBy(Order::category, Collectors.collectingAndThen(
+                Collectors.maxBy(Comparator.comparingDouble(Order::amount)), opt -> opt.orElse(null))));
     }
 
     /**
@@ -266,11 +248,9 @@ public final class OrderAnalyzer {
      * @return map of category to top N orders sorted by amount descending
      */
     public static Map<String, List<Order>> topNOrdersByCategory(List<Order> orders, int topN) {
-        return orders.stream()
-                .collect(Collectors.groupingBy(Order::category,
-                        Collectors.collectingAndThen(Collectors.toList(), list -> list.stream()
-                                .sorted(Comparator.comparingDouble(Order::amount).reversed())
-                                .limit(topN).toList())));
+        return orders.stream().collect(
+                Collectors.groupingBy(Order::category, Collectors.collectingAndThen(Collectors.toList(), list -> list
+                        .stream().sorted(Comparator.comparingDouble(Order::amount).reversed()).limit(topN).toList())));
     }
 
     // ========================================================================
@@ -291,10 +271,8 @@ public final class OrderAnalyzer {
      *            amount threshold for high-value classification
      * @return map with true -> high-value orders, false -> regular orders
      */
-    public static Map<Boolean, List<Order>> partitionByHighValue(List<Order> orders,
-            double threshold) {
-        return orders.stream()
-                .collect(Collectors.partitioningBy(order -> order.amount() >= threshold));
+    public static Map<Boolean, List<Order>> partitionByHighValue(List<Order> orders, double threshold) {
+        return orders.stream().collect(Collectors.partitioningBy(order -> order.amount() >= threshold));
     }
 
     /**
@@ -307,10 +285,9 @@ public final class OrderAnalyzer {
      * @return map with true -> count of orders on/after cutoff, false -> count
      *         before
      */
-    public static Map<Boolean, Long> countByDatePartition(List<Order> orders,
-            LocalDate cutoffDate) {
-        return orders.stream().collect(Collectors.partitioningBy(
-                order -> !order.date().isBefore(cutoffDate), Collectors.counting()));
+    public static Map<Boolean, Long> countByDatePartition(List<Order> orders, LocalDate cutoffDate) {
+        return orders.stream()
+                .collect(Collectors.partitioningBy(order -> !order.date().isBefore(cutoffDate), Collectors.counting()));
     }
 
     /**
@@ -324,8 +301,8 @@ public final class OrderAnalyzer {
      *         regular
      */
     public static Map<Boolean, Double> partitionWithTotals(List<Order> orders, double threshold) {
-        return orders.stream().collect(Collectors.partitioningBy(
-                order -> order.amount() >= threshold, Collectors.summingDouble(Order::amount)));
+        return orders.stream().collect(Collectors.partitioningBy(order -> order.amount() >= threshold,
+                Collectors.summingDouble(Order::amount)));
     }
 
     // ========================================================================
@@ -379,8 +356,7 @@ public final class OrderAnalyzer {
                     // Adjust running totals in list2 and add to list1
                     double offset = total1[0];
                     for (OrderWithRunningTotal owrt : list2) {
-                        list1.add(new OrderWithRunningTotal(owrt.order(),
-                                owrt.runningTotal() + offset));
+                        list1.add(new OrderWithRunningTotal(owrt.order(), owrt.runningTotal() + offset));
                     }
                     total1[0] += total2[0];
                     return acc1;
@@ -401,8 +377,7 @@ public final class OrderAnalyzer {
      * @return list of orders with running totals
      */
     public static List<OrderWithRunningTotal> calculateRunningTotals(List<Order> orders) {
-        return orders.stream().sorted(Comparator.comparing(Order::date))
-                .collect(runningTotalCollector());
+        return orders.stream().sorted(Comparator.comparing(Order::date)).collect(runningTotalCollector());
     }
 
     /**
@@ -423,8 +398,8 @@ public final class OrderAnalyzer {
      * @param uniqueCustomers
      *            number of unique customers
      */
-    public record CategorySummary(String category, long orderCount, double totalAmount,
-            double averageAmount, double minAmount, double maxAmount, long uniqueCustomers) {
+    public record CategorySummary(String category, long orderCount, double totalAmount, double averageAmount,
+            double minAmount, double maxAmount, long uniqueCustomers) {
     }
 
     /**
@@ -507,8 +482,8 @@ public final class OrderAnalyzer {
      */
     public static Map<String, CategorySummary> generateCategorySummaries(List<Order> orders) {
         return orders.stream().collect(Collectors.groupingBy(Order::category)).entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().stream()
-                        .collect(new CategorySummaryCollector(entry.getKey()))));
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        entry -> entry.getValue().stream().collect(new CategorySummaryCollector(entry.getKey()))));
     }
 
     // ========================================================================
@@ -605,8 +580,7 @@ public final class OrderAnalyzer {
         }
         long parTime = System.nanoTime() - parStart;
 
-        return String.format(
-                "Sequential: %.3f ms, Parallel: %.3f ms (for %d orders, 1000 iterations)",
+        return String.format("Sequential: %.3f ms, Parallel: %.3f ms (for %d orders, 1000 iterations)",
                 seqTime / 1_000_000.0, parTime / 1_000_000.0, orders.size());
     }
 
@@ -630,10 +604,8 @@ public final class OrderAnalyzer {
      * @param regularOrders
      *            orders below threshold
      */
-    public record OrderReport(long totalOrders, double totalRevenue,
-            Map<String, CategorySummary> categorySummaries,
-            Map<String, List<Order>> topOrdersByCategory, List<Order> highValueOrders,
-            List<Order> regularOrders) {
+    public record OrderReport(long totalOrders, double totalRevenue, Map<String, CategorySummary> categorySummaries,
+            Map<String, List<Order>> topOrdersByCategory, List<Order> highValueOrders, List<Order> regularOrders) {
     }
 
     /**
@@ -649,8 +621,8 @@ public final class OrderAnalyzer {
         Map<Boolean, List<Order>> partitioned = partitionByHighValue(orders, highValueThreshold);
 
         return new OrderReport(orders.size(), orders.stream().mapToDouble(Order::amount).sum(),
-                generateCategorySummaries(orders), topNOrdersByCategory(orders, 3),
-                partitioned.get(true), partitioned.get(false));
+                generateCategorySummaries(orders), topNOrdersByCategory(orders, 3), partitioned.get(true),
+                partitioned.get(false));
     }
 
     /**
@@ -671,8 +643,7 @@ public final class OrderAnalyzer {
             System.out.printf("  Orders: %d%n", summary.orderCount());
             System.out.printf("  Total: $%.2f%n", summary.totalAmount());
             System.out.printf("  Average: $%.2f%n", summary.averageAmount());
-            System.out.printf("  Min: $%.2f, Max: $%.2f%n", summary.minAmount(),
-                    summary.maxAmount());
+            System.out.printf("  Min: $%.2f, Max: $%.2f%n", summary.minAmount(), summary.maxAmount());
             System.out.printf("  Unique Customers: %d%n", summary.uniqueCustomers());
         });
 
@@ -683,12 +654,10 @@ public final class OrderAnalyzer {
         });
 
         System.out.println("\n--- High Value Orders ---");
-        report.highValueOrders()
-                .forEach(order -> System.out.printf("  %s%n", order.toFormattedString()));
+        report.highValueOrders().forEach(order -> System.out.printf("  %s%n", order.toFormattedString()));
 
         System.out.println("\n--- Regular Orders ---");
-        report.regularOrders()
-                .forEach(order -> System.out.printf("  %s%n", order.toFormattedString()));
+        report.regularOrders().forEach(order -> System.out.printf("  %s%n", order.toFormattedString()));
     }
 
     // ========================================================================
@@ -710,41 +679,36 @@ public final class OrderAnalyzer {
         System.out.println("--- takeWhile() and dropWhile() (Java 9+) ---\n");
 
         System.out.println("Orders with amount < $500 (takeWhile on sorted stream):");
-        takeOrdersWhileBelowBudget(orders, 500.0)
-                .forEach(o -> System.out.println("  " + o.toFormattedString()));
+        takeOrdersWhileBelowBudget(orders, 500.0).forEach(o -> System.out.println("  " + o.toFormattedString()));
 
         System.out.println("\nOrders >= $500 (dropWhile on sorted stream):");
-        dropOrdersBelowThreshold(orders, 500.0)
-                .forEach(o -> System.out.println("  " + o.toFormattedString()));
+        dropOrdersBelowThreshold(orders, 500.0).forEach(o -> System.out.println("  " + o.toFormattedString()));
 
         System.out.println("\nOrders in range $100-$1000:");
-        getOrdersInAmountRange(orders, 100.0, 1000.0)
-                .forEach(o -> System.out.println("  " + o.toFormattedString()));
+        getOrdersInAmountRange(orders, 100.0, 1000.0).forEach(o -> System.out.println("  " + o.toFormattedString()));
 
         // Demo 2: groupingBy with downstream collectors
         System.out.println("\n--- groupingBy() with Downstream Collectors ---\n");
 
         System.out.println("Order count by category:");
-        countOrdersByCategory(orders).forEach(
-                (category, count) -> System.out.printf("  %s: %d orders%n", category, count));
+        countOrdersByCategory(orders)
+                .forEach((category, count) -> System.out.printf("  %s: %d orders%n", category, count));
 
         System.out.println("\nTotal amount by category:");
-        totalAmountByCategory(orders)
-                .forEach((category, total) -> System.out.printf("  %s: $%.2f%n", category, total));
+        totalAmountByCategory(orders).forEach((category, total) -> System.out.printf("  %s: $%.2f%n", category, total));
 
         System.out.println("\nStatistics by category:");
         statisticsByCategory(orders).forEach((category, stats) -> System.out.printf(
-                "  %s: count=%d, sum=$%.2f, avg=$%.2f, min=$%.2f, max=$%.2f%n", category,
-                stats.getCount(), stats.getSum(), stats.getAverage(), stats.getMin(),
-                stats.getMax()));
+                "  %s: count=%d, sum=$%.2f, avg=$%.2f, min=$%.2f, max=$%.2f%n", category, stats.getCount(),
+                stats.getSum(), stats.getAverage(), stats.getMin(), stats.getMax()));
 
         System.out.println("\nUnique customers by category:");
-        uniqueCustomersByCategory(orders).forEach(
-                (category, customers) -> System.out.printf("  %s: %s%n", category, customers));
+        uniqueCustomersByCategory(orders)
+                .forEach((category, customers) -> System.out.printf("  %s: %s%n", category, customers));
 
         System.out.println("\nHighest order by category:");
-        highestOrderByCategory(orders).forEach((category, order) -> System.out.printf("  %s: %s%n",
-                category, order != null ? order.toFormattedString() : "N/A"));
+        highestOrderByCategory(orders).forEach((category, order) -> System.out.printf("  %s: %s%n", category,
+                order != null ? order.toFormattedString() : "N/A"));
 
         // Demo 3: partitioningBy
         System.out.println("\n--- partitioningBy() ---\n");
@@ -763,9 +727,8 @@ public final class OrderAnalyzer {
         System.out.println("\n--- Custom Collectors ---\n");
 
         System.out.println("Running totals (sorted by date):");
-        calculateRunningTotals(orders)
-                .forEach(owrt -> System.out.printf("  %s -> Running Total: $%.2f%n",
-                        owrt.order().toFormattedString(), owrt.runningTotal()));
+        calculateRunningTotals(orders).forEach(owrt -> System.out.printf("  %s -> Running Total: $%.2f%n",
+                owrt.order().toFormattedString(), owrt.runningTotal()));
 
         // Demo 5: Parallel streams
         System.out.println("\n--- Parallel Streams ---\n");

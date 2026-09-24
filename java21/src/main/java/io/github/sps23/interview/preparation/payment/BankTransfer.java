@@ -18,8 +18,7 @@ import java.util.Objects;
  * @param amount
  *            the transfer amount
  */
-public record BankTransfer(String iban, String bankCode,
-        BigDecimal amount) implements PaymentMethod {
+public record BankTransfer(String iban, String bankCode, BigDecimal amount) implements PaymentMethod {
 
     /**
      * Compact constructor for validation.

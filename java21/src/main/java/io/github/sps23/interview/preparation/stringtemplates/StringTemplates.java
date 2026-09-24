@@ -272,9 +272,8 @@ public final class StringTemplates {
      * @return the safe query builder with configured query
      */
     public static SafeQueryBuilder buildUserQuery(String tableName, int minAge, String status) {
-        return new SafeQueryBuilder().select("id", "name", "email", "age").from(tableName)
-                .where("age", ">=", minAge).where("status", "=", status).orderBy("name", "ASC")
-                .limit(100);
+        return new SafeQueryBuilder().select("id", "name", "email", "age").from(tableName).where("age", ">=", minAge)
+                .where("status", "=", status).orderBy("name", "ASC").limit(100);
     }
 
     // ========================================================================
@@ -351,8 +350,8 @@ public final class StringTemplates {
         if (input == null) {
             return "";
         }
-        return input.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-                .replace("\"", "&quot;").replace("'", "&#39;");
+        return input.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;")
+                .replace("'", "&#39;");
     }
 
     /**

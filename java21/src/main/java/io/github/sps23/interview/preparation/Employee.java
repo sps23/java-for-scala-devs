@@ -78,8 +78,7 @@ public record Employee(long id, String name, String email, String department, do
      * @return formatted employee information
      */
     public String toFormattedString() {
-        return String.format("Employee #%d: %s (%s) - %s - $%.2f", id, name, email, department,
-                salary);
+        return String.format("Employee #%d: %s (%s) - %s - $%.2f", id, name, email, department, salary);
     }
 
     /**
@@ -97,8 +96,7 @@ public record Employee(long id, String name, String email, String department, do
      *            employee salary
      * @return new Employee instance
      */
-    public static Employee of(long id, String name, String email, String department,
-            double salary) {
+    public static Employee of(long id, String name, String email, String department, double salary) {
         return new Employee(id, name, email, department, salary);
     }
 }

@@ -13,8 +13,8 @@ public class CheckoutService {
     private final InvoiceFormatter invoiceFormatter;
     private final LegacySupportPolicy legacySupportPolicy;
 
-    public CheckoutService(PaymentClient paymentClient, TaxCalculator taxCalculator,
-            InvoiceFormatter invoiceFormatter, LegacySupportPolicy legacySupportPolicy) {
+    public CheckoutService(PaymentClient paymentClient, TaxCalculator taxCalculator, InvoiceFormatter invoiceFormatter,
+            LegacySupportPolicy legacySupportPolicy) {
         this.paymentClient = paymentClient;
         this.taxCalculator = taxCalculator;
         this.invoiceFormatter = invoiceFormatter;
@@ -34,7 +34,6 @@ public class CheckoutService {
         var transactionId = paymentClient.charge(request, total);
         var invoiceLine = invoiceFormatter.format(request, total, paymentClient.mode());
         var supportQueue = legacySupportPolicy.supportQueueFor(request.salesChannel());
-        return new CheckoutReceipt(transactionId, paymentClient.mode(), total, invoiceLine,
-                supportQueue);
+        return new CheckoutReceipt(transactionId, paymentClient.mode(), total, invoiceLine, supportQueue);
     }
 }

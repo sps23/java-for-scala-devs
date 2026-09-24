@@ -11,14 +11,10 @@ public final class OrderFulfillmentFacade {
 
     public OrderFulfillmentFacade(InventoryGateway inventoryGateway, PaymentGateway paymentGateway,
             ShippingGateway shippingGateway, NotificationGateway notificationGateway) {
-        this.inventoryGateway = Objects.requireNonNull(inventoryGateway,
-                "Inventory gateway must not be null");
-        this.paymentGateway = Objects.requireNonNull(paymentGateway,
-                "Payment gateway must not be null");
-        this.shippingGateway = Objects.requireNonNull(shippingGateway,
-                "Shipping gateway must not be null");
-        this.notificationGateway = Objects.requireNonNull(notificationGateway,
-                "Notification gateway must not be null");
+        this.inventoryGateway = Objects.requireNonNull(inventoryGateway, "Inventory gateway must not be null");
+        this.paymentGateway = Objects.requireNonNull(paymentGateway, "Payment gateway must not be null");
+        this.shippingGateway = Objects.requireNonNull(shippingGateway, "Shipping gateway must not be null");
+        this.notificationGateway = Objects.requireNonNull(notificationGateway, "Notification gateway must not be null");
     }
 
     public FulfillmentResult placeOrder(OrderRequest request) {
@@ -32,8 +28,7 @@ public final class OrderFulfillmentFacade {
             return FulfillmentResult.failure("Payment failed for customer " + request.customerId());
         }
 
-        String trackingId = shippingGateway.scheduleShipment(request.customerId(),
-                request.shippingAddress());
+        String trackingId = shippingGateway.scheduleShipment(request.customerId(), request.shippingAddress());
         notificationGateway.sendConfirmation(request.customerId(), request.sku(), trackingId);
 
         return FulfillmentResult.success("Order placed successfully", trackingId);
@@ -55,8 +50,7 @@ public final class OrderFulfillmentFacade {
         void sendConfirmation(String customerId, String sku, String trackingId);
     }
 
-    public record OrderRequest(String customerId, String sku, int quantity, BigDecimal amount,
-            String shippingAddress) {
+    public record OrderRequest(String customerId, String sku, int quantity, BigDecimal amount, String shippingAddress) {
 
         public OrderRequest {
             Objects.requireNonNull(customerId, "Customer ID must not be null");
@@ -109,8 +103,8 @@ public final class OrderFulfillmentFacade {
     public static final class NotificationService implements NotificationGateway {
         @Override
         public void sendConfirmation(String customerId, String sku, String trackingId) {
-            System.out.println("Sending confirmation to " + customerId + " for " + sku
-                    + " with tracking ID " + trackingId);
+            System.out.println(
+                    "Sending confirmation to " + customerId + " for " + sku + " with tracking ID " + trackingId);
         }
     }
 }

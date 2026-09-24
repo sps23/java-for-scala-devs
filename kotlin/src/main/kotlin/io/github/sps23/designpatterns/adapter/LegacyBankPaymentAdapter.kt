@@ -25,17 +25,12 @@ data class LegacyBankResponse(
 )
 
 class LegacyBankApi {
-    fun submitPayment(
-        clientCode: String,
-        minorUnits: Long,
-        isoCurrency: String,
-    ): LegacyBankResponse =
-        when {
-            minorUnits <= 0 -> LegacyBankResponse("12", "N/A", "Amount must be greater than zero")
-            isoCurrency !in setOf("USD", "EUR", "GBP") ->
-                LegacyBankResponse("14", "N/A", "Unsupported currency: $isoCurrency")
-            else -> LegacyBankResponse("00", "TX-${clientCode.uppercase()}-$minorUnits", "Approved")
-        }
+    fun submitPayment(clientCode: String, minorUnits: Long, isoCurrency: String): LegacyBankResponse = when {
+        minorUnits <= 0 -> LegacyBankResponse("12", "N/A", "Amount must be greater than zero")
+        isoCurrency !in setOf("USD", "EUR", "GBP") ->
+            LegacyBankResponse("14", "N/A", "Unsupported currency: $isoCurrency")
+        else -> LegacyBankResponse("00", "TX-${clientCode.uppercase()}-$minorUnits", "Approved")
+    }
 }
 
 /**

@@ -55,8 +55,7 @@ enum RetryResult[+T]:
     case Failure(_, a) => a
 
 /** Custom exception for retry-related failures. */
-class RetryException(message: String, cause: Throwable = null)
-    extends RuntimeException(message, cause)
+class RetryException(message: String, cause: Throwable = null) extends RuntimeException(message, cause)
 
 /** A configurable retry executor demonstrating functional programming in Scala 3.
   *
@@ -370,8 +369,7 @@ object MethodReferencesDemo:
     // Composing conditions with && extension method
     condition = RetryCondition.maxAttempts(4) && RetryCondition.forExceptions[RuntimeException],
     // Function literal for logging (Consumer equivalent)
-    onRetry =
-      (ctx, delay) => println(s"  Retry attempt ${ctx.attempt}, waiting ${delay.toMillis}ms"),
+    onRetry = (ctx, delay) => println(s"  Retry attempt ${ctx.attempt}, waiting ${delay.toMillis}ms"),
     // Function composition with andThen
     transformer = (s: String) => s.trim.toLowerCase
   )

@@ -1,31 +1,19 @@
 package io.github.sps23.designpatterns.factory
 
 sealed interface Notification {
-    fun send(
-        recipient: String,
-        message: String,
-    ): String
+    fun send(recipient: String, message: String): String
 }
 
 object EmailNotification : Notification {
-    override fun send(
-        recipient: String,
-        message: String,
-    ): String = "EMAIL to $recipient: $message"
+    override fun send(recipient: String, message: String): String = "EMAIL to $recipient: $message"
 }
 
 object SmsNotification : Notification {
-    override fun send(
-        recipient: String,
-        message: String,
-    ): String = "SMS to $recipient: $message"
+    override fun send(recipient: String, message: String): String = "SMS to $recipient: $message"
 }
 
 object PushNotification : Notification {
-    override fun send(
-        recipient: String,
-        message: String,
-    ): String = "PUSH to $recipient: $message"
+    override fun send(recipient: String, message: String): String = "PUSH to $recipient: $message"
 }
 
 object NotificationFactory {

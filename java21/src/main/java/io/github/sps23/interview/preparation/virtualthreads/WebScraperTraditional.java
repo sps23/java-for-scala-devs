@@ -97,8 +97,8 @@ public class WebScraperTraditional {
      * @return list of results, one per URL
      */
     public List<ScrapedResult> scrapeAll(List<String> urls) {
-        List<Callable<ScrapedResult>> tasks = urls.stream()
-                .map(url -> (Callable<ScrapedResult>) () -> scrapeUrl(url)).toList();
+        List<Callable<ScrapedResult>> tasks = urls.stream().map(url -> (Callable<ScrapedResult>) () -> scrapeUrl(url))
+                .toList();
 
         List<ScrapedResult> results = new ArrayList<>();
 
@@ -123,11 +123,10 @@ public class WebScraperTraditional {
      */
     private ScrapedResult scrapeUrl(String url) {
         try {
-            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url))
-                    .timeout(Duration.ofSeconds(30)).GET().build();
+            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).timeout(Duration.ofSeconds(30)).GET()
+                    .build();
 
-            HttpResponse<String> response = httpClient.send(request,
-                    HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             return ScrapedResult.success(url, response.statusCode(), response.body().length());
         } catch (Exception e) {
@@ -159,8 +158,7 @@ public class WebScraperTraditional {
 
         // Sample URLs (using httpbin.org for testing)
         List<String> urls = List.of("https://httpbin.org/delay/1", "https://httpbin.org/get",
-                "https://httpbin.org/headers", "https://httpbin.org/ip",
-                "https://httpbin.org/user-agent");
+                "https://httpbin.org/headers", "https://httpbin.org/ip", "https://httpbin.org/user-agent");
 
         WebScraperTraditional scraper = new WebScraperTraditional();
 

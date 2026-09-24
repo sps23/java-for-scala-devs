@@ -4,8 +4,8 @@ import scala.annotation.nowarn
 
 /** Singleton using object in Scala 2.
   *
-  * Like Kotlin, Scala provides the `object` keyword for singletons. The Scala runtime guarantees
-  * thread-safe lazy initialization.
+  * Like Kotlin, Scala provides the `object` keyword for singletons. The Scala runtime guarantees thread-safe lazy
+  * initialization.
   *
   * This is the idiomatic way to implement singletons in Scala 2. Benefits:
   *   - ✓ Thread-safe by default

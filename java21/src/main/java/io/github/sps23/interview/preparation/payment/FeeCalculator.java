@@ -61,12 +61,9 @@ public final class FeeCalculator {
         // Exhaustive switch expression - no default needed because PaymentMethod is
         // sealed
         return switch (payment) {
-            case CreditCard(var cardNumber, var expiry, var amount) ->
-                calculateCreditCardFee(amount);
-            case BankTransfer(var iban, var bankCode, var amount) ->
-                calculateBankTransferFee(amount);
-            case DigitalWallet(var provider, var accountId, var amount) ->
-                calculateDigitalWalletFee(amount);
+            case CreditCard(var cardNumber, var expiry, var amount) -> calculateCreditCardFee(amount);
+            case BankTransfer(var iban, var bankCode, var amount) -> calculateBankTransferFee(amount);
+            case DigitalWallet(var provider, var accountId, var amount) -> calculateDigitalWalletFee(amount);
         };
     }
 
@@ -83,13 +80,11 @@ public final class FeeCalculator {
      */
     public static String describeFee(PaymentMethod payment) {
         return switch (payment) {
-            case CreditCard(var num, var exp, var amt) when amt
-                    .compareTo(new BigDecimal("100")) > 0 ->
+            case CreditCard(var num, var exp, var amt) when amt.compareTo(new BigDecimal("100")) > 0 ->
                 "Credit card (high value): 2.9%% + $0.30 on %s".formatted(num.substring(12));
             case CreditCard(var num, var exp, var amt) ->
                 "Credit card (standard): 2.9%% + $0.30 on %s".formatted(num.substring(12));
-            case BankTransfer(var iban, var code, var amt) when amt
-                    .compareTo(BANK_TRANSFER_THRESHOLD) >= 0 ->
+            case BankTransfer(var iban, var code, var amt) when amt.compareTo(BANK_TRANSFER_THRESHOLD) >= 0 ->
                 "Bank transfer (high value): flat $5.00 to %s".formatted(code);
             case BankTransfer(var iban, var code, var amt) ->
                 "Bank transfer (standard): flat $2.50 to %s".formatted(code);
@@ -121,9 +116,7 @@ public final class FeeCalculator {
 
     private static BigDecimal calculateBankTransferFee(BigDecimal amount) {
         // Flat fee: $2.50 for < $1000, $5.00 for >= $1000
-        return amount.compareTo(BANK_TRANSFER_THRESHOLD) < 0
-                ? BANK_TRANSFER_LOW_FEE
-                : BANK_TRANSFER_HIGH_FEE;
+        return amount.compareTo(BANK_TRANSFER_THRESHOLD) < 0 ? BANK_TRANSFER_LOW_FEE : BANK_TRANSFER_HIGH_FEE;
     }
 
     private static BigDecimal calculateDigitalWalletFee(BigDecimal amount) {

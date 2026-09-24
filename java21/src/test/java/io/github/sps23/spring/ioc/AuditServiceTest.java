@@ -86,15 +86,13 @@ class AuditServiceTest {
             var service = new AuditService(List.of());
             assertEquals(0, service.handlerCount());
             // Should not throw
-            assertDoesNotThrow(
-                    () -> service.audit(new AuditEvent("X", "nothing to handle", "user-0")));
+            assertDoesNotThrow(() -> service.audit(new AuditEvent("X", "nothing to handle", "user-0")));
         }
 
         @Test
         @DisplayName("Should report correct handler count")
         void shouldReportHandlerCount() {
-            var service = new AuditService(
-                    List.of(new LoggingAuditHandler(), new MetricsAuditHandler()));
+            var service = new AuditService(List.of(new LoggingAuditHandler(), new MetricsAuditHandler()));
             assertEquals(2, service.handlerCount());
         }
 

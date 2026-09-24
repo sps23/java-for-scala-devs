@@ -30,8 +30,7 @@ public final class HttpClientConfig {
         this.maxRetries = validateMaxRetries(builder.maxRetries);
         this.retryBackoffMs = validateRetryBackoff(builder.retryBackoffMs, maxRetries);
         this.defaultHeaders = validateHeaders(builder.defaultHeaders);
-        this.circuitBreakerFailureThreshold = validateThreshold(
-                builder.circuitBreakerFailureThreshold);
+        this.circuitBreakerFailureThreshold = validateThreshold(builder.circuitBreakerFailureThreshold);
         this.apiVersion = validateApiVersion(builder.apiVersion);
         this.enableCompression = builder.enableCompression;
         validateTimeoutRelationship(connectTimeoutMs, readTimeoutMs);
@@ -113,8 +112,7 @@ public final class HttpClientConfig {
 
     private static void validateTimeoutRelationship(int connectTimeoutMs, int readTimeoutMs) {
         if (readTimeoutMs < connectTimeoutMs) {
-            throw new IllegalArgumentException(
-                    "Read timeout must be greater than or equal to connect timeout");
+            throw new IllegalArgumentException("Read timeout must be greater than or equal to connect timeout");
         }
     }
 
@@ -157,8 +155,7 @@ public final class HttpClientConfig {
 
     private static int validateThreshold(int value) {
         if (value < 1 || value > 100) {
-            throw new IllegalArgumentException(
-                    "Circuit breaker threshold must be between 1 and 100");
+            throw new IllegalArgumentException("Circuit breaker threshold must be between 1 and 100");
         }
         return value;
     }

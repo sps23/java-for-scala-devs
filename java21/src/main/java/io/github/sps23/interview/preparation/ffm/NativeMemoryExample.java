@@ -96,9 +96,8 @@ public class NativeMemoryExample {
 
         // Define a struct layout for a "Point3D" structure:
         // struct Point3D { double x; double y; double z; }
-        MemoryLayout point3DLayout = MemoryLayout.structLayout(
-                ValueLayout.JAVA_DOUBLE.withName("x"), ValueLayout.JAVA_DOUBLE.withName("y"),
-                ValueLayout.JAVA_DOUBLE.withName("z"));
+        MemoryLayout point3DLayout = MemoryLayout.structLayout(ValueLayout.JAVA_DOUBLE.withName("x"),
+                ValueLayout.JAVA_DOUBLE.withName("y"), ValueLayout.JAVA_DOUBLE.withName("z"));
 
         System.out.println("Point3D layout: " + point3DLayout);
         System.out.println("Point3D size: " + point3DLayout.byteSize() + " bytes");

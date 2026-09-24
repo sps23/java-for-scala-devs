@@ -30,9 +30,6 @@ data class ApiResponse(
          * @param data the response data
          * @return new ApiResponse instance
          */
-        fun of(
-            source: String,
-            data: String,
-        ): ApiResponse = ApiResponse(source, data)
+        fun of(source: String, data: String): ApiResponse = ApiResponse(source, data)
     }
 }

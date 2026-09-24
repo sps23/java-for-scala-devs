@@ -46,10 +46,8 @@ public final class VisibilityExamples {
             var bothRead = new CountDownLatch(2);
             var allowWrite = new CountDownLatch(1);
 
-            var first = new Thread(() -> stagedIncrement(start, bothRead, allowWrite),
-                    "counter-reader-1");
-            var second = new Thread(() -> stagedIncrement(start, bothRead, allowWrite),
-                    "counter-reader-2");
+            var first = new Thread(() -> stagedIncrement(start, bothRead, allowWrite), "counter-reader-1");
+            var second = new Thread(() -> stagedIncrement(start, bothRead, allowWrite), "counter-reader-2");
 
             first.start();
             second.start();
@@ -67,8 +65,7 @@ public final class VisibilityExamples {
             return counter;
         }
 
-        private void stagedIncrement(CountDownLatch start, CountDownLatch bothRead,
-                CountDownLatch allowWrite) {
+        private void stagedIncrement(CountDownLatch start, CountDownLatch bothRead, CountDownLatch allowWrite) {
             await(start);
             // Both workers can observe the same value before either one writes.
             var observed = counter;
@@ -100,8 +97,7 @@ public final class VisibilityExamples {
             }
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
-            throw new IllegalStateException("Interrupted while waiting for the demo thread",
-                    exception);
+            throw new IllegalStateException("Interrupted while waiting for the demo thread", exception);
         }
     }
 }

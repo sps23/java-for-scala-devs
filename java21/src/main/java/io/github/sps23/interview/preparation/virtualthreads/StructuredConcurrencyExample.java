@@ -166,11 +166,10 @@ public class StructuredConcurrencyExample {
      * Helper method to fetch content length from a URL.
      */
     private int fetchContentLength(String url) throws Exception {
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url))
-                .timeout(Duration.ofSeconds(30)).GET().build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).timeout(Duration.ofSeconds(30)).GET()
+                .build();
 
-        HttpResponse<String> response = httpClient.send(request,
-                HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() != 200) {
             throw new RuntimeException("HTTP " + response.statusCode() + " for " + url);

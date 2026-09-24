@@ -9,11 +9,9 @@ import java.util.Objects;
 /**
  * Immutable customer profile for demonstrating Java 21 immutability patterns.
  */
-public record CustomerProfile(long id, String email, List<String> roles,
-        Map<String, String> preferences) {
+public record CustomerProfile(long id, String email, List<String> roles, Map<String, String> preferences) {
 
-    public CustomerProfile(long id, String email, List<String> roles,
-            Map<String, String> preferences) {
+    public CustomerProfile(long id, String email, List<String> roles, Map<String, String> preferences) {
         if (id <= 0) {
             throw new IllegalArgumentException("id must be positive");
         }

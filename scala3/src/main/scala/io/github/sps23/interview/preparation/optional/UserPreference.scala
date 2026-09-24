@@ -2,8 +2,7 @@ package io.github.sps23.interview.preparation.optional
 
 /** An immutable UserPreference case class representing user settings.
   *
-  * This case class is used to demonstrate Option API best practices for handling potentially
-  * missing values in Scala 3.
+  * This case class is used to demonstrate Option API best practices for handling potentially missing values in Scala 3.
   *
   * @param userId
   *   unique user identifier

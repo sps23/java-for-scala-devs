@@ -59,8 +59,7 @@ public class ForeignFunctionExample {
         System.out.println("=== Calling C strlen() ===\n");
 
         // Find the strlen symbol in the C library
-        MemorySegment strlenSymbol = STDLIB.find("strlen")
-                .orElseThrow(() -> new RuntimeException("strlen not found"));
+        MemorySegment strlenSymbol = STDLIB.find("strlen").orElseThrow(() -> new RuntimeException("strlen not found"));
 
         // Define the function signature: returns long (size_t), takes pointer
         // (ADDRESS)
@@ -97,8 +96,7 @@ public class ForeignFunctionExample {
     public static void demonstrateAbs() throws Throwable {
         System.out.println("=== Calling C abs() ===\n");
 
-        MemorySegment absSymbol = STDLIB.find("abs")
-                .orElseThrow(() -> new RuntimeException("abs not found"));
+        MemorySegment absSymbol = STDLIB.find("abs").orElseThrow(() -> new RuntimeException("abs not found"));
 
         // Function signature: int abs(int)
         FunctionDescriptor absDescriptor = FunctionDescriptor.of(ValueLayout.JAVA_INT, // return
@@ -128,8 +126,7 @@ public class ForeignFunctionExample {
     public static void demonstrateSqrt() throws Throwable {
         System.out.println("=== Calling C sqrt() ===\n");
 
-        MemorySegment sqrtSymbol = STDLIB.find("sqrt")
-                .orElseThrow(() -> new RuntimeException("sqrt not found"));
+        MemorySegment sqrtSymbol = STDLIB.find("sqrt").orElseThrow(() -> new RuntimeException("sqrt not found"));
 
         // Function signature: double sqrt(double)
         FunctionDescriptor sqrtDescriptor = FunctionDescriptor.of(ValueLayout.JAVA_DOUBLE, // return
@@ -159,8 +156,7 @@ public class ForeignFunctionExample {
     public static void demonstrateTime() throws Throwable {
         System.out.println("=== Calling C time() ===\n");
 
-        MemorySegment timeSymbol = STDLIB.find("time")
-                .orElseThrow(() -> new RuntimeException("time not found"));
+        MemorySegment timeSymbol = STDLIB.find("time").orElseThrow(() -> new RuntimeException("time not found"));
 
         // Function signature: long time(pointer)
         // We pass NULL to just get the return value
@@ -176,8 +172,7 @@ public class ForeignFunctionExample {
         long timestamp = (long) time.invokeExact(MemorySegment.NULL);
 
         System.out.println("Current Unix timestamp: " + timestamp);
-        System.out.println(
-                "Java System.currentTimeMillis()/1000: " + System.currentTimeMillis() / 1000);
+        System.out.println("Java System.currentTimeMillis()/1000: " + System.currentTimeMillis() / 1000);
 
         System.out.println();
     }
@@ -191,8 +186,7 @@ public class ForeignFunctionExample {
     public static void demonstrateMemcpy() throws Throwable {
         System.out.println("=== Calling C memcpy() ===\n");
 
-        MemorySegment memcpySymbol = STDLIB.find("memcpy")
-                .orElseThrow(() -> new RuntimeException("memcpy not found"));
+        MemorySegment memcpySymbol = STDLIB.find("memcpy").orElseThrow(() -> new RuntimeException("memcpy not found"));
 
         // Function signature: pointer memcpy(pointer, pointer, long)
         FunctionDescriptor memcpyDescriptor = FunctionDescriptor.of(ValueLayout.ADDRESS, // return

@@ -5,8 +5,8 @@ import scala.collection.mutable
 
 /** Demonstrates local variable type inference in Scala 3.
   *
-  * Scala has supported type inference since its inception, making it a natural comparison point for
-  * Java's var keyword (Java 10+).
+  * Scala has supported type inference since its inception, making it a natural comparison point for Java's var keyword
+  * (Java 10+).
   *
   * ==Key Points==
   *   - Scala uses `val` for immutable and `var` for mutable variables
@@ -101,8 +101,8 @@ object LocalVariableTypeInference:
 
   /** Demonstrates type inference with complex generic types.
     *
-    * Scala's type inference handles complex nested generics seamlessly, making code much cleaner
-    * than explicitly typed equivalents.
+    * Scala's type inference handles complex nested generics seamlessly, making code much cleaner than explicitly typed
+    * equivalents.
     */
   def goodTypeInferenceWithGenerics(): Unit =
     val transactions = sampleTransactions
@@ -129,13 +129,11 @@ object LocalVariableTypeInference:
 
     // Type inferred in for-comprehension
     println("Transactions by product:")
-    for transaction <- transactions do
-      println(f"  ${transaction.product}: $$${transaction.amount}%.2f")
+    for transaction <- transactions do println(f"  ${transaction.product}: $$${transaction.amount}%.2f")
 
     // Type inferred in indexed iteration
     println("\nTransaction IDs:")
-    for (transaction, i) <- transactions.zipWithIndex do
-      println(f"  Index $i: ID ${transaction.id}")
+    for (transaction, i) <- transactions.zipWithIndex do println(f"  Index $i: ID ${transaction.id}")
 
   /** Demonstrates type inference with pattern matching.
     *

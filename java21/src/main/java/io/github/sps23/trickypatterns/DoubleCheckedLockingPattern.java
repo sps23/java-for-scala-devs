@@ -67,8 +67,7 @@ public class DoubleCheckedLockingPattern {
         System.out.println("    if (instance == null) {");
         System.out.println("        synchronized (CorrectSingleton.class) {");
         System.out.println("            if (instance == null) {");
-        System.out.println(
-                "                instance = new CorrectSingleton();  // ✅ Safe with volatile");
+        System.out.println("                instance = new CorrectSingleton();  // ✅ Safe with volatile");
         System.out.println("            }");
         System.out.println("        }");
         System.out.println("    }");
@@ -96,8 +95,7 @@ public class DoubleCheckedLockingPattern {
         System.out.println("    private ModernSingleton() {}");
         System.out.println();
         System.out.println("    private static class Holder {");
-        System.out
-                .println("        static final ModernSingleton INSTANCE = new ModernSingleton();");
+        System.out.println("        static final ModernSingleton INSTANCE = new ModernSingleton();");
         System.out.println("    }");
         System.out.println();
         System.out.println("    public static ModernSingleton getInstance() {");

@@ -31,10 +31,7 @@ object StringTemplates {
      * @param age the age to display
      * @return a formatted greeting string
      */
-    fun basicInterpolation(
-        name: String,
-        age: Int,
-    ): String = "Hello, $name! You are $age years old."
+    fun basicInterpolation(name: String, age: Int): String = "Hello, $name! You are $age years old."
 
     /**
      * Demonstrates expressions within template placeholders.
@@ -43,10 +40,7 @@ object StringTemplates {
      * @param y second operand
      * @return string showing arithmetic operations
      */
-    fun expressionInterpolation(
-        x: Int,
-        y: Int,
-    ): String = "Sum: $x + $y = ${x + y}, Product: ${x * y}"
+    fun expressionInterpolation(x: Int, y: Int): String = "Sum: $x + $y = ${x + y}, Product: ${x * y}"
 
     /**
      * Demonstrates multi-line string templates with trimIndent.
@@ -56,18 +50,13 @@ object StringTemplates {
      * @param active active status
      * @return formatted JSON string
      */
-    fun multiLineTemplate(
-        name: String,
-        email: String,
-        active: Boolean,
-    ): String =
-        """
+    fun multiLineTemplate(name: String, email: String, active: Boolean): String = """
         {
             "name": "$name",
             "email": "$email",
             "active": $active
         }
-        """.trimIndent()
+    """.trimIndent()
 
     // ========================================================================
     // Formatted Output
@@ -84,11 +73,7 @@ object StringTemplates {
      * @param unitPrice price per unit
      * @return formatted receipt line
      */
-    fun formattedOutput(
-        item: String,
-        quantity: Int,
-        unitPrice: Double,
-    ): String {
+    fun formattedOutput(item: String, quantity: Int, unitPrice: Double): String {
         val total = quantity * unitPrice
         return "Item: $item, Qty: $quantity, Price: $%.2f, Total: $%.2f".format(unitPrice, total)
     }
@@ -101,11 +86,7 @@ object StringTemplates {
      * @param salary employee salary
      * @return formatted table row
      */
-    fun tableRow(
-        id: Int,
-        name: String,
-        salary: Double,
-    ): String = "| %5d | %-20s | $%10.2f |".format(id, name, salary)
+    fun tableRow(id: Int, name: String, salary: Double): String = "| %5d | %-20s | $%10.2f |".format(id, name, salary)
 
     // ========================================================================
     // SQL Query Builder - Safe Parameter Interpolation
@@ -150,23 +131,18 @@ object StringTemplates {
          * @param value parameter value (safely parameterized)
          * @return new builder with WHERE condition
          */
-        fun where(
-            column: String,
-            operator: String,
-            value: Any,
-        ): SafeQueryBuilder =
-            if (hasWhereClause) {
-                copy(
-                    query = "$query AND $column $operator ?",
-                    parameters = parameters + value,
-                )
-            } else {
-                copy(
-                    query = "$query WHERE $column $operator ?",
-                    parameters = parameters + value,
-                    hasWhereClause = true,
-                )
-            }
+        fun where(column: String, operator: String, value: Any): SafeQueryBuilder = if (hasWhereClause) {
+            copy(
+                query = "$query AND $column $operator ?",
+                parameters = parameters + value,
+            )
+        } else {
+            copy(
+                query = "$query WHERE $column $operator ?",
+                parameters = parameters + value,
+                hasWhereClause = true,
+            )
+        }
 
         /**
          * Adds an ORDER BY clause.
@@ -175,10 +151,8 @@ object StringTemplates {
          * @param direction ASC or DESC
          * @return new builder with ORDER BY clause
          */
-        fun orderBy(
-            column: String,
-            direction: String,
-        ): SafeQueryBuilder = copy(query = "$query ORDER BY $column $direction")
+        fun orderBy(column: String, direction: String): SafeQueryBuilder =
+            copy(query = "$query ORDER BY $column $direction")
 
         /**
          * Adds a LIMIT clause.
@@ -186,22 +160,20 @@ object StringTemplates {
          * @param limit maximum number of rows
          * @return new builder with LIMIT clause
          */
-        fun limit(limit: Int): SafeQueryBuilder =
-            copy(
-                query = "$query LIMIT ?",
-                parameters = parameters + limit,
-            )
+        fun limit(limit: Int): SafeQueryBuilder = copy(
+            query = "$query LIMIT ?",
+            parameters = parameters + limit,
+        )
 
         /**
          * Returns a debug representation showing query and parameters.
          *
          * @return debug string
          */
-        fun toDebugString(): String =
-            """
+        fun toDebugString(): String = """
             Query: $query
             Parameters: $parameters
-            """.trimIndent()
+        """.trimIndent()
     }
 
     /**
@@ -212,18 +184,13 @@ object StringTemplates {
      * @param status status filter
      * @return the safe query builder with configured query
      */
-    fun buildUserQuery(
-        tableName: String,
-        minAge: Int,
-        status: String,
-    ): SafeQueryBuilder =
-        SafeQueryBuilder()
-            .select("id", "name", "email", "age")
-            .from(tableName)
-            .where("age", ">=", minAge)
-            .where("status", "=", status)
-            .orderBy("name", "ASC")
-            .limit(100)
+    fun buildUserQuery(tableName: String, minAge: Int, status: String): SafeQueryBuilder = SafeQueryBuilder()
+        .select("id", "name", "email", "age")
+        .from(tableName)
+        .where("age", ">=", minAge)
+        .where("status", "=", status)
+        .orderBy("name", "ASC")
+        .limit(100)
 
     // ========================================================================
     // Unsafe vs Safe Comparison
@@ -238,8 +205,7 @@ object StringTemplates {
      * @param name user-provided name (potentially malicious)
      * @return UNSAFE query string
      */
-    fun unsafeQuery(name: String): String =
-        // DANGEROUS: Never do this in production!
+    fun unsafeQuery(name: String): String = // DANGEROUS: Never do this in production!
         "SELECT * FROM users WHERE name = '$name'"
 
     /**
@@ -248,7 +214,8 @@ object StringTemplates {
      * @param name user-provided name
      * @return safe query builder with parameterized value
      */
-    fun safeQuery(name: String): SafeQueryBuilder = SafeQueryBuilder().select("*").from("users").where("name", "=", name)
+    fun safeQuery(name: String): SafeQueryBuilder =
+        SafeQueryBuilder().select("*").from("users").where("name", "=", name)
 
     // ========================================================================
     // Complex Template Examples
@@ -262,12 +229,7 @@ object StringTemplates {
      * @param content page content
      * @return HTML string
      */
-    fun htmlTemplate(
-        title: String,
-        heading: String,
-        content: String,
-    ): String =
-        """
+    fun htmlTemplate(title: String, heading: String, content: String): String = """
         <!DOCTYPE html>
         <html>
         <head>
@@ -280,7 +242,7 @@ object StringTemplates {
             </div>
         </body>
         </html>
-        """.trimIndent()
+    """.trimIndent()
 
     /**
      * Escapes HTML special characters to prevent XSS attacks.
@@ -288,14 +250,13 @@ object StringTemplates {
      * @param input raw input string
      * @return HTML-escaped string
      */
-    fun escapeHtml(input: String?): String =
-        input
-            ?.replace("&", "&amp;")
-            ?.replace("<", "&lt;")
-            ?.replace(">", "&gt;")
-            ?.replace("\"", "&quot;")
-            ?.replace("'", "&#39;")
-            ?: ""
+    fun escapeHtml(input: String?): String = input
+        ?.replace("&", "&amp;")
+        ?.replace("<", "&lt;")
+        ?.replace(">", "&gt;")
+        ?.replace("\"", "&quot;")
+        ?.replace("'", "&#39;")
+        ?: ""
 
     /**
      * Creates a log message template.
@@ -305,11 +266,8 @@ object StringTemplates {
      * @param message log message
      * @return formatted log string
      */
-    fun logMessage(
-        level: String,
-        component: String,
-        message: String,
-    ): String = "[${LocalDateTime.now()}] [$level] [$component] $message"
+    fun logMessage(level: String, component: String, message: String): String =
+        "[${LocalDateTime.now()}] [$level] [$component] $message"
 }
 
 // ========================================================================
@@ -324,20 +282,18 @@ fun String.wrapWith(delimiter: String): String = "$delimiter$this$delimiter"
 /**
  * Truncates the string to maximum length with ellipsis.
  */
-fun String.truncate(maxLength: Int): String =
-    if (length <= maxLength) {
-        this
-    } else {
-        take(maxLength - 3) + "..."
-    }
+fun String.truncate(maxLength: Int): String = if (length <= maxLength) {
+    this
+} else {
+    take(maxLength - 3) + "..."
+}
 
 /**
  * Escapes special characters for use in SQL LIKE patterns.
  */
-fun String.escapeSqlLike(): String =
-    this.replace("\\", "\\\\")
-        .replace("%", "\\%")
-        .replace("_", "\\_")
+fun String.escapeSqlLike(): String = this.replace("\\", "\\\\")
+    .replace("%", "\\%")
+    .replace("_", "\\_")
 
 /**
  * Main function demonstrating all String Template features.

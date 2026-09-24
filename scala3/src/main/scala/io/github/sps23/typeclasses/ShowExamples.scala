@@ -2,8 +2,7 @@ package io.github.sps23.typeclasses
 
 /** Examples demonstrating the typeclass pattern in Scala 3.
   *
-  * This corresponds to the blog post "Typeclasses in Java: Because Why Should Scala Have All the
-  * Fun?"
+  * This corresponds to the blog post "Typeclasses in Java: Because Why Should Scala Have All the Fun?"
   */
 @main def showExamples(): Unit =
 

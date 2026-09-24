@@ -91,8 +91,7 @@ public class RecordConstructorPattern {
 
         // Compact constructor syntax is confusing
         System.out.println("Syntax comparison:");
-        System.out.println(
-                "❌ Regular constructor: public Point(int x, int y) { this.x = x; this.y = y; }");
+        System.out.println("❌ Regular constructor: public Point(int x, int y) { this.x = x; this.y = y; }");
         System.out.println("✅ Compact constructor: public Point { /* validation */ }");
         System.out.println();
 

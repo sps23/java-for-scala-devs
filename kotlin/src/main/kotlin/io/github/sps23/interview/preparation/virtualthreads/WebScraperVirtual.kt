@@ -46,16 +46,10 @@ object WebScraperVirtual {
         val isSuccess: Boolean get() = error == null
 
         companion object {
-            fun success(
-                url: String,
-                statusCode: Int,
-                contentLength: Long,
-            ) = ScrapedResult(url, statusCode, contentLength, null)
+            fun success(url: String, statusCode: Int, contentLength: Long) =
+                ScrapedResult(url, statusCode, contentLength, null)
 
-            fun failure(
-                url: String,
-                error: String,
-            ) = ScrapedResult(url, -1, -1, error)
+            fun failure(url: String, error: String) = ScrapedResult(url, -1, -1, error)
         }
     }
 
@@ -89,30 +83,26 @@ object WebScraperVirtual {
      * - The carrier thread is released to run other virtual threads
      * - When the response arrives, the virtual thread resumes
      */
-    private fun scrapeUrl(url: String): ScrapedResult =
-        try {
-            val request =
-                HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .timeout(Duration.ofSeconds(30))
-                    .GET()
-                    .build()
+    private fun scrapeUrl(url: String): ScrapedResult = try {
+        val request =
+            HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .timeout(Duration.ofSeconds(30))
+                .GET()
+                .build()
 
-            val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())
-            ScrapedResult.success(url, response.statusCode(), response.body().length.toLong())
-        } catch (e: Exception) {
-            ScrapedResult.failure(url, e.message ?: "Unknown error")
-        }
+        val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())
+        ScrapedResult.success(url, response.statusCode(), response.body().length.toLong())
+    } catch (e: Exception) {
+        ScrapedResult.failure(url, e.message ?: "Unknown error")
+    }
 
     /**
      * Alternative: Using Thread.startVirtualThread() directly.
      *
      * For simple cases where you want to start a virtual thread without an executor.
      */
-    fun scrapeUrlAsync(
-        url: String,
-        callback: (ScrapedResult) -> Unit,
-    ) {
+    fun scrapeUrlAsync(url: String, callback: (ScrapedResult) -> Unit) {
         Thread.startVirtualThread { callback(scrapeUrl(url)) }
     }
 
@@ -121,13 +111,9 @@ object WebScraperVirtual {
      *
      * The builder pattern allows setting thread name, daemon status, etc.
      */
-    fun scrapeUrlWithBuilder(
-        url: String,
-        callback: (ScrapedResult) -> Unit,
-    ): Thread =
-        Thread.ofVirtual()
-            .name("scraper-", 0)
-            .start { callback(scrapeUrl(url)) }
+    fun scrapeUrlWithBuilder(url: String, callback: (ScrapedResult) -> Unit): Thread = Thread.ofVirtual()
+        .name("scraper-", 0)
+        .start { callback(scrapeUrl(url)) }
 }
 
 fun main() {

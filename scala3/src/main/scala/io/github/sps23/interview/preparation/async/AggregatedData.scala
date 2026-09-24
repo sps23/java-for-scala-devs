@@ -2,8 +2,8 @@ package io.github.sps23.interview.preparation.async
 
 /** Represents aggregated data from multiple API sources.
   *
-  * This case class holds the combined results from multiple async API calls, including any partial
-  * failures that occurred during aggregation.
+  * This case class holds the combined results from multiple async API calls, including any partial failures that
+  * occurred during aggregation.
   *
   * @param responses
   *   successful API responses

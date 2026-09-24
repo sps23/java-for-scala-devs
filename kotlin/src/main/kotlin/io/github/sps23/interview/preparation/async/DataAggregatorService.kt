@@ -58,33 +58,30 @@ class DataAggregatorService(
      *
      * @return Deferred containing the API response
      */
-    fun CoroutineScope.fetchWeatherDataAsync(): Deferred<ApiResponse> =
-        async(Dispatchers.IO) {
-            simulateApiCall("Weather API", 150)
-            ApiResponse.of("weather", """{"temp": 22, "unit": "celsius"}""")
-        }
+    fun CoroutineScope.fetchWeatherDataAsync(): Deferred<ApiResponse> = async(Dispatchers.IO) {
+        simulateApiCall("Weather API", 150)
+        ApiResponse.of("weather", """{"temp": 22, "unit": "celsius"}""")
+    }
 
     /**
      * Fetches data from a simulated traffic API.
      *
      * @return Deferred containing the API response
      */
-    fun CoroutineScope.fetchTrafficDataAsync(): Deferred<ApiResponse> =
-        async(Dispatchers.IO) {
-            simulateApiCall("Traffic API", 200)
-            ApiResponse.of("traffic", """{"congestion": "moderate"}""")
-        }
+    fun CoroutineScope.fetchTrafficDataAsync(): Deferred<ApiResponse> = async(Dispatchers.IO) {
+        simulateApiCall("Traffic API", 200)
+        ApiResponse.of("traffic", """{"congestion": "moderate"}""")
+    }
 
     /**
      * Fetches data from a simulated news API.
      *
      * @return Deferred containing the API response
      */
-    fun CoroutineScope.fetchNewsDataAsync(): Deferred<ApiResponse> =
-        async(Dispatchers.IO) {
-            simulateApiCall("News API", 100)
-            ApiResponse.of("news", """{"headlines": ["Tech stocks rise"]}""")
-        }
+    fun CoroutineScope.fetchNewsDataAsync(): Deferred<ApiResponse> = async(Dispatchers.IO) {
+        simulateApiCall("News API", 100)
+        ApiResponse.of("news", """{"headlines": ["Tech stocks rise"]}""")
+    }
 
     /**
      * Fetches data from a slow API with timeout and fallback.
@@ -128,16 +125,15 @@ class DataAggregatorService(
      *
      * @return API response or error fallback
      */
-    suspend fun fetchUnreliableApiWithRecovery(): ApiResponse =
-        try {
-            simulateApiCall("Unreliable API", 100)
-            if (Math.random() < 0.5) {
-                throw RuntimeException("API temporarily unavailable")
-            }
-            ApiResponse.of("unreliable", """{"status": "success"}""")
-        } catch (ex: Exception) {
-            ApiResponse.of("unreliable", """{"status": "recovered", "error": "${ex.message}"}""")
+    suspend fun fetchUnreliableApiWithRecovery(): ApiResponse = try {
+        simulateApiCall("Unreliable API", 100)
+        if (Math.random() < 0.5) {
+            throw RuntimeException("API temporarily unavailable")
         }
+        ApiResponse.of("unreliable", """{"status": "success"}""")
+    } catch (ex: Exception) {
+        ApiResponse.of("unreliable", """{"status": "recovered", "error": "${ex.message}"}""")
+    }
 
     /**
      * Transforms API response using map operation.
@@ -156,7 +152,8 @@ class DataAggregatorService(
      * @param responseDeferred the deferred to transform
      * @return transformed data
      */
-    suspend fun transformResponse(responseDeferred: Deferred<ApiResponse>): String = responseDeferred.await().data.uppercase()
+    suspend fun transformResponse(responseDeferred: Deferred<ApiResponse>): String =
+        responseDeferred.await().data.uppercase()
 
     /**
      * Chains API calls sequentially.
@@ -177,11 +174,10 @@ class DataAggregatorService(
      *
      * @return enriched response
      */
-    suspend fun fetchAndEnrichWeather(): ApiResponse =
-        coroutineScope {
-            val weather = fetchWeatherDataAsync().await()
-            enrichWithLocation(weather)
-        }
+    suspend fun fetchAndEnrichWeather(): ApiResponse = coroutineScope {
+        val weather = fetchWeatherDataAsync().await()
+        enrichWithLocation(weather)
+    }
 
     private suspend fun enrichWithLocation(weather: ApiResponse): ApiResponse {
         simulateApiCall("Location API", 50)
@@ -206,54 +202,52 @@ class DataAggregatorService(
      * @param timeout maximum time to wait for all responses
      * @return aggregated data
      */
-    suspend fun aggregateFromAllApis(timeout: Duration): AggregatedData =
-        coroutineScope {
-            val weatherDeferred =
-                async {
-                    fetchWithTimeoutAndRecovery("weather", timeout) {
-                        fetchWeatherDataAsync().await()
-                    }
+    suspend fun aggregateFromAllApis(timeout: Duration): AggregatedData = coroutineScope {
+        val weatherDeferred =
+            async {
+                fetchWithTimeoutAndRecovery("weather", timeout) {
+                    fetchWeatherDataAsync().await()
                 }
-
-            val trafficDeferred =
-                async {
-                    fetchWithTimeoutAndRecovery("traffic", timeout) {
-                        fetchTrafficDataAsync().await()
-                    }
-                }
-
-            val newsDeferred =
-                async {
-                    fetchWithTimeoutAndRecovery("news", timeout) {
-                        fetchNewsDataAsync().await()
-                    }
-                }
-
-            val responses = listOf(weatherDeferred, trafficDeferred, newsDeferred).awaitAll()
-            val errors =
-                responses
-                    .filter { it.data.contains("error") }
-                    .map { "${it.source}: ${it.data}" }
-
-            if (errors.isEmpty()) {
-                AggregatedData.success(responses)
-            } else {
-                AggregatedData.partial(responses, errors)
             }
+
+        val trafficDeferred =
+            async {
+                fetchWithTimeoutAndRecovery("traffic", timeout) {
+                    fetchTrafficDataAsync().await()
+                }
+            }
+
+        val newsDeferred =
+            async {
+                fetchWithTimeoutAndRecovery("news", timeout) {
+                    fetchNewsDataAsync().await()
+                }
+            }
+
+        val responses = listOf(weatherDeferred, trafficDeferred, newsDeferred).awaitAll()
+        val errors =
+            responses
+                .filter { it.data.contains("error") }
+                .map { "${it.source}: ${it.data}" }
+
+        if (errors.isEmpty()) {
+            AggregatedData.success(responses)
+        } else {
+            AggregatedData.partial(responses, errors)
         }
+    }
 
     private suspend fun fetchWithTimeoutAndRecovery(
         source: String,
         timeout: Duration,
         block: suspend () -> ApiResponse,
-    ): ApiResponse =
-        try {
-            withTimeoutOrNull(timeout) {
-                block()
-            } ?: ApiResponse.of(source, """{"error": "timeout"}""")
-        } catch (ex: Exception) {
-            ApiResponse.of(source, """{"error": "${ex.message}"}""")
-        }
+    ): ApiResponse = try {
+        withTimeoutOrNull(timeout) {
+            block()
+        } ?: ApiResponse.of(source, """{"error": "timeout"}""")
+    } catch (ex: Exception) {
+        ApiResponse.of(source, """{"error": "${ex.message}"}""")
+    }
 
     /**
      * Gets the first available response using select.
@@ -271,18 +265,17 @@ class DataAggregatorService(
      *
      * @return first available response
      */
-    suspend fun getFirstAvailableResponse(): ApiResponse =
-        coroutineScope {
-            val weather = fetchWeatherDataAsync()
-            val traffic = fetchTrafficDataAsync()
-            val news = fetchNewsDataAsync()
+    suspend fun getFirstAvailableResponse(): ApiResponse = coroutineScope {
+        val weather = fetchWeatherDataAsync()
+        val traffic = fetchTrafficDataAsync()
+        val news = fetchNewsDataAsync()
 
-            select {
-                weather.onAwait { it }
-                traffic.onAwait { it }
-                news.onAwait { it }
-            }
+        select {
+            weather.onAwait { it }
+            traffic.onAwait { it }
+            news.onAwait { it }
         }
+    }
 
     /**
      * Demonstrates Result.fold for both success and failure handling.
@@ -334,17 +327,13 @@ class DataAggregatorService(
      * @return API response (may throw TimeoutCancellationException)
      */
     @Throws(TimeoutCancellationException::class)
-    suspend fun fetchWithStrictTimeout(timeout: Duration): ApiResponse =
-        withTimeout(timeout) {
-            simulateApiCall("Strict Timeout API", 5000)
-            ApiResponse.of("strict", """{"data": "response"}""")
-        }
+    suspend fun fetchWithStrictTimeout(timeout: Duration): ApiResponse = withTimeout(timeout) {
+        simulateApiCall("Strict Timeout API", 5000)
+        ApiResponse.of("strict", """{"data": "response"}""")
+    }
 
     @Suppress("UNUSED_PARAMETER")
-    private suspend fun simulateApiCall(
-        apiName: String,
-        delayMs: Long,
-    ) {
+    private suspend fun simulateApiCall(apiName: String, delayMs: Long) {
         delay(delayMs.milliseconds)
     }
 }
@@ -352,19 +341,18 @@ class DataAggregatorService(
 /**
  * Example usage demonstrating the DataAggregatorService.
  */
-fun main() =
-    runBlocking {
-        val aggregator = DataAggregatorService()
+fun main() = runBlocking {
+    val aggregator = DataAggregatorService()
 
-        println("Starting async data aggregation with Kotlin Coroutines...")
+    println("Starting async data aggregation with Kotlin Coroutines...")
 
-        // Example: Aggregate from all APIs
-        val result = aggregator.aggregateFromAllApis(5.seconds)
+    // Example: Aggregate from all APIs
+    val result = aggregator.aggregateFromAllApis(5.seconds)
 
-        println("Aggregation complete:")
-        println("  Success count: ${result.successCount()}")
-        println("  Fully successful: ${result.isFullySuccessful()}")
-        result.responses.forEach { r ->
-            println("  - ${r.source}: ${r.data}")
-        }
+    println("Aggregation complete:")
+    println("  Success count: ${result.successCount()}")
+    println("  Fully successful: ${result.isFullySuccessful()}")
+    result.responses.forEach { r ->
+        println("  - ${r.source}: ${r.data}")
     }
+}

@@ -88,13 +88,7 @@ class ReportExporterTest {
 class ReportPublishingService(
     private val auditLog: MutableList<String>,
 ) {
-    fun publish(
-        content: String,
-        compress: Boolean,
-        encrypt: Boolean,
-        audit: Boolean,
-        encryptionKey: Int,
-    ): String {
+    fun publish(content: String, compress: Boolean, encrypt: Boolean, audit: Boolean, encryptionKey: Int): String {
         var exporter: ReportExporter = PlainTextReportExporter()
         if (compress) exporter = CompressionDecorator(exporter)
         if (encrypt) exporter = EncryptionDecorator(exporter, encryptionKey)

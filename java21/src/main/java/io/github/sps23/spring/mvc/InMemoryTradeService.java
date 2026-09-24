@@ -34,8 +34,8 @@ public class InMemoryTradeService implements TradeService {
 
     @Override
     public List<Trade> getTrades(Optional<String> symbol) {
-        return symbol.map(s -> trades.stream().filter(t -> t.symbol().equalsIgnoreCase(s))
-                .collect(Collectors.toList())).orElseGet(() -> List.copyOf(trades));
+        return symbol.map(s -> trades.stream().filter(t -> t.symbol().equalsIgnoreCase(s)).collect(Collectors.toList()))
+                .orElseGet(() -> List.copyOf(trades));
     }
 
     @Override
@@ -46,8 +46,8 @@ public class InMemoryTradeService implements TradeService {
 
     @Override
     public Trade executeTrade(TradeRequest request) {
-        var trade = new Trade(UUID.randomUUID().toString(), request.symbol().toUpperCase(),
-                request.type(), request.quantity(), request.pricePerShare(), Instant.now());
+        var trade = new Trade(UUID.randomUUID().toString(), request.symbol().toUpperCase(), request.type(),
+                request.quantity(), request.pricePerShare(), Instant.now());
         trades.add(trade);
         return trade;
     }
@@ -55,8 +55,8 @@ public class InMemoryTradeService implements TradeService {
     @Override
     public PortfolioSummary getPortfolio() {
         // Group trades by symbol and compute net position for each
-        var tradesBySymbol = trades.stream().collect(
-                Collectors.groupingBy(Trade::symbol, LinkedHashMap::new, Collectors.toList()));
+        var tradesBySymbol = trades.stream()
+                .collect(Collectors.groupingBy(Trade::symbol, LinkedHashMap::new, Collectors.toList()));
 
         var positions = new ArrayList<PortfolioSummary.PortfolioPosition>();
         var totalInvested = new AtomicReference<>(BigDecimal.ZERO);
@@ -66,24 +66,22 @@ public class InMemoryTradeService implements TradeService {
             var position = buildPosition(symbol, symbolTrades);
             if (position.sharesHeld() > 0) {
                 positions.add(position);
-                totalInvested.updateAndGet(v -> v.add(position.averageCostPerShare()
-                        .multiply(BigDecimal.valueOf(position.sharesHeld()))));
+                totalInvested.updateAndGet(
+                        v -> v.add(position.averageCostPerShare().multiply(BigDecimal.valueOf(position.sharesHeld()))));
                 totalCurrentValue.updateAndGet(v -> v.add(position.currentValue()));
             }
         });
 
         var invested = totalInvested.get();
         var current = totalCurrentValue.get();
-        return new PortfolioSummary(List.copyOf(positions), invested, current,
-                current.subtract(invested));
+        return new PortfolioSummary(List.copyOf(positions), invested, current, current.subtract(invested));
     }
 
     // -------------------------------------------------------------------------
     // Private helpers
     // -------------------------------------------------------------------------
 
-    private PortfolioSummary.PortfolioPosition buildPosition(String symbol,
-            List<Trade> symbolTrades) {
+    private PortfolioSummary.PortfolioPosition buildPosition(String symbol, List<Trade> symbolTrades) {
         var sharesHeld = 0;
         var totalCost = BigDecimal.ZERO;
         var latestPrice = BigDecimal.ZERO;
@@ -98,8 +96,8 @@ public class InMemoryTradeService implements TradeService {
                 // Reduce cost basis proportionally on sells (simplified FIFO)
                 var sharesBeforeSell = sharesHeld + trade.quantity();
                 if (sharesBeforeSell > 0) {
-                    var sellRatio = BigDecimal.valueOf(trade.quantity())
-                            .divide(BigDecimal.valueOf(sharesBeforeSell), 10, RoundingMode.HALF_UP);
+                    var sellRatio = BigDecimal.valueOf(trade.quantity()).divide(BigDecimal.valueOf(sharesBeforeSell),
+                            10, RoundingMode.HALF_UP);
                     totalCost = totalCost.subtract(totalCost.multiply(sellRatio));
                 }
             }
@@ -111,8 +109,7 @@ public class InMemoryTradeService implements TradeService {
         var currentValue = latestPrice.multiply(BigDecimal.valueOf(Math.max(sharesHeld, 0)));
         var gainLoss = currentValue.subtract(totalCost);
 
-        return new PortfolioSummary.PortfolioPosition(symbol, Math.max(sharesHeld, 0), avgCost,
-                currentValue, gainLoss);
+        return new PortfolioSummary.PortfolioPosition(symbol, Math.max(sharesHeld, 0), avgCost, currentValue, gainLoss);
     }
 
     /**

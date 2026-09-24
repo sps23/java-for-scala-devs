@@ -50,10 +50,8 @@ class WebScopedBeansTest {
     @Test
     @DisplayName("each HTTP request resolves its own RequestTrace instance")
     void eachRequestGetsItsOwnRequestTrace() {
-        var firstRequestTraceId = withNewRequest(
-                () -> context.getBean(RequestTrace.class).traceId());
-        var secondRequestTraceId = withNewRequest(
-                () -> context.getBean(RequestTrace.class).traceId());
+        var firstRequestTraceId = withNewRequest(() -> context.getBean(RequestTrace.class).traceId());
+        var secondRequestTraceId = withNewRequest(() -> context.getBean(RequestTrace.class).traceId());
 
         assertNotEquals(firstRequestTraceId, secondRequestTraceId);
     }
@@ -68,8 +66,7 @@ class WebScopedBeansTest {
             return null;
         });
 
-        var itemsSeenOnSecondRequest = withRequestInSession(session,
-                () -> context.getBean(ShoppingCart.class).items());
+        var itemsSeenOnSecondRequest = withRequestInSession(session, () -> context.getBean(ShoppingCart.class).items());
 
         assertEquals(List.of("keyboard"), itemsSeenOnSecondRequest);
     }
@@ -78,8 +75,7 @@ class WebScopedBeansTest {
         return withRequestInSession(new MockHttpSession(), action);
     }
 
-    private <T> T withRequestInSession(MockHttpSession session,
-            java.util.function.Supplier<T> action) {
+    private <T> T withRequestInSession(MockHttpSession session, java.util.function.Supplier<T> action) {
         var request = new MockHttpServletRequest();
         request.setSession(session);
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));

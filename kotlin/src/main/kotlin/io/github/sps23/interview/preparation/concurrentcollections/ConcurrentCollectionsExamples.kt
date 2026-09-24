@@ -130,14 +130,13 @@ object ConcurrentCollectionsExamples {
         sharedPot["spoons"] = observed + 1
     }
 
-    private fun take(orders: LinkedBlockingQueue<String>): String =
-        try {
-            val order = orders.poll(1, TimeUnit.SECONDS)
-            order ?: throw IllegalStateException("Timed out while waiting for an order")
-        } catch (exception: InterruptedException) {
-            Thread.currentThread().interrupt()
-            throw IllegalStateException("Interrupted while waiting for an order", exception)
-        }
+    private fun take(orders: LinkedBlockingQueue<String>): String = try {
+        val order = orders.poll(1, TimeUnit.SECONDS)
+        order ?: throw IllegalStateException("Timed out while waiting for an order")
+    } catch (exception: InterruptedException) {
+        Thread.currentThread().interrupt()
+        throw IllegalStateException("Interrupted while waiting for an order", exception)
+    }
 
     private fun await(latch: CountDownLatch) {
         try {

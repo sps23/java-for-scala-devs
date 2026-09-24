@@ -175,8 +175,7 @@ public class DataAggregatorService {
      *            the future to transform
      * @return CompletableFuture with transformed data
      */
-    public CompletableFuture<String> transformResponse(
-            CompletableFuture<ApiResponse> responseFuture) {
+    public CompletableFuture<String> transformResponse(CompletableFuture<ApiResponse> responseFuture) {
         return responseFuture.thenApply(response -> response.data().toUpperCase());
     }
 
@@ -226,22 +225,19 @@ public class DataAggregatorService {
      */
     public CompletableFuture<AggregatedData> aggregateFromAllApis(Duration timeout) {
         var weatherFuture = fetchWeatherData()
-                .completeOnTimeout(ApiResponse.of("weather", "{\"error\": \"timeout\"}"),
-                        timeout.toMillis(), TimeUnit.MILLISECONDS)
-                .exceptionally(ex -> ApiResponse.of("weather",
-                        "{\"error\": \"" + ex.getMessage() + "\"}"));
+                .completeOnTimeout(ApiResponse.of("weather", "{\"error\": \"timeout\"}"), timeout.toMillis(),
+                        TimeUnit.MILLISECONDS)
+                .exceptionally(ex -> ApiResponse.of("weather", "{\"error\": \"" + ex.getMessage() + "\"}"));
 
         var trafficFuture = fetchTrafficData()
-                .completeOnTimeout(ApiResponse.of("traffic", "{\"error\": \"timeout\"}"),
-                        timeout.toMillis(), TimeUnit.MILLISECONDS)
-                .exceptionally(ex -> ApiResponse.of("traffic",
-                        "{\"error\": \"" + ex.getMessage() + "\"}"));
+                .completeOnTimeout(ApiResponse.of("traffic", "{\"error\": \"timeout\"}"), timeout.toMillis(),
+                        TimeUnit.MILLISECONDS)
+                .exceptionally(ex -> ApiResponse.of("traffic", "{\"error\": \"" + ex.getMessage() + "\"}"));
 
         var newsFuture = fetchNewsData()
-                .completeOnTimeout(ApiResponse.of("news", "{\"error\": \"timeout\"}"),
-                        timeout.toMillis(), TimeUnit.MILLISECONDS)
-                .exceptionally(
-                        ex -> ApiResponse.of("news", "{\"error\": \"" + ex.getMessage() + "\"}"));
+                .completeOnTimeout(ApiResponse.of("news", "{\"error\": \"timeout\"}"), timeout.toMillis(),
+                        TimeUnit.MILLISECONDS)
+                .exceptionally(ex -> ApiResponse.of("news", "{\"error\": \"" + ex.getMessage() + "\"}"));
 
         return CompletableFuture.allOf(weatherFuture, trafficFuture, newsFuture).thenApply(v -> {
             var responses = List.of(weatherFuture.join(), trafficFuture.join(), newsFuture.join());
@@ -251,9 +247,7 @@ public class DataAggregatorService {
                     errors.add(response.source() + ": " + response.data());
                 }
             }
-            return errors.isEmpty()
-                    ? AggregatedData.success(responses)
-                    : AggregatedData.partial(responses, errors);
+            return errors.isEmpty() ? AggregatedData.success(responses) : AggregatedData.partial(responses, errors);
         });
     }
 
@@ -275,8 +269,7 @@ public class DataAggregatorService {
         var traffic = fetchTrafficData();
         var news = fetchNewsData();
 
-        return CompletableFuture.anyOf(weather, traffic, news)
-                .thenApply(result -> (ApiResponse) result);
+        return CompletableFuture.anyOf(weather, traffic, news).thenApply(result -> (ApiResponse) result);
     }
 
     /**

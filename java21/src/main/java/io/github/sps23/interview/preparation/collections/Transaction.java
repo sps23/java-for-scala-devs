@@ -27,8 +27,7 @@ import java.util.Objects;
  * @param date
  *            transaction date, must not be null
  */
-public record Transaction(long id, String category, double amount, String description,
-        LocalDate date) {
+public record Transaction(long id, String category, double amount, String description, LocalDate date) {
 
     /**
      * Compact constructor for validation.
@@ -76,8 +75,7 @@ public record Transaction(long id, String category, double amount, String descri
      *            transaction date
      * @return new Transaction instance
      */
-    public static Transaction of(long id, String category, double amount, String description,
-            LocalDate date) {
+    public static Transaction of(long id, String category, double amount, String description, LocalDate date) {
         return new Transaction(id, category, amount, description, date);
     }
 

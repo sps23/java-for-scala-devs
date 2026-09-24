@@ -6,18 +6,12 @@ import java.util.Deque
 class DocumentEditor {
     private val content = StringBuilder()
 
-    fun insert(
-        index: Int,
-        value: String,
-    ) {
+    fun insert(index: Int, value: String) {
         require(index in 0..content.length) { "Index out of range: $index" }
         content.insert(index, value)
     }
 
-    fun delete(
-        start: Int,
-        end: Int,
-    ) {
+    fun delete(start: Int, end: Int) {
         require(start in 0..end && end <= content.length) { "Range is invalid: [$start, $end]" }
         content.delete(start, end)
     }

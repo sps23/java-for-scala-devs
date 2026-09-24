@@ -42,12 +42,10 @@ final class LegacyBankApi {
         if (minorUnits <= 0) {
             return new LegacyBankResponse("12", "N/A", "Amount must be greater than zero");
         }
-        if (!"USD".equals(isoCurrency) && !"EUR".equals(isoCurrency)
-                && !"GBP".equals(isoCurrency)) {
+        if (!"USD".equals(isoCurrency) && !"EUR".equals(isoCurrency) && !"GBP".equals(isoCurrency)) {
             return new LegacyBankResponse("14", "N/A", "Unsupported currency: " + isoCurrency);
         }
-        return new LegacyBankResponse("00",
-                "TX-" + clientCode.toUpperCase(Locale.ROOT) + "-" + minorUnits, "Approved");
+        return new LegacyBankResponse("00", "TX-" + clientCode.toUpperCase(Locale.ROOT) + "-" + minorUnits, "Approved");
     }
 }
 
@@ -77,12 +75,11 @@ public final class LegacyBankPaymentAdapter implements PaymentGateway {
         }
 
         String currency = normalizeCurrency(request.currency());
-        LegacyBankResponse response = legacyBankApi.submitPayment(request.customerId(),
-                request.amountInCents(), currency);
+        LegacyBankResponse response = legacyBankApi.submitPayment(request.customerId(), request.amountInCents(),
+                currency);
 
         boolean approved = "00".equals(response.statusCode());
-        return new PaymentResult(approved, response.reference(),
-                approved ? "Payment approved" : response.detail());
+        return new PaymentResult(approved, response.reference(), approved ? "Payment approved" : response.detail());
     }
 
     private String normalizeCurrency(String currency) {

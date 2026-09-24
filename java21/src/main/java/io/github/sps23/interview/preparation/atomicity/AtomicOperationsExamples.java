@@ -24,8 +24,7 @@ public final class AtomicOperationsExamples {
             thread.join();
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
-            throw new IllegalStateException("Interrupted while waiting for the demo threads",
-                    exception);
+            throw new IllegalStateException("Interrupted while waiting for the demo threads", exception);
         }
     }
 
@@ -39,10 +38,8 @@ public final class AtomicOperationsExamples {
             var bothRead = new CountDownLatch(2);
             var allowWrite = new CountDownLatch(1);
 
-            var first = new Thread(() -> stagedIncrement(start, bothRead, allowWrite),
-                    "counter-reader-1");
-            var second = new Thread(() -> stagedIncrement(start, bothRead, allowWrite),
-                    "counter-reader-2");
+            var first = new Thread(() -> stagedIncrement(start, bothRead, allowWrite), "counter-reader-1");
+            var second = new Thread(() -> stagedIncrement(start, bothRead, allowWrite), "counter-reader-2");
 
             first.start();
             second.start();
@@ -59,8 +56,7 @@ public final class AtomicOperationsExamples {
             return counter;
         }
 
-        private void stagedIncrement(CountDownLatch start, CountDownLatch bothRead,
-                CountDownLatch allowWrite) {
+        private void stagedIncrement(CountDownLatch start, CountDownLatch bothRead, CountDownLatch allowWrite) {
             await(start);
             var observed = counter;
             bothRead.countDown();
