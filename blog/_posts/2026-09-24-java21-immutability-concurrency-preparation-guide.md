@@ -214,9 +214,9 @@ lock scope, deadlock avoidance, and how virtual-thread pinning changes the conve
 at all. Instead of many threads editing the same object, they hand work to each other through queues
 and clear ownership boundaries.
 
-**Read the full post:** Coming soon - planned follow-up post.
+**Read the full post:** [Passing Messages Instead of Sharing State]({{ site.baseurl }}{% link _posts/2026-09-24-passing-messages-instead-of-sharing-state.md %})
 
-**What You'll Learn:** This planned article should connect producer-consumer queues, mailbox-style
+**What You'll Learn:** This post connects producer-consumer queues, mailbox-style
 processing, blocking vs non-blocking handoff, and why message passing often feels more natural to Scala
 developers who already think in terms of isolation and explicit effects.
 
