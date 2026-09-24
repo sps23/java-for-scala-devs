@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Virtual Threads and Structured Concurrency in Java 21"
+title: "Virtual Threads and Structured Concurrency"
 description: "Master Java 21 virtual threads and Project Loom - migrate from thread pools, use StructuredTaskScope, understand scoped values, and compare with Scala ZIO and Kotlin coroutines."
 date: 2025-11-29 17:00:00 +0000
-updated: 2026-08-29 14:00:00 +0000
+updated: 2026-09-24 19:00:00 +0000
 categories: [interview]
 tags: [java, java21, scala, kotlin, virtual-threads, concurrency, project-loom, interview-preparation]
 ---
@@ -29,135 +29,139 @@ Imagine you need to scrape thousands of web pages concurrently. With traditional
 
 Here's how we'd typically implement a web scraper with platform threads:
 
-### Java
+<div class="code-tabs" data-tabs-id="traditional-thread-pool">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebScraperTraditional</span> <span class="o">{</span>
+    <span class="c1">// Fixed thread pool - typically sized based on available processors</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nc">THREAD_POOL_SIZE</span> <span class="o">=</span> <span class="nc">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">().</span><span class="na">availableProcessors</span><span class="o">()</span> <span class="o">*</span> <span class="mi">2</span><span class="o">;</span>
 
-```java
-public class WebScraperTraditional {
-    // Fixed thread pool - typically sized based on available processors
-    private static final int THREAD_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2;
-    
-    private final ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
-    private final HttpClient httpClient = HttpClient.newBuilder()
-            .connectTimeout(Duration.ofSeconds(10))
-            .build();
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">ExecutorService</span> <span class="n">executor</span> <span class="o">=</span> <span class="nc">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span><span class="nc">THREAD_POOL_SIZE</span><span class="o">);</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">HttpClient</span> <span class="n">httpClient</span> <span class="o">=</span> <span class="nc">HttpClient</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">connectTimeout</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 
-    public List<ScrapedResult> scrapeAll(List<String> urls) {
-        List<Callable<ScrapedResult>> tasks = urls.stream()
-                .map(url -> (Callable<ScrapedResult>) () -> scrapeUrl(url))
-                .toList();
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">ScrapedResult</span><span class="o">&gt;</span> <span class="nf">scrapeAll</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">urls</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Callable</span><span class="o">&lt;</span><span class="nc">ScrapedResult</span><span class="o">&gt;&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="n">urls</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">url</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="nc">Callable</span><span class="o">&lt;</span><span class="nc">ScrapedResult</span><span class="o">&gt;)</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="nf">scrapeUrl</span><span class="o">(</span><span class="n">url</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">toList</span><span class="o">();</span>
 
-        try {
-            List<Future<ScrapedResult>> futures = executor.invokeAll(tasks);
-            return futures.stream().map(f -> f.get()).toList();
-        } catch (Exception e) {
-            Thread.currentThread().interrupt();
-            return List.of();
-        }
-    }
-    
-    private ScrapedResult scrapeUrl(String url) {
-        // Blocking HTTP call - ties up the thread while waiting
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        return new ScrapedResult(url, response.statusCode(), response.body().length());
-    }
-}
-```
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Future</span><span class="o">&lt;</span><span class="nc">ScrapedResult</span><span class="o">&gt;&gt;</span> <span class="n">futures</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="na">invokeAll</span><span class="o">(</span><span class="n">tasks</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">futures</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">f</span> <span class="o">-&gt;</span> <span class="n">f</span><span class="o">.</span><span class="na">get</span><span class="o">()).</span><span class="na">toList</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">interrupt</span><span class="o">();</span>
+            <span class="k">return</span> <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="nc">ScrapedResult</span> <span class="nf">scrapeUrl</span><span class="o">(</span><span class="nc">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Blocking HTTP call - ties up the thread while waiting</span>
+        <span class="nc">HttpRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="nc">HttpRequest</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">().</span><span class="na">uri</span><span class="o">(</span><span class="nc">URI</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">url</span><span class="o">)).</span><span class="na">GET</span><span class="o">().</span><span class="na">build</span><span class="o">();</span>
+        <span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="nc">HttpResponse</span><span class="o">.</span><span class="na">BodyHandlers</span><span class="o">.</span><span class="na">ofString</span><span class="o">());</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">ScrapedResult</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">response</span><span class="o">.</span><span class="na">statusCode</span><span class="o">(),</span> <span class="n">response</span><span class="o">.</span><span class="na">body</span><span class="o">().</span><span class="na">length</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">object</span> <span class="nc">WebScraperTraditional</span><span class="o">:</span>
+  <span class="k">private</span> <span class="k">val</span> <span class="nc">ThreadPoolSize</span> <span class="o">=</span> <span class="nc">Runtime</span><span class="o">.</span><span class="n">getRuntime</span><span class="o">.</span><span class="n">availableProcessors</span> <span class="o">*</span> <span class="mi">2</span>
+
+  <span class="k">def</span> <span class="nf">scrapeAll</span><span class="o">(</span><span class="n">urls</span><span class="o">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">String</span><span class="o">]):</span> <span class="kt">List</span><span class="o">[</span><span class="nc">ScrapedResult</span><span class="o">]</span> <span class="o">=</span>
+    <span class="nc">Using</span><span class="o">.</span><span class="n">resource</span><span class="o">(</span><span class="nc">Executors</span><span class="o">.</span><span class="n">newFixedThreadPool</span><span class="o">(</span><span class="nc">ThreadPoolSize</span><span class="o">))</span> <span class="o">{</span> <span class="n">executor</span> <span class="o">=&gt;</span>
+      <span class="k">val</span> <span class="n">tasks</span> <span class="o">=</span> <span class="n">urls</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">url</span> <span class="o">=&gt;</span>
+        <span class="k">new</span> <span class="nc">Callable</span><span class="o">[</span><span class="nc">ScrapedResult</span><span class="o">]</span> <span class="o">{</span> <span class="k">def</span> <span class="n">call</span><span class="o">()</span> <span class="o">=</span> <span class="n">scrapeUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)</span> <span class="o">}</span>
+      <span class="o">).</span><span class="n">asJava</span>
+      <span class="k">val</span> <span class="n">futures</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">invokeAll</span><span class="o">(</span><span class="n">tasks</span><span class="o">)</span>
+      <span class="n">futures</span><span class="o">.</span><span class="n">asScala</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">_</span><span class="o">.</span><span class="n">get</span><span class="o">()).</span><span class="n">toList</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">object</span> <span class="nc">WebScraperTraditional</span> <span class="p">{</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">THREAD_POOL_SIZE</span> <span class="p">=</span> <span class="nc">Runtime</span><span class="p">.</span><span class="n">getRuntime</span><span class="p">().</span><span class="n">availableProcessors</span><span class="p">()</span> <span class="p">*</span> <span class="mi">2</span>
+
+    <span class="k">fun</span> <span class="nf">scrapeAll</span><span class="p">(</span><span class="n">urls</span><span class="p">:</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;):</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">ScrapedResult</span><span class="p">&gt;</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="py">executor</span> <span class="p">=</span> <span class="nc">Executors</span><span class="p">.</span><span class="n">newFixedThreadPool</span><span class="p">(</span><span class="nc">THREAD_POOL_SIZE</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">try</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="py">tasks</span> <span class="p">=</span> <span class="n">urls</span><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">url</span> <span class="o">-&gt;</span> <span class="nc">Callable</span> <span class="p">{</span> <span class="nf">scrapeUrl</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+            <span class="n">executor</span><span class="p">.</span><span class="n">invokeAll</span><span class="p">(</span><span class="n">tasks</span><span class="p">).</span><span class="n">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="p">}</span>
+        <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+            <span class="n">executor</span><span class="p">.</span><span class="n">shutdown</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
 **Problem**: With 16 threads and 1000 URLs, only 16 requests can run concurrently. The rest queue up.
-
-### Scala
-
-```scala
-object WebScraperTraditional:
-  private val ThreadPoolSize = Runtime.getRuntime.availableProcessors * 2
-
-  def scrapeAll(urls: List[String]): List[ScrapedResult] =
-    Using.resource(Executors.newFixedThreadPool(ThreadPoolSize)) { executor =>
-      val tasks = urls.map(url => 
-        new Callable[ScrapedResult] { def call() = scrapeUrl(url) }
-      ).asJava
-      val futures = executor.invokeAll(tasks)
-      futures.asScala.map(_.get()).toList
-    }
-```
-
-### Kotlin
-
-```kotlin
-object WebScraperTraditional {
-    private val THREAD_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2
-
-    fun scrapeAll(urls: List<String>): List<ScrapedResult> {
-        val executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
-        return try {
-            val tasks = urls.map { url -> Callable { scrapeUrl(url) } }
-            executor.invokeAll(tasks).map { it.get() }
-        } finally {
-            executor.shutdown()
-        }
-    }
-}
-```
 
 ## After: Virtual Threads Approach
 
 With Java 21's virtual threads, the migration is surprisingly simple:
 
-### Java
+<div class="code-tabs" data-tabs-id="virtual-threads-approach">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="java" data-lang="Java 21">Java 21</button>
+<button class="tab-button" data-tab="scala" data-lang="Scala 3">Scala 3</button>
+<button class="tab-button" data-tab="kotlin" data-lang="Kotlin">Kotlin</button>
+</div>
+<div class="tab-content active" data-tab="java">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebScraperVirtual</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">HttpClient</span> <span class="n">httpClient</span> <span class="o">=</span> <span class="nc">HttpClient</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">connectTimeout</span><span class="o">(</span><span class="nc">Duration</span><span class="o">.</span><span class="na">ofSeconds</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 
-```java
-public class WebScraperVirtual {
-    private final HttpClient httpClient = HttpClient.newBuilder()
-            .connectTimeout(Duration.ofSeconds(10))
-            .build();
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">ScrapedResult</span><span class="o">&gt;</span> <span class="nf">scrapeAll</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">urls</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// newVirtualThreadPerTaskExecutor() - the key change!</span>
+        <span class="c1">// Creates a new virtual thread for each task</span>
+        <span class="k">try</span> <span class="o">(</span><span class="nc">ExecutorService</span> <span class="n">executor</span> <span class="o">=</span> <span class="nc">Executors</span><span class="o">.</span><span class="na">newVirtualThreadPerTaskExecutor</span><span class="o">())</span> <span class="o">{</span>
+            <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Future</span><span class="o">&lt;</span><span class="nc">ScrapedResult</span><span class="o">&gt;&gt;</span> <span class="n">futures</span> <span class="o">=</span> <span class="n">urls</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">url</span> <span class="o">-&gt;</span> <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="nf">scrapeUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)))</span>
+                    <span class="o">.</span><span class="na">toList</span><span class="o">();</span>
 
-    public List<ScrapedResult> scrapeAll(List<String> urls) {
-        // newVirtualThreadPerTaskExecutor() - the key change!
-        // Creates a new virtual thread for each task
-        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
-            List<Future<ScrapedResult>> futures = urls.stream()
-                    .map(url -> executor.submit(() -> scrapeUrl(url)))
-                    .toList();
-            
-            return futures.stream().map(f -> f.get()).toList();
-        }
-    }
-    
-    // The scrapeUrl method is IDENTICAL to before!
-    // Blocking code works efficiently with virtual threads
-    private ScrapedResult scrapeUrl(String url) {
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        return new ScrapedResult(url, response.statusCode(), response.body().length());
-    }
-}
-```
+            <span class="k">return</span> <span class="n">futures</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">f</span> <span class="o">-&gt;</span> <span class="n">f</span><span class="o">.</span><span class="na">get</span><span class="o">()).</span><span class="na">toList</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// The scrapeUrl method is IDENTICAL to before!</span>
+    <span class="c1">// Blocking code works efficiently with virtual threads</span>
+    <span class="kd">private</span> <span class="nc">ScrapedResult</span> <span class="nf">scrapeUrl</span><span class="o">(</span><span class="nc">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="nc">HttpResponse</span><span class="o">.</span><span class="na">BodyHandlers</span><span class="o">.</span><span class="na">ofString</span><span class="o">());</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">ScrapedResult</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">response</span><span class="o">.</span><span class="na">statusCode</span><span class="o">(),</span> <span class="n">response</span><span class="o">.</span><span class="na">body</span><span class="o">().</span><span class="na">length</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="scala">
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">object</span> <span class="nc">WebScraperVirtual</span><span class="o">:</span>
+  <span class="k">def</span> <span class="nf">scrapeAll</span><span class="o">(</span><span class="n">urls</span><span class="o">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">String</span><span class="o">]):</span> <span class="kt">List</span><span class="o">[</span><span class="nc">ScrapedResult</span><span class="o">]</span> <span class="o">=</span>
+    <span class="c1">// One virtual thread per URL - all run concurrently!</span>
+    <span class="nc">Using</span><span class="o">.</span><span class="n">resource</span><span class="o">(</span><span class="nc">Executors</span><span class="o">.</span><span class="n">newVirtualThreadPerTaskExecutor</span><span class="o">())</span> <span class="o">{</span> <span class="n">executor</span> <span class="o">=&gt;</span>
+      <span class="k">val</span> <span class="n">futures</span> <span class="o">=</span> <span class="n">urls</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">url</span> <span class="o">=&gt;</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="o">(()</span> <span class="o">=&gt;</span> <span class="n">scrapeUrl</span><span class="o">(</span><span class="n">url</span><span class="o">)))</span>
+      <span class="n">futures</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">_</span><span class="o">.</span><span class="n">get</span><span class="o">()).</span><span class="n">toList</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+</div>
+<div class="tab-content" data-tab="kotlin">
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">object</span> <span class="nc">WebScraperVirtual</span> <span class="p">{</span>
+    <span class="k">fun</span> <span class="nf">scrapeAll</span><span class="p">(</span><span class="n">urls</span><span class="p">:</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;):</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">ScrapedResult</span><span class="p">&gt;</span> <span class="p">=</span>
+        <span class="nc">Executors</span><span class="p">.</span><span class="n">newVirtualThreadPerTaskExecutor</span><span class="p">().</span><span class="n">use</span> <span class="p">{</span> <span class="n">executor</span> <span class="o">-&gt;</span>
+            <span class="k">val</span> <span class="py">futures</span> <span class="p">=</span> <span class="n">urls</span><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">url</span> <span class="o">-&gt;</span> <span class="n">executor</span><span class="p">.</span><span class="n">submit</span><span class="p">&lt;</span><span class="nc">ScrapedResult</span><span class="p">&gt;</span> <span class="p">{</span> <span class="nf">scrapeUrl</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+            <span class="n">futures</span><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="p">}</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
 
 **The change**: Just replace `newFixedThreadPool(N)` with `newVirtualThreadPerTaskExecutor()`.
-
-### Scala
-
-```scala
-object WebScraperVirtual:
-  def scrapeAll(urls: List[String]): List[ScrapedResult] =
-    // One virtual thread per URL - all run concurrently!
-    Using.resource(Executors.newVirtualThreadPerTaskExecutor()) { executor =>
-      val futures = urls.map(url => executor.submit(() => scrapeUrl(url)))
-      futures.map(_.get()).toList
-    }
-```
-
-### Kotlin
-
-```kotlin
-object WebScraperVirtual {
-    fun scrapeAll(urls: List<String>): List<ScrapedResult> =
-        Executors.newVirtualThreadPerTaskExecutor().use { executor ->
-            val futures = urls.map { url -> executor.submit<ScrapedResult> { scrapeUrl(url) } }
-            futures.map { it.get() }
-        }
-}
-```
 
 ## Key Virtual Thread APIs
 

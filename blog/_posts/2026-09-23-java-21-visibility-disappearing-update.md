@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Java 21 Visibility: The Case of the Disappearing Update"
+title: "Visibility: The Case of the Disappearing Update"
 description: "Understand Java 21 visibility with volatile, happens-before, and why counter++ still races, with direct JVM comparisons to Scala 3 and Kotlin."
 date: 2026-09-23 14:00:00 +0000
 updated: 2026-09-23 15:00:00 +0000

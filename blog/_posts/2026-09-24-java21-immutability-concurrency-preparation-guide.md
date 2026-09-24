@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Java 21 Immutability and Concurrency Preparation Guide: From Shared Mutable State to Confidence"
+title: "Immutability and Concurrency Preparation Guide"
 description: "A practical roadmap for Scala developers learning Java 21 immutability and concurrency, covering records, visibility, atomics, concurrent collections, virtual threads, and planned next topics."
 date: 2026-09-24 15:00:00 +0000
 categories: [interview]
@@ -43,12 +43,12 @@ map cleanly to Scala case classes and Kotlin data classes.
 
 ---
 
-### 2. Immutability in Java 21: Beyond Records
+### 2. Immutability Beyond Records
 
 **What It Is:** Records are a great start, but real immutability also means defensive copying,
 immutable collections, and making sure nobody can mutate your state through the side door.
 
-**Read the full post:** [Immutability in Java 21: Beyond Records]({{ site.baseurl }}{% link _posts/2026-09-23-immutability-in-java-21.md %})
+**Read the full post:** [Immutability Beyond Records]({{ site.baseurl }}{% link _posts/2026-09-23-immutability-in-java-21.md %})
 
 **What You'll Learn:** This post shows how to build truly stable objects with `List.copyOf`,
 `Map.copyOf`, validation rules, and replacement-style updates. It also makes the Java vs Scala vs Kotlin
@@ -69,12 +69,12 @@ This is where concurrency stops being a vague "multiple things happen at once" s
 of specific guarantees. Visibility, atomicity, and concurrent collections solve different problems, and
 interviewers love asking about the boundary between them.
 
-### 1. Java 21 Visibility: The Case of the Disappearing Update
+### 1. Visibility: The Case of the Disappearing Update
 
 **What It Is:** Visibility is about whether one thread is guaranteed to observe another thread's write,
 not whether the write happened at all.
 
-**Read the full post:** [Java 21 Visibility: The Case of the Disappearing Update]({{ site.baseurl }}{% link _posts/2026-09-23-java-21-visibility-disappearing-update.md %})
+**Read the full post:** [Visibility: The Case of the Disappearing Update]({{ site.baseurl }}{% link _posts/2026-09-23-java-21-visibility-disappearing-update.md %})
 
 **What You'll Learn:** You will learn the practical meaning of the Java Memory Model, happens-before,
 and `volatile`, along with the crucial rule that visibility is not the same thing as atomicity. This is
@@ -132,12 +132,12 @@ Once the basics are solid, the next interview questions are usually about archit
 virtual threads vs futures, locks vs atomics, message passing vs shared mutation, and when immutable
 snapshots are the cleanest escape hatch.
 
-### 1. Virtual Threads and Structured Concurrency in Java 21
+### 1. Virtual Threads and Structured Concurrency
 
 **What It Is:** Project Loom makes the "one thread per task" model practical again by giving Java
 lightweight virtual threads and structured coordination tools.
 
-**Read the full post:** [Virtual Threads and Structured Concurrency in Java 21]({{ site.baseurl }}{% link _posts/2025-11-29-virtual-threads-and-structured-concurrency.md %})
+**Read the full post:** [Virtual Threads and Structured Concurrency]({{ site.baseurl }}{% link _posts/2025-11-29-virtual-threads-and-structured-concurrency.md %})
 
 **What You'll Learn:** This post covers migration from thread pools to virtual threads,
 `StructuredTaskScope`, scoped values, and the important caveat of virtual-thread pinning. It is the
@@ -189,7 +189,7 @@ who want a precise answer to "What feels familiar in Java 21, and what still wor
 
 ---
 
-### 4. Locks in Java 21: When One Atomic Value Isn't Enough
+### 4. Locks: When One Atomic Value Isn't Enough
 
 **What It Is:** Sometimes one field is not the problem. The real problem is that several pieces of
 state must change together, and atomics alone cannot protect the whole dance.
@@ -245,46 +245,6 @@ cleaner than fine-grained locking.
 - "How does `AtomicReference` pair with immutable state?"
 - "When is copy-on-write a smart trade-off, and when is it too expensive?"
 - "How does this pattern map to Scala's value-oriented style?"
-
----
-
-## Bonus Level - The Sneaky Topics That Still Show Up
-
-These are not the main spine of the series, but they are relevant enough that a strong candidate should
-at least know how they connect to the immutability/concurrency conversation.
-
-### 1. Effective Unit Testing in Java 21
-
-**What It Is:** Concurrency bugs are hard enough already. Weak tests just make them sneakier.
-
-**Read the full post:** [Effective Unit Testing in Java 21 with JUnit 5]({{ site.baseurl }}{% link _posts/2025-12-14-effective-unit-testing-in-java.md %})
-
-**What You'll Learn:** This post is not concurrency-only, but it is still relevant because deterministic
-tests, focused assertions, and clear fixture setup matter a lot when you are testing state transitions,
-publication rules, and concurrent edge cases.
-
-**Interview Questions You Might Face:**
-- "How do you test code that deals with shared state?"
-- "Why are deterministic examples important when explaining concurrency?"
-- "What makes a concurrency-related test trustworthy instead of flaky?"
-
----
-
-### 2. Singleton Pattern: When There Can Be Only One
-
-**What It Is:** Singleton questions often sound like design-pattern trivia, but they quickly turn into
-thread-safety, lazy initialization, and publication questions.
-
-**Read the full post:** [Singleton Pattern: When There Can Be Only One]({{ site.baseurl }}{% link _posts/2026-07-26-design-patterns-singleton.md %})
-
-**What You'll Learn:** This is a useful side quest for interview prep because it touches eager vs lazy
-initialization, enum singletons, and the infamous double-checked-locking story that still appears in
-senior-level discussions.
-
-**Interview Questions You Might Face:**
-- "How do you make lazy initialization thread-safe in Java?"
-- "Why was double-checked locking historically tricky?"
-- "What publication guarantees does a singleton rely on?"
 
 ---
 

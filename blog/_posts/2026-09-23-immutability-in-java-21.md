@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Immutability in Java 21: Beyond Records"
+title: "Immutability Beyond Records"
 description: "Learn what immutability means in Java 21, how to enforce it with records and immutable collections, and how it compares with Scala 3 and Kotlin data modeling."
 date: 2026-09-23 10:00:00 +0000
 updated: 2026-09-23 10:00:00 +0000
