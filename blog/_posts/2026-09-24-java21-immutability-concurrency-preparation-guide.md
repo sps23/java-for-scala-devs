@@ -195,7 +195,7 @@ who want a precise answer to "What feels familiar in Java 21, and what still wor
 **What It Is:** Sometimes one field is not the problem. The real problem is that several pieces of
 state must change together, and atomics alone cannot protect the whole dance.
 
-**Read the full post:** [Locks in Java 21: When One Atomic Value Isn't Enough]({{ site.baseurl }}{% link _posts/2026-09-24-locks-when-one-atomic-value-isnt-enough.md %})
+**Read the full post:** [Locks: When One Atomic Value Isn't Enough]({{ site.baseurl }}{% link _posts/2026-09-24-locks-when-one-atomic-value-isnt-enough.md %})
 
 **What You'll Learn:** This post covers `synchronized` vs `ReentrantLock`, cross-field invariants,
 lock scope, deadlock avoidance, and how virtual-thread pinning changes the conversation in Java 21.

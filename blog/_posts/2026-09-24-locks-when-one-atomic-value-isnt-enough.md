@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Locks in Java 21: When One Atomic Value Isn't Enough"
+title: "Locks: When One Atomic Value Isn't Enough"
 description: "Learn when Java 21 locks beat atomics, how to protect cross-field invariants safely, and how synchronized vs ReentrantLock trade-offs change under virtual-thread pinning."
 date: 2026-09-24 20:00:00 +0000
-updated: 2026-09-24 20:00:00 +0000
+updated: 2026-09-24 21:00:00 +0000
 categories: [concurrency]
 tags: [java, java21, scala, scala3, kotlin, locks, synchronized, reentrantlock, deadlock, virtual-threads, pinning, atomicity]
 ---
@@ -81,6 +81,72 @@ public final class PizzaCounter {
 
 The key point is not "ReentrantLock is always better." The key point is: one critical section protects the invariant that these fields must agree with each other.
 
+### Closing the exact gap left by atomics
+
+The [atomic operations post]({{ site.baseurl }}{% link _posts/2026-09-23-atomic-operations-defuse-the-race-condition.md %}) showed `SplitAtomicTicketOffice`: a separate `AtomicInteger` for `remainingTickets` and a separate `AtomicBoolean` for `soldOut`. Each field update is individually atomic, yet another thread can still observe `remainingTickets == 0` while `soldOut` is still `false`, because the two updates happen in two different atomic operations.
+
+`LockedTicketOffice` fixes that by moving both fields under **one** `ReentrantLock`, so nobody ever sees them disagree:
+
+```java
+public final class LockedTicketOffice {
+    private final ReentrantLock lock = new ReentrantLock();
+    private int remainingTickets;
+    private boolean soldOut;
+
+    public LockedTicketOffice(int initialTickets) {
+        this.remainingTickets = initialTickets;
+        this.soldOut = initialTickets == 0;
+    }
+
+    public boolean claimLastTicket() {
+        lock.lock();
+        try {
+            if (remainingTickets == 0) {
+                soldOut = true;
+                return false;
+            }
+
+            remainingTickets--;
+            if (remainingTickets == 0) {
+                soldOut = true;
+            }
+            return true;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public String snapshot() {
+        lock.lock();
+        try {
+            return "remaining=" + remainingTickets + ", soldOut=" + soldOut;
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+```
+
+A concurrency test hammers this with several threads claiming tickets at once and asserts that `remainingTickets == 0` and `soldOut` **never** disagree — something `SplitAtomicTicketOffice` cannot guarantee, no matter how many atomics you add.
+
+### Reentrancy: the feature `synchronized` and `ReentrantLock` both give you for free
+
+A plain mutex only lets one thread hold it at a time — including the thread that already holds it. `ReentrantLock` (like `synchronized`) tracks *which thread* owns the lock and *how many times* it has been acquired, so the owning thread can re-enter without deadlocking itself:
+
+```java
+public String describeAfterClaimAttempt() {
+    lock.lock();
+    try {
+        var claimed = claimLastTicket(); // re-acquires the same lock, same thread
+        return (claimed ? "claimed, " : "rejected, ") + snapshot(); // re-acquires again
+    } finally {
+        lock.unlock();
+    }
+}
+```
+
+`ReentrantLock#getHoldCount()` even lets you assert this behavior directly in a test: the count climbs to 3 while nested, then drops back to 0 once every `unlock()` has matched a `lock()`. Try the same trick with a binary `Semaphore(1)` used as a mutex and the second `acquire()` call from the same thread blocks forever — semaphores are **not** reentrant.
+
 ## `synchronized` vs `ReentrantLock`
 
 <div class="table-wrapper" markdown="1">
@@ -104,6 +170,78 @@ In interviews, a strong answer is usually: start with `synchronized` for straigh
 4. **Virtual-thread pinning matters in Java 21.** Long `synchronized` sections that block can pin carrier threads; this is one reason to keep synchronized regions short and evaluate explicit lock strategies when contention/blocking is non-trivial.
 
 Think of locks like bathroom keys in a restaurant: one clear key cabinet is annoying but predictable; hiding random spare keys in five drawers is how you create chaos and manager meetings.
+
+## A Good Use Case: Transferring Money Between Two Accounts
+
+Locking one shared object is straightforward. The classic *hard* case is when a single operation must lock **two** shared objects at once — for example, transferring money between two bank accounts, each guarded by its own lock.
+
+```java
+/** Deliberately deadlock-prone: locks "from" first, then "to", with no ordering. */
+public void transferNaive(BankAccount from, BankAccount to, long amountInCents) {
+    from.lock().lock();
+    try {
+        to.lock().lock();
+        try {
+            move(from, to, amountInCents);
+        } finally {
+            to.lock().unlock();
+        }
+    } finally {
+        from.lock().unlock();
+    }
+}
+```
+
+This looks fine in isolation. It deadlocks the moment two threads transfer in opposite directions at the same time: Thread 1 locks account A and waits for account B; Thread 2 has already locked account B and waits for account A. Neither can proceed, and neither will ever time out on its own. A test in the repository proves this deterministically: it forces both threads to hold their first lock before reaching for the second, then confirms both threads are still blocked half a second later.
+
+The fix is a **global, consistent lock order** — always lock accounts in the same sequence, regardless of transfer direction:
+
+```java
+/** Deadlock-free: both accounts are always locked in the same, id-derived order. */
+public void transferOrdered(BankAccount from, BankAccount to, long amountInCents) {
+    var first = from.id().compareTo(to.id()) <= 0 ? from : to;
+    var second = first == from ? to : from;
+
+    first.lock().lock();
+    try {
+        second.lock().lock();
+        try {
+            move(from, to, amountInCents);
+        } finally {
+            second.lock().unlock();
+        }
+    } finally {
+        first.lock().unlock();
+    }
+}
+```
+
+Now every thread agrees on lock order, so a circular wait can never form — a test hammers this with concurrent transfers in both directions and confirms the total balance stays conserved and every transfer completes within a few seconds.
+
+As a second line of defense, `ReentrantLock.tryLock(timeout, unit)` lets a transfer **fail fast** instead of hanging forever, even if ordering were somehow violated elsewhere:
+
+```java
+public void transferWithTimeout(BankAccount from, BankAccount to, long amountInCents, long timeoutMillis)
+        throws TimeoutException {
+    if (!from.lock().tryLock(timeoutMillis, TimeUnit.MILLISECONDS)) {
+        throw new TimeoutException("Could not lock source account " + from.id());
+    }
+    try {
+        if (!to.lock().tryLock(timeoutMillis, TimeUnit.MILLISECONDS)) {
+            throw new TimeoutException("Could not lock destination account " + to.id());
+        }
+        try {
+            move(from, to, amountInCents);
+        } finally {
+            to.lock().unlock();
+        }
+    } finally {
+        from.lock().unlock();
+    }
+}
+```
+
+This is the exact `tryLock` capability `synchronized` cannot give you — it is a strong reason to reach for `ReentrantLock` whenever an operation must acquire more than one lock.
 
 ## Best Practices
 
@@ -158,8 +296,12 @@ Locks are not "old-fashioned" tools; they are what you use when your state updat
 
 ## Code Samples
 
-Related runnable examples in this repository:
+All examples in this post are runnable and backed by concurrency tests proving the invariants hold under contention:
 
+- [Java 21 LockedTicketOffice](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/locks/LockedTicketOffice.java) — fixes the exact race from `SplitAtomicTicketOffice`
+- [Java 21 BankAccount](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/locks/BankAccount.java)
+- [Java 21 BankAccountTransfer](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/main/java/io/github/sps23/interview/preparation/locks/BankAccountTransfer.java) — naive, ordered, and timeout-guarded transfers
+- [Java 21 tests](https://github.com/sps23/java-for-scala-devs/blob/main/java21/src/test/java/io/github/sps23/interview/preparation/locks/LockedTicketOfficeAndTransferTest.java) — proves the consistency fix, reentrancy, the deadlock, and its two fixes
 - [Java 21 pinning and lock patterns](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/trickypatterns)
 - [Java 21 virtual threads interview examples](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/interview/preparation/virtualthreads)
 - [Java 21 Spring scope synchronization examples](https://github.com/sps23/java-for-scala-devs/tree/main/java21/src/main/java/io/github/sps23/spring/scopes)
