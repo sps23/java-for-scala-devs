@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 object MessagePassingExamples:
   def handOffOrdersWithBlockingQueue(incomingOrders: List[String]): List[String] =
-    val orders = new LinkedBlockingQueue[String]()
+    val orders   = new LinkedBlockingQueue[String]()
     val prepared = scala.collection.mutable.ListBuffer.empty[String]
 
     val kitchenWorker = Thread(

@@ -38,11 +38,7 @@ object MessagePassingExamples {
         }
     }
 
-    fun processWalletTopUpsWithSingleOwner(
-        producerCount: Int,
-        topUpsPerProducer: Int,
-        centsPerTopUp: Int,
-    ): Int {
+    fun processWalletTopUpsWithSingleOwner(producerCount: Int, topUpsPerProducer: Int, centsPerTopUp: Int): Int {
         require(producerCount >= 1) { "producerCount must be at least one" }
         require(topUpsPerProducer >= 0) { "topUpsPerProducer cannot be negative" }
         require(centsPerTopUp >= 0) { "centsPerTopUp cannot be negative" }
