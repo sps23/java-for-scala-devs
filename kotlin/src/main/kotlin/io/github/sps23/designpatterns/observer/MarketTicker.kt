@@ -26,10 +26,7 @@ class MarketTicker {
         observers -= observer
     }
 
-    fun publishPrice(
-        symbol: String,
-        price: BigDecimal,
-    ): PriceUpdate {
+    fun publishPrice(symbol: String, price: BigDecimal): PriceUpdate {
         val update = PriceUpdate(symbol, price, Instant.now())
         latestPrices[symbol] = price
         observers.toList().forEach { it.onPriceUpdate(update) }

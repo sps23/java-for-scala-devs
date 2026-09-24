@@ -55,19 +55,14 @@ class EncryptionDecorator(
         private const val PREFIX = "ENCRYPTED:"
 
         /** Reverses [exportReport] for a given key, useful for tests and audits. */
-        fun decrypt(
-            encoded: String,
-            key: Int,
-        ): String {
+        fun decrypt(encoded: String, key: Int): String {
             val payload = if (encoded.startsWith(PREFIX)) encoded.removePrefix(PREFIX) else encoded
             val decoded = Base64.getDecoder().decode(payload)
             return String(xor(String(decoded), key))
         }
 
-        private fun xor(
-            text: String,
-            key: Int,
-        ): ByteArray = ByteArray(text.length) { i -> (text[i].code xor key).toByte() }
+        private fun xor(text: String, key: Int): ByteArray =
+            ByteArray(text.length) { i -> (text[i].code xor key).toByte() }
     }
 }
 

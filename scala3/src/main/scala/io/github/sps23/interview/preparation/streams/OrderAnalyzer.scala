@@ -13,8 +13,8 @@ import scala.math.Ordering.Double.TotalOrdering
   *   - Custom aggregation functions (like Java's custom collectors)
   *   - Parallel collections and when to use them
   *
-  * Problem Statement: Analyze a dataset of orders: calculate running totals, find top N by
-  * category, and generate a summary report.
+  * Problem Statement: Analyze a dataset of orders: calculate running totals, find top N by category, and generate a
+  * summary report.
   */
 object OrderAnalyzer:
 
@@ -77,8 +77,8 @@ object OrderAnalyzer:
 
   /** Demonstrates takeWhile - takes elements while predicate is true.
     *
-    * Scala's takeWhile is a direct collection operation (not tied to streams). It takes elements
-    * from the collection as long as the predicate returns true.
+    * Scala's takeWhile is a direct collection operation (not tied to streams). It takes elements from the collection as
+    * long as the predicate returns true.
     *
     * @param orders
     *   list of orders
@@ -104,8 +104,8 @@ object OrderAnalyzer:
 
   /** Demonstrates dropWhile - drops elements while predicate is true.
     *
-    * dropWhile discards elements from the collection as long as the predicate returns true. Once
-    * the predicate returns false, it returns all remaining elements.
+    * dropWhile discards elements from the collection as long as the predicate returns true. Once the predicate returns
+    * false, it returns all remaining elements.
     *
     * @param orders
     *   list of orders
@@ -156,8 +156,7 @@ object OrderAnalyzer:
 
   /** Groups orders by category with total amount.
     *
-    * Equivalent to Java's Collectors.groupingBy(Order::category,
-    * Collectors.summingDouble(Order::amount))
+    * Equivalent to Java's Collectors.groupingBy(Order::category, Collectors.summingDouble(Order::amount))
     *
     * Scala's groupMapReduce provides an efficient single-pass operation.
     *
@@ -204,8 +203,8 @@ object OrderAnalyzer:
 
   /** Groups orders by category with list of customer names.
     *
-    * Equivalent to Java's Collectors.groupingBy(Order::category,
-    * Collectors.mapping(Order::customer, Collectors.toList()))
+    * Equivalent to Java's Collectors.groupingBy(Order::category, Collectors.mapping(Order::customer,
+    * Collectors.toList()))
     *
     * @param orders
     *   list of orders
@@ -339,8 +338,8 @@ object OrderAnalyzer:
 
   /** Calculates running totals using scanLeft.
     *
-    * Scala's scanLeft is a powerful operation that produces all intermediate accumulation results.
-    * This is more elegant than Java's custom collector approach.
+    * Scala's scanLeft is a powerful operation that produces all intermediate accumulation results. This is more elegant
+    * than Java's custom collector approach.
     *
     * @param orders
     *   list of orders
@@ -384,8 +383,7 @@ object OrderAnalyzer:
 
   /** Generates category summaries using foldLeft.
     *
-    * Scala's foldLeft can aggregate multiple values in a single pass, similar to custom Java
-    * collectors.
+    * Scala's foldLeft can aggregate multiple values in a single pass, similar to custom Java collectors.
     *
     * @param orders
     *   list of orders
@@ -415,8 +413,8 @@ object OrderAnalyzer:
 
   /** Calculates total amount.
     *
-    * Note: Scala 3 parallel collections require a separate dependency (scala-parallel-collections).
-    * For simplicity, this example shows sequential processing.
+    * Note: Scala 3 parallel collections require a separate dependency (scala-parallel-collections). For simplicity,
+    * this example shows sequential processing.
     *
     * @param orders
     *   list of orders

@@ -2,8 +2,7 @@ package io.github.sps23.interview.preparation.optional
 
 /** Demonstrates Option API and best practices for null-safe programming in Scala 3.
   *
-  * This service fetches user preferences with fallback defaults, avoiding null checks. It
-  * showcases:
+  * This service fetches user preferences with fallback defaults, avoiding null checks. It showcases:
   *   - Option creation: Some(), None, Option()
   *   - Extraction: getOrElse(), fold(), orElse()
   *   - Transformation: map(), flatMap(), filter(), collect()
@@ -11,8 +10,7 @@ package io.github.sps23.interview.preparation.optional
   *   - for-comprehensions with Option
   *   - Anti-patterns to avoid
   *
-  * Problem Statement: Implement a service that fetches user preferences with fallback defaults,
-  * avoiding null checks.
+  * Problem Statement: Implement a service that fetches user preferences with fallback defaults, avoiding null checks.
   */
 class UserPreferenceService:
 
@@ -164,19 +162,17 @@ class UserPreferenceService:
 
   /** Resolves all preferences with proper fallbacks.
     *
-    * This method demonstrates the complete pattern for handling optional values with cascading
-    * defaults.
+    * This method demonstrates the complete pattern for handling optional values with cascading defaults.
     */
   def resolvePreferences(userId: String): ResolvedPreferences =
     val userPref = findUserPreference(userId)
 
     ResolvedPreferences(
-      userId   = userId,
-      theme    = userPref.flatMap(_.theme).getOrElse(DefaultTheme),
-      language = userPref.flatMap(_.language).getOrElse(DefaultLanguage),
-      fontSize = userPref.flatMap(_.fontSize).getOrElse(DefaultFontSize),
-      notificationsEnabled =
-        userPref.flatMap(_.notificationsEnabled).getOrElse(DefaultNotifications)
+      userId               = userId,
+      theme                = userPref.flatMap(_.theme).getOrElse(DefaultTheme),
+      language             = userPref.flatMap(_.language).getOrElse(DefaultLanguage),
+      fontSize             = userPref.flatMap(_.fontSize).getOrElse(DefaultFontSize),
+      notificationsEnabled = userPref.flatMap(_.notificationsEnabled).getOrElse(DefaultNotifications)
     )
 
   // ========================================================================

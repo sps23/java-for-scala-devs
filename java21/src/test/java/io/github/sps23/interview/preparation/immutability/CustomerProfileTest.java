@@ -35,8 +35,7 @@ class CustomerProfileTest {
                 java.util.Map.of("tier", "standard"));
 
         assertThrows(UnsupportedOperationException.class, () -> profile.roles().add("admin"));
-        assertThrows(UnsupportedOperationException.class,
-                () -> profile.preferences().put("region", "eu"));
+        assertThrows(UnsupportedOperationException.class, () -> profile.preferences().put("region", "eu"));
     }
 
     @Test
@@ -55,8 +54,8 @@ class CustomerProfileTest {
     @Test
     @DisplayName("Should reject invalid email")
     void shouldRejectInvalidEmail() {
-        var error = assertThrows(IllegalArgumentException.class, () -> new CustomerProfile(1L,
-                "invalid-email", java.util.List.of("user"), java.util.Map.of("tier", "standard")));
+        var error = assertThrows(IllegalArgumentException.class, () -> new CustomerProfile(1L, "invalid-email",
+                java.util.List.of("user"), java.util.Map.of("tier", "standard")));
 
         assertEquals("email must contain '@'", error.getMessage());
     }

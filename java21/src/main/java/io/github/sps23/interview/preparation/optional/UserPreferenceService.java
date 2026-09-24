@@ -38,10 +38,10 @@ public final class UserPreferenceService {
 
     public UserPreferenceService() {
         // Initialize with some sample data
-        database.put("user1", UserPreference.builder("user1").theme("dark").language("en")
-                .fontSize(16).notificationsEnabled(true).build());
-        database.put("user2", UserPreference.builder("user2").theme(null).language("fr")
-                .fontSize(null).notificationsEnabled(false).build());
+        database.put("user1", UserPreference.builder("user1").theme("dark").language("en").fontSize(16)
+                .notificationsEnabled(true).build());
+        database.put("user2", UserPreference.builder("user2").theme(null).language("fr").fontSize(null)
+                .notificationsEnabled(false).build());
         database.put("user3", UserPreference.builder("user3").build()); // All preferences null
     }
 
@@ -88,8 +88,7 @@ public final class UserPreferenceService {
      * @return the theme, or computed default if not set
      */
     public String getThemeWithOrElseGet(String userId) {
-        return findUserPreference(userId).map(UserPreference::theme)
-                .orElseGet(this::computeDefaultTheme);
+        return findUserPreference(userId).map(UserPreference::theme).orElseGet(this::computeDefaultTheme);
     }
 
     /**
@@ -105,8 +104,7 @@ public final class UserPreferenceService {
      *             if user not found
      */
     public UserPreference getPreferenceOrThrow(String userId) {
-        return findUserPreference(userId)
-                .orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
+        return findUserPreference(userId).orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
     }
 
     // ========================================================================
@@ -186,8 +184,7 @@ public final class UserPreferenceService {
      * @return theme from user preference or from fallback source
      */
     public String getThemeWithOr(String userId) {
-        return findUserPreference(userId).map(UserPreference::theme).or(this::getFallbackTheme)
-                .orElse(DEFAULT_THEME);
+        return findUserPreference(userId).map(UserPreference::theme).or(this::getFallbackTheme).orElse(DEFAULT_THEME);
     }
 
     // ========================================================================
@@ -219,8 +216,8 @@ public final class UserPreferenceService {
      * @return processed theme value
      */
     public String getProcessedTheme(String userId) {
-        return findUserPreference(userId).map(UserPreference::theme).filter(this::isValidTheme)
-                .map(String::toUpperCase).orElse(DEFAULT_THEME.toUpperCase());
+        return findUserPreference(userId).map(UserPreference::theme).filter(this::isValidTheme).map(String::toUpperCase)
+                .orElse(DEFAULT_THEME.toUpperCase());
     }
 
     /**
@@ -262,8 +259,7 @@ public final class UserPreferenceService {
 
         int fontSize = userPref.map(UserPreference::fontSize).orElse(DEFAULT_FONT_SIZE);
 
-        boolean notifications = userPref.map(UserPreference::notificationsEnabled)
-                .orElse(DEFAULT_NOTIFICATIONS);
+        boolean notifications = userPref.map(UserPreference::notificationsEnabled).orElse(DEFAULT_NOTIFICATIONS);
 
         return new ResolvedPreferences(userId, theme, language, fontSize, notifications);
     }
@@ -287,8 +283,8 @@ public final class UserPreferenceService {
 
         @Override
         public String toString() {
-            return String.format("Preferences[user=%s, theme=%s, lang=%s, font=%dpx, notify=%s]",
-                    userId, theme, language, fontSize, notificationsEnabled);
+            return String.format("Preferences[user=%s, theme=%s, lang=%s, font=%dpx, notify=%s]", userId, theme,
+                    language, fontSize, notificationsEnabled);
         }
     }
 

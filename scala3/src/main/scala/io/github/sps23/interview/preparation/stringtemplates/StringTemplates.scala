@@ -2,9 +2,8 @@ package io.github.sps23.interview.preparation.stringtemplates
 
 /** Demonstrates Scala 3 String Interpolation, comparing with Java 21 String Templates.
   *
-  * Scala 3 provides built-in string interpolation that is similar to Java 21's String Templates but
-  * has been part of the language since Scala 2.10. This class showcases a SQL query builder using
-  * safe interpolation patterns.
+  * Scala 3 provides built-in string interpolation that is similar to Java 21's String Templates but has been part of
+  * the language since Scala 2.10. This class showcases a SQL query builder using safe interpolation patterns.
   *
   * Key Concepts:
   *   - s"..." interpolator - simple string interpolation
@@ -21,8 +20,7 @@ object StringTemplates:
 
   /** Demonstrates basic s-interpolator usage.
     *
-    * The s-interpolator performs simple string interpolation, embedding expression values directly
-    * into the string.
+    * The s-interpolator performs simple string interpolation, embedding expression values directly into the string.
     *
     * @param name
     *   the name to greet
@@ -70,8 +68,8 @@ object StringTemplates:
 
   /** Demonstrates f-interpolator for formatted output.
     *
-    * The f-interpolator combines string interpolation with printf-style format specifiers, allowing
-    * precise control over number formatting, alignment, and padding.
+    * The f-interpolator combines string interpolation with printf-style format specifiers, allowing precise control
+    * over number formatting, alignment, and padding.
     *
     * @param item
     *   item name
@@ -106,8 +104,7 @@ object StringTemplates:
 
   /** A safe SQL query builder that prevents SQL injection by using parameterized queries.
     *
-    * This class demonstrates how to build domain-specific query builders that are safer than string
-    * concatenation.
+    * This class demonstrates how to build domain-specific query builders that are safer than string concatenation.
     *
     * @param query
     *   the parameterized SQL query
@@ -224,8 +221,8 @@ object StringTemplates:
 
   /** Demonstrates UNSAFE string concatenation (vulnerable to SQL injection).
     *
-    * WARNING: This is an example of what NOT to do. String concatenation with user input can lead
-    * to SQL injection attacks.
+    * WARNING: This is an example of what NOT to do. String concatenation with user input can lead to SQL injection
+    * attacks.
     *
     * @param name
     *   user-provided name (potentially malicious)

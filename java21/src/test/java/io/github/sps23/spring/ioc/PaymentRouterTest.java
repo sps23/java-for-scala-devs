@@ -22,8 +22,7 @@ class PaymentRouterTest {
 
     private final FakePaymentGateway stripeGateway = new FakePaymentGateway("txn_stripe_");
     private final FakePaymentGateway paypalGateway = new FakePaymentGateway("txn_paypal_");
-    private final PaymentRouter router = new PaymentRouter(
-            Map.of("stripe", stripeGateway, "paypal", paypalGateway));
+    private final PaymentRouter router = new PaymentRouter(Map.of("stripe", stripeGateway, "paypal", paypalGateway));
 
     @Nested
     @DisplayName("Routing to correct gateway")

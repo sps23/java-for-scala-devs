@@ -14,8 +14,8 @@ object StringManipulation:
   // Sample multi-line text for processing
   // ========================================================================
 
-  /** Sample multi-line text using Scala's stripMargin for clean formatting. The pipe character
-    * indicates where the margin should be stripped.
+  /** Sample multi-line text using Scala's stripMargin for clean formatting. The pipe character indicates where the
+    * margin should be stripped.
     */
   val sampleText: String =
     """
@@ -202,8 +202,8 @@ object StringManipulation:
   // Extension methods for enhanced string operations
   // ========================================================================
 
-  /** Extension methods add functionality to String type. These are similar to Java's instance
-    * methods but defined externally.
+  /** Extension methods add functionality to String type. These are similar to Java's instance methods but defined
+    * externally.
     */
   extension (s: String)
 

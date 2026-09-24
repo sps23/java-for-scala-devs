@@ -37,8 +37,8 @@ public final class LocalVariableTypeInference {
     /**
      * Represents a sales transaction for processing.
      */
-    public record Transaction(long id, String product, String category, double amount, int quantity,
-            LocalDate date, String region) {
+    public record Transaction(long id, String product, String category, double amount, int quantity, LocalDate date,
+            String region) {
 
         public Transaction {
             Objects.requireNonNull(product, "Product cannot be null");
@@ -64,8 +64,7 @@ public final class LocalVariableTypeInference {
     /**
      * Summary report for a category.
      */
-    public record CategorySummary(String category, long transactionCount, double totalAmount,
-            double averageAmount) {
+    public record CategorySummary(String category, long transactionCount, double totalAmount, double averageAmount) {
     }
 
     // ========================================================================
@@ -76,23 +75,14 @@ public final class LocalVariableTypeInference {
      * Creates sample transaction data for demonstrations.
      */
     public static List<Transaction> sampleTransactions() {
-        return List.of(
-                new Transaction(1, "Laptop", "Electronics", 1200.00, 2, LocalDate.of(2024, 1, 15),
-                        "North"),
-                new Transaction(2, "Mouse", "Electronics", 25.00, 10, LocalDate.of(2024, 1, 16),
-                        "South"),
-                new Transaction(3, "Desk Chair", "Furniture", 350.00, 3, LocalDate.of(2024, 1, 17),
-                        "North"),
-                new Transaction(4, "Monitor", "Electronics", 400.00, 5, LocalDate.of(2024, 1, 18),
-                        "East"),
-                new Transaction(5, "Bookshelf", "Furniture", 180.00, 2, LocalDate.of(2024, 1, 19),
-                        "West"),
-                new Transaction(6, "Keyboard", "Electronics", 75.00, 8, LocalDate.of(2024, 1, 20),
-                        "North"),
-                new Transaction(7, "Coffee Table", "Furniture", 220.00, 1,
-                        LocalDate.of(2024, 1, 21), "South"),
-                new Transaction(8, "Webcam", "Electronics", 90.00, 6, LocalDate.of(2024, 1, 22),
-                        "East"));
+        return List.of(new Transaction(1, "Laptop", "Electronics", 1200.00, 2, LocalDate.of(2024, 1, 15), "North"),
+                new Transaction(2, "Mouse", "Electronics", 25.00, 10, LocalDate.of(2024, 1, 16), "South"),
+                new Transaction(3, "Desk Chair", "Furniture", 350.00, 3, LocalDate.of(2024, 1, 17), "North"),
+                new Transaction(4, "Monitor", "Electronics", 400.00, 5, LocalDate.of(2024, 1, 18), "East"),
+                new Transaction(5, "Bookshelf", "Furniture", 180.00, 2, LocalDate.of(2024, 1, 19), "West"),
+                new Transaction(6, "Keyboard", "Electronics", 75.00, 8, LocalDate.of(2024, 1, 20), "North"),
+                new Transaction(7, "Coffee Table", "Furniture", 220.00, 1, LocalDate.of(2024, 1, 21), "South"),
+                new Transaction(8, "Webcam", "Electronics", 90.00, 6, LocalDate.of(2024, 1, 22), "East"));
     }
 
     // ========================================================================
@@ -148,12 +138,11 @@ public final class LocalVariableTypeInference {
         // .collect(Collectors.groupingBy(Transaction::category));
 
         // With var: cleaner, type is clear from context
-        var byCategory = transactions.stream()
-                .collect(Collectors.groupingBy(Transaction::category));
+        var byCategory = transactions.stream().collect(Collectors.groupingBy(Transaction::category));
 
         // Nested generics - var significantly reduces noise
-        var categoryToRegionMap = transactions.stream().collect(Collectors
-                .groupingBy(Transaction::category, Collectors.groupingBy(Transaction::region)));
+        var categoryToRegionMap = transactions.stream()
+                .collect(Collectors.groupingBy(Transaction::category, Collectors.groupingBy(Transaction::region)));
 
         System.out.println("Categories: " + byCategory.keySet());
         System.out.println("Nested map structure: " + categoryToRegionMap.keySet());
@@ -308,15 +297,13 @@ public final class LocalVariableTypeInference {
      * This example shows a realistic use case where var improves code readability
      * by reducing boilerplate while maintaining type safety.
      */
-    public static Map<String, CategorySummary> processTransactionPipeline(
-            List<Transaction> transactions) {
+    public static Map<String, CategorySummary> processTransactionPipeline(List<Transaction> transactions) {
 
         // var is good here - type obvious from stream operation
         var filteredTransactions = transactions.stream().filter(t -> t.amount() >= 50.0).toList();
 
         // var good - Map type clear from Collectors.groupingBy context
-        var byCategory = filteredTransactions.stream()
-                .collect(Collectors.groupingBy(Transaction::category));
+        var byCategory = filteredTransactions.stream().collect(Collectors.groupingBy(Transaction::category));
 
         // var good - type clear from stream().map() with toMap
         var summaries = byCategory.entrySet().stream().map(entry -> {

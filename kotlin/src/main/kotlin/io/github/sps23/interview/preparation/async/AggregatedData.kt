@@ -46,9 +46,7 @@ data class AggregatedData(
          * @param errors the error messages
          * @return new AggregatedData instance
          */
-        fun partial(
-            responses: List<ApiResponse>,
-            errors: List<String>,
-        ): AggregatedData = AggregatedData(responses, errors)
+        fun partial(responses: List<ApiResponse>, errors: List<String>): AggregatedData =
+            AggregatedData(responses, errors)
     }
 }

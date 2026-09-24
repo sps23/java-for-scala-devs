@@ -9,15 +9,14 @@ import zio.*
   *   - `E` – the typed error channel (what can go wrong)
   *   - `A` – the success value
   *
-  * This is different from Java/Kotlin where errors are untyped exceptions. The compiler tells you
-  * exactly what errors are possible, and you must handle all cases.
+  * This is different from Java/Kotlin where errors are untyped exceptions. The compiler tells you exactly what errors
+  * are possible, and you must handle all cases.
   *
-  * Common type aliases: - `UIO[A]` = `ZIO[Any, Nothing, A]` – can never fail - `IO[E, A]` =
-  * `ZIO[Any, E, A]` – can fail with `E` - `Task[A]` = `ZIO[Any, Throwable, A]` – can fail with any
-  * exception
+  * Common type aliases: - `UIO[A]` = `ZIO[Any, Nothing, A]` – can never fail - `IO[E, A]` = `ZIO[Any, E, A]` – can fail
+  * with `E` - `Task[A]` = `ZIO[Any, Throwable, A]` – can fail with any exception
   *
-  * For comparison with Java: - Java uses `CompletableFuture.exceptionally()` for error recovery,
-  * but errors are untyped `Throwable`
+  * For comparison with Java: - Java uses `CompletableFuture.exceptionally()` for error recovery, but errors are untyped
+  * `Throwable`
   */
 object FibreSupervision:
 
@@ -36,8 +35,7 @@ object FibreSupervision:
 
   /** Recovers from any AppError and returns a fallback value.
     *
-    * `catchAll` requires you to handle every variant of the error type. If you miss a case, it
-    * won't compile.
+    * `catchAll` requires you to handle every variant of the error type. If you miss a case, it won't compile.
     */
   val withFallback: UIO[String] =
     riskyFetch.catchAll:
@@ -46,11 +44,11 @@ object FibreSupervision:
 
   /** Demonstrates interruption: a fibre can be cancelled at any point.
     *
-    * When interrupted, ZIO ensures all finalizers (resource release) still run. This is the
-    * "semantic interruption" model – you never leak resources, even under cancellation.
+    * When interrupted, ZIO ensures all finalizers (resource release) still run. This is the "semantic interruption"
+    * model – you never leak resources, even under cancellation.
     *
-    * `fibre.interrupt` returns `Exit[E, A]` – a value describing the outcome (success, failure, or
-    * interruption). We inspect it to decide what to report.
+    * `fibre.interrupt` returns `Exit[E, A]` – a value describing the outcome (success, failure, or interruption). We
+    * inspect it to decide what to report.
     */
   val interruptionDemo: UIO[String] =
     for

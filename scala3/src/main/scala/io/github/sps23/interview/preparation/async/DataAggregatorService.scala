@@ -248,8 +248,7 @@ class DataAggregatorService(
 
   /** Demonstrates strict timeout that fails with TimeoutException.
     *
-    * Unlike withTimeout with fallback, this method fails the future if timeout occurs. Similar to
-    * Java's orTimeout:
+    * Unlike withTimeout with fallback, this method fails the future if timeout occurs. Similar to Java's orTimeout:
     * {{{
     * // Java equivalent
     * future.orTimeout(timeout, TimeUnit.MILLISECONDS)
@@ -269,8 +268,7 @@ class DataAggregatorService(
 
   /** Helper method to add timeout with fallback to a Future.
     *
-    * This pattern is commonly used in Scala to achieve similar functionality to Java 9+'s
-    * completeOnTimeout.
+    * This pattern is commonly used in Scala to achieve similar functionality to Java 9+'s completeOnTimeout.
     */
   private def withTimeout[T](future: Future[T], timeout: FiniteDuration, fallback: T): Future[T] =
     val promise = Promise[T]()

@@ -48,8 +48,7 @@ class ReportExporterTest {
     @DisplayName("Audit logging decorator should record an entry without changing content")
     void shouldRecordAuditLogWhenExporting() {
         List<String> auditLog = new ArrayList<>();
-        ReportExporter exporter = new AuditLoggingDecorator(new PlainTextReportExporter(),
-                auditLog);
+        ReportExporter exporter = new AuditLoggingDecorator(new PlainTextReportExporter(), auditLog);
 
         String exported = exporter.exportReport(REPORT);
 
@@ -62,8 +61,7 @@ class ReportExporterTest {
     void shouldStackMultipleDecoratorsInAnyOrder() {
         List<String> auditLog = new ArrayList<>();
         ReportExporter exporter = new AuditLoggingDecorator(
-                new EncryptionDecorator(new CompressionDecorator(new PlainTextReportExporter()), 7),
-                auditLog);
+                new EncryptionDecorator(new CompressionDecorator(new PlainTextReportExporter()), 7), auditLog);
 
         String exported = exporter.exportReport(REPORT);
 
@@ -101,8 +99,7 @@ final class ReportPublishingService {
         this.auditLog = auditLog;
     }
 
-    String publish(String content, boolean compress, boolean encrypt, boolean audit,
-            int encryptionKey) {
+    String publish(String content, boolean compress, boolean encrypt, boolean audit, int encryptionKey) {
         ReportExporter exporter = new PlainTextReportExporter();
         if (compress) {
             exporter = new CompressionDecorator(exporter);

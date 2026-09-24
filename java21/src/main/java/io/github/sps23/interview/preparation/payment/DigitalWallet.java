@@ -18,8 +18,7 @@ import java.util.Objects;
  * @param amount
  *            the payment amount
  */
-public record DigitalWallet(String provider, String accountId,
-        BigDecimal amount) implements PaymentMethod {
+public record DigitalWallet(String provider, String accountId, BigDecimal amount) implements PaymentMethod {
 
     /**
      * Compact constructor for validation.
@@ -49,8 +48,7 @@ public record DigitalWallet(String provider, String accountId,
     public String maskedAccountId() {
         int atIndex = accountId.indexOf('@');
         if (atIndex > 0) {
-            return accountId.substring(0, Math.min(4, atIndex)) + "***"
-                    + accountId.substring(atIndex);
+            return accountId.substring(0, Math.min(4, atIndex)) + "***" + accountId.substring(atIndex);
         }
         return accountId.substring(0, Math.min(4, accountId.length())) + "***";
     }

@@ -19,8 +19,8 @@ class OrderFulfillmentFacadeTest {
         OrderFulfillmentFacade facade = new OrderFulfillmentFacade(new InventoryAlwaysAvailable(),
                 new PaymentAlwaysAccepted(), new ShippingAlwaysScheduled(), notificationRecorder);
 
-        var request = new OrderFulfillmentFacade.OrderRequest("customer-42", "SKU-42", 2,
-                new BigDecimal("149.99"), "12 Main Street, London");
+        var request = new OrderFulfillmentFacade.OrderRequest("customer-42", "SKU-42", 2, new BigDecimal("149.99"),
+                "12 Main Street, London");
 
         OrderFulfillmentFacade.FulfillmentResult result = facade.placeOrder(request);
 
@@ -34,11 +34,10 @@ class OrderFulfillmentFacadeTest {
     @DisplayName("Should reject when inventory is insufficient")
     void shouldRejectWhenInventoryIsInsufficient() {
         OrderFulfillmentFacade facade = new OrderFulfillmentFacade(new InventoryInsufficient(),
-                new PaymentAlwaysAccepted(), new ShippingAlwaysScheduled(),
-                new NotificationRecorder());
+                new PaymentAlwaysAccepted(), new ShippingAlwaysScheduled(), new NotificationRecorder());
 
-        var request = new OrderFulfillmentFacade.OrderRequest("customer-99", "SKU-999", 10,
-                new BigDecimal("40.00"), "99 Market Road, Berlin");
+        var request = new OrderFulfillmentFacade.OrderRequest("customer-99", "SKU-999", 10, new BigDecimal("40.00"),
+                "99 Market Road, Berlin");
 
         OrderFulfillmentFacade.FulfillmentResult result = facade.placeOrder(request);
 
@@ -52,8 +51,8 @@ class OrderFulfillmentFacadeTest {
         OrderFulfillmentFacade facade = new OrderFulfillmentFacade(new InventoryAlwaysAvailable(),
                 new PaymentRejected(), new ShippingAlwaysScheduled(), new NotificationRecorder());
 
-        var request = new OrderFulfillmentFacade.OrderRequest("blocked-customer", "SKU-42", 1,
-                new BigDecimal("10.00"), "1 High Street, Paris");
+        var request = new OrderFulfillmentFacade.OrderRequest("blocked-customer", "SKU-42", 1, new BigDecimal("10.00"),
+                "1 High Street, Paris");
 
         OrderFulfillmentFacade.FulfillmentResult result = facade.placeOrder(request);
 
@@ -61,27 +60,21 @@ class OrderFulfillmentFacadeTest {
         assertEquals("Payment failed for customer blocked-customer", result.message());
     }
 
-    private static final class InventoryAlwaysAvailable
-            implements
-                OrderFulfillmentFacade.InventoryGateway {
+    private static final class InventoryAlwaysAvailable implements OrderFulfillmentFacade.InventoryGateway {
         @Override
         public boolean hasStock(String sku, int quantity) {
             return true;
         }
     }
 
-    private static final class InventoryInsufficient
-            implements
-                OrderFulfillmentFacade.InventoryGateway {
+    private static final class InventoryInsufficient implements OrderFulfillmentFacade.InventoryGateway {
         @Override
         public boolean hasStock(String sku, int quantity) {
             return false;
         }
     }
 
-    private static final class PaymentAlwaysAccepted
-            implements
-                OrderFulfillmentFacade.PaymentGateway {
+    private static final class PaymentAlwaysAccepted implements OrderFulfillmentFacade.PaymentGateway {
         @Override
         public boolean charge(String customerId, BigDecimal amount) {
             return true;
@@ -95,18 +88,14 @@ class OrderFulfillmentFacadeTest {
         }
     }
 
-    private static final class ShippingAlwaysScheduled
-            implements
-                OrderFulfillmentFacade.ShippingGateway {
+    private static final class ShippingAlwaysScheduled implements OrderFulfillmentFacade.ShippingGateway {
         @Override
         public String scheduleShipment(String customerId, String shippingAddress) {
             return "TRACK-123";
         }
     }
 
-    private static final class NotificationRecorder
-            implements
-                OrderFulfillmentFacade.NotificationGateway {
+    private static final class NotificationRecorder implements OrderFulfillmentFacade.NotificationGateway {
         private boolean sent;
 
         @Override

@@ -46,11 +46,7 @@ data class Transaction(
          * @param description transaction description
          * @return new Transaction instance with current date
          */
-        fun today(
-            id: Long,
-            category: String,
-            amount: Double,
-            description: String,
-        ): Transaction = Transaction(id, category, amount, description, LocalDate.now())
+        fun today(id: Long, category: String, amount: Double, description: String): Transaction =
+            Transaction(id, category, amount, description, LocalDate.now())
     }
 }

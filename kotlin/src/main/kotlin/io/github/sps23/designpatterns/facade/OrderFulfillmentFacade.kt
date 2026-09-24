@@ -30,32 +30,19 @@ class OrderFulfillmentFacade(
     }
 
     interface InventoryGateway {
-        fun hasStock(
-            sku: String,
-            quantity: Int,
-        ): Boolean
+        fun hasStock(sku: String, quantity: Int): Boolean
     }
 
     interface PaymentGateway {
-        fun charge(
-            customerId: String,
-            amount: BigDecimal,
-        ): Boolean
+        fun charge(customerId: String, amount: BigDecimal): Boolean
     }
 
     interface ShippingGateway {
-        fun scheduleShipment(
-            customerId: String,
-            shippingAddress: String,
-        ): String
+        fun scheduleShipment(customerId: String, shippingAddress: String): String
     }
 
     interface NotificationGateway {
-        fun sendConfirmation(
-            customerId: String,
-            sku: String,
-            trackingId: String,
-        )
+        fun sendConfirmation(customerId: String, sku: String, trackingId: String)
     }
 
     data class OrderRequest(
@@ -76,42 +63,29 @@ class OrderFulfillmentFacade(
 
     data class FulfillmentResult(val success: Boolean, val message: String, val trackingId: String?) {
         companion object {
-            fun success(
-                message: String,
-                trackingId: String,
-            ): FulfillmentResult = FulfillmentResult(true, message, trackingId)
+            fun success(message: String, trackingId: String): FulfillmentResult =
+                FulfillmentResult(true, message, trackingId)
 
             fun failure(message: String): FulfillmentResult = FulfillmentResult(false, message, null)
         }
     }
 
     class InventoryService : InventoryGateway {
-        override fun hasStock(
-            sku: String,
-            quantity: Int,
-        ): Boolean = sku == "SKU-42" && quantity <= 5
+        override fun hasStock(sku: String, quantity: Int): Boolean = sku == "SKU-42" && quantity <= 5
     }
 
     class PaymentService : PaymentGateway {
-        override fun charge(
-            customerId: String,
-            amount: BigDecimal,
-        ): Boolean = customerId != "blocked-customer" && amount > BigDecimal.ZERO
+        override fun charge(customerId: String, amount: BigDecimal): Boolean =
+            customerId != "blocked-customer" && amount > BigDecimal.ZERO
     }
 
     class ShippingService : ShippingGateway {
-        override fun scheduleShipment(
-            customerId: String,
-            shippingAddress: String,
-        ): String = "TRACK-${customerId.uppercase()}-${shippingAddress.hashCode()}"
+        override fun scheduleShipment(customerId: String, shippingAddress: String): String =
+            "TRACK-${customerId.uppercase()}-${shippingAddress.hashCode()}"
     }
 
     class NotificationService : NotificationGateway {
-        override fun sendConfirmation(
-            customerId: String,
-            sku: String,
-            trackingId: String,
-        ) {
+        override fun sendConfirmation(customerId: String, sku: String, trackingId: String) {
             println("Sending confirmation to $customerId for $sku with tracking ID $trackingId")
         }
     }

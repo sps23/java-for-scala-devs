@@ -106,15 +106,13 @@ public class ScopedValuesExample {
      *            URL to fetch
      * @return response body
      */
-    public String handleRequest(String userId, String role, String tenantId, String url)
-            throws Exception {
+    public String handleRequest(String userId, String role, String tenantId, String url) throws Exception {
         String requestId = UUID.randomUUID().toString().substring(0, 8);
         UserContext context = new UserContext(userId, role, tenantId);
 
         // Bind scoped values and run the request handler
         // Values are available to all code in this scope
-        return ScopedValue.where(REQUEST_ID, requestId).where(USER_CONTEXT, context)
-                .call(() -> processRequest(url));
+        return ScopedValue.where(REQUEST_ID, requestId).where(USER_CONTEXT, context).call(() -> processRequest(url));
     }
 
     /**
@@ -156,16 +154,15 @@ public class ScopedValuesExample {
     private String fetchWithLogging(String url) throws Exception {
         log("Fetching: " + url);
 
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url))
-                .timeout(Duration.ofSeconds(30)).header("X-Request-ID", REQUEST_ID.get()) // Add
-                                                                                          // request
-                                                                                          // ID to
-                                                                                          // outgoing
-                                                                                          // request
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).timeout(Duration.ofSeconds(30))
+                .header("X-Request-ID", REQUEST_ID.get()) // Add
+                                                          // request
+                                                          // ID to
+                                                          // outgoing
+                                                          // request
                 .GET().build();
 
-        HttpResponse<String> response = httpClient.send(request,
-                HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         log("Response status: " + response.statusCode());
 
@@ -226,8 +223,7 @@ public class ScopedValuesExample {
         // Example 1: Basic usage with HTTP request
         System.out.println("1. Basic scoped values with HTTP request:");
         try {
-            String response = example.handleRequest("alice", "USER", "tenant-123",
-                    "https://httpbin.org/get");
+            String response = example.handleRequest("alice", "USER", "tenant-123", "https://httpbin.org/get");
             System.out.println("   Response received: " + response.length() + " bytes");
         } catch (Exception e) {
             System.out.println("   Error: " + e.getMessage());

@@ -34,11 +34,11 @@ class HttpClientConfigTest {
     @Test
     @DisplayName("Should build config with custom values")
     void shouldBuildWithCustomValues() {
-        HttpClientConfig config = HttpClientConfig.builder("localhost", 8080).connectTimeoutMs(300)
-                .readTimeoutMs(1500).useSsl(false).maxRetries(2).retryBackoffMs(List.of(50, 100))
+        HttpClientConfig config = HttpClientConfig.builder("localhost", 8080).connectTimeoutMs(300).readTimeoutMs(1500)
+                .useSsl(false).maxRetries(2).retryBackoffMs(List.of(50, 100))
                 .defaultHeaders(Map.of("Accept", "application/json"))
-                .addDefaultHeader("X-Correlation-Id", "request-123").apiVersion("v2")
-                .circuitBreakerFailureThreshold(25).enableCompression(false).build();
+                .addDefaultHeader("X-Correlation-Id", "request-123").apiVersion("v2").circuitBreakerFailureThreshold(25)
+                .enableCompression(false).build();
 
         assertEquals("localhost", config.host());
         assertEquals(8080, config.port());
@@ -81,11 +81,9 @@ class HttpClientConfigTest {
     @Test
     @DisplayName("Should reject read timeout smaller than connect timeout")
     void shouldRejectTimeoutRelationship() {
-        IllegalArgumentException error = assertThrows(IllegalArgumentException.class,
-                () -> HttpClientConfig.builder("api.example.com", 443).connectTimeoutMs(2000)
-                        .readTimeoutMs(1000).build());
-        assertEquals("Read timeout must be greater than or equal to connect timeout",
-                error.getMessage());
+        IllegalArgumentException error = assertThrows(IllegalArgumentException.class, () -> HttpClientConfig
+                .builder("api.example.com", 443).connectTimeoutMs(2000).readTimeoutMs(1000).build());
+        assertEquals("Read timeout must be greater than or equal to connect timeout", error.getMessage());
     }
 
     @Test
@@ -99,9 +97,8 @@ class HttpClientConfigTest {
     @Test
     @DisplayName("Should reject retry backoff size mismatch")
     void shouldRejectBackoffSizeMismatch() {
-        IllegalArgumentException error = assertThrows(IllegalArgumentException.class,
-                () -> HttpClientConfig.builder("api.example.com", 443).maxRetries(2)
-                        .retryBackoffMs(List.of(100)).build());
+        IllegalArgumentException error = assertThrows(IllegalArgumentException.class, () -> HttpClientConfig
+                .builder("api.example.com", 443).maxRetries(2).retryBackoffMs(List.of(100)).build());
         assertEquals("Retry backoff size must match max retries", error.getMessage());
     }
 
@@ -109,8 +106,7 @@ class HttpClientConfigTest {
     @DisplayName("Should reject blank header key")
     void shouldRejectBlankHeaderKey() {
         IllegalArgumentException error = assertThrows(IllegalArgumentException.class,
-                () -> HttpClientConfig.builder("api.example.com", 443).addDefaultHeader(" ", "x")
-                        .build());
+                () -> HttpClientConfig.builder("api.example.com", 443).addDefaultHeader(" ", "x").build());
         assertEquals("Header key must not be blank", error.getMessage());
     }
 
@@ -118,8 +114,7 @@ class HttpClientConfigTest {
     @DisplayName("Should reject invalid API version")
     void shouldRejectApiVersion() {
         IllegalArgumentException error = assertThrows(IllegalArgumentException.class,
-                () -> HttpClientConfig.builder("api.example.com", 443).apiVersion("latest")
-                        .build());
+                () -> HttpClientConfig.builder("api.example.com", 443).apiVersion("latest").build());
         assertEquals("API version must match pattern v{number}", error.getMessage());
     }
 }

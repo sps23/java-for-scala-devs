@@ -46,8 +46,7 @@ public final class NotificationFactory {
             case "email" -> new EmailNotification();
             case "sms" -> new SmsNotification();
             case "push" -> new PushNotification();
-            default ->
-                throw new IllegalArgumentException("Unsupported notification channel: " + channel);
+            default -> throw new IllegalArgumentException("Unsupported notification channel: " + channel);
         };
     }
 }

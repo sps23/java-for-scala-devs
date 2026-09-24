@@ -90,48 +90,29 @@ class OrderFulfillmentFacadeTest {
     }
 
     private class InventoryAlwaysAvailable : OrderFulfillmentFacade.InventoryGateway {
-        override fun hasStock(
-            sku: String,
-            quantity: Int,
-        ): Boolean = true
+        override fun hasStock(sku: String, quantity: Int): Boolean = true
     }
 
     private class InventoryInsufficient : OrderFulfillmentFacade.InventoryGateway {
-        override fun hasStock(
-            sku: String,
-            quantity: Int,
-        ): Boolean = false
+        override fun hasStock(sku: String, quantity: Int): Boolean = false
     }
 
     private class PaymentAlwaysAccepted : OrderFulfillmentFacade.PaymentGateway {
-        override fun charge(
-            customerId: String,
-            amount: BigDecimal,
-        ): Boolean = true
+        override fun charge(customerId: String, amount: BigDecimal): Boolean = true
     }
 
     private class PaymentRejected : OrderFulfillmentFacade.PaymentGateway {
-        override fun charge(
-            customerId: String,
-            amount: BigDecimal,
-        ): Boolean = false
+        override fun charge(customerId: String, amount: BigDecimal): Boolean = false
     }
 
     private class ShippingAlwaysScheduled : OrderFulfillmentFacade.ShippingGateway {
-        override fun scheduleShipment(
-            customerId: String,
-            shippingAddress: String,
-        ): String = "TRACK-123"
+        override fun scheduleShipment(customerId: String, shippingAddress: String): String = "TRACK-123"
     }
 
     private class NotificationRecorder : OrderFulfillmentFacade.NotificationGateway {
         var sent = false
 
-        override fun sendConfirmation(
-            customerId: String,
-            sku: String,
-            trackingId: String,
-        ) {
+        override fun sendConfirmation(customerId: String, sku: String, trackingId: String) {
             sent = true
         }
     }

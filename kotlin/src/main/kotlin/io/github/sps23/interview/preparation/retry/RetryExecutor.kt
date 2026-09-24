@@ -68,15 +68,9 @@ sealed class RetryResult<out T> {
     }
 
     companion object {
-        fun <T> success(
-            value: T,
-            attempts: Int,
-        ): RetryResult<T> = Success(value, attempts)
+        fun <T> success(value: T, attempts: Int): RetryResult<T> = Success(value, attempts)
 
-        fun <T> failure(
-            error: Throwable,
-            attempts: Int,
-        ): RetryResult<T> = Failure(error, attempts)
+        fun <T> failure(error: Throwable, attempts: Int): RetryResult<T> = Failure(error, attempts)
     }
 }
 
@@ -133,28 +127,20 @@ object RetryPolicies {
      *
      * Demonstrates lambda with calculation logic, same as Java.
      */
-    fun exponentialBackoff(
-        initialDelay: Duration,
-        maxDelay: Duration,
-    ): RetryPolicy =
-        { attempt, _ ->
-            val delayMs = initialDelay.toMillis() * Math.pow(2.0, (attempt - 1).toDouble()).toLong()
-            Duration.ofMillis(minOf(delayMs, maxDelay.toMillis()))
-        }
+    fun exponentialBackoff(initialDelay: Duration, maxDelay: Duration): RetryPolicy = { attempt, _ ->
+        val delayMs = initialDelay.toMillis() * Math.pow(2.0, (attempt - 1).toDouble()).toLong()
+        Duration.ofMillis(minOf(delayMs, maxDelay.toMillis()))
+    }
 
     /**
      * Creates a policy that varies delay based on exception type.
      */
-    fun errorSpecific(
-        networkDelay: Duration,
-        otherDelay: Duration,
-    ): RetryPolicy =
-        { _, error ->
-            when (error) {
-                is IOException -> networkDelay
-                else -> otherDelay
-            }
+    fun errorSpecific(networkDelay: Duration, otherDelay: Duration): RetryPolicy = { _, error ->
+        when (error) {
+            is IOException -> networkDelay
+            else -> otherDelay
         }
+    }
 }
 
 /**
@@ -166,12 +152,11 @@ object RetryPolicies {
  * default RetryPolicy maxWith(RetryPolicy other) { ... }
  * ```
  */
-fun RetryPolicy.maxWith(other: RetryPolicy): RetryPolicy =
-    { attempt, error ->
-        val selfDelay = this(attempt, error)
-        val otherDelay = other(attempt, error)
-        if (selfDelay > otherDelay) selfDelay else otherDelay
-    }
+fun RetryPolicy.maxWith(other: RetryPolicy): RetryPolicy = { attempt, error ->
+    val selfDelay = this(attempt, error)
+    val otherDelay = other(attempt, error)
+    if (selfDelay > otherDelay) selfDelay else otherDelay
+}
 
 /**
  * Retry condition factory functions - equivalent to Java's RetryCondition interface.
@@ -191,7 +176,8 @@ object RetryConditions {
      * static RetryCondition forExceptions(Class<? extends Throwable>... types) { ... }
      * ```
      */
-    fun forExceptions(vararg types: KClass<out Throwable>): RetryCondition = { ctx -> types.any { it.isInstance(ctx.lastError) } }
+    fun forExceptions(vararg types: KClass<out Throwable>): RetryCondition =
+        { ctx -> types.any { it.isInstance(ctx.lastError) } }
 
     /**
      * Creates a condition based on exception type using reified generic.
@@ -402,8 +388,8 @@ fun main() {
             policy = RetryPolicies.exponentialBackoff(Duration.ofMillis(100), Duration.ofSeconds(2)),
             // Composing conditions with infix 'and' function
             condition =
-                RetryConditions.maxAttempts(4) and
-                    RetryConditions.forException<RuntimeException>(),
+            RetryConditions.maxAttempts(4) and
+                RetryConditions.forException<RuntimeException>(),
             // Lambda for logging (Consumer equivalent)
             onRetry = { ctx, delay ->
                 println("  Retry attempt ${ctx.attempt}, waiting ${delay.toMillis()}ms")

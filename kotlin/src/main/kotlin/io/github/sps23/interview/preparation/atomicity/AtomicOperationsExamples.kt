@@ -30,11 +30,7 @@ object AtomicOperationsExamples {
 
         fun currentValue(): Int = counter
 
-        private fun stagedIncrement(
-            start: CountDownLatch,
-            bothRead: CountDownLatch,
-            allowWrite: CountDownLatch,
-        ) {
+        private fun stagedIncrement(start: CountDownLatch, bothRead: CountDownLatch, allowWrite: CountDownLatch) {
             await(start)
             val observed = counter
             bothRead.countDown()

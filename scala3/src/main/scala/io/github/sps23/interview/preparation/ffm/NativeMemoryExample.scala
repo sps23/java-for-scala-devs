@@ -2,8 +2,7 @@ package io.github.sps23.interview.preparation.ffm
 
 import java.lang.foreign.{Arena, MemoryLayout, MemorySegment, ValueLayout}
 
-/** Demonstrates Java 21's Foreign Function and Memory (FFM) API for native memory management in
-  * Scala 3.
+/** Demonstrates Java 21's Foreign Function and Memory (FFM) API for native memory management in Scala 3.
   *
   * The FFM API provides safe, efficient access to native memory without JNI. This example shows:
   *   - Arena for memory lifecycle management (automatic deallocation)
@@ -11,8 +10,8 @@ import java.lang.foreign.{Arena, MemoryLayout, MemorySegment, ValueLayout}
   *   - MemoryLayout for structured data layouts
   *   - Safety improvements over manual memory management
   *
-  * For Scala developers: Think of Arena as a managed region similar to ZIO's Scope or Cats Effect's
-  * Resource - it automatically cleans up memory when the scope exits.
+  * For Scala developers: Think of Arena as a managed region similar to ZIO's Scope or Cats Effect's Resource - it
+  * automatically cleans up memory when the scope exits.
   *
   * Key FFM API concepts:
   *   - '''Arena''': Controls the lifecycle of memory segments. When closed, all memory is freed.
@@ -128,9 +127,7 @@ object NativeMemoryExample:
       (0 until arraySize.toInt).foreach(i => intArray.setAtIndex(ValueLayout.JAVA_INT, i, i * i))
 
       // Read back and print - functional style
-      val contents = (0 until arraySize.toInt).map { i =>
-        intArray.getAtIndex(ValueLayout.JAVA_INT, i)
-      }
+      val contents = (0 until arraySize.toInt).map(i => intArray.getAtIndex(ValueLayout.JAVA_INT, i))
       println(s"Array contents: [${contents.mkString(", ")}]")
 
       // Calculate sum using fold

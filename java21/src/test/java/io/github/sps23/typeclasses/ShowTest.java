@@ -115,8 +115,7 @@ class ShowTest {
         @Test
         @DisplayName("Should support mapping")
         void testShowableMap() {
-            String result = Showable.of(21, Show.forInteger()).map(i -> i * 2, Show.forInteger())
-                    .show();
+            String result = Showable.of(21, Show.forInteger()).map(i -> i * 2, Show.forInteger()).show();
             assertEquals("Int(42)", result);
         }
 

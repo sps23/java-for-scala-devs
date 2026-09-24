@@ -46,13 +46,11 @@ public interface Show<T> {
     }
 
     static <T> Show<List<T>> forList(Show<T> elementShow) {
-        return list -> list.stream().map(elementShow::show)
-                .collect(Collectors.joining(", ", "List(", ")"));
+        return list -> list.stream().map(elementShow::show).collect(Collectors.joining(", ", "List(", ")"));
     }
 
     static <K, V> Show<Map<K, V>> forMap(Show<K> keyShow, Show<V> valueShow) {
-        return map -> map.entrySet().stream()
-                .map(e -> keyShow.show(e.getKey()) + " -> " + valueShow.show(e.getValue()))
+        return map -> map.entrySet().stream().map(e -> keyShow.show(e.getKey()) + " -> " + valueShow.show(e.getValue()))
                 .collect(Collectors.joining(", ", "Map(", ")"));
     }
 

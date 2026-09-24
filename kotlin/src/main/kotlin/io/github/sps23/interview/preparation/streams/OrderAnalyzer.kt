@@ -25,35 +25,34 @@ object OrderAnalyzer {
      *
      * @return immutable list of sample orders
      */
-    fun createSampleOrders(): List<Order> =
-        listOf(
-            Order(1, "Electronics", 1299.99, "Alice", LocalDate.of(2025, 1, 15), listOf("Laptop", "Mouse")),
-            Order(2, "Books", 45.50, "Bob", LocalDate.of(2025, 1, 15), listOf("Java Programming", "Design Patterns")),
-            Order(3, "Electronics", 799.00, "Charlie", LocalDate.of(2025, 1, 16), listOf("Tablet")),
-            Order(4, "Clothing", 125.00, "Alice", LocalDate.of(2025, 1, 17), listOf("Jacket", "Jeans")),
-            Order(5, "Books", 32.99, "Diana", LocalDate.of(2025, 1, 18), listOf("Scala for Impatient")),
-            Order(
-                6,
-                "Electronics",
-                2499.99,
-                "Eve",
-                LocalDate.of(2025, 1, 18),
-                listOf("Desktop Computer", "Monitor", "Keyboard"),
-            ),
-            Order(7, "Clothing", 89.99, "Frank", LocalDate.of(2025, 1, 19), listOf("Shirt", "Tie")),
-            Order(
-                8,
-                "Books",
-                89.00,
-                "Alice",
-                LocalDate.of(2025, 1, 20),
-                listOf("Kotlin in Action", "Effective Java", "Clean Code"),
-            ),
-            Order(9, "Electronics", 349.99, "Bob", LocalDate.of(2025, 1, 20), listOf("Headphones")),
-            Order(10, "Clothing", 250.00, "Charlie", LocalDate.of(2025, 1, 21), listOf("Suit")),
-            Order(11, "Books", 28.50, "Diana", LocalDate.of(2025, 1, 22), listOf("Functional Programming")),
-            Order(12, "Electronics", 599.00, "Eve", LocalDate.of(2025, 1, 22), listOf("Smartphone")),
-        )
+    fun createSampleOrders(): List<Order> = listOf(
+        Order(1, "Electronics", 1299.99, "Alice", LocalDate.of(2025, 1, 15), listOf("Laptop", "Mouse")),
+        Order(2, "Books", 45.50, "Bob", LocalDate.of(2025, 1, 15), listOf("Java Programming", "Design Patterns")),
+        Order(3, "Electronics", 799.00, "Charlie", LocalDate.of(2025, 1, 16), listOf("Tablet")),
+        Order(4, "Clothing", 125.00, "Alice", LocalDate.of(2025, 1, 17), listOf("Jacket", "Jeans")),
+        Order(5, "Books", 32.99, "Diana", LocalDate.of(2025, 1, 18), listOf("Scala for Impatient")),
+        Order(
+            6,
+            "Electronics",
+            2499.99,
+            "Eve",
+            LocalDate.of(2025, 1, 18),
+            listOf("Desktop Computer", "Monitor", "Keyboard"),
+        ),
+        Order(7, "Clothing", 89.99, "Frank", LocalDate.of(2025, 1, 19), listOf("Shirt", "Tie")),
+        Order(
+            8,
+            "Books",
+            89.00,
+            "Alice",
+            LocalDate.of(2025, 1, 20),
+            listOf("Kotlin in Action", "Effective Java", "Clean Code"),
+        ),
+        Order(9, "Electronics", 349.99, "Bob", LocalDate.of(2025, 1, 20), listOf("Headphones")),
+        Order(10, "Clothing", 250.00, "Charlie", LocalDate.of(2025, 1, 21), listOf("Suit")),
+        Order(11, "Books", 28.50, "Diana", LocalDate.of(2025, 1, 22), listOf("Functional Programming")),
+        Order(12, "Electronics", 599.00, "Eve", LocalDate.of(2025, 1, 22), listOf("Smartphone")),
+    )
 
     // ========================================================================
     // takeWhile() and dropWhile()
@@ -69,10 +68,8 @@ object OrderAnalyzer {
      * @param maxAmount take orders while amount stays below this threshold
      * @return list of orders taken while condition is met
      */
-    fun takeOrdersWhileBelowBudget(
-        orders: List<Order>,
-        maxAmount: Double,
-    ): List<Order> = orders.sortedBy { it.amount }.takeWhile { it.amount < maxAmount }
+    fun takeOrdersWhileBelowBudget(orders: List<Order>, maxAmount: Double): List<Order> =
+        orders.sortedBy { it.amount }.takeWhile { it.amount < maxAmount }
 
     /**
      * Takes orders before a cutoff date from sorted list.
@@ -81,10 +78,8 @@ object OrderAnalyzer {
      * @param cutoffDate take orders before this date
      * @return orders before the cutoff date
      */
-    fun takeOrdersBeforeDate(
-        orders: List<Order>,
-        cutoffDate: LocalDate,
-    ): List<Order> = orders.sortedBy { it.date }.takeWhile { it.date.isBefore(cutoffDate) }
+    fun takeOrdersBeforeDate(orders: List<Order>, cutoffDate: LocalDate): List<Order> =
+        orders.sortedBy { it.date }.takeWhile { it.date.isBefore(cutoffDate) }
 
     /**
      * Demonstrates dropWhile - drops elements while predicate is true.
@@ -96,10 +91,8 @@ object OrderAnalyzer {
      * @param threshold skip orders below this amount
      * @return orders starting from first order at or above threshold
      */
-    fun dropOrdersBelowThreshold(
-        orders: List<Order>,
-        threshold: Double,
-    ): List<Order> = orders.sortedBy { it.amount }.dropWhile { it.amount < threshold }
+    fun dropOrdersBelowThreshold(orders: List<Order>, threshold: Double): List<Order> =
+        orders.sortedBy { it.amount }.dropWhile { it.amount < threshold }
 
     /**
      * Combines takeWhile and dropWhile for range selection.
@@ -109,11 +102,7 @@ object OrderAnalyzer {
      * @param maxAmount maximum amount
      * @return orders in the specified amount range
      */
-    fun getOrdersInAmountRange(
-        orders: List<Order>,
-        minAmount: Double,
-        maxAmount: Double,
-    ): List<Order> =
+    fun getOrdersInAmountRange(orders: List<Order>, minAmount: Double, maxAmount: Double): List<Order> =
         orders.sortedBy { it.amount }
             .dropWhile { it.amount < minAmount }
             .takeWhile { it.amount < maxAmount }
@@ -130,7 +119,8 @@ object OrderAnalyzer {
      * @param orders list of orders
      * @return map of category to order count
      */
-    fun countOrdersByCategory(orders: List<Order>): Map<String, Int> = orders.groupBy { it.category }.mapValues { it.value.size }
+    fun countOrdersByCategory(orders: List<Order>): Map<String, Int> =
+        orders.groupBy { it.category }.mapValues { it.value.size }
 
     /**
      * Groups orders by category with total amount.
@@ -140,9 +130,8 @@ object OrderAnalyzer {
      * @param orders list of orders
      * @return map of category to total amount
      */
-    fun totalAmountByCategory(orders: List<Order>): Map<String, Double> =
-        orders.groupBy { it.category }
-            .mapValues { (_, categoryOrders) -> categoryOrders.sumOf { it.amount } }
+    fun totalAmountByCategory(orders: List<Order>): Map<String, Double> = orders.groupBy { it.category }
+        .mapValues { (_, categoryOrders) -> categoryOrders.sumOf { it.amount } }
 
     /**
      * Groups orders by category with statistics.
@@ -158,18 +147,17 @@ object OrderAnalyzer {
         val max: Double,
     )
 
-    fun statisticsByCategory(orders: List<Order>): Map<String, Statistics> =
-        orders.groupBy { it.category }
-            .mapValues { (_, categoryOrders) ->
-                val amounts = categoryOrders.map { it.amount }
-                Statistics(
-                    count = amounts.size,
-                    total = amounts.sum(),
-                    average = if (amounts.isNotEmpty()) amounts.average() else 0.0,
-                    min = amounts.minOrNull() ?: 0.0,
-                    max = amounts.maxOrNull() ?: 0.0,
-                )
-            }
+    fun statisticsByCategory(orders: List<Order>): Map<String, Statistics> = orders.groupBy { it.category }
+        .mapValues { (_, categoryOrders) ->
+            val amounts = categoryOrders.map { it.amount }
+            Statistics(
+                count = amounts.size,
+                total = amounts.sum(),
+                average = if (amounts.isNotEmpty()) amounts.average() else 0.0,
+                min = amounts.minOrNull() ?: 0.0,
+                max = amounts.maxOrNull() ?: 0.0,
+            )
+        }
 
     /**
      * Groups orders by category with list of customer names.
@@ -180,9 +168,8 @@ object OrderAnalyzer {
      * @param orders list of orders
      * @return map of category to list of customer names
      */
-    fun customersByCategory(orders: List<Order>): Map<String, List<String>> =
-        orders.groupBy { it.category }
-            .mapValues { (_, categoryOrders) -> categoryOrders.map { it.customer } }
+    fun customersByCategory(orders: List<Order>): Map<String, List<String>> = orders.groupBy { it.category }
+        .mapValues { (_, categoryOrders) -> categoryOrders.map { it.customer } }
 
     /**
      * Groups orders by category with unique customers.
@@ -190,9 +177,8 @@ object OrderAnalyzer {
      * @param orders list of orders
      * @return map of category to set of unique customer names
      */
-    fun uniqueCustomersByCategory(orders: List<Order>): Map<String, Set<String>> =
-        orders.groupBy { it.category }
-            .mapValues { (_, categoryOrders) -> categoryOrders.map { it.customer }.toSet() }
+    fun uniqueCustomersByCategory(orders: List<Order>): Map<String, Set<String>> = orders.groupBy { it.category }
+        .mapValues { (_, categoryOrders) -> categoryOrders.map { it.customer }.toSet() }
 
     /**
      * Nested grouping: by category then by customer.
@@ -210,9 +196,8 @@ object OrderAnalyzer {
      * @param orders list of orders
      * @return map of category to highest value order
      */
-    fun highestOrderByCategory(orders: List<Order>): Map<String, Order?> =
-        orders.groupBy { it.category }
-            .mapValues { (_, categoryOrders) -> categoryOrders.maxByOrNull { it.amount } }
+    fun highestOrderByCategory(orders: List<Order>): Map<String, Order?> = orders.groupBy { it.category }
+        .mapValues { (_, categoryOrders) -> categoryOrders.maxByOrNull { it.amount } }
 
     /**
      * Gets top N orders by amount for each category.
@@ -221,14 +206,10 @@ object OrderAnalyzer {
      * @param topN number of top orders per category
      * @return map of category to top N orders
      */
-    fun topNOrdersByCategory(
-        orders: List<Order>,
-        topN: Int,
-    ): Map<String, List<Order>> =
-        orders.groupBy { it.category }
-            .mapValues { (_, categoryOrders) ->
-                categoryOrders.sortedByDescending { it.amount }.take(topN)
-            }
+    fun topNOrdersByCategory(orders: List<Order>, topN: Int): Map<String, List<Order>> = orders.groupBy { it.category }
+        .mapValues { (_, categoryOrders) ->
+            categoryOrders.sortedByDescending { it.amount }.take(topN)
+        }
 
     // ========================================================================
     // partition (like partitioningBy)
@@ -243,10 +224,8 @@ object OrderAnalyzer {
      * @param threshold amount threshold
      * @return pair of (high-value orders, regular orders)
      */
-    fun partitionByHighValue(
-        orders: List<Order>,
-        threshold: Double,
-    ): Pair<List<Order>, List<Order>> = orders.partition { it.amount >= threshold }
+    fun partitionByHighValue(orders: List<Order>, threshold: Double): Pair<List<Order>, List<Order>> =
+        orders.partition { it.amount >= threshold }
 
     /**
      * Result data class for partition results (more type-safe than pair).
@@ -263,10 +242,7 @@ object OrderAnalyzer {
      * @param threshold amount threshold
      * @return PartitionResult with named fields
      */
-    fun partitionByHighValueNamed(
-        orders: List<Order>,
-        threshold: Double,
-    ): PartitionResult {
+    fun partitionByHighValueNamed(orders: List<Order>, threshold: Double): PartitionResult {
         val (high, regular) = orders.partition { it.amount >= threshold }
         return PartitionResult(high, regular)
     }
@@ -278,10 +254,7 @@ object OrderAnalyzer {
      * @param cutoffDate date to partition around
      * @return pair of (count on/after cutoff, count before cutoff)
      */
-    fun countByDatePartition(
-        orders: List<Order>,
-        cutoffDate: LocalDate,
-    ): Pair<Int, Int> {
+    fun countByDatePartition(orders: List<Order>, cutoffDate: LocalDate): Pair<Int, Int> {
         val (onOrAfter, before) = orders.partition { !it.date.isBefore(cutoffDate) }
         return onOrAfter.size to before.size
     }
@@ -293,10 +266,7 @@ object OrderAnalyzer {
      * @param threshold amount threshold
      * @return pair of (high-value total, regular total)
      */
-    fun partitionWithTotals(
-        orders: List<Order>,
-        threshold: Double,
-    ): Pair<Double, Double> {
+    fun partitionWithTotals(orders: List<Order>, threshold: Double): Pair<Double, Double> {
         val (high, regular) = orders.partition { it.amount >= threshold }
         return high.sumOf { it.amount } to regular.sumOf { it.amount }
     }
@@ -364,21 +334,20 @@ object OrderAnalyzer {
      * @param orders list of orders
      * @return map of category to summary
      */
-    fun generateCategorySummaries(orders: List<Order>): Map<String, CategorySummary> =
-        orders.groupBy { it.category }
-            .mapValues { (category, categoryOrders) ->
-                val amounts = categoryOrders.map { it.amount }
-                val customers = categoryOrders.map { it.customer }.distinct()
-                CategorySummary(
-                    category = category,
-                    orderCount = categoryOrders.size,
-                    totalAmount = amounts.sum(),
-                    averageAmount = if (amounts.isNotEmpty()) amounts.average() else 0.0,
-                    minAmount = amounts.minOrNull() ?: 0.0,
-                    maxAmount = amounts.maxOrNull() ?: 0.0,
-                    uniqueCustomers = customers.size,
-                )
-            }
+    fun generateCategorySummaries(orders: List<Order>): Map<String, CategorySummary> = orders.groupBy { it.category }
+        .mapValues { (category, categoryOrders) ->
+            val amounts = categoryOrders.map { it.amount }
+            val customers = categoryOrders.map { it.customer }.distinct()
+            CategorySummary(
+                category = category,
+                orderCount = categoryOrders.size,
+                totalAmount = amounts.sum(),
+                averageAmount = if (amounts.isNotEmpty()) amounts.average() else 0.0,
+                minAmount = amounts.minOrNull() ?: 0.0,
+                maxAmount = amounts.maxOrNull() ?: 0.0,
+                uniqueCustomers = customers.size,
+            )
+        }
 
     // ========================================================================
     // Parallel Processing (using Coroutines would be idiomatic, but for comparison
@@ -412,10 +381,7 @@ object OrderAnalyzer {
      * @param minAmount minimum amount threshold
      * @return filtered list
      */
-    fun filterHighValue(
-        orders: List<Order>,
-        minAmount: Double,
-    ): List<Order> = orders.filter { it.amount >= minAmount }
+    fun filterHighValue(orders: List<Order>, minAmount: Double): List<Order> = orders.filter { it.amount >= minAmount }
 
     /**
      * Compares different processing approaches.
@@ -477,10 +443,7 @@ object OrderAnalyzer {
      * @param highValueThreshold threshold for high-value classification
      * @return complete order report
      */
-    fun generateReport(
-        orders: List<Order>,
-        highValueThreshold: Double,
-    ): OrderReport {
+    fun generateReport(orders: List<Order>, highValueThreshold: Double): OrderReport {
         val (highValue, regular) = partitionByHighValue(orders, highValueThreshold)
         return OrderReport(
             totalOrders = orders.size,

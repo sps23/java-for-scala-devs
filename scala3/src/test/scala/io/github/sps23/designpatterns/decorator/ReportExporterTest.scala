@@ -81,8 +81,8 @@ class ReportExporterTest:
     assertTrue(published.startsWith("ENCRYPTED:"))
     assertEquals(1, auditLog.size)
 
-/** Illustrates a realistic client: it composes decorators at runtime based on feature flags instead
-  * of needing a dedicated exporter subclass for every combination.
+/** Illustrates a realistic client: it composes decorators at runtime based on feature flags instead of needing a
+  * dedicated exporter subclass for every combination.
   */
 class ReportPublishingService(auditLog: ArrayBuffer[String]):
   def publish(

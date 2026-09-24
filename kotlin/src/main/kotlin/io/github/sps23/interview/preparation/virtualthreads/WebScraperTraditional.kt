@@ -45,16 +45,10 @@ object WebScraperTraditional {
         val isSuccess: Boolean get() = error == null
 
         companion object {
-            fun success(
-                url: String,
-                statusCode: Int,
-                contentLength: Long,
-            ) = ScrapedResult(url, statusCode, contentLength, null)
+            fun success(url: String, statusCode: Int, contentLength: Long) =
+                ScrapedResult(url, statusCode, contentLength, null)
 
-            fun failure(
-                url: String,
-                error: String,
-            ) = ScrapedResult(url, -1, -1, error)
+            fun failure(url: String, error: String) = ScrapedResult(url, -1, -1, error)
         }
     }
 
@@ -84,20 +78,19 @@ object WebScraperTraditional {
     /**
      * Scrapes a single URL (blocking operation).
      */
-    private fun scrapeUrl(url: String): ScrapedResult =
-        try {
-            val request =
-                HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .timeout(Duration.ofSeconds(30))
-                    .GET()
-                    .build()
+    private fun scrapeUrl(url: String): ScrapedResult = try {
+        val request =
+            HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .timeout(Duration.ofSeconds(30))
+                .GET()
+                .build()
 
-            val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())
-            ScrapedResult.success(url, response.statusCode(), response.body().length.toLong())
-        } catch (e: Exception) {
-            ScrapedResult.failure(url, e.message ?: "Unknown error")
-        }
+        val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())
+        ScrapedResult.success(url, response.statusCode(), response.body().length.toLong())
+    } catch (e: Exception) {
+        ScrapedResult.failure(url, e.message ?: "Unknown error")
+    }
 
     /** Returns thread pool size for comparison. */
     fun threadPoolSize(): Int = THREAD_POOL_SIZE

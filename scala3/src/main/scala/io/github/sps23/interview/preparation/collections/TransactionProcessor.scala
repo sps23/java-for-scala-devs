@@ -5,15 +5,13 @@ import scala.collection.immutable.{List, Map, Set}
 
 /** Demonstrates Scala 3 collection operations compared to Java's Stream API.
   *
-  * Scala collections are immutable by default and provide rich functional operations. This class
-  * shows how to:
+  * Scala collections are immutable by default and provide rich functional operations. This class shows how to:
   *   - Create immutable collections (List, Set, Map)
   *   - Filter, map, and group collections
   *   - Calculate statistics
   *   - Process transactions idiomatically
   *
-  * Problem Statement: Process a list of transactions: filter by amount, group by category, and
-  * calculate statistics.
+  * Problem Statement: Process a list of transactions: filter by amount, group by category, and calculate statistics.
   */
 object TransactionProcessor:
 

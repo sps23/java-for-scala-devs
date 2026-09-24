@@ -24,8 +24,7 @@ public final class AtomicTicketOffice {
         }
 
         this.ticketPriceInCents = ticketPriceInCents;
-        this.ticketState = new AtomicReference<>(
-                new TicketSnapshot(initialTickets, initialTickets > 0, null));
+        this.ticketState = new AtomicReference<>(new TicketSnapshot(initialTickets, initialTickets > 0, null));
         this.displayedQueueSize = new AtomicInteger(initialTickets);
         this.soldOut.set(initialTickets == 0);
     }

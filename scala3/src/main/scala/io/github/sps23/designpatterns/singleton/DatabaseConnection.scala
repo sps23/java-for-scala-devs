@@ -2,8 +2,7 @@ package io.github.sps23.designpatterns.singleton
 
 /** Singleton using object in Scala 3.
   *
-  * Scala 3 continues the idiomatic `object` keyword pattern. This is even cleaner with Scala 3's
-  * new syntax.
+  * Scala 3 continues the idiomatic `object` keyword pattern. This is even cleaner with Scala 3's new syntax.
   *
   * Benefits:
   *   - ✓ Thread-safe by default
@@ -20,8 +19,8 @@ object DatabaseConnection:
 
 /** Alternative: Class-based singleton with companion object-like pattern.
   *
-  * When you need instance-specific state, use a class with a singleton companion. Scala 3 makes
-  * this even cleaner with its new syntax.
+  * When you need instance-specific state, use a class with a singleton companion. Scala 3 makes this even cleaner with
+  * its new syntax.
   */
 class StatefulDatabaseConnection private ():
   private var isConnected: Boolean = false

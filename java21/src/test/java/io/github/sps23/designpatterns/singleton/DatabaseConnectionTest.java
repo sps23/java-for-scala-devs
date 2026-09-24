@@ -50,8 +50,7 @@ class DatabaseConnectionTest {
             }
             startLatch.countDown();
             endLatch.await();
-            assertEquals(1, instances.size(),
-                    "Only one instance should exist despite concurrent access");
+            assertEquals(1, instances.size(), "Only one instance should exist despite concurrent access");
         }
     }
 
@@ -66,7 +65,6 @@ class DatabaseConnectionTest {
     @DisplayName("Should successfully disconnect from database")
     void testDisconnection() {
         DatabaseConnection conn = DatabaseConnection.getInstance();
-        assertDoesNotThrow(conn::disconnect,
-                "Should be able to disconnect without throwing exception");
+        assertDoesNotThrow(conn::disconnect, "Should be able to disconnect without throwing exception");
     }
 }

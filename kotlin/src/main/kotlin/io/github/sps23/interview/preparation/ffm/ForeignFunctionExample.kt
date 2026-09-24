@@ -44,7 +44,8 @@ object ForeignFunctionExample {
     /**
      * Helper extension function to find a symbol or throw an exception.
      */
-    private fun SymbolLookup.findOrThrow(name: String): MemorySegment = find(name).orElseThrow { RuntimeException("$name not found") }
+    private fun SymbolLookup.findOrThrow(name: String): MemorySegment =
+        find(name).orElseThrow { RuntimeException("$name not found") }
 
     /**
      * Demonstrates calling the C strlen function.

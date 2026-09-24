@@ -22,8 +22,7 @@ class CheckoutApplicationConfigTest {
         try (var context = newContext("dev")) {
             var service = context.getBean(CheckoutService.class);
 
-            var receipt = service.checkout(
-                    new CheckoutRequest("cust-1", "PL", new BigDecimal("100.00"), "partner"));
+            var receipt = service.checkout(new CheckoutRequest("cust-1", "PL", new BigDecimal("100.00"), "partner"));
 
             assertEquals("sandbox", receipt.paymentMode());
             assertEquals(new BigDecimal("123.00"), receipt.total());
@@ -72,8 +71,7 @@ class CheckoutApplicationConfigTest {
                 "io/github/sps23/spring/configuration/legacy-checkout-context.xml")) {
             var service = context.getBean(CheckoutService.class);
 
-            var receipt = service
-                    .checkout(new CheckoutRequest("cust-3", "DE", new BigDecimal("100.00"), "web"));
+            var receipt = service.checkout(new CheckoutRequest("cust-3", "DE", new BigDecimal("100.00"), "web"));
 
             assertEquals("sandbox", receipt.paymentMode());
             assertEquals(new BigDecimal("119.00"), receipt.total());

@@ -47,13 +47,12 @@ object StructuredConcurrencyExample {
      * @param urls list of URLs - all must succeed
      * @return combined content length from all URLs
      */
-    fun fetchAllOrFail(urls: List<String>): Long =
-        StructuredTaskScope.ShutdownOnFailure().use { scope ->
-            val subtasks = urls.map { url -> scope.fork { fetchContentLength(url) } }
-            scope.join()
-            scope.throwIfFailed()
-            subtasks.sumOf { it.get().toLong() }
-        }
+    fun fetchAllOrFail(urls: List<String>): Long = StructuredTaskScope.ShutdownOnFailure().use { scope ->
+        val subtasks = urls.map { url -> scope.fork { fetchContentLength(url) } }
+        scope.join()
+        scope.throwIfFailed()
+        subtasks.sumOf { it.get().toLong() }
+    }
 
     /**
      * Demonstrates ShutdownOnSuccess - returns as soon as one task succeeds.
@@ -68,12 +67,11 @@ object StructuredConcurrencyExample {
      * @param urls list of URLs - return first successful response
      * @return content length from first successful URL
      */
-    fun fetchAnySuccessful(urls: List<String>): Int =
-        StructuredTaskScope.ShutdownOnSuccess<Int>().use { scope ->
-            urls.forEach { url -> scope.fork { fetchContentLength(url) } }
-            scope.join()
-            scope.result()
-        }
+    fun fetchAnySuccessful(urls: List<String>): Int = StructuredTaskScope.ShutdownOnSuccess<Int>().use { scope ->
+        urls.forEach { url -> scope.fork { fetchContentLength(url) } }
+        scope.join()
+        scope.result()
+    }
 
     /**
      * Aggregated data from multiple services.
@@ -91,17 +89,16 @@ object StructuredConcurrencyExample {
      *
      * @return aggregated data from all services
      */
-    fun fetchAggregatedData(): AggregatedData =
-        StructuredTaskScope.ShutdownOnFailure().use { scope ->
-            val userData = scope.fork { fetchContentLength("https://httpbin.org/json") }
-            val productData = scope.fork { fetchContentLength("https://httpbin.org/get") }
-            val orderData = scope.fork { fetchContentLength("https://httpbin.org/headers") }
+    fun fetchAggregatedData(): AggregatedData = StructuredTaskScope.ShutdownOnFailure().use { scope ->
+        val userData = scope.fork { fetchContentLength("https://httpbin.org/json") }
+        val productData = scope.fork { fetchContentLength("https://httpbin.org/get") }
+        val orderData = scope.fork { fetchContentLength("https://httpbin.org/headers") }
 
-            scope.join()
-            scope.throwIfFailed()
+        scope.join()
+        scope.throwIfFailed()
 
-            AggregatedData(userData.get(), productData.get(), orderData.get())
-        }
+        AggregatedData(userData.get(), productData.get(), orderData.get())
+    }
 
     /**
      * Helper method to fetch content length from a URL.

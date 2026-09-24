@@ -14,6 +14,5 @@ import java.math.BigDecimal;
  * @param salesChannel
  *            where the order came from, for legacy support routing
  */
-public record CheckoutRequest(String customerId, String countryCode, BigDecimal subtotal,
-        String salesChannel) {
+public record CheckoutRequest(String customerId, String countryCode, BigDecimal subtotal, String salesChannel) {
 }

@@ -92,8 +92,7 @@ class UserServiceTest {
             when(userRepository.existsById(id)).thenReturn(true);
 
             // Act & Assert
-            assertThrows(IllegalArgumentException.class,
-                    () -> userService.createUser(id, "John", "john@example.com"));
+            assertThrows(IllegalArgumentException.class, () -> userService.createUser(id, "John", "john@example.com"));
 
             // Verify no other interactions occurred
             verify(userRepository).existsById(id);
@@ -111,8 +110,7 @@ class UserServiceTest {
             when(emailService.isEmailValid(email)).thenReturn(false);
 
             // Act & Assert
-            assertThrows(IllegalArgumentException.class,
-                    () -> userService.createUser(id, "John", email));
+            assertThrows(IllegalArgumentException.class, () -> userService.createUser(id, "John", email));
 
             verify(userRepository).existsById(id);
             verify(emailService).isEmailValid(email);
@@ -142,8 +140,7 @@ class UserServiceTest {
             userService.createUser(id, name, email);
 
             // Assert - verify email was sent with correct arguments
-            verify(emailService).sendEmail(emailCaptor.capture(), subjectCaptor.capture(),
-                    bodyCaptor.capture());
+            verify(emailService).sendEmail(emailCaptor.capture(), subjectCaptor.capture(), bodyCaptor.capture());
 
             assertEquals(email, emailCaptor.getValue());
             assertEquals("Welcome!", subjectCaptor.getValue());

@@ -2,8 +2,8 @@ package io.github.sps23.interview.preparation.async
 
 /** Represents an API response with data from an external service.
   *
-  * This case class demonstrates Scala's approach to immutable data in async contexts. Case classes
-  * work seamlessly with Scala Futures for representing results from async operations.
+  * This case class demonstrates Scala's approach to immutable data in async contexts. Case classes work seamlessly with
+  * Scala Futures for representing results from async operations.
   *
   * @param source
   *   the name of the API source

@@ -1,7 +1,7 @@
 package io.github.sps23.interview.preparation
 
-/** Immutable Employee case class in Scala 3. Demonstrates idiomatic Scala for data modeling, with
-  * validation in the body.
+/** Immutable Employee case class in Scala 3. Demonstrates idiomatic Scala for data modeling, with validation in the
+  * body.
   */
 case class Employee(
     id: Long,

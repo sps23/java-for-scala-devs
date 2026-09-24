@@ -31,8 +31,7 @@ import java.util.Objects;
  * @param items
  *            list of items in the order, must not be null
  */
-public record Order(long id, String category, double amount, String customer, LocalDate date,
-        List<String> items) {
+public record Order(long id, String category, double amount, String customer, LocalDate date, List<String> items) {
 
     /**
      * Compact constructor for validation.
@@ -109,8 +108,7 @@ public record Order(long id, String category, double amount, String customer, Lo
      *            list of items
      * @return new Order instance with current date
      */
-    public static Order today(long id, String category, double amount, String customer,
-            List<String> items) {
+    public static Order today(long id, String category, double amount, String customer, List<String> items) {
         return new Order(id, category, amount, customer, LocalDate.now(), items);
     }
 
@@ -129,7 +127,6 @@ public record Order(long id, String category, double amount, String customer, Lo
      * @return formatted order string
      */
     public String toFormattedString() {
-        return String.format("[%d] %s: $%.2f by %s (%s) - %d items", id, category, amount, customer,
-                date, itemCount());
+        return String.format("[%d] %s: $%.2f by %s (%s) - %d items", id, category, amount, customer, date, itemCount());
     }
 }

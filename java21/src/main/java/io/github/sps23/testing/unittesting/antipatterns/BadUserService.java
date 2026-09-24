@@ -54,8 +54,8 @@ public class BadUserService {
                 stmt.setString(1, id);
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
-                        return Optional.of(new User(rs.getString("id"), rs.getString("name"),
-                                rs.getString("email"), rs.getBoolean("active")));
+                        return Optional.of(new User(rs.getString("id"), rs.getString("name"), rs.getString("email"),
+                                rs.getBoolean("active")));
                     }
                 }
             }

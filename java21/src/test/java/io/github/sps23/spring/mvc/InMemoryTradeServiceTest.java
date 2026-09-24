@@ -111,8 +111,7 @@ class InMemoryTradeServiceTest {
         @DisplayName("Throws TradeNotFoundException when trade ID does not exist")
         void throwsWhenTradeNotFound() {
             // This maps to a 404 response in the controller via @ExceptionHandler
-            var ex = assertThrows(TradeNotFoundException.class,
-                    () -> service.getTradeById("trade-does-not-exist"));
+            var ex = assertThrows(TradeNotFoundException.class, () -> service.getTradeById("trade-does-not-exist"));
 
             assertTrue(ex.getMessage().contains("trade-does-not-exist"));
         }

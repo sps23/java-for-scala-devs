@@ -17,8 +17,8 @@ import java.util.Map;
  * In tests you construct the map yourself:
  *
  * <pre>{@code
- * var router = new PaymentRouter(Map.of("stripe", new FakePaymentGateway("txn_stripe"), "paypal",
- *         new FakePaymentGateway("txn_paypal")));
+ * var router = new PaymentRouter(
+ *         Map.of("stripe", new FakePaymentGateway("txn_stripe"), "paypal", new FakePaymentGateway("txn_paypal")));
  * }</pre>
  *
  * <p>
@@ -49,8 +49,8 @@ public class PaymentRouter {
     public PaymentResult route(String provider, BigDecimal amount, String customerId) {
         var gateway = gateways.get(provider);
         if (gateway == null) {
-            throw new IllegalArgumentException("Unknown payment provider: %s. Available: %s"
-                    .formatted(provider, gateways.keySet()));
+            throw new IllegalArgumentException(
+                    "Unknown payment provider: %s. Available: %s".formatted(provider, gateways.keySet()));
         }
         return gateway.charge(amount, customerId);
     }

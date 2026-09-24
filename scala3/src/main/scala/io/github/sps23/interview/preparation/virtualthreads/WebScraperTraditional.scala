@@ -9,8 +9,8 @@ import scala.util.{Try, Using}
 
 /** Traditional thread-pool-based web scraper in Scala 3.
   *
-  * This implementation uses a fixed thread pool, demonstrating the pre-virtual-thread approach that
-  * Scala developers might use with standard library futures.
+  * This implementation uses a fixed thread pool, demonstrating the pre-virtual-thread approach that Scala developers
+  * might use with standard library futures.
   *
   * Limitations:
   *   - Limited concurrency based on thread pool size

@@ -10,12 +10,12 @@ import zio.*
   *   - `ZIO.collectAllPar` – run a list of effects all at once, collect all results
   *   - `zipPar` – run two effects in parallel and combine their results as a tuple
   *
-  * These are safer than raw fork/join because ZIO automatically cancels the loser in a race and
-  * propagates errors properly.
+  * These are safer than raw fork/join because ZIO automatically cancels the loser in a race and propagates errors
+  * properly.
   *
   * For comparison: - Java uses `StructuredTaskScope.ShutdownOnSuccess` for racing -
-  * `StructuredTaskScope.ShutdownOnFailure` for parallel-all - Kotlin uses `select {}` for racing
-  * and `.awaitAll()` for parallel-all
+  * `StructuredTaskScope.ShutdownOnFailure` for parallel-all - Kotlin uses `select {}` for racing and `.awaitAll()` for
+  * parallel-all
   */
 object FibreConcurrency:
 

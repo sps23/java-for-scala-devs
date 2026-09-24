@@ -96,12 +96,10 @@ final case class HttpClientConfigBuilder private (
     )
 
   private def validateHost(value: String): Unit =
-    if value == null || value.trim.isEmpty then
-      throw new IllegalArgumentException("Host must not be blank")
+    if value == null || value.trim.isEmpty then throw new IllegalArgumentException("Host must not be blank")
 
   private def validatePort(value: Int): Unit =
-    if value < 1 || value > 65535 then
-      throw new IllegalArgumentException("Port must be between 1 and 65535")
+    if value < 1 || value > 65535 then throw new IllegalArgumentException("Port must be between 1 and 65535")
 
   private def validateTimeout(value: Int, name: String): Unit =
     if value <= 0 then throw new IllegalArgumentException(s"$name must be positive")
@@ -113,15 +111,12 @@ final case class HttpClientConfigBuilder private (
       )
 
   private def validateMaxRetries(value: Int): Unit =
-    if value < 0 || value > 10 then
-      throw new IllegalArgumentException("Max retries must be between 0 and 10")
+    if value < 0 || value > 10 then throw new IllegalArgumentException("Max retries must be between 0 and 10")
 
   private def validateBackoff(values: List[Int], retries: Int): Unit =
     if values == null then throw new IllegalArgumentException("Retry backoff must not be null")
-    else if values.size != retries then
-      throw new IllegalArgumentException("Retry backoff size must match max retries")
-    else if values.exists(_ <= 0) then
-      throw new IllegalArgumentException("Retry backoff values must be positive")
+    else if values.size != retries then throw new IllegalArgumentException("Retry backoff size must match max retries")
+    else if values.exists(_ <= 0) then throw new IllegalArgumentException("Retry backoff values must be positive")
 
   private def validateHeaders(values: Map[String, String]): Unit =
     if values == null then throw new IllegalArgumentException("Default headers must not be null")

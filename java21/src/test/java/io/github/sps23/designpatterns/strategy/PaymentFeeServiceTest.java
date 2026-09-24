@@ -15,8 +15,7 @@ class PaymentFeeServiceTest {
     @DisplayName("Should calculate card fees with percentage and flat charge")
     void shouldCalculateCardFee() {
         var service = PaymentFeeService.defaultService();
-        var request = new PaymentRequest(PaymentMethod.CARD, new BigDecimal("100.00"), "GBP",
-                false);
+        var request = new PaymentRequest(PaymentMethod.CARD, new BigDecimal("100.00"), "GBP", false);
 
         var quote = service.quote(request);
 
@@ -28,8 +27,7 @@ class PaymentFeeServiceTest {
     @DisplayName("Should cap bank transfer fees")
     void shouldCapBankTransferFee() {
         var service = PaymentFeeService.defaultService();
-        var request = new PaymentRequest(PaymentMethod.BANK_TRANSFER, new BigDecimal("1000.00"),
-                "GBP", false);
+        var request = new PaymentRequest(PaymentMethod.BANK_TRANSFER, new BigDecimal("1000.00"), "GBP", false);
 
         var quote = service.quote(request);
 
@@ -41,8 +39,7 @@ class PaymentFeeServiceTest {
     @DisplayName("Should enforce a minimum wallet fee")
     void shouldApplyMinimumWalletFee() {
         var service = PaymentFeeService.defaultService();
-        var request = new PaymentRequest(PaymentMethod.DIGITAL_WALLET, new BigDecimal("5.00"),
-                "GBP", false);
+        var request = new PaymentRequest(PaymentMethod.DIGITAL_WALLET, new BigDecimal("5.00"), "GBP", false);
 
         var quote = service.quote(request);
 
@@ -53,10 +50,8 @@ class PaymentFeeServiceTest {
     @Test
     @DisplayName("Should allow lambda-based custom strategies")
     void shouldAllowLambdaBasedCustomStrategies() {
-        var service = new PaymentFeeService(
-                Map.of(PaymentMethod.BUY_NOW_PAY_LATER, request -> new BigDecimal("9.00")));
-        var request = new PaymentRequest(PaymentMethod.BUY_NOW_PAY_LATER, new BigDecimal("200.00"),
-                "GBP", false);
+        var service = new PaymentFeeService(Map.of(PaymentMethod.BUY_NOW_PAY_LATER, request -> new BigDecimal("9.00")));
+        var request = new PaymentRequest(PaymentMethod.BUY_NOW_PAY_LATER, new BigDecimal("200.00"), "GBP", false);
 
         var quote = service.quote(request);
 
@@ -68,12 +63,10 @@ class PaymentFeeServiceTest {
     @DisplayName("Should reject unknown strategies")
     void shouldRejectUnknownStrategies() {
         var service = PaymentFeeService.defaultService();
-        var request = new PaymentRequest(PaymentMethod.BUY_NOW_PAY_LATER, new BigDecimal("200.00"),
-                "GBP", false);
+        var request = new PaymentRequest(PaymentMethod.BUY_NOW_PAY_LATER, new BigDecimal("200.00"), "GBP", false);
 
         var error = assertThrows(IllegalArgumentException.class, () -> service.quote(request));
 
-        assertEquals("No strategy configured for payment method: BUY_NOW_PAY_LATER",
-                error.getMessage());
+        assertEquals("No strategy configured for payment method: BUY_NOW_PAY_LATER", error.getMessage());
     }
 }

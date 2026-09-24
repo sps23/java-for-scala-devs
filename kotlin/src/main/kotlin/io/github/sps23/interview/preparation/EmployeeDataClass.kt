@@ -25,13 +25,8 @@ data class EmployeeDataClass(
     fun toFormattedString(): String = "Employee #$id: $name ($email) - $department - $%.2f".format(salary)
 
     companion object {
-        fun of(
-            id: Long,
-            name: String,
-            email: String,
-            department: String,
-            salary: Double,
-        ) = EmployeeDataClass(id, name, email, department, salary)
+        fun of(id: Long, name: String, email: String, department: String, salary: Double) =
+            EmployeeDataClass(id, name, email, department, salary)
     }
 }
 

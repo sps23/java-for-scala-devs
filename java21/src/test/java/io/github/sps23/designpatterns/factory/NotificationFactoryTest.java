@@ -15,8 +15,7 @@ class NotificationFactoryTest {
     void shouldCreateEmailNotification() {
         Notification notification = NotificationFactory.create("email");
         assertInstanceOf(EmailNotification.class, notification);
-        assertEquals("EMAIL to alice@example.com: Welcome!",
-                notification.send("alice@example.com", "Welcome!"));
+        assertEquals("EMAIL to alice@example.com: Welcome!", notification.send("alice@example.com", "Welcome!"));
     }
 
     @Test
@@ -24,8 +23,7 @@ class NotificationFactoryTest {
     void shouldCreateSmsNotification() {
         Notification notification = NotificationFactory.create("sms");
         assertInstanceOf(SmsNotification.class, notification);
-        assertEquals("SMS to +441234567890: Code 1234",
-                notification.send("+441234567890", "Code 1234"));
+        assertEquals("SMS to +441234567890: Code 1234", notification.send("+441234567890", "Code 1234"));
     }
 
     @Test
@@ -33,8 +31,7 @@ class NotificationFactoryTest {
     void shouldCreatePushNotification() {
         Notification notification = NotificationFactory.create("push");
         assertInstanceOf(PushNotification.class, notification);
-        assertEquals("PUSH to user-42: Build completed",
-                notification.send("user-42", "Build completed"));
+        assertEquals("PUSH to user-42: Build completed", notification.send("user-42", "Build completed"));
     }
 
     @Test

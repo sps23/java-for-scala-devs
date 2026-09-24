@@ -79,10 +79,7 @@ object StringManipulation {
      * @param spaces number of spaces to add (positive) or remove (negative)
      * @return text with adjusted indentation
      */
-    fun adjustIndentation(
-        text: String?,
-        spaces: Int,
-    ): String {
+    fun adjustIndentation(text: String?, spaces: Int): String {
         if (text.isNullOrBlank()) return ""
 
         return if (spaces >= 0) {
@@ -105,11 +102,10 @@ object StringManipulation {
      * @param text the input text
      * @return transformed text
      */
-    fun transformExample(text: String?): String =
-        text?.trim()
-            ?.uppercase()
-            ?.let { "[$it]" }
-            ?: ""
+    fun transformExample(text: String?): String = text?.trim()
+        ?.uppercase()
+        ?.let { "[$it]" }
+        ?: ""
 
     /**
      * Process text using a complete pipeline with bullet points.
@@ -153,11 +149,7 @@ object StringManipulation {
      * @param separator separator between repetitions
      * @return repeated pattern string
      */
-    fun repeatPattern(
-        pattern: String?,
-        count: Int,
-        separator: String,
-    ): String {
+    fun repeatPattern(pattern: String?, count: Int, separator: String): String {
         if (pattern == null || count <= 0) return ""
         return List(count) { pattern }.joinToString(separator)
     }
@@ -226,44 +218,34 @@ object StringManipulation {
     /**
      * Create formatted JSON using string templates and multi-line strings.
      */
-    fun createJson(
-        name: String,
-        email: String,
-        active: Boolean,
-    ): String =
-        """
+    fun createJson(name: String, email: String, active: Boolean): String = """
         {
           "name": "$name",
           "email": "$email",
           "active": $active
         }
-        """.trimIndent()
+    """.trimIndent()
 
     /**
      * Create SQL query with parameters.
      */
-    fun createQuery(
-        table: String,
-        columns: List<String>,
-        whereClause: String,
-    ): String {
+    fun createQuery(table: String, columns: List<String>, whereClause: String): String {
         val cols = columns.joinToString(", ")
         return """
             SELECT $cols
             FROM $table
             WHERE $whereClause
-            """.trimIndent()
+        """.trimIndent()
     }
 
     /**
      * Demonstrates trimMargin with custom margin prefix.
      */
-    fun trimMarginExample(): String =
-        """
+    fun trimMarginExample(): String = """
         |First line
         |Second line
         |  Indented third line
-        """.trimMargin()
+    """.trimMargin()
 }
 
 // ========================================================================
@@ -284,7 +266,8 @@ fun String?.toNonBlankOrNull(): String? = this?.takeIf { it.isNotBlank() }
 /**
  * Apply multiple transformations in sequence.
  */
-fun String.transformWith(vararg transformations: (String) -> String): String = transformations.fold(this) { acc, f -> f(acc) }
+fun String.transformWith(vararg transformations: (String) -> String): String =
+    transformations.fold(this) { acc, f -> f(acc) }
 
 /**
  * Wrap string in a delimiter.
@@ -294,21 +277,19 @@ fun String.wrapWith(delimiter: String): String = "$delimiter$this$delimiter"
 /**
  * Truncate to max length with ellipsis.
  */
-fun String.truncate(maxLength: Int): String =
-    if (length <= maxLength) {
-        this
-    } else {
-        take(maxLength - 3) + "..."
-    }
+fun String.truncate(maxLength: Int): String = if (length <= maxLength) {
+    this
+} else {
+    take(maxLength - 3) + "..."
+}
 
 /**
  * Convert to title case.
  */
-fun String.toTitleCase(): String =
-    split(" ")
-        .joinToString(" ") { word ->
-            word.lowercase().replaceFirstChar { it.uppercase() }
-        }
+fun String.toTitleCase(): String = split(" ")
+    .joinToString(" ") { word ->
+        word.lowercase().replaceFirstChar { it.uppercase() }
+    }
 
 // ========================================================================
 // Main demonstration

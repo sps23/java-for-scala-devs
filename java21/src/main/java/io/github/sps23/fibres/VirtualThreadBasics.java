@@ -48,8 +48,8 @@ public class VirtualThreadBasics {
 
     // Callables keep the fetch operations injectable so the test can verify
     // concurrency deterministically.
-    static String fetchUserAndOrders(Callable<String> userFetcher,
-            Callable<List<String>> ordersFetcher) throws Exception {
+    static String fetchUserAndOrders(Callable<String> userFetcher, Callable<List<String>> ordersFetcher)
+            throws Exception {
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             Future<String> userFuture = executor.submit(userFetcher);
             Future<List<String>> orderFuture = executor.submit(ordersFetcher);

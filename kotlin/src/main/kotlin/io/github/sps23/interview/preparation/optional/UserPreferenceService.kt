@@ -75,7 +75,8 @@ class UserPreferenceService {
     /**
      * Demonstrates safe call with Elvis for complete null safety.
      */
-    fun getUppercaseThemeOrDefault(userId: String): String = findUserPreference(userId)?.theme?.uppercase() ?: DEFAULT_THEME.uppercase()
+    fun getUppercaseThemeOrDefault(userId: String): String =
+        findUserPreference(userId)?.theme?.uppercase() ?: DEFAULT_THEME.uppercase()
 
     // ========================================================================
     // Scope Functions: let, run, also, apply
@@ -86,32 +87,30 @@ class UserPreferenceService {
      *
      * let is the Kotlin equivalent of Java's Optional.map() + ifPresent().
      */
-    fun processThemeWithLet(userId: String): String? =
-        findUserPreference(userId)?.theme?.let { theme ->
-            println("Processing theme: $theme")
-            theme.uppercase()
-        }
+    fun processThemeWithLet(userId: String): String? = findUserPreference(userId)?.theme?.let { theme ->
+        println("Processing theme: $theme")
+        theme.uppercase()
+    }
 
     /**
      * Demonstrates let with Elvis for transformation with default.
      */
-    fun getProcessedTheme(userId: String): String = findUserPreference(userId)?.theme?.let { it.uppercase() } ?: DEFAULT_THEME.uppercase()
+    fun getProcessedTheme(userId: String): String =
+        findUserPreference(userId)?.theme?.let { it.uppercase() } ?: DEFAULT_THEME.uppercase()
 
     /**
      * Demonstrates run - similar to let but uses 'this' instead of 'it'.
      */
-    fun getThemeDescriptionWithRun(userId: String): String =
-        findUserPreference(userId)?.theme?.run {
-            "Theme: ${uppercase()}, length: $length"
-        } ?: "Using default theme: $DEFAULT_THEME"
+    fun getThemeDescriptionWithRun(userId: String): String = findUserPreference(userId)?.theme?.run {
+        "Theme: ${uppercase()}, length: $length"
+    } ?: "Using default theme: $DEFAULT_THEME"
 
     /**
      * Demonstrates also - for side effects without transforming.
      */
-    fun getThemeWithLogging(userId: String): String? =
-        findUserPreference(userId)?.theme?.also { theme ->
-            println("Retrieved theme: $theme for user: $userId")
-        }
+    fun getThemeWithLogging(userId: String): String? = findUserPreference(userId)?.theme?.also { theme ->
+        println("Retrieved theme: $theme for user: $userId")
+    }
 
     // ========================================================================
     // Filtering: takeIf, takeUnless
@@ -129,7 +128,8 @@ class UserPreferenceService {
      *
      * Inverse of takeIf.
      */
-    fun getCustomTheme(userId: String): String? = findUserPreference(userId)?.theme?.takeUnless { it == "light" || it == "dark" }
+    fun getCustomTheme(userId: String): String? =
+        findUserPreference(userId)?.theme?.takeUnless { it == "light" || it == "dark" }
 
     /**
      * Demonstrates takeIf for filtering nullable integers.
@@ -143,13 +143,12 @@ class UserPreferenceService {
     /**
      * Demonstrates when expression - Kotlin's pattern matching for nullables.
      */
-    fun describeTheme(userId: String): String =
-        when (val theme = findUserPreference(userId)?.theme) {
-            "dark" -> "Using dark theme for reduced eye strain"
-            "light" -> "Using light theme for better visibility"
-            null -> "Using default theme: $DEFAULT_THEME"
-            else -> "Using custom theme: $theme"
-        }
+    fun describeTheme(userId: String): String = when (val theme = findUserPreference(userId)?.theme) {
+        "dark" -> "Using dark theme for reduced eye strain"
+        "light" -> "Using light theme for better visibility"
+        null -> "Using default theme: $DEFAULT_THEME"
+        else -> "Using custom theme: $theme"
+    }
 
     // ========================================================================
     // Chaining with Multiple Nullable Values
@@ -168,14 +167,13 @@ class UserPreferenceService {
     /**
      * Demonstrates alternative approach using run for chaining.
      */
-    fun getDisplaySettingsWithRun(userId: String): String? =
-        findUserPreference(userId)?.run {
-            theme?.let { t ->
-                fontSize?.let { s ->
-                    "$t theme, ${s}px font"
-                }
+    fun getDisplaySettingsWithRun(userId: String): String? = findUserPreference(userId)?.run {
+        theme?.let { t ->
+            fontSize?.let { s ->
+                "$t theme, ${s}px font"
             }
         }
+    }
 
     // ========================================================================
     // Complete Preference Resolution with Fallbacks
@@ -222,11 +220,10 @@ class UserPreferenceService {
      *     ?: "default"
      * ```
      */
-    fun demonstrateKotlinVsJava(value: String?): String =
-        value
-            ?.uppercase()
-            ?.takeIf { it.length > 3 }
-            ?: "default"
+    fun demonstrateKotlinVsJava(value: String?): String = value
+        ?.uppercase()
+        ?.takeIf { it.length > 3 }
+        ?: "default"
 
     // ========================================================================
     // Safe Casts

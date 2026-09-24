@@ -18,12 +18,7 @@ data class CustomerProfile private constructor(
     }
 
     companion object {
-        fun create(
-            id: Long,
-            email: String,
-            roles: List<String>,
-            preferences: Map<String, String>,
-        ): CustomerProfile {
+        fun create(id: Long, email: String, roles: List<String>, preferences: Map<String, String>): CustomerProfile {
             require(id > 0) { "id must be positive" }
             val normalizedEmail = email.trim()
             require(normalizedEmail.contains("@")) { "email must contain '@'" }

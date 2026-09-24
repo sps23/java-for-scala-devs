@@ -23,8 +23,7 @@ class LegacyBankPaymentAdapter(legacyBankApi: LegacyBankApi) extends PaymentGate
     if request == null then throw new IllegalArgumentException("Payment request must not be null")
     if Option(request.customerId).forall(_.trim.isEmpty) then
       throw new IllegalArgumentException("Customer id must not be blank")
-    if request.amountInCents <= 0 then
-      throw new IllegalArgumentException("Amount must be greater than zero")
+    if request.amountInCents <= 0 then throw new IllegalArgumentException("Amount must be greater than zero")
 
     val currency = normalizeCurrency(request.currency)
     val response = legacyBankApi.submitPayment(

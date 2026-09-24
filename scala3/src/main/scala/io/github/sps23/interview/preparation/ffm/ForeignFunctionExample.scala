@@ -1,35 +1,23 @@
 package io.github.sps23.interview.preparation.ffm
 
-import java.lang.foreign.{
-  Arena,
-  FunctionDescriptor,
-  Linker,
-  MemorySegment,
-  SymbolLookup,
-  ValueLayout
-}
+import java.lang.foreign.{Arena, FunctionDescriptor, Linker, MemorySegment, SymbolLookup, ValueLayout}
 import java.lang.invoke.MethodHandle
 import scala.util.Using
 
-/** Demonstrates Java 21's Foreign Function and Memory (FFM) API for calling native C library
-  * functions in Scala 3.
+/** Demonstrates Java 21's Foreign Function and Memory (FFM) API for calling native C library functions in Scala 3.
   *
-  * The FFM API provides a modern alternative to JNI for native code integration. This example
-  * demonstrates:
+  * The FFM API provides a modern alternative to JNI for native code integration. This example demonstrates:
   *   - Linker for creating method handles to native functions
   *   - FunctionDescriptor for describing native function signatures
   *   - SymbolLookup for finding native functions in libraries
   *   - Calling standard C library functions (strlen, abs, etc.)
   *
-  * For Scala developers: This is similar to using JNA or JNI, but with a pure Java API that's
-  * type-safe and doesn't require native code compilation. The functional style of Scala makes the
-  * code more concise.
+  * For Scala developers: This is similar to using JNA or JNI, but with a pure Java API that's type-safe and doesn't
+  * require native code compilation. The functional style of Scala makes the code more concise.
   *
   * Key FFM API concepts for function calls:
-  *   - '''Linker''': Creates method handles for native functions following the platform's calling
-  *     convention.
-  *   - '''FunctionDescriptor''': Describes the signature (return type and parameter types) of a
-  *     native function.
+  *   - '''Linker''': Creates method handles for native functions following the platform's calling convention.
+  *   - '''FunctionDescriptor''': Describes the signature (return type and parameter types) of a native function.
   *   - '''SymbolLookup''': Locates native functions by name in loaded libraries.
   *   - '''MethodHandle''': Java representation of a callable native function.
   *

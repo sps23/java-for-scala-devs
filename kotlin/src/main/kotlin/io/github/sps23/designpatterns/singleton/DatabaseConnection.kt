@@ -52,9 +52,8 @@ class StatefulDatabaseConnection private constructor() {
         @Volatile
         private var instance: StatefulDatabaseConnection? = null
 
-        fun getInstance(): StatefulDatabaseConnection =
-            instance ?: synchronized(this) {
-                instance ?: StatefulDatabaseConnection().also { instance = it }
-            }
+        fun getInstance(): StatefulDatabaseConnection = instance ?: synchronized(this) {
+            instance ?: StatefulDatabaseConnection().also { instance = it }
+        }
     }
 }

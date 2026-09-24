@@ -9,8 +9,8 @@ import scala.util.{Try, Using}
 
 /** Virtual threads-based web scraper in Scala 3.
   *
-  * This implementation uses Java 21's virtual threads, demonstrating how Scala developers can
-  * leverage Project Loom features.
+  * This implementation uses Java 21's virtual threads, demonstrating how Scala developers can leverage Project Loom
+  * features.
   *
   * Key benefits over traditional thread pools:
   *   - Massive concurrency (millions of virtual threads)
@@ -18,8 +18,8 @@ import scala.util.{Try, Using}
   *   - Minimal memory overhead (KB vs MB per thread)
   *   - Simple blocking code style
   *
-  * For Scala developers familiar with ZIO or Cats Effect: Virtual threads provide similar benefits
-  * to fibers, but at the JVM level. You can write blocking-style code that scales like async code.
+  * For Scala developers familiar with ZIO or Cats Effect: Virtual threads provide similar benefits to fibers, but at
+  * the JVM level. You can write blocking-style code that scales like async code.
   *
   * For comparison with:
   *   - Java: see WebScraperVirtual.java
@@ -51,8 +51,8 @@ object WebScraperVirtual:
 
   /** Scrapes multiple URLs using virtual threads - one thread per URL.
     *
-    * With virtual threads, creating one thread per task is efficient. The JVM handles scheduling
-    * and resource management automatically.
+    * With virtual threads, creating one thread per task is efficient. The JVM handles scheduling and resource
+    * management automatically.
     *
     * Comparison with traditional approach:
     *   - Traditional: 1000 URLs with 16 threads = max 16 concurrent requests

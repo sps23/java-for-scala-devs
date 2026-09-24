@@ -55,7 +55,7 @@ test {
 
 spotless {
     kotlin {
-        ktlint('1.1.1')
+        ktlint('1.1.1').editorConfigOverride(['max_line_length': '120'])
         trimTrailingWhitespace()
         endWithNewline()
     }

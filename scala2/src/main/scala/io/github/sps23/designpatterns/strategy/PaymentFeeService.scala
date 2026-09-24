@@ -60,9 +60,7 @@ final class PaymentFeeService(
 object PaymentFeeService {
   def defaultService: PaymentFeeService = {
     val card =
-      PaymentFeeStrategy(request =>
-        scale(request.amount * BigDecimal("0.029") + BigDecimal("0.30"))
-      )
+      PaymentFeeStrategy(request => scale(request.amount * BigDecimal("0.029") + BigDecimal("0.30")))
     val bankTransfer =
       PaymentFeeStrategy(request => scale(request.amount * BigDecimal("0.008")))
     val digitalWallet = PaymentFeeStrategy { request =>

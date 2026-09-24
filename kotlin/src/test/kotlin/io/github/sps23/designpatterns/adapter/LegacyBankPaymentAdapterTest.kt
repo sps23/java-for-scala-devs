@@ -43,11 +43,7 @@ class LegacyBankPaymentAdapterTest {
 class CheckoutService(
     private val paymentGateway: PaymentGateway,
 ) {
-    fun checkout(
-        customerId: String,
-        amountInCents: Int,
-        currency: String,
-    ): String {
+    fun checkout(customerId: String, amountInCents: Int, currency: String): String {
         val result = paymentGateway.charge(PaymentRequest(customerId, amountInCents, currency))
         return if (result.approved) {
             "CONFIRMED:${result.transactionId}"

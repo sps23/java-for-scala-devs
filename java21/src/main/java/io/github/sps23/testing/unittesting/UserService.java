@@ -44,8 +44,7 @@ public class UserService {
     }
 
     public void deactivateUser(String id) {
-        var user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
+        var user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
 
         var deactivatedUser = user.withActive(false);
         userRepository.save(deactivatedUser);

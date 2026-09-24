@@ -29,19 +29,18 @@ object TransactionProcessor {
      *
      * @return immutable list of sample transactions
      */
-    fun createSampleTransactions(): List<Transaction> =
-        listOf(
-            Transaction(1, "Food", 25.50, "Grocery shopping", LocalDate.of(2025, 1, 15)),
-            Transaction(2, "Transport", 45.00, "Uber ride", LocalDate.of(2025, 1, 15)),
-            Transaction(3, "Entertainment", 120.00, "Concert tickets", LocalDate.of(2025, 1, 16)),
-            Transaction(4, "Food", 35.75, "Restaurant dinner", LocalDate.of(2025, 1, 17)),
-            Transaction(5, "Transport", 30.00, "Train ticket", LocalDate.of(2025, 1, 18)),
-            Transaction(6, "Food", 15.25, "Coffee shop", LocalDate.of(2025, 1, 18)),
-            Transaction(7, "Entertainment", 60.00, "Movie night", LocalDate.of(2025, 1, 19)),
-            Transaction(8, "Shopping", 250.00, "New shoes", LocalDate.of(2025, 1, 20)),
-            Transaction(9, "Food", 42.50, "Takeout order", LocalDate.of(2025, 1, 20)),
-            Transaction(10, "Transport", 55.00, "Taxi fare", LocalDate.of(2025, 1, 21)),
-        )
+    fun createSampleTransactions(): List<Transaction> = listOf(
+        Transaction(1, "Food", 25.50, "Grocery shopping", LocalDate.of(2025, 1, 15)),
+        Transaction(2, "Transport", 45.00, "Uber ride", LocalDate.of(2025, 1, 15)),
+        Transaction(3, "Entertainment", 120.00, "Concert tickets", LocalDate.of(2025, 1, 16)),
+        Transaction(4, "Food", 35.75, "Restaurant dinner", LocalDate.of(2025, 1, 17)),
+        Transaction(5, "Transport", 30.00, "Train ticket", LocalDate.of(2025, 1, 18)),
+        Transaction(6, "Food", 15.25, "Coffee shop", LocalDate.of(2025, 1, 18)),
+        Transaction(7, "Entertainment", 60.00, "Movie night", LocalDate.of(2025, 1, 19)),
+        Transaction(8, "Shopping", 250.00, "New shoes", LocalDate.of(2025, 1, 20)),
+        Transaction(9, "Food", 42.50, "Takeout order", LocalDate.of(2025, 1, 20)),
+        Transaction(10, "Transport", 55.00, "Taxi fare", LocalDate.of(2025, 1, 21)),
+    )
 
     /**
      * Creates a set of valid categories.
@@ -50,7 +49,14 @@ object TransactionProcessor {
      *
      * @return immutable set of valid categories
      */
-    fun getValidCategories(): Set<String> = setOf("Food", "Transport", "Entertainment", "Shopping", "Utilities", "Healthcare")
+    fun getValidCategories(): Set<String> = setOf(
+        "Food",
+        "Transport",
+        "Entertainment",
+        "Shopping",
+        "Utilities",
+        "Healthcare",
+    )
 
     /**
      * Creates a map of category descriptions.
@@ -59,29 +65,27 @@ object TransactionProcessor {
      *
      * @return immutable map of category descriptions
      */
-    fun getCategoryDescriptions(): Map<String, String> =
-        mapOf(
-            "Food" to "Food and dining expenses",
-            "Transport" to "Transportation and travel costs",
-            "Entertainment" to "Entertainment and leisure activities",
-            "Shopping" to "Shopping and retail purchases",
-            "Utilities" to "Utility bills and services",
-        )
+    fun getCategoryDescriptions(): Map<String, String> = mapOf(
+        "Food" to "Food and dining expenses",
+        "Transport" to "Transportation and travel costs",
+        "Entertainment" to "Entertainment and leisure activities",
+        "Shopping" to "Shopping and retail purchases",
+        "Utilities" to "Utility bills and services",
+    )
 
     /**
      * Creates a map of category budgets.
      *
      * @return immutable map of category budgets
      */
-    fun getCategoryBudgets(): Map<String, Double> =
-        mapOf(
-            "Food" to 500.0,
-            "Transport" to 200.0,
-            "Entertainment" to 150.0,
-            "Shopping" to 300.0,
-            "Utilities" to 250.0,
-            "Healthcare" to 100.0,
-        )
+    fun getCategoryBudgets(): Map<String, Double> = mapOf(
+        "Food" to 500.0,
+        "Transport" to 200.0,
+        "Entertainment" to 150.0,
+        "Shopping" to 300.0,
+        "Utilities" to 250.0,
+        "Healthcare" to 100.0,
+    )
 
     // ========================================================================
     // Collection Operations (Comparable to Java Stream API)
@@ -96,10 +100,8 @@ object TransactionProcessor {
      * @param minAmount minimum amount threshold
      * @return filtered list of transactions
      */
-    fun filterByMinAmount(
-        transactions: List<Transaction>,
-        minAmount: Double,
-    ): List<Transaction> = transactions.filter { it.amount >= minAmount }
+    fun filterByMinAmount(transactions: List<Transaction>, minAmount: Double): List<Transaction> =
+        transactions.filter { it.amount >= minAmount }
 
     /**
      * Filters transactions by category.
@@ -108,10 +110,8 @@ object TransactionProcessor {
      * @param category category to filter by
      * @return filtered list of transactions
      */
-    fun filterByCategory(
-        transactions: List<Transaction>,
-        category: String,
-    ): List<Transaction> = transactions.filter { it.category == category }
+    fun filterByCategory(transactions: List<Transaction>, category: String): List<Transaction> =
+        transactions.filter { it.category == category }
 
     /**
      * Groups transactions by category.
@@ -121,7 +121,8 @@ object TransactionProcessor {
      * @param transactions list of transactions to group
      * @return map of category to list of transactions
      */
-    fun groupByCategory(transactions: List<Transaction>): Map<String, List<Transaction>> = transactions.groupBy { it.category }
+    fun groupByCategory(transactions: List<Transaction>): Map<String, List<Transaction>> =
+        transactions.groupBy { it.category }
 
     /**
      * Calculates total amount per category.
@@ -209,11 +210,10 @@ object TransactionProcessor {
      * @param transactions list of transactions
      * @return MinMaxResult with min and max transactions
      */
-    fun findMinAndMaxTransaction(transactions: List<Transaction>): MinMaxResult =
-        MinMaxResult(
-            min = transactions.minByOrNull { it.amount },
-            max = transactions.maxByOrNull { it.amount },
-        )
+    fun findMinAndMaxTransaction(transactions: List<Transaction>): MinMaxResult = MinMaxResult(
+        min = transactions.minByOrNull { it.amount },
+        max = transactions.maxByOrNull { it.amount },
+    )
 
     /**
      * Result data class for combined summary.

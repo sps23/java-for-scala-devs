@@ -2,9 +2,8 @@ package io.github.sps23.interview.preparation.payment
 
 /** Calculates transaction fees for different payment methods.
   *
-  * This object demonstrates exhaustive pattern matching with sealed traits in Scala 3. Because
-  * `PaymentMethod` is sealed and all subtypes are defined in the same file, the compiler verifies
-  * that all cases are handled.
+  * This object demonstrates exhaustive pattern matching with sealed traits in Scala 3. Because `PaymentMethod` is
+  * sealed and all subtypes are defined in the same file, the compiler verifies that all cases are handled.
   *
   * Fee structure:
   *   - Credit Card: 2.9% + $0.30 per transaction
@@ -23,8 +22,8 @@ object FeeCalculator:
 
   /** Calculates the transaction fee for a payment method.
     *
-    * Uses exhaustive pattern matching with case class destructuring. The compiler verifies that all
-    * permitted subtypes of `PaymentMethod` are handled.
+    * Uses exhaustive pattern matching with case class destructuring. The compiler verifies that all permitted subtypes
+    * of `PaymentMethod` are handled.
     *
     * @param payment
     *   the payment method to calculate fee for
@@ -39,8 +38,8 @@ object FeeCalculator:
 
   /** Calculates fee using pattern matching with guards.
     *
-    * Demonstrates conditional pattern matching using the `if` keyword in patterns. This is similar
-    * to Java's `when` clause in switch expressions.
+    * Demonstrates conditional pattern matching using the `if` keyword in patterns. This is similar to Java's `when`
+    * clause in switch expressions.
     *
     * @param payment
     *   the payment method
@@ -88,8 +87,8 @@ object FeeCalculator:
 @main def runPaymentExample(): Unit =
   import java.time.YearMonth
 
-  val creditCard   = CreditCard("1234567890123456", YearMonth.now().plusYears(2), BigDecimal("100"))
-  val bankTransfer = BankTransfer("DE89370400440532013000", "COBADEFFXXX", BigDecimal("500"))
+  val creditCard    = CreditCard("1234567890123456", YearMonth.now().plusYears(2), BigDecimal("100"))
+  val bankTransfer  = BankTransfer("DE89370400440532013000", "COBADEFFXXX", BigDecimal("500"))
   val digitalWallet = DigitalWallet("PayPal", "user@example.com", BigDecimal("50"))
 
   val payments = List(creditCard, bankTransfer, digitalWallet)

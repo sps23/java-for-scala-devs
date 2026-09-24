@@ -48,8 +48,7 @@ final class CheckoutService {
     }
 
     String checkout(String customerId, int amountInCents, String currency) {
-        PaymentResult result = paymentGateway
-                .charge(new PaymentRequest(customerId, amountInCents, currency));
+        PaymentResult result = paymentGateway.charge(new PaymentRequest(customerId, amountInCents, currency));
         if (result.approved()) {
             return "CONFIRMED:" + result.transactionId();
         }

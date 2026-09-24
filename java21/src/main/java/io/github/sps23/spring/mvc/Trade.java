@@ -30,8 +30,8 @@ import java.time.Instant;
  * @param executedAt
  *            when the trade was executed (UTC)
  */
-public record Trade(String tradeId, String symbol, TradeType type, int quantity,
-        BigDecimal pricePerShare, Instant executedAt) {
+public record Trade(String tradeId, String symbol, TradeType type, int quantity, BigDecimal pricePerShare,
+        Instant executedAt) {
 
     public Trade {
         if (tradeId == null || tradeId.isBlank()) {

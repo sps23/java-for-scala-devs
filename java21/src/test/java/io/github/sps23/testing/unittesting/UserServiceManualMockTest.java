@@ -101,8 +101,7 @@ class UserServiceManualMockTest {
         userRepository.users.put(id, new User(id, "Existing", "existing@example.com", true));
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> userService.createUser(id, "New", "new@example.com"));
+        assertThrows(IllegalArgumentException.class, () -> userService.createUser(id, "New", "new@example.com"));
     }
 
     /**
